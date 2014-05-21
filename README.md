@@ -12,9 +12,9 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 * Renderização de boletos em projetos separados, eliminando dependências. Ex: Aplicativo windows forms utilizando biblioteca System.Web.
 
 Tarefas/Implementações:
-- [ ] Arquitetura
+* Arquitetura
 	- [ ] Classes base
 	- [ ] Common methods
-- [ ] Bancos Brasileiros
+* Bancos Brasileiros
 	- [ ] Banco Itaú
 	- [ ] Banco Hsbc
