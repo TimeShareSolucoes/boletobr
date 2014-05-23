@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BoletoBr.CalculoModulo;
 
-namespace BoletoBr
+namespace BoletoBr.Bancos
 {
     public class BancoAbstract
     {
-        private readonly ICalculaModulo10 _calculoModulo10;
+        private readonly ICalculadoraModulo10 _calculoModulo10;
 
         #region Propriedades
         /// <summary>
@@ -20,7 +16,7 @@ namespace BoletoBr
         public string NomeBanco { get; set; }
         #endregion
 
-        public BancoAbstract(ICalculaModulo10 calculoModulo10)
+        public BancoAbstract(ICalculadoraModulo10 calculoModulo10)
         {
             _calculoModulo10 = calculoModulo10;
         }

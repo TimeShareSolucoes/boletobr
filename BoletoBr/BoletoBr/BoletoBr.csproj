@@ -40,15 +40,31 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bancos\BancoAbstract.cs" />
+    <Compile Include="Bancos\Hsbc\BancoHsbc.cs" />
+    <Compile Include="Bancos\Hsbc\CarteiraCobrancaHsbcCnr.cs" />
+    <Compile Include="Bancos\Hsbc\CarteiraCobrancaHsbcCsb.cs" />
+    <Compile Include="Bancos\IBanco.cs" />
     <Compile Include="Common\Common.cs" />
     <Compile Include="Common\MetodosExtensao.cs" />
+    <Compile Include="Dominio\Boleto.cs" />
+    <Compile Include="Dominio\CarteiraCobranca.cs" />
     <Compile Include="Dominio\Cedente.cs" />
     <Compile Include="Dominio\ContaBancaria.cs" />
     <Compile Include="Dominio\Endereco.cs" />
-    <Compile Include="Interfaces\ICalculaModulo10.cs" />
+    <Compile Include="Dominio\Sacado.cs" />
+    <Compile Include="Fabricas\BancoFactory.cs" />
+    <Compile Include="CalculoModulo\CalculadoraMod10Basa.cs" />
+    <Compile Include="CalculoModulo\CalculadoraMod10Generica.cs" />
+    <Compile Include="CalculoModulo\CalculadoraMod11Basa.cs" />
+    <Compile Include="CalculoModulo\CalculadoraMod11Generica.cs" />
+    <Compile Include="CalculoModulo\ICalculadoraModulo10.cs" />
+    <Compile Include="CalculoModulo\ICalculadoraModulo11.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Implementacoes\" />
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="CommonTests.cs" />
     <Compile Include="FatorVencimentoTests.cs" />
+    <Compile Include="BancoHsbcTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
