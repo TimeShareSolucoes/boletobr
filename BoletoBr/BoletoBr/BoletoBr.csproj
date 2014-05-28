@@ -52,6 +52,7 @@
     <Compile Include="Dominio\ContaBancaria.cs" />
     <Compile Include="Dominio\Endereco.cs" />
     <Compile Include="Dominio\Sacado.cs" />
+    <Compile Include="Exceptions\ValidacaoBoletoException.cs" />
     <Compile Include="Fabricas\BancoFactory.cs" />
     <Compile Include="CalculoModulo\CalculadoraMod10Basa.cs" />
     <Compile Include="CalculoModulo\CalculadoraMod10Generica.cs" />

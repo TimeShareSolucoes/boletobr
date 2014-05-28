@@ -4,8 +4,6 @@ namespace BoletoBr.Bancos
 {
     public class BancoAbstract
     {
-        private readonly ICalculadoraModulo10 _calculoModulo10;
-
         #region Propriedades
         /// <summary>
         /// Código do Banco
@@ -16,9 +14,37 @@ namespace BoletoBr.Bancos
         public string NomeBanco { get; set; }
         #endregion
 
-        public BancoAbstract(ICalculadoraModulo10 calculoModulo10)
+        /// <summary>
+        /// Formata código de barras seguindo regras específicas do banco
+        /// </summary>
+        /// <param name="boleto"></param>
+        protected virtual void FormataCodigoBarra(Boleto boleto)
         {
-            _calculoModulo10 = calculoModulo10;
+
+        }
+        /// <summary>
+        /// Formata a linha digitável do boleto, seguindo as regras específicas do banco.
+        /// </summary>
+        /// <param name="boleto"></param>
+        protected virtual void FormataLinhaDigitavel(Boleto boleto)
+        {
+
+        }
+        /// <summary>
+        /// Formata o Nosso número do boleto, seguindo as regras específicas do banco.
+        /// </summary>
+        /// <param name="boleto"></param>
+        protected virtual void FormataNossoNumero(Boleto boleto)
+        {
+
+        }
+        /// <summary>
+        /// Formata o número do documento, seguindo as regras específicas do banco.
+        /// </summary>
+        /// <param name="boleto"></param>
+        protected virtual void FormataNumeroDocumento(Boleto boleto)
+        {
+
         }
     }
 }

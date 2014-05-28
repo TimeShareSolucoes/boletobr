@@ -40,6 +40,8 @@ namespace BoletoBr
         public DateTime DataOutrosDescontos { get; set; }
         public short PercentualIos { get; set; }
         public string TipoModalidade { get; set; }
+        public string CodigoBarraBoleto { get; set; }
+        public string LinhaDigitavelBoleto { get; set; }
 
         public Boleto()
         {

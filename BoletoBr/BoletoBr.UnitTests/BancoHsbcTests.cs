@@ -32,8 +32,14 @@ namespace BoletoBr.UnitTests
             });
 
             var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("CNR"));
+            boleto.NumeroDocumento = "40156";
+            boleto.ValorBoleto = 200;
+            boleto.NossoNumero = "40156044";
+            boleto.DataVencimento = DateTime.Now.Date;
 
-            
+            banco.FormatarBoleto(boleto);
+
+            Assert.AreEqual(boleto.LinhaDigitavelBoleto, "39994.29552 79000.000004 40156.320224 1 55180000020000");
         }
     }
 }

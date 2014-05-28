@@ -16,25 +16,11 @@ namespace BoletoBr.Bancos
         CarteiraCobranca GetCarteiraCobrancaPorCodigo(string codigoCarteira);
 
         void ValidaBoletoComNormasBanco(Boleto boleto);
+        
         /// <summary>
-        /// Formata código de barras seguindo regras específicas do banco
+        /// Efetua os cálculos de linha digitável do boleto.
         /// </summary>
         /// <param name="boleto"></param>
-        void FormataCodigoBarra(Boleto boleto);
-        /// <summary>
-        /// Formata a linha digitável do boleto, seguindo as regras específicas do banco.
-        /// </summary>
-        /// <param name="boleto"></param>
-        void FormataLinhaDigitavel(Boleto boleto);
-        /// <summary>
-        /// Formata o Nosso número do boleto, seguindo as regras específicas do banco.
-        /// </summary>
-        /// <param name="boleto"></param>
-        void FormataNossoNumero(Boleto boleto);
-        /// <summary>
-        /// Formata o número do documento, seguindo as regras específicas do banco.
-        /// </summary>
-        /// <param name="boleto"></param>
-        void FormataNumeroDocumento(Boleto boleto);
+        void FormatarBoleto(Boleto boleto);
     }
 }

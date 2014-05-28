@@ -247,6 +247,7 @@ namespace BoletoBr
         #endregion Mod
 
         #region Funções para strings
+
         public static string Mid(string str, int Start)
         {
             try
@@ -299,6 +300,41 @@ namespace BoletoBr
                     return str.Substring(checked(Start - 1));
                 else
                     return str.Substring(checked(Start - 1), Length);
+            }
+        }
+
+        public static string Left(string str, int Length)
+        {
+            if (Length < 0)
+            {
+                throw new ArgumentException("Informe o Length");
+            }
+            else
+            {
+                if (Length == 0 || str == null)
+                    return "";
+                if (Length >= str.Length)
+                    return str;
+                else
+                    return str.Substring(0, Length);
+            }
+        }
+
+        public static string Right(string str, int Length)
+        {
+            if (Length < 0)
+            {
+                throw new ArgumentException("Informe o Length.");
+            }
+            else
+            {
+                if (Length == 0 || str == null)
+                    return "";
+                int length = str.Length;
+                if (Length >= length)
+                    return str;
+                else
+                    return str.Substring(checked(length - Length), Length);
             }
         }
         #endregion
