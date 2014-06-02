@@ -40,6 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bancos\BancoAbstract.cs" />
+    <Compile Include="Bancos\Bradesco\BancoBradesco.cs" />
+    <Compile Include="Bancos\Bradesco\CarteiraCobrancaBradesco09.cs" />
     <Compile Include="Bancos\Hsbc\BancoHsbc.cs" />
     <Compile Include="Bancos\Hsbc\CarteiraCobrancaHsbcCnr.cs" />
     <Compile Include="Bancos\Hsbc\CarteiraCobrancaHsbcCsb.cs" />

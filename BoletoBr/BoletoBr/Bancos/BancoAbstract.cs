@@ -1,4 +1,5 @@
-﻿using BoletoBr.CalculoModulo;
+﻿using System.Collections.Generic;
+using BoletoBr.CalculoModulo;
 
 namespace BoletoBr.Bancos
 {
@@ -13,6 +14,14 @@ namespace BoletoBr.Bancos
         public string DigitoBanco { get; set; }
         public string NomeBanco { get; set; }
         #endregion
+        public virtual List<CarteiraCobranca> GetCarteirasCobranca()
+        {
+            return new List<CarteiraCobranca>();
+        }
+        public CarteiraCobranca GetCarteiraCobrancaPorCodigo(string codigoCarteira)
+        {
+            return GetCarteirasCobranca().Find(fd => fd.Codigo == codigoCarteira);
+        }
 
         /// <summary>
         /// Formata código de barras seguindo regras específicas do banco

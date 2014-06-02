@@ -244,6 +244,61 @@ namespace BoletoBr
             //Retornando
             return result;
         }
+
+        public static string Mod11Bradesco(string seq, int b)
+        {
+            #region Trecho do manual layout_cobranca_port.pdf do BRADESCO
+            /* 
+            Para o c�lculo do d�gito, ser� necess�rio acrescentar o n�mero da carteira � esquerda antes do Nosso N�mero, 
+            e aplicar o m�dulo 11, com base 7.
+            Multiplicar cada algarismo que comp�e o n�mero pelo seu respectivo multiplicador (PESO).
+            Os multiplicadores(PESOS) variam de 2 a 7.
+            O primeiro d�gito da direita para a esquerda dever� ser multiplicado por 2, o segundo por 3 e assim sucessivamente.
+             
+              Carteira   Nosso Numero
+                ______   _________________________________________
+                1    9   0   0   0   0   0   0   0   0   0   0   2
+                x    x   x   x   x   x   x   x   x   x   x   x   x
+                2    7   6   5   4   3   2   7   6   5   4   3   2
+                =    =   =   =   =   =   =   =   =   =   =   =   =
+                2 + 63 + 0 + 0 + 0 + 0 + 0 + 0 + 0 + 0 + 0 + 0 + 4 = 69
+
+            O total da soma dever� ser dividido por 11: 69 / 11 = 6 tendo como resto = 3
+            A diferen�a entre o divisor e o resto, ser� o d�gito de autoconfer�ncia: 11 - 3 = 8 (d�gito de auto-confer�ncia)
+            
+            Se o resto da divis�o for �1�, desprezar o c�lculo de subtra��o e considerar o d�gito como �P�. 
+            Se o resto da divis�o for �0�, desprezar o c�lculo de subtra��o e considerar o d�gito como �0�.
+            */
+            #endregion
+
+            /* Vari�veis
+             * -------------
+             * s - Soma
+             * p - Peso
+             * b - Base
+             * r - Resto
+             */
+
+            int s = 0, p = 2;
+
+            for (int i = seq.Length; i > 0; i--)
+            {
+                s = s + (Convert.ToInt32(Mid(seq, i, 1)) * p);
+                if (p == b)
+                    p = 2;
+                else
+                    p = p + 1;
+            }
+
+            int r = (s % 11);
+
+            if (r == 0)
+                return "0";
+            else if (r == 1)
+                return "P";
+            else
+                return (11 - r).ToString();
+        }
         #endregion Mod
 
         #region Funções para strings

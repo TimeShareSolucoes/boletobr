@@ -14,6 +14,7 @@ namespace BoletoBr.Bancos.Hsbc
             NomeBanco = "HSBC";
 
             /* Adiciona carteiras de cobrança */
+            _carteirasCobrancaHsbc = new List<CarteiraCobranca>();
             _carteirasCobrancaHsbc.Add(new CarteiraCobrancaHsbcCnr());
             _carteirasCobrancaHsbc.Add(new CarteiraCobrancaHsbcCsb());
         }
@@ -23,18 +24,11 @@ namespace BoletoBr.Bancos.Hsbc
         public string NomeBanco { get; set; }
 
         private int _digitoAutoConferenciaCodigoBarras;
-        public ICalculadoraModulo10 CalculadoraModulo10 { get; set; }
-        public ICalculadoraModulo11 CalculadoraModulo11 { get; set; }
-
-        private readonly List<CarteiraCobranca> _carteirasCobrancaHsbc = new List<CarteiraCobranca>();
-        public List<CarteiraCobranca> GetCarteirasCobranca()
+        private string _digitoAutoConferenciaNossoNumero;
+        private readonly List<CarteiraCobranca> _carteirasCobrancaHsbc;
+        public override List<CarteiraCobranca> GetCarteirasCobranca()
         {
             return _carteirasCobrancaHsbc;
-        }
-
-        public CarteiraCobranca GetCarteiraCobrancaPorCodigo(string codigoCarteira)
-        {
-            return this._carteirasCobrancaHsbc.Find(fd => fd.Codigo == codigoCarteira);
         }
         /// <summary>
         /// Valida se o boleto está preenchido com os campos mínimos requeridos.
@@ -42,11 +36,39 @@ namespace BoletoBr.Bancos.Hsbc
         /// </summary>
         public void ValidaBoletoComNormasBanco(Boleto boleto)
         {
-            boleto.ValidaDadosEssenciaisDoBoleto();
+            //Verifica as carteiras implementadas
+            if (!boleto.CarteiraCobranca.Codigo.Equals("CSB") &
+                !boleto.CarteiraCobranca.Codigo.Equals("CNR"))
+                throw new NotImplementedException("Carteira n�o implementada. Utilize a carteira 'CSB' ou 'CNR'.");
+
+            //Verifica se o nosso n�mero � v�lido
+            if (boleto.NossoNumero.ToStringSafe() == string.Empty)
+                throw new NotImplementedException("Nosso número inválido");
+
+            //Verifica se o nosso n�mero � v�lido
+            if (boleto.NossoNumero.ToStringSafe().ToLong() == 0)
+                throw new NotImplementedException("Nosso número inválido");
+
+            //Verifica se o tamanho para o NossoNumero s�o 10 d�gitos (5 range + 5 numero sequencial)
+            if (Convert.ToInt32(boleto.NossoNumero).ToString().Length > 10)
+                throw new NotImplementedException("A quantidade de dígitos do nosso número para a carteira " + boleto.CarteiraCobranca.Codigo + ", s�o 10 n�meros.");
+            else if (Convert.ToInt32(boleto.NossoNumero).ToString().Length < 10)
+                boleto.NossoNumero = boleto.NossoNumero.PadLeft(10, '0');
         }
 
         public void FormatarBoleto(Boleto boleto)
         {
+            boleto.ValidaDadosEssenciaisDoBoleto();
+
+            ValidaBoletoComNormasBanco(boleto);
+
+            // Calcula o DAC do Nosso N�mero
+            // Nosso N�mero = Range(5) + Numero Sequencial(5)
+            _digitoAutoConferenciaNossoNumero = Common.Mod11(boleto.NossoNumero, 7).ToString();
+            
+            //Atribui o nome do banco ao local de pagamento
+            boleto.LocalPagamento = "PAGAR PREFERENCIALMENTE EM AGÊNCIAS DO HSBC";
+
             FormataNumeroDocumento(boleto);
             FormataNossoNumero(boleto);
             FormataLinhaDigitavel(boleto);

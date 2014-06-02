@@ -8,15 +8,9 @@ namespace BoletoBr.Bancos
         string CodigoBanco { get; set; }
         string DigitoBanco { get; set; }
         string NomeBanco { get; set; }
-
-        ICalculadoraModulo10 CalculadoraModulo10 { get; set; }
-        ICalculadoraModulo11 CalculadoraModulo11 { get; set; }
-
         List<CarteiraCobranca> GetCarteirasCobranca();
         CarteiraCobranca GetCarteiraCobrancaPorCodigo(string codigoCarteira);
-
         void ValidaBoletoComNormasBanco(Boleto boleto);
-        
         /// <summary>
         /// Efetua os cálculos de linha digitável do boleto.
         /// </summary>
