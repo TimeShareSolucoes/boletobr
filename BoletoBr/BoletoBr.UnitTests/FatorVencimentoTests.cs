@@ -15,7 +15,7 @@ namespace BoletoBr.UnitTests
         {
             DateTime data = new DateTime(2025, 2, 21);
             var fator = Common.FatorVencimento(data);
-            Assert.AreEqual(data, 9999);
+            Assert.AreEqual(fator, 9999);
         }
         [TestMethod]
         public void FatorVencimento_22_02_2025()

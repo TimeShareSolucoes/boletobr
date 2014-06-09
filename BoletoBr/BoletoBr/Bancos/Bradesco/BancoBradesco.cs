@@ -4,8 +4,12 @@ using BoletoBr.CalculoModulo;
 
 namespace BoletoBr.Bancos.Bradesco
 {
-    public class BancoBradesco : BancoAbstract, IBanco
+    public class BancoBradesco : IBanco
     {
+        public string CodigoBanco { get; set; }
+        public string DigitoBanco { get; set; }
+        public string NomeBanco { get; set; }
+
         public BancoBradesco()
         {
             CodigoBanco = "237";
@@ -18,52 +22,57 @@ namespace BoletoBr.Bancos.Bradesco
 
         public string CalcularDigitoNossoNumero(Boleto boleto)
         {
-            //TODO: verificar dígitos carteira
             return Common.Mod11Bradesco(boleto.CarteiraCobranca.Codigo + boleto.NossoNumero, 7);
         }
         private int _digitoAutoConferenciaBoleto;
         private string _digitoAutoConferenciaNossoNumero;
 
         private readonly List<CarteiraCobranca> _carteirasCobranca;
-        public override List<CarteiraCobranca> GetCarteirasCobranca()
+
+        public List<CarteiraCobranca> GetCarteirasCobranca()
         {
             return _carteirasCobranca;
+        }
+
+        public CarteiraCobranca GetCarteiraCobrancaPorCodigo(string codigoCarteira)
+        {
+            return GetCarteirasCobranca().Find(fd => fd.Codigo == codigoCarteira);
         }
 
         public void ValidaBoletoComNormasBanco(Boleto boleto)
         {
             if (boleto.CarteiraCobranca.Codigo != "02" && boleto.CarteiraCobranca.Codigo != "03" && boleto.CarteiraCobranca.Codigo != "06" && boleto.CarteiraCobranca.Codigo != "09" && boleto.CarteiraCobranca.Codigo != "19")
-                throw new NotImplementedException("Carteira n�o implementada. Carteiras implementadas 02, 03, 06, 09, 19.");
+                throw new ValidacaoBoletoException("Carteira não implementada. Carteiras implementadas 02, 03, 06, 09, 19.");
 
             //O valor � obrigat�rio para a carteira 03
             if (boleto.CarteiraCobranca.Codigo == "03")
             {
                 if (boleto.ValorBoleto == 0)
-                    throw new NotImplementedException("Para a carteira 03, o valor do boleto n�o pode ser igual a zero");
+                    throw new ValidacaoBoletoException("Para a carteira 03, o valor do boleto n�o pode ser igual a zero");
             }
 
             //O valor � obrigat�rio para a carteira 09
             if (boleto.CarteiraCobranca.Codigo == "09")
             {
                 if (boleto.ValorBoleto == 0)
-                    throw new NotImplementedException("Para a carteira 09, o valor do boleto n�o pode ser igual a zero");
+                    throw new ValidacaoBoletoException("Para a carteira 09, o valor do boleto não pode ser igual a zero");
             }
 
             //Verifica se o nosso n�mero � v�lido
             if (boleto.NossoNumero.Length > 11)
-                throw new NotImplementedException("A quantidade de d�gitos do nosso n�mero, s�o 11 n�meros.");
+                throw new ValidacaoBoletoException("A quantidade de d�gitos do nosso n�mero, s�o 11 n�meros.");
             else if (boleto.NossoNumero.Length < 11)
                 boleto.NossoNumero = boleto.NossoNumero.PadLeft(11, '0');
 
             //Verificar se a Agencia esta correta
             if (boleto.CedenteBoleto.ContaBancariaCedente.Agencia.Length > 4)
-                throw new NotImplementedException("A quantidade de d�gitos da Ag�ncia " + boleto.CedenteBoleto.ContaBancariaCedente.Agencia + ", s�o de 4 n�meros.");
+                throw new ValidacaoBoletoException("A quantidade de d�gitos da Ag�ncia " + boleto.CedenteBoleto.ContaBancariaCedente.Agencia + ", s�o de 4 n�meros.");
             else if (boleto.CedenteBoleto.ContaBancariaCedente.Agencia.Length < 4)
                 boleto.CedenteBoleto.ContaBancariaCedente.Agencia = boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4,'0');
 
             //Verificar se a Conta esta correta
             if (boleto.CedenteBoleto.ContaBancariaCedente.Conta.Length > 7)
-                throw new NotImplementedException("A quantidade de d�gitos da Conta " + boleto.CedenteBoleto.ContaBancariaCedente.Conta + ", s�o de 07 n�meros.");
+                throw new ValidacaoBoletoException("A quantidade de d�gitos da Conta " + boleto.CedenteBoleto.ContaBancariaCedente.Conta + ", s�o de 07 n�meros.");
             else if (boleto.CedenteBoleto.ContaBancariaCedente.Conta.Length < 7)
                 boleto.CedenteBoleto.ContaBancariaCedente.Conta =
                     boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(7, '0');
@@ -113,7 +122,7 @@ namespace BoletoBr.Bancos.Bradesco
         ///   *******
         /// 
         /// </summary>
-        protected override void FormataCodigoBarra(Boleto boleto)
+        public void FormataCodigoBarra(Boleto boleto)
         {
             string valorBoleto = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "");
             valorBoleto = valorBoleto.PadLeft(10, '0');
@@ -165,7 +174,7 @@ namespace BoletoBr.Bancos.Bradesco
             return FormataCampoLivre;
         }
 
-        protected override void FormataLinhaDigitavel(Boleto boleto)
+        public void FormataLinhaDigitavel(Boleto boleto)
         {
 
             //BBBMC.CCCCD1 CCCCC.CCCCCD2 CCCCC.CCCCCD3 D4 FFFFVVVVVVVVVV
@@ -242,12 +251,12 @@ namespace BoletoBr.Bancos.Bradesco
 
         }
 
-        protected override void FormataNumeroDocumento(Boleto boleto)
+        public void FormataNumeroDocumento(Boleto boleto)
         {
             throw new NotImplementedException("Função ainda não implementada.");
         }
 
-        protected override void FormataNossoNumero(Boleto boleto)
+        public void FormataNossoNumero(Boleto boleto)
         {
             boleto.NossoNumero =
                 string.Format("{0}/{1}-{2}",

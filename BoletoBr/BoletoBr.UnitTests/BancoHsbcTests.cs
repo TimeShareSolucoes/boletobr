@@ -34,8 +34,8 @@ namespace BoletoBr.UnitTests
             var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("CNR"));
             boleto.NumeroDocumento = "40156";
             boleto.ValorBoleto = 200;
-            boleto.NossoNumero = "40156044";
-            boleto.DataVencimento = DateTime.Now.Date;
+            boleto.NossoNumero = "40156";
+            boleto.DataVencimento = new DateTime(2012, 11, 15);
 
             banco.FormatarBoleto(boleto);
 

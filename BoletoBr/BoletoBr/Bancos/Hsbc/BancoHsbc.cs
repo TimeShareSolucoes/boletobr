@@ -5,8 +5,11 @@ using BoletoBr.Bancos;
 
 namespace BoletoBr.Bancos.Hsbc
 {
-    public class BancoHsbc : BancoAbstract, IBanco
+    public class BancoHsbc : IBanco
     {
+        public string CodigoBanco { get; set; }
+        public string DigitoBanco { get; set; }
+        public string NomeBanco { get; set; }
         public BancoHsbc()
         {
             CodigoBanco = "399";
@@ -18,18 +21,20 @@ namespace BoletoBr.Bancos.Hsbc
             _carteirasCobrancaHsbc.Add(new CarteiraCobrancaHsbcCnr());
             _carteirasCobrancaHsbc.Add(new CarteiraCobrancaHsbcCsb());
         }
-
-        public string CodigoBanco { get; set; }
-        public string DigitoBanco { get; set; }
-        public string NomeBanco { get; set; }
-
+        
         private int _digitoAutoConferenciaCodigoBarras;
         private string _digitoAutoConferenciaNossoNumero;
         private readonly List<CarteiraCobranca> _carteirasCobrancaHsbc;
-        public override List<CarteiraCobranca> GetCarteirasCobranca()
+        public List<CarteiraCobranca> GetCarteirasCobranca()
         {
             return _carteirasCobrancaHsbc;
         }
+
+        public CarteiraCobranca GetCarteiraCobrancaPorCodigo(string codigoCarteira)
+        {
+            return GetCarteirasCobranca().Find(fd => fd.Codigo == codigoCarteira);
+        }
+
         /// <summary>
         /// Valida se o boleto está preenchido com os campos mínimos requeridos.
         /// Dispara uma ApplicationException caso esteja faltando alguma informação.
@@ -75,7 +80,7 @@ namespace BoletoBr.Bancos.Hsbc
             FormataCodigoBarra(boleto);
         }
 
-        protected override void FormataCodigoBarra(Boleto boleto)
+        public void FormataCodigoBarra(Boleto boleto)
         {
             try
             {
@@ -144,7 +149,7 @@ namespace BoletoBr.Bancos.Hsbc
             }
         }
 
-        protected override void FormataLinhaDigitavel(Boleto boleto)
+        public void FormataLinhaDigitavel(Boleto boleto)
         {
             string nossoNumeroLinhaDigitavel = boleto.NossoNumero.PadLeft(13, '0');
             string codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0');
@@ -258,7 +263,7 @@ namespace BoletoBr.Bancos.Hsbc
             boleto.LinhaDigitavelBoleto = C1+C2+C3+W+C5;
         }
 
-        protected override void FormataNossoNumero(Boleto boleto)
+        public void FormataNossoNumero(Boleto boleto)
         {
             try
             {
@@ -303,7 +308,7 @@ namespace BoletoBr.Bancos.Hsbc
             }
         }
 
-        protected override void FormataNumeroDocumento(Boleto boleto)
+        public void FormataNumeroDocumento(Boleto boleto)
         {
             boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(7, '0');
         }
