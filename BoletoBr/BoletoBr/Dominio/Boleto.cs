@@ -9,7 +9,8 @@ namespace BoletoBr
         public Cedente CedenteBoleto { get; set; }
         public Sacado SacadoBoleto { get; set; }
         public CarteiraCobranca CarteiraCobranca { get; set; }
-        public string NossoNumero { get; set; }
+        public string SequencialNossoNumero { get; set; }
+        public string NossoNumeroFormatado { get; set; }
         public string DigitoNossoNumero { get; set; }
         public DateTime DataVencimento { get; set; }
         public DateTime DataDocumento { get; set; }
@@ -73,7 +74,7 @@ namespace BoletoBr
             if (this.CarteiraCobranca == null)
                 throw new ApplicationException("Informe a carteira de cobrança.");
 
-            if (String.IsNullOrEmpty(this.NossoNumero))
+            if (String.IsNullOrEmpty(this.NossoNumeroFormatado))
                 throw new ApplicationException("Nosso número não foi informado.");
         }
     }

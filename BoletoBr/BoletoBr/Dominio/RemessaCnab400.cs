@@ -20,11 +20,11 @@ namespace BoletoBr
         public void AdicionarBoleto(Boleto boletoAdicionar)
         {
             if (boletoAdicionar.BancoBoleto == null)
-                throw new ValidacaoBoletoException("Boleto " + boletoAdicionar.NossoNumero +
+                throw new ValidacaoBoletoException("Boleto " + boletoAdicionar.NossoNumeroFormatado +
                                                    " não é válido para adição na remessa. Falta informar o banco do boleto.");
 
             if (boletoAdicionar.CarteiraCobranca == null)
-                throw new ValidacaoBoletoException("Boleto " + boletoAdicionar.NossoNumero +
+                throw new ValidacaoBoletoException("Boleto " + boletoAdicionar.NossoNumeroFormatado +
                                                    " não é válido para adição na remessa. Falta informar a carteira de cobrança.");
         }
 

@@ -39,12 +39,12 @@ namespace BoletoBr.UnitTests
         {
             var valorOrigem = "10062014";
             DateTime valorEsperado = new DateTime(2014, 6, 10);
-            var valorObtido = valorOrigem.ToDateTimeFromDdMmAa();
+            var valorObtido = valorOrigem.ToDateTimeFromDdMmAaaa();
             Assert.AreEqual(valorObtido.GetValueOrDefault(), valorEsperado);
 
-            var valorOrigem2 = "10062099";
+            var valorOrigem2 = "10061999";
             DateTime valorEsperado2 = new DateTime(1999, 6, 10);
-            var valorObtido2 = valorOrigem2.ToDateTimeFromDdMmAa();
+            var valorObtido2 = valorOrigem2.ToDateTimeFromDdMmAaaa();
             Assert.AreEqual(valorObtido2.GetValueOrDefault(), valorEsperado2);
         }
 

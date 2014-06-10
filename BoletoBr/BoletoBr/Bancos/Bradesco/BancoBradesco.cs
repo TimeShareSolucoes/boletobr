@@ -22,7 +22,7 @@ namespace BoletoBr.Bancos.Bradesco
 
         public string CalcularDigitoNossoNumero(Boleto boleto)
         {
-            return Common.Mod11Bradesco(boleto.CarteiraCobranca.Codigo + boleto.NossoNumero, 7);
+            return Common.Mod11Bradesco(boleto.CarteiraCobranca.Codigo + boleto.NossoNumeroFormatado, 7);
         }
         private int _digitoAutoConferenciaBoleto;
         private string _digitoAutoConferenciaNossoNumero;
@@ -59,10 +59,10 @@ namespace BoletoBr.Bancos.Bradesco
             }
 
             //Verifica se o nosso n�mero � v�lido
-            if (boleto.NossoNumero.Length > 11)
+            if (boleto.NossoNumeroFormatado.Length > 11)
                 throw new ValidacaoBoletoException("A quantidade de d�gitos do nosso n�mero, s�o 11 n�meros.");
-            else if (boleto.NossoNumero.Length < 11)
-                boleto.NossoNumero = boleto.NossoNumero.PadLeft(11, '0');
+            else if (boleto.NossoNumeroFormatado.Length < 11)
+                boleto.NossoNumeroFormatado = boleto.NossoNumeroFormatado.PadLeft(11, '0');
 
             //Verificar se a Agencia esta correta
             if (boleto.CedenteBoleto.ContaBancariaCedente.Agencia.Length > 4)
@@ -169,7 +169,7 @@ namespace BoletoBr.Bancos.Bradesco
         {
 
             string FormataCampoLivre = string.Format("{0}{1}{2}{3}{4}", boleto.CedenteBoleto.ContaBancariaCedente.Agencia, boleto.CarteiraCobranca.Codigo,
-                                            boleto.NossoNumero, boleto.CedenteBoleto.ContaBancariaCedente.Conta, "0");
+                                            boleto.NossoNumeroFormatado, boleto.CedenteBoleto.ContaBancariaCedente.Conta, "0");
 
             return FormataCampoLivre;
         }
@@ -258,10 +258,10 @@ namespace BoletoBr.Bancos.Bradesco
 
         public void FormataNossoNumero(Boleto boleto)
         {
-            boleto.NossoNumero =
+            boleto.NossoNumeroFormatado =
                 string.Format("{0}/{1}-{2}",
                     boleto.CarteiraCobranca.Codigo,
-                    boleto.NossoNumero,
+                    boleto.NossoNumeroFormatado,
                     boleto.DigitoNossoNumero);
         }
     }
