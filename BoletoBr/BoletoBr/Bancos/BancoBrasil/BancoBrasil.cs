@@ -21,16 +21,23 @@ namespace BoletoBr.Bancos.BancoBrasil
             this.CodigoBanco = "001";
             this.DigitoBanco = "9";
             this.NomeBanco = "Banco do Brasil";
+
+            this._carteirasCobranca = new List<CarteiraCobranca>();
+            this._carteirasCobranca.Add(new CarteiraCobrancaBancoBrasil17019());
+            this._carteirasCobranca.Add(new CarteiraCobrancaBancoBrasil18019());
+            this._carteirasCobranca.Add(new CarteiraCobrancaBancoBrasil31());
         }
+
+        private readonly List<CarteiraCobranca> _carteirasCobranca;
 
         public List<CarteiraCobranca> GetCarteirasCobranca()
         {
-            throw new NotImplementedException();
+            return _carteirasCobranca;
         }
 
         public CarteiraCobranca GetCarteiraCobrancaPorCodigo(string codigoCarteira)
         {
-            throw new NotImplementedException();
+            return this.GetCarteirasCobranca().FirstOrDefault(wh => wh.Codigo == codigoCarteira);
         }
 
         public void ValidaBoletoComNormasBanco(Boleto boleto)

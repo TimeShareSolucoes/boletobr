@@ -1,9 +1,11 @@
 ﻿using System;
+using BoletoBr.Bancos;
 
 namespace BoletoBr
 {
     public class Boleto
     {
+        public IBanco BancoBoleto { get; set; }
         public Cedente CedenteBoleto { get; set; }
         public Sacado SacadoBoleto { get; set; }
         public CarteiraCobranca CarteiraCobranca { get; set; }

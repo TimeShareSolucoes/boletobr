@@ -315,5 +315,39 @@ namespace BoletoBr
 
             return stringVerificar;
         }
+
+        public static string ExtrairValorDaLinha(this string conteudoLinha, int de, int ate)
+        {
+            int inicio = de - 1;
+            return conteudoLinha.Substring(inicio, ate - inicio);
+        }
+
+        public static DateTime? ToDateTimeFromDdMmAa(this string s)
+        {
+            DateTime result;
+
+            if (String.IsNullOrEmpty(s))
+                return null;
+
+            if (DateTime.TryParseExact(s, "ddMMyy", null, DateTimeStyles.None, out result))
+            {
+                return result;
+            }
+            return null;
+        }
+
+        public static DateTime? ToDateTimeFromDdMmAaaa(this string s)
+        {
+            DateTime result;
+
+            if (String.IsNullOrEmpty(s))
+                return null;
+
+            if (DateTime.TryParseExact(s, "ddMMyyyy", null, DateTimeStyles.None, out result))
+            {
+                return result;
+            }
+            return null;
+        }
     }
 }
