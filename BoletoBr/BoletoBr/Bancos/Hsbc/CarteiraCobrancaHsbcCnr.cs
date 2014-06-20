@@ -12,7 +12,7 @@ namespace BoletoBr.Bancos.Hsbc
         {
             this.Codigo = "CNR";
             this.Tipo = "";
-            this.Descricao = "CNR Cobrança Não Registro HSBC";
+            this.Descricao = "CNR Cobrança Não Registrada HSBC";
         }
     }
 }

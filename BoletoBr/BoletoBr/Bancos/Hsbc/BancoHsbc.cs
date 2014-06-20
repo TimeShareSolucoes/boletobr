@@ -72,7 +72,7 @@ namespace BoletoBr.Bancos.Hsbc
             _digitoAutoConferenciaNossoNumero = Common.Mod11(boleto.NossoNumeroFormatado, 7).ToString();
             
             //Atribui o nome do banco ao local de pagamento
-            boleto.LocalPagamento = "PAGAR PREFERENCIALMENTE EM AGÊNCIAS DO " + NomeBanco.ToString();
+            boleto.LocalPagamento = "PAGAR PREFERENCIALMENTE EM AGÊNCIAS DO HSBC";
 
             FormataNumeroDocumento(boleto);
             FormataNossoNumero(boleto);
@@ -93,7 +93,7 @@ namespace BoletoBr.Bancos.Hsbc
                     .Replace(".", "")
                     .PadLeft(10, '0');
 
-                string numeroDocumentoFormatado =
+                string numeroDocumentoFormatado = 
                     boleto.NumeroDocumento.PadLeft(7, '0');
 
                 string codigoBarraSemDigitoVerificador = null;
@@ -133,12 +133,21 @@ namespace BoletoBr.Bancos.Hsbc
                  */
                 string codigoBarraComDigitoVerificador = null;
 
-                _digitoAutoConferenciaCodigoBarras = Common.Mod11(codigoBarraSemDigitoVerificador, 9, 0);
+                //_digitoAutoConferenciaCodigoBarras = Common.Mod11(codigoBarraSemDigitoVerificador, 9, 0);
+
+                //codigoBarraComDigitoVerificador =
+                //    Common.Left(codigoBarraSemDigitoVerificador, 4) +
+                //    _digitoAutoConferenciaCodigoBarras +
+                //    Common.Right(codigoBarraSemDigitoVerificador, 39);
+
+                //TST
+                _digitoAutoConferenciaCodigoBarras = Common.Mod11Peso2a9(codigoBarraSemDigitoVerificador);
 
                 codigoBarraComDigitoVerificador =
                     Common.Left(codigoBarraSemDigitoVerificador, 4) +
                     _digitoAutoConferenciaCodigoBarras +
                     Common.Right(codigoBarraSemDigitoVerificador, 39);
+
 
 
                 boleto.CodigoBarraBoleto = codigoBarraComDigitoVerificador;

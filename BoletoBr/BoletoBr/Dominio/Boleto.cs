@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using BoletoBr.Bancos;
 
 namespace BoletoBr
@@ -45,6 +46,11 @@ namespace BoletoBr
         public string TipoModalidade { get; set; }
         public string CodigoBarraBoleto { get; set; }
         public string LinhaDigitavelBoleto { get; set; }
+
+        // Conforme layout HSBC.
+        // Data de Vencimento em formato Juliano.
+        public string DataFormatJuliano { get; set; }
+        public string CodigoDoProduto { get; set; }
 
         public Boleto()
         {

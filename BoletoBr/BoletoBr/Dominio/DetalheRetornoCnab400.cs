@@ -27,7 +27,6 @@ namespace BoletoBr
         public int CodigoDaOcorrencia { get; set; }
         public int DataDaOcorrencia { get; set; }
         public int SeuNumero { get; set; }
-        public int NossoNumero { get; set; }
         public int BancoTamanho9 { get; set; }
         public int Vencimento { get; set; }
         public int Valor { get; set; }
