@@ -72,7 +72,7 @@ namespace BoletoBr.Bancos.Hsbc
             _digitoAutoConferenciaNossoNumero = Common.Mod11(boleto.NossoNumeroFormatado, 7).ToString();
             
             //Atribui o nome do banco ao local de pagamento
-            boleto.LocalPagamento = "PAGAR PREFERENCIALMENTE EM AGÊNCIAS DO HSBC";
+            boleto.LocalPagamento = "PAGAR PREFERENCIALMENTE EM AGÊNCIAS DO " + NomeBanco.ToString();
 
             FormataNumeroDocumento(boleto);
             FormataNossoNumero(boleto);
@@ -267,8 +267,6 @@ namespace BoletoBr.Bancos.Hsbc
         {
             try
             {
-
-
                 if (boleto.CarteiraCobranca.Codigo == "CSB")
                 {
                     string nossoNumeroComposto = 
