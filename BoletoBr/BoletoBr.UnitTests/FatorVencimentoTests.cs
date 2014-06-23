@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BoletoBr.UnitTests
@@ -25,11 +21,11 @@ namespace BoletoBr.UnitTests
             Assert.AreEqual(fator2, 1000);
         }
         [TestMethod]
-        public void FatorVencimento_12_03_2014()
+        public void FatorVencimento_4_7_2008()
         {
-            DateTime dataTeste3 = new DateTime(2014, 3, 12);
+            DateTime dataTeste3 = new DateTime(2008, 7, 4);
             var fatorTeste3 = Common.FatorVencimento(dataTeste3);
-            Assert.AreEqual(fatorTeste3, 6000);
+            Assert.AreEqual(fatorTeste3, 3923);
         }
     }
 }

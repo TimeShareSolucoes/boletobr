@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.AccessControl;
 using BoletoBr.CalculoModulo;
 using BoletoBr.Bancos;
 
@@ -56,9 +57,9 @@ namespace BoletoBr.Bancos.Hsbc
 
             //Verifica se o tamanho para o NossoNumero s�o 10 d�gitos (5 range + 5 numero sequencial)
             if (Convert.ToInt32(boleto.NossoNumeroFormatado).ToString().Length > 10)
-                throw new NotImplementedException("A quantidade de dígitos do nosso número para a carteira " + boleto.CarteiraCobranca.Codigo + ", s�o 10 n�meros.");
+                throw new NotImplementedException("A quantidade de dígitos do nosso número para a carteira " + boleto.CarteiraCobranca.Codigo + ", são 10 números.");
             else if (Convert.ToInt32(boleto.NossoNumeroFormatado).ToString().Length < 10)
-                boleto.NossoNumeroFormatado = boleto.NossoNumeroFormatado.PadLeft(10, '0');
+                boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(10, '0'));
         }
 
         public void FormatarBoleto(Boleto boleto)
@@ -104,7 +105,8 @@ namespace BoletoBr.Bancos.Hsbc
                         String.Format("{0}{1}{2}{3}{4}{5}{6}001",
                             this.CodigoBanco,
                             boleto.Moeda,
-                            9999,
+                            //9999 --> 21/02/2025
+                            Common.FatorVencimento(boleto.DataVencimento),
                             valorBoletoTexto,
                             boleto.NossoNumeroFormatado + boleto.DigitoNossoNumero,
                             boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'),
@@ -117,10 +119,11 @@ namespace BoletoBr.Bancos.Hsbc
                         String.Format("{0}{1}{2}{3}{4}{5}{6}2",
                             this.CodigoBanco,
                             boleto.Moeda,
-                            9999,
+                            //9999 --> 21/02/2025
+                            Common.FatorVencimento(boleto.DataVencimento),
                             valorBoletoTexto,
                             boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'),
-                            boleto.NossoNumeroFormatado.PadLeft(13, '0'),
+                            boleto.SequencialNossoNumero.PadLeft(13, '0'),
                             (boleto.DataVencimento.DayOfYear +
                              boleto.DataVencimento.ToString("yy").Substring(1, 1)).PadLeft(4, '0')
                             );
@@ -133,23 +136,13 @@ namespace BoletoBr.Bancos.Hsbc
                  */
                 string codigoBarraComDigitoVerificador = null;
 
-                //_digitoAutoConferenciaCodigoBarras = Common.Mod11(codigoBarraSemDigitoVerificador, 9, 0);
-
-                //codigoBarraComDigitoVerificador =
-                //    Common.Left(codigoBarraSemDigitoVerificador, 4) +
-                //    _digitoAutoConferenciaCodigoBarras +
-                //    Common.Right(codigoBarraSemDigitoVerificador, 39);
-
-                //TST
-                _digitoAutoConferenciaCodigoBarras = Common.Mod11Peso2a9(codigoBarraSemDigitoVerificador);
+                _digitoAutoConferenciaCodigoBarras = Common.Mod11(codigoBarraSemDigitoVerificador, 9, 0);
 
                 codigoBarraComDigitoVerificador =
                     Common.Left(codigoBarraSemDigitoVerificador, 4) +
                     _digitoAutoConferenciaCodigoBarras +
                     Common.Right(codigoBarraSemDigitoVerificador, 39);
-
-
-
+                
                 boleto.CodigoBarraBoleto = codigoBarraComDigitoVerificador;
             }
             catch (Exception ex)
@@ -288,7 +281,7 @@ namespace BoletoBr.Bancos.Hsbc
                 string nossoNumeroFormatado =
                     nossoNumeroComposto + digitoAutoConferenciaNossoNumero;
 
-                boleto.NossoNumeroFormatado = nossoNumeroFormatado;
+                    boleto.SetNossoNumeroFormatado(nossoNumeroFormatado);
                     return;
                 }
                 if (boleto.CarteiraCobranca.Codigo == "CNR")
@@ -304,15 +297,15 @@ namespace BoletoBr.Bancos.Hsbc
                        primeiroDigitoVerificador, boleto.CedenteBoleto.CodigoCedente,
                        boleto.DataVencimento);
 
-                    boleto.NossoNumeroFormatado =
+                    boleto.SetNossoNumeroFormatado(
                         String.Format("{0}{1}4{2}",
                             codigoDoPagador,
                             primeiroDigitoVerificador,
-                            segundoDigitoVerificador);
+                            segundoDigitoVerificador));
 
                     /* Padroniza com 16 dígitos */
-                    boleto.NossoNumeroFormatado =
-                        boleto.NossoNumeroFormatado.PadLeft(16, '0');
+                    boleto.SetNossoNumeroFormatado(
+                        boleto.NossoNumeroFormatado.PadLeft(16, '0'));
                         return;
                 }
 

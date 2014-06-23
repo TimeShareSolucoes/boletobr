@@ -74,16 +74,16 @@ namespace BoletoBr.Bancos.BancoBrasil
                         throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, a quantidade máxima são de 11 de posições para o nosso número", boleto.CarteiraCobranca.Codigo));
 
                     if (boleto.CedenteBoleto.Convenio.Length == 6)
-                        boleto.NossoNumeroFormatado = string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(11, '0'));
+                        boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(11, '0')));
                     else
-                        boleto.NossoNumeroFormatado = boleto.NossoNumeroFormatado.PadLeft(11, '0');
+                        boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(11, '0'));
                 }
                 else
                 {
                     if (boleto.CedenteBoleto.Convenio.ToString().Length != 6)
                         throw new ValidacaoBoletoException(string.Format("Para a carteira {0} e o tipo da modalidade 21, o número do convênio são de 6 posições", boleto.CarteiraCobranca.Codigo));
 
-                    boleto.NossoNumeroFormatado = boleto.NossoNumeroFormatado.PadLeft(17, '0');
+                    boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(17, '0'));
                 }
             }
             #endregion Carteira 11
@@ -98,16 +98,16 @@ namespace BoletoBr.Bancos.BancoBrasil
                         throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, a quantidade máxima são de 11 de posições para o nosso número", boleto.CarteiraCobranca.Codigo));
 
                     if (boleto.CedenteBoleto.Convenio.ToString().Length == 6)
-                        boleto.NossoNumeroFormatado = string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(11, '0'));
+                        boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(11, '0')));
                     else
-                        boleto.NossoNumeroFormatado = boleto.NossoNumeroFormatado.PadLeft(11, '0');
+                        boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(11, '0'));
                 }
                 else
                 {
                     if (boleto.CedenteBoleto.Convenio.ToString().Length != 6)
                         throw new ValidacaoBoletoException(string.Format("Para a carteira {0} e o tipo da modalidade 21, o número do convênio são de 6 posições", boleto.CarteiraCobranca.Codigo));
 
-                    boleto.NossoNumeroFormatado = boleto.NossoNumeroFormatado.PadLeft(17, '0');
+                    boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(17, '0'));
                 }
             }
             #endregion Carteira 16
@@ -122,12 +122,12 @@ namespace BoletoBr.Bancos.BancoBrasil
                     case 6:
                         if (boleto.NossoNumeroFormatado.Length > 12)
                             throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, a quantidade máxima são de 12 de posições para o nosso número", boleto.CarteiraCobranca.Codigo));
-                        boleto.NossoNumeroFormatado = boleto.NossoNumeroFormatado.PadLeft(12, '0');
+                        boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(12, '0'));
                         break;
                     case 7:
                         if (boleto.NossoNumeroFormatado.Length > 17)
                             throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, a quantidade máxima são de 10 de posições para o nosso número", boleto.CarteiraCobranca.Codigo));
-                        boleto.NossoNumeroFormatado = string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(10, '0'));
+                        boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(10, '0')));
                         break;
                     default:
                         throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, o número do convênio deve ter 6 ou 7 posições", boleto.CarteiraCobranca.Codigo));
@@ -148,7 +148,7 @@ namespace BoletoBr.Bancos.BancoBrasil
                     if (boleto.NossoNumeroFormatado.Length > 10)
                         throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, a quantidade máxima são de 10 de posições para o nosso número", boleto.CarteiraCobranca.Codigo));
 
-                    boleto.NossoNumeroFormatado = string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(10, '0'));
+                    boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(10, '0')));
                 }
                 /*
                  * Convênio de 6 posições
@@ -160,7 +160,7 @@ namespace BoletoBr.Bancos.BancoBrasil
                     if ((boleto.CedenteBoleto.CodigoCedente.ToString().Length + boleto.NossoNumeroFormatado.Length) > 11)
                         throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, a quantidade máxima são de 11 de posições para o nosso número. Onde o nosso número é formado por CCCCCCNNNNN-X: C -> número do convênio fornecido pelo Banco, N -> seqüencial atribuído pelo cliente e X -> dígito verificador do “Nosso-Número”.", boleto.CarteiraCobranca.Codigo));
 
-                    boleto.NossoNumeroFormatado = string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(5, '0'));
+                    boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(5, '0')));
                 }
                 /*
                   * Convênio de 4 posições
@@ -171,17 +171,17 @@ namespace BoletoBr.Bancos.BancoBrasil
                     if (boleto.NossoNumeroFormatado.Length > 7)
                         throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, a quantidade máxima são de 7 de posições para o nosso número [{1}]", boleto.CarteiraCobranca.Codigo, boleto.NossoNumeroFormatado));
 
-                    boleto.NossoNumeroFormatado = string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(7, '0'));
+                    boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(7, '0')));
                 }
                 else
-                    boleto.NossoNumeroFormatado = boleto.NossoNumeroFormatado.PadLeft(11, '0');
+                    boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(11, '0'));
             }
             #endregion Carteira 17-019
 
             #region Carteira 18
             //Carteira 18 com nosso número de 11 posições
             if (boleto.CarteiraCobranca.Codigo.Equals("18"))
-                boleto.NossoNumeroFormatado = boleto.NossoNumeroFormatado.PadLeft(11, '0');
+                boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(11, '0'));
             #endregion Carteira 18
 
             #region Carteira 18-019
@@ -197,7 +197,7 @@ namespace BoletoBr.Bancos.BancoBrasil
                     if (boleto.NossoNumeroFormatado.Length > 10)
                         throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, a quantidade máxima são de 10 de posições para o nosso número", boleto.CarteiraCobranca.Codigo));
 
-                    boleto.NossoNumeroFormatado = string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(10, '0'));
+                    boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(10, '0')));
                 }
                 /*
                  * Convênio de 6 posições
@@ -212,14 +212,15 @@ namespace BoletoBr.Bancos.BancoBrasil
                         if ((boleto.CedenteBoleto.CodigoCedente.ToString().Length + boleto.NossoNumeroFormatado.Length) > 11)
                             throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, a quantidade máxima são de 11 de posições para o nosso número. Onde o nosso número é formado por CCCCCCNNNNN-X: C -> número do convênio fornecido pelo Banco, N -> seqüencial atribuído pelo cliente e X -> dígito verificador do “Nosso-Número”.", boleto.CarteiraCobranca.Codigo));
 
-                        boleto.NossoNumeroFormatado = string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(5, '0'));
+                        boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio,
+                            boleto.NossoNumeroFormatado.PadLeft(5, '0')));
                     }
                     else
                     {
                         if (boleto.CedenteBoleto.Convenio.ToString().Length != 6)
                             throw new ValidacaoBoletoException(string.Format("Para a carteira {0} e o tipo da modalidade 21, o número do convênio são de 6 posições", boleto.CarteiraCobranca.Codigo));
 
-                        boleto.NossoNumeroFormatado = boleto.NossoNumeroFormatado.PadLeft(17, '0');
+                        boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(17, '0'));
                     }
                 }
                 /*
@@ -231,10 +232,10 @@ namespace BoletoBr.Bancos.BancoBrasil
                     if (boleto.NossoNumeroFormatado.Length > 7)
                         throw new NotImplementedException(string.Format("Para a carteira {0}, a quantidade máxima são de 7 de posições para o nosso número [{1}]", boleto.CarteiraCobranca.Codigo, boleto.NossoNumeroFormatado));
 
-                    boleto.NossoNumeroFormatado = string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(7, '0'));
+                    boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(7, '0')));
                 }
                 else
-                    boleto.NossoNumeroFormatado = boleto.NossoNumeroFormatado.PadLeft(11, '0');
+                    boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(11, '0'));
             }
             #endregion Carteira 18-019
 
@@ -253,7 +254,7 @@ namespace BoletoBr.Bancos.BancoBrasil
                     if (boleto.NossoNumeroFormatado.Length > 10)
                         throw new NotImplementedException(string.Format("Para a carteira {0}, a quantidade máxima são de 10 de posições para o nosso número", boleto.CarteiraCobranca.Codigo));
 
-                    boleto.NossoNumeroFormatado = string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(10, '0'));
+                    boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(10, '0')));
                 }
                 /*
                  * Convênio de 6 posições
@@ -268,14 +269,14 @@ namespace BoletoBr.Bancos.BancoBrasil
                         if ((boleto.CedenteBoleto.CodigoCedente.ToString().Length + boleto.NossoNumeroFormatado.Length) > 11)
                             throw new NotImplementedException(string.Format("Para a carteira {0}, a quantidade máxima são de 11 de posições para o nosso número. Onde o nosso número é formado por CCCCCCNNNNN-X: C -> número do convênio fornecido pelo Banco, N -> seqüencial atribuído pelo cliente e X -> dígito verificador do “Nosso-Número”.", boleto.CarteiraCobranca.Codigo));
 
-                        boleto.NossoNumeroFormatado = string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(5, '0'));
+                        boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(5, '0')));
                     }
                     else
                     {
                         if (boleto.CedenteBoleto.Convenio.ToString().Length != 6)
                             throw new NotImplementedException(string.Format("Para a carteira {0} e o tipo da modalidade 21, o número do convênio são de 6 posições", boleto.CarteiraCobranca.Codigo));
 
-                        boleto.NossoNumeroFormatado = boleto.NossoNumeroFormatado.PadLeft(17, '0');
+                        boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(17, '0'));
                     }
                 }
                 /*
@@ -287,10 +288,10 @@ namespace BoletoBr.Bancos.BancoBrasil
                     if (boleto.NossoNumeroFormatado.Length > 7)
                         throw new NotImplementedException(string.Format("Para a carteira {0}, a quantidade máxima são de 7 de posições para o nosso número [{1}]", boleto.CarteiraCobranca.Codigo, boleto.NossoNumeroFormatado));
 
-                    boleto.NossoNumeroFormatado = string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(7, '0'));
+                    boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(7, '0')));
                 }
                 else
-                    boleto.NossoNumeroFormatado = boleto.NossoNumeroFormatado.PadLeft(11, '0');
+                    boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(11, '0'));
             }
             #endregion Carteira 18-027
 
@@ -307,7 +308,7 @@ namespace BoletoBr.Bancos.BancoBrasil
                     if (boleto.NossoNumeroFormatado.Length > 10)
                         throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, a quantidade máxima são de 10 de posições para o nosso número", boleto.CarteiraCobranca.Codigo));
 
-                    boleto.NossoNumeroFormatado = string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(10, '0'));
+                    boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(10, '0')));
                 }
                 /*
                  * Convênio de 6 posições
@@ -322,14 +323,14 @@ namespace BoletoBr.Bancos.BancoBrasil
                         if ((boleto.CedenteBoleto.CodigoCedente.ToString().Length + boleto.NossoNumeroFormatado.Length) > 11)
                             throw new NotImplementedException(string.Format("Para a carteira {0}, a quantidade máxima são de 11 de posições para o nosso número. Onde o nosso número é formado por CCCCCCNNNNN-X: C -> número do convênio fornecido pelo Banco, N -> seqüencial atribuído pelo cliente e X -> dígito verificador do “Nosso-Número”.", boleto.CarteiraCobranca.Codigo));
 
-                        boleto.NossoNumeroFormatado = string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(5, '0'));
+                        boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(5, '0')));
                     }
                     else
                     {
                         if (boleto.CedenteBoleto.Convenio.ToString().Length != 6)
                             throw new NotImplementedException(string.Format("Para a carteira {0} e o tipo da modalidade 21, o número do convênio são de 6 posições", boleto.CarteiraCobranca.Codigo));
 
-                        boleto.NossoNumeroFormatado = boleto.NossoNumeroFormatado.PadLeft(17, '0');
+                        boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(17, '0'));
                     }
                 }
                 /*
@@ -341,10 +342,10 @@ namespace BoletoBr.Bancos.BancoBrasil
                     if (boleto.NossoNumeroFormatado.Length > 7)
                         throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, a quantidade máxima são de 7 de posições para o nosso número [{1}]", boleto.CarteiraCobranca.Codigo, boleto.NossoNumeroFormatado));
 
-                    boleto.NossoNumeroFormatado = string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(7, '0'));
+                    boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(7, '0')));
                 }
                 else
-                    boleto.NossoNumeroFormatado = boleto.NossoNumeroFormatado.PadLeft(11, '0');
+                    boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(11, '0'));
             }
             #endregion Carteira 18-035
 
@@ -361,7 +362,7 @@ namespace BoletoBr.Bancos.BancoBrasil
                     if (boleto.NossoNumeroFormatado.Length > 10)
                         throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, a quantidade máxima são de 10 de posições para o nosso número", boleto.CarteiraCobranca.Codigo));
 
-                    boleto.NossoNumeroFormatado = string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(10, '0'));
+                    boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(10, '0')));
                 }
                 /*
                  * Convênio de 6 posições
@@ -376,14 +377,14 @@ namespace BoletoBr.Bancos.BancoBrasil
                         if ((boleto.CedenteBoleto.CodigoCedente.ToString().Length + boleto.NossoNumeroFormatado.Length) > 11)
                             throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, a quantidade máxima são de 11 de posições para o nosso número. Onde o nosso número é formado por CCCCCCNNNNN-X: C -> número do convênio fornecido pelo Banco, N -> seqüencial atribuído pelo cliente e X -> dígito verificador do “Nosso-Número”.", boleto.CarteiraCobranca.Codigo));
 
-                        boleto.NossoNumeroFormatado = string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(5, '0'));
+                        boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(5, '0')));
                     }
                     else
                     {
                         if (boleto.CedenteBoleto.Convenio.ToString().Length != 6)
                             throw new ValidacaoBoletoException(string.Format("Para a carteira {0} e o tipo da modalidade 21, o número do convênio são de 6 posições", boleto.CarteiraCobranca.Codigo));
 
-                        boleto.NossoNumeroFormatado = boleto.NossoNumeroFormatado.PadLeft(17, '0');
+                        boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(17, '0'));
                     }
                 }
                 /*
@@ -395,10 +396,10 @@ namespace BoletoBr.Bancos.BancoBrasil
                     if (boleto.NossoNumeroFormatado.Length > 7)
                         throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, a quantidade máxima são de 7 de posições para o nosso número [{1}]", boleto.CarteiraCobranca.Codigo, boleto.NossoNumeroFormatado));
 
-                    boleto.NossoNumeroFormatado = string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(7, '0'));
+                    boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(7, '0')));
                 }
                 else
-                    boleto.NossoNumeroFormatado = boleto.NossoNumeroFormatado.PadLeft(11, '0');
+                    boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(11, '0'));
             }
             #endregion Carteira 18-140
 
@@ -412,17 +413,17 @@ namespace BoletoBr.Bancos.BancoBrasil
                     case 5:
                         if (boleto.NossoNumeroFormatado.Length > 10)
                             throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, a quantidade máxima são de 12 de posições para o nosso número", boleto.CarteiraCobranca));
-                        boleto.NossoNumeroFormatado = boleto.NossoNumeroFormatado.PadLeft(10, '0');
+                        boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(10, '0'));
                         break;
                     case 6:
                         if (boleto.NossoNumeroFormatado.Length > 10)
                             throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, a quantidade máxima são de 12 de posições para o nosso número", boleto.CarteiraCobranca));
-                        boleto.NossoNumeroFormatado = boleto.NossoNumeroFormatado.PadLeft(10, '0');
+                        boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(10, '0'));
                         break;
                     case 7:
                         if (boleto.NossoNumeroFormatado.Length > 17)
                             throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, a quantidade máxima são de 10 de posições para o nosso número", boleto.CarteiraCobranca));
-                        boleto.NossoNumeroFormatado = string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(10, '0'));
+                        boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(10, '0')));
                         break;
                     default:
                         throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, o número do convênio deve ter 6 ou 7 posições", boleto.CarteiraCobranca));
@@ -1056,7 +1057,7 @@ namespace BoletoBr.Bancos.BancoBrasil
                 switch (boleto.CarteiraCobranca.Codigo)
                 {
                     case "18-019":
-                        boleto.NossoNumeroFormatado = string.Format("{0}/{1}-{2}", LimparCarteira(boleto.CarteiraCobranca.Codigo), boleto.NossoNumeroFormatado, Mod11BancoBrasil(boleto.NossoNumeroFormatado));
+                        boleto.SetNossoNumeroFormatado(string.Format("{0}/{1}-{2}", LimparCarteira(boleto.CarteiraCobranca.Codigo), boleto.NossoNumeroFormatado, Mod11BancoBrasil(boleto.NossoNumeroFormatado)));
                         return;
                 }
             }
@@ -1065,15 +1066,15 @@ namespace BoletoBr.Bancos.BancoBrasil
             {
                 case "17-019":
                 case "18-019":
-                    boleto.NossoNumeroFormatado = string.Format("{0}/{1}", LimparCarteira(boleto.CarteiraCobranca.Codigo), boleto.NossoNumeroFormatado);
+                    boleto.SetNossoNumeroFormatado(string.Format("{0}/{1}", LimparCarteira(boleto.CarteiraCobranca.Codigo), boleto.NossoNumeroFormatado));
                     return;
                 case "31":
-                    boleto.NossoNumeroFormatado = string.Format("{0}{1}", boleto.CedenteBoleto.Convenio.PadLeft(7, '0'), boleto.NossoNumeroFormatado);
+                    boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio.PadLeft(7, '0'), boleto.NossoNumeroFormatado));
                     return;
             }
 
 
-            boleto.NossoNumeroFormatado = string.Format("{0}", boleto.NossoNumeroFormatado);
+            boleto.SetNossoNumeroFormatado(string.Format("{0}", boleto.NossoNumeroFormatado));
         }
 
         public void FormataNumeroDocumento(Boleto boleto)
