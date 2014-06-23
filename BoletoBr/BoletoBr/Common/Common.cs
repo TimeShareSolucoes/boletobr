@@ -174,7 +174,7 @@ namespace BoletoBr
             if (flag == 1)
                 return nresto;
             else
-            {
+            {   
                 if (nresto == 0 || nresto == 1 || nresto == 10)
                     ndig = 1;
                 else

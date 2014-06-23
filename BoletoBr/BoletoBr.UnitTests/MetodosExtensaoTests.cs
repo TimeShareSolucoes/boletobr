@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BoletoBr.UnitTests
@@ -15,7 +11,7 @@ namespace BoletoBr.UnitTests
         {
             var valorOrigem = "100614";
             DateTime valorEsperado = new DateTime(2014, 6, 10);
-            var valorObtido = valorOrigem.ToDateTimeFromDdMmAa(w);
+            var valorObtido = valorOrigem.ToDateTimeFromDdMmAa();
             Assert.AreEqual(valorObtido.GetValueOrDefault(), valorEsperado);
 
             var valorOrigem2 = "100699";
