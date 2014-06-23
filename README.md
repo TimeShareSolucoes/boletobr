@@ -19,5 +19,7 @@ Tarefas/Implementações:
 	- [ ] Banco Itaú
 	- [ ] Banco Hsbc
 		- [ ] Testes
-			- Carteira CNR (Concluído)
+			- Carteira CNR
+				- [x] Tipo Identificador 4 (boletos com data de vencimento)
+				- [ ] Tipo Identificador 5 (boletos sem data de vencimento)
 			- Carteira CSB (Em Andamento)
