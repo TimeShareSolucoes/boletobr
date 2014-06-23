@@ -18,7 +18,7 @@ Tarefas/Implementações:
 * Bancos Brasileiros
 	- [ ] Banco Itaú
 	- [ ] Banco Hsbc
-		- [ ] Testes
+		- [ ] Implementação / Cobertura de Testes
 			- Carteira CNR
 				- [x] Tipo Identificador 4 (boletos com data de vencimento)
 				- [ ] Tipo Identificador 5 (boletos sem data de vencimento)
