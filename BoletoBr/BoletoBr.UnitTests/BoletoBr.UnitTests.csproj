@@ -50,7 +50,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="BancoHsbc\HsbcCarteiraCnrTipoIdentificador4.cs" />
     <Compile Include="CommonTests.cs" />
     <Compile Include="FatorVencimentoTests.cs" />
     <Compile Include="BancoHsbcTests.cs" />

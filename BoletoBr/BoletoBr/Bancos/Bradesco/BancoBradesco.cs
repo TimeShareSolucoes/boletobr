@@ -62,7 +62,7 @@ namespace BoletoBr.Bancos.Bradesco
             if (boleto.NossoNumeroFormatado.Length > 11)
                 throw new ValidacaoBoletoException("A quantidade de d�gitos do nosso n�mero, s�o 11 n�meros.");
             else if (boleto.NossoNumeroFormatado.Length < 11)
-                boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(11, '0'));
+                boleto.NossoNumeroFormatado = boleto.NossoNumeroFormatado.PadLeft(11, '0');
 
             //Verificar se a Agencia esta correta
             if (boleto.CedenteBoleto.ContaBancariaCedente.Agencia.Length > 4)
@@ -258,11 +258,11 @@ namespace BoletoBr.Bancos.Bradesco
 
         public void FormataNossoNumero(Boleto boleto)
         {
-            boleto.SetNossoNumeroFormatado(
+            boleto.NossoNumeroFormatado =
                 string.Format("{0}/{1}-{2}",
                     boleto.CarteiraCobranca.Codigo,
                     boleto.NossoNumeroFormatado,
-                    boleto.DigitoNossoNumero));
+                    boleto.DigitoNossoNumero);
         }
     }
 }
