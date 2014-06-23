@@ -18,3 +18,6 @@ Tarefas/Implementações:
 * Bancos Brasileiros
 	- [ ] Banco Itaú
 	- [ ] Banco Hsbc
+		- [ ] Testes
+			- Carteira CNR (Concluído)
+			- Carteira CSB (Em Andamento)
