@@ -10,15 +10,14 @@ namespace BoletoBr.UnitTests.BancoHsbc
     [TestClass]
     public class HsbcCarteiraCnrTipoIdentificador4
     {
-
         [TestMethod]
         public void TesteCalculoNossoNumeroBoletoReal()
         {
             var banco = Fabricas.BancoFactory.ObterBanco("399", "9");
 
-            var contaBancariaCedente = new ContaBancaria("429557", "", "00009", "7");
+            var contaBancariaCedente = new ContaBancaria("", "", "", "");
 
-            var cedente = new Cedente("4295579", 0, "99.999.999/9999-99", "X", contaBancariaCedente, null);
+            var cedente = new Cedente("4295579", 0, "99.999.999/9999-99", "Razão Social Teste Cálculo Nosso Número Ltda", contaBancariaCedente, null);
 
             var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
             {
@@ -33,14 +32,14 @@ namespace BoletoBr.UnitTests.BancoHsbc
             });
 
             var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("CNR"));
-            boleto.NumeroDocumento = "850368";
-            boleto.ValorBoleto = 330;
-            boleto.SequencialNossoNumero = "850368";
-            boleto.DataVencimento = new DateTime(2014, 7, 10);
+            boleto.NumeroDocumento = "40156";
+            boleto.ValorBoleto = 200;
+            boleto.SequencialNossoNumero = "40156";
+            boleto.DataVencimento = new DateTime(2012, 11, 15);
 
             banco.FormataNossoNumero(boleto);
 
-            Assert.AreEqual("0000000850368047", boleto.NossoNumeroFormatado);
+            Assert.AreEqual("0000000040156044", boleto.NossoNumeroFormatado);
         }
 
         [TestMethod]
@@ -51,7 +50,7 @@ namespace BoletoBr.UnitTests.BancoHsbc
 
             var contaBancariaCedente = new ContaBancaria("", "", "", "");
 
-            var cedente = new Cedente("4295579", 0, "99.999.999/0001-99", "Razao Social X", contaBancariaCedente, null);
+            var cedente = new Cedente("4295579", 0, "99.999.999/0001-99", "Razao Social Teste Linha Digitável", contaBancariaCedente, null);
 
             var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
             {

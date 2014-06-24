@@ -11,11 +11,42 @@ namespace BoletoBr.Fabricas
     {
         public static IBanco ObterBanco(string codigoBanco, string digitoBanco)
         {
-            if (codigoBanco == "399" && digitoBanco == "9")
-                return new Bancos.Hsbc.BancoHsbc();
+            try
+            {
+                switch (codigoBanco)
+                {
+                    //001 - Banco do Brasil
+                    case "001":
+                        return new Bancos.BancoBrasil.BancoBrasil();
+                        break;
+                    //003 - Banco da Amazônia
+                    case "003":
+                        return new Bancos.Amazonia.BancoAmazonia();
+                        break;
+                    //104 - Caixa
+                    case "104":
+                        return new Bancos.Cef.BancoCef();
+                        break;
+                    //237 - Bradesco
+                    case "237":
+                        return new Bancos.Bradesco.BancoBradesco();
+                        break;
 
-            throw new NotImplementedException("Banco " + codigoBanco + "-" + digitoBanco +
+                    //399 - HSBC
+                    case "399":
+                        return new Bancos.Hsbc.BancoHsbc();
+                        break;
+
+                    default:
+                        throw new NotImplementedException("Banco " + codigoBanco + "-" + digitoBanco +
                                               " ainda não foi implementado.");
+                }
+            }
+            catch (Exception ex)
+            {
+                
+                throw new Exception("Erro durante a execução da transação.", ex);
+            }
         }
     }
 }

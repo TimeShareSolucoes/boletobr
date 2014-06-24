@@ -8,7 +8,6 @@ namespace BoletoBr.Bancos
 {
     interface ILeitorArquivoRetornoCnab400
     {
-
         RetornoCnab400 ProcessarRetorno();
         HeaderRetornoCnab400 ObterHeader();
         List<DetalheRetornoCnab400> ObterRegistrosDetalhe();

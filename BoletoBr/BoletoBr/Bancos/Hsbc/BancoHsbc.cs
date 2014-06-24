@@ -81,73 +81,61 @@ namespace BoletoBr.Bancos.Hsbc
             FormataCodigoBarra(boleto);
         }
 
-        public void FormataCodigoBarra(Boleto boleto)
+        public void FormataNumeroDocumento(Boleto boleto)
+        {
+            boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(7, '0');
+        }
+
+        public void FormataNossoNumero(Boleto boleto)
         {
             try
             {
-                /* Preenche com 0´s a esquerda
-                 * 10 caracteres
-                 */
-                string valorBoletoTexto = 
-                    boleto.ValorBoleto.ToString("f")
-                    .Replace(",", "")
-                    .Replace(".", "")
-                    .PadLeft(10, '0');
-
-                string numeroDocumentoFormatado = 
-                    boleto.NumeroDocumento.PadLeft(7, '0');
-
-                string codigoBarraSemDigitoVerificador = null;
-
                 if (boleto.CarteiraCobranca.Codigo == "CSB")
                 {
-                    codigoBarraSemDigitoVerificador =
-                        String.Format("{0}{1}{2}{3}{4}{5}{6}001",
-                            this.CodigoBanco,
-                            boleto.Moeda,
-                            //9999 --> 21/02/2025
-                            Common.FatorVencimento(boleto.DataVencimento),
-                            valorBoletoTexto,
-                            boleto.NossoNumeroFormatado + boleto.DigitoNossoNumero,
-                            boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'),
-                            boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(7, '0')
-                            );
+                    string nossoNumeroComposto =
+                    boleto.CedenteBoleto.CodigoCedente.PadLeft(5, '0')
+                    +
+                    boleto.SequencialNossoNumero.PadLeft(5, '0');
+
+                    string digitoAutoConferenciaNossoNumero = Common.Mod11(nossoNumeroComposto, 7).ToString();
+
+                    string nossoNumeroFormatado =
+                        nossoNumeroComposto + digitoAutoConferenciaNossoNumero;
+
+                    boleto.SetNossoNumeroFormatado(nossoNumeroFormatado);
+                    return;
                 }
                 if (boleto.CarteiraCobranca.Codigo == "CNR")
                 {
-                    codigoBarraSemDigitoVerificador =
-                        String.Format("{0}{1}{2}{3}{4}{5}{6}2",
-                            this.CodigoBanco,
-                            boleto.Moeda,
-                            //9999 --> 21/02/2025
-                            Common.FatorVencimento(boleto.DataVencimento),
-                            valorBoletoTexto,
-                            boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'),
-                            boleto.SequencialNossoNumero.PadLeft(13, '0'),
-                            (boleto.DataVencimento.DayOfYear +
-                             boleto.DataVencimento.ToString("yy").Substring(1, 1)).PadLeft(4, '0')
-                            );
+                    /* Seguindo documentação CNR - Cobrança Não Registrada
+                     * Disponível em: https://www.hsbc.com.br/1/PA_esf-ca-app-content/content/hbbr-pws-gip16/portugues/business/comum/pdf/cnrbarra.pdf
+                     */
+
+                    string codigoDoPagador = boleto.SequencialNossoNumero;
+                    string primeiroDigitoVerificador = CalculaPrimeiroDigitoVerificadorCnrTipo4(boleto.SequencialNossoNumero);
+                    string segundoDigitoVerificador =
+                       CalculaSegundoDigitoVerificadorCnrTipo4(boleto.SequencialNossoNumero,
+                       primeiroDigitoVerificador, boleto.CedenteBoleto.CodigoCedente,
+                       boleto.DataVencimento);
+
+                    boleto.SetNossoNumeroFormatado(
+                        String.Format("{0}{1}4{2}",
+                            codigoDoPagador,
+                            primeiroDigitoVerificador,
+                            segundoDigitoVerificador));
+
+                    /* Padroniza com 16 dígitos */
+                    boleto.SetNossoNumeroFormatado(
+                        boleto.NossoNumeroFormatado.PadLeft(16, '0'));
+                    return;
                 }
 
-                /* 
-                 * 1. Calcula dígito de auto conferência
-                 * 2. Insere no meio do código de barras
-                 * 3. Atribui ao boleto
-                 */
-                string codigoBarraComDigitoVerificador = null;
-
-                _digitoAutoConferenciaCodigoBarras = Common.Mod11(codigoBarraSemDigitoVerificador, 9, 0);
-
-                codigoBarraComDigitoVerificador =
-                    Common.Left(codigoBarraSemDigitoVerificador, 4) +
-                    _digitoAutoConferenciaCodigoBarras +
-                    Common.Right(codigoBarraSemDigitoVerificador, 39);
-                
-                boleto.CodigoBarraBoleto = codigoBarraComDigitoVerificador;
+                throw new NotImplementedException("Modelo de carteira de cobrança: " + boleto.CarteiraCobranca.Codigo +
+                                                  " não está implementado.");
             }
             catch (Exception ex)
             {
-                throw new Exception("Falha ao formatar código de barras.", ex);
+                throw new Exception("Falha ao tentar formatar nosso número.", ex);
             }
         }
 
@@ -265,58 +253,76 @@ namespace BoletoBr.Bancos.Hsbc
             boleto.LinhaDigitavelBoleto = C1+C2+C3+W+C5;
         }
 
-        public void FormataNossoNumero(Boleto boleto)
+        public void FormataCodigoBarra(Boleto boleto)
         {
             try
             {
+                /* Preenche com 0´s a esquerda
+                 * 10 caracteres
+                 */
+                string valorBoletoTexto =
+                    boleto.ValorBoleto.ToString("f")
+                    .Replace(",", "")
+                    .Replace(".", "")
+                    .PadLeft(10, '0');
+
+                string numeroDocumentoFormatado =
+                    boleto.NumeroDocumento.PadLeft(7, '0');
+
+                string codigoBarraSemDigitoVerificador = null;
+
                 if (boleto.CarteiraCobranca.Codigo == "CSB")
                 {
-                    string nossoNumeroComposto = 
-                    boleto.CedenteBoleto.CodigoCedente.PadLeft(5, '0')
-                    +
-                    boleto.SequencialNossoNumero.PadLeft(5, '0');
-
-                string digitoAutoConferenciaNossoNumero = Common.Mod11(nossoNumeroComposto, 7).ToString();
-
-                string nossoNumeroFormatado =
-                    nossoNumeroComposto + digitoAutoConferenciaNossoNumero;
-
-                    boleto.SetNossoNumeroFormatado(nossoNumeroFormatado);
-                    return;
+                    codigoBarraSemDigitoVerificador =
+                        String.Format("{0}{1}{2}{3}{4}{5}{6}001",
+                            this.CodigoBanco,
+                            boleto.Moeda,
+                        //9999 --> 21/02/2025
+                            Common.FatorVencimento(boleto.DataVencimento),
+                            valorBoletoTexto,
+                            boleto.NossoNumeroFormatado + boleto.DigitoNossoNumero,
+                            boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'),
+                            boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(7, '0')
+                            );
                 }
                 if (boleto.CarteiraCobranca.Codigo == "CNR")
                 {
-                    /* Seguindo documentação CNR - Cobrança Não Registrada
-                     * Disponível em: https://www.hsbc.com.br/1/PA_esf-ca-app-content/content/hbbr-pws-gip16/portugues/business/comum/pdf/cnrbarra.pdf
-                     */
-
-                    string codigoDoPagador = boleto.SequencialNossoNumero;
-                    string primeiroDigitoVerificador = CalculaPrimeiroDigitoVerificadorCnrTipo4(boleto.SequencialNossoNumero);
-                    string segundoDigitoVerificador =
-                       CalculaSegundoDigitoVerificadorCnrTipo4(boleto.SequencialNossoNumero,
-                       primeiroDigitoVerificador, boleto.CedenteBoleto.CodigoCedente,
-                       boleto.DataVencimento);
-
-                    boleto.SetNossoNumeroFormatado(
-                        String.Format("{0}{1}4{2}",
-                            codigoDoPagador,
-                            primeiroDigitoVerificador,
-                            segundoDigitoVerificador));
-
-                    /* Padroniza com 16 dígitos */
-                    boleto.SetNossoNumeroFormatado(
-                        boleto.NossoNumeroFormatado.PadLeft(16, '0'));
-                        return;
+                    codigoBarraSemDigitoVerificador =
+                        String.Format("{0}{1}{2}{3}{4}{5}{6}2",
+                            this.CodigoBanco,
+                            boleto.Moeda,
+                        //9999 --> 21/02/2025
+                            Common.FatorVencimento(boleto.DataVencimento),
+                            valorBoletoTexto,
+                            boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'),
+                            boleto.SequencialNossoNumero.PadLeft(13, '0'),
+                            (boleto.DataVencimento.DayOfYear +
+                             boleto.DataVencimento.ToString("yy").Substring(1, 1)).PadLeft(4, '0')
+                            );
                 }
 
-                throw new NotImplementedException("Modelo de carteira de cobrança: " + boleto.CarteiraCobranca.Codigo +
-                                                  " não está implementado.");
+                /* 
+                 * 1. Calcula dígito de auto conferência
+                 * 2. Insere no meio do código de barras
+                 * 3. Atribui ao boleto
+                 */
+                string codigoBarraComDigitoVerificador = null;
+
+                _digitoAutoConferenciaCodigoBarras = Common.Mod11(codigoBarraSemDigitoVerificador, 9, 0);
+
+                codigoBarraComDigitoVerificador =
+                    Common.Left(codigoBarraSemDigitoVerificador, 4) +
+                    _digitoAutoConferenciaCodigoBarras +
+                    Common.Right(codigoBarraSemDigitoVerificador, 39);
+
+                boleto.CodigoBarraBoleto = codigoBarraComDigitoVerificador;
             }
             catch (Exception ex)
             {
-                throw new Exception("Falha ao tentar formatar nosso número.", ex);
+                throw new Exception("Falha ao formatar código de barras.", ex);
             }
         }
+
 
         /// <summary>
         /// Calcula primeiro dígito verificador
@@ -341,9 +347,6 @@ namespace BoletoBr.Bancos.Hsbc
                 .ToString();
         }
 
-        public void FormataNumeroDocumento(Boleto boleto)
-        {
-            boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(7, '0');
-        }
+
     }
 }

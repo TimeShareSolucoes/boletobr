@@ -21,7 +21,7 @@ namespace BoletoBr
         public DateTime DataDocumento { get; set; }
         public DateTime DataProcessamento { get; set; }
         public int NumeroParcela { get; set; }
-        public decimal ValorBoleto { get; set; }
+        public double ValorBoleto { get; set; }
         public decimal ValorCobrado { get; set; }
         public string LocalPagamento { get; set; }
         public int QuantidadeMoeda { get; set; }
