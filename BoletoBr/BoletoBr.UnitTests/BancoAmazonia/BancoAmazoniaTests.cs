@@ -23,7 +23,7 @@ namespace BoletoBr.UnitTests
 
             var contaBancariaCedente = new ContaBancaria("007", "8", "", "");
 
-            var cedente = new Cedente("9999999", 0, "99.999.999/9999-99", "Razão Social Teste Cálculo Nosso Número Ltda", contaBancariaCedente, null);
+            var cedente = new Cedente("9999999", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente, null);
 
             var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
             {
@@ -38,12 +38,11 @@ namespace BoletoBr.UnitTests
             });
 
             var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("CNR"));
-            boleto.NumeroDocumento = "12345";
+            boleto.NumeroDocumento = "123";
             boleto.ValorBoleto = 15.56;
-            boleto.SequencialNossoNumero = "12345";
+            boleto.SequencialNossoNumero = "123";
             boleto.DataVencimento = new DateTime(2008, 06, 27);
             
-
             banco.FormataNossoNumero(boleto);
 
             Assert.AreEqual("0000000000000123", boleto.NossoNumeroFormatado);
@@ -60,7 +59,7 @@ namespace BoletoBr.UnitTests
 
             var contaBancariaCedente = new ContaBancaria("007", "8", "", "");
 
-            var cedente = new Cedente("99999", "01234567890123456789", 0, "99.999.999/0001-99", "Razao Social X", contaBancariaCedente, null);
+            var cedente = new Cedente("99999", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
 
             var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
             {
@@ -75,15 +74,16 @@ namespace BoletoBr.UnitTests
             });
 
             var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("CNR"));
+            boleto.NumeroDocumento = "123";
             boleto.ValorBoleto = 15.56;
-            boleto.DataVencimento = new DateTime(2008, 7, 4);
-            boleto.SetNossoNumeroFormatado("0123456789000000");
+            boleto.SequencialNossoNumero = "123";
+            boleto.DataVencimento = new DateTime(2008, 06, 27);
 
             banco.FormataNossoNumero(boleto);
             banco.FormataCodigoBarra(boleto);
             banco.FormataLinhaDigitavel(boleto);
 
-            var valorEsperado = "00390078020010000000900000012385839160000001556";
+            var valorEsperado = "00390.07802 00100.000009  00000.012385 8 39160000001556";
             Assert.AreEqual(valorEsperado.Length, boleto.LinhaDigitavelBoleto.Length);
             Assert.AreEqual(valorEsperado, boleto.LinhaDigitavelBoleto);
         }
@@ -97,9 +97,9 @@ namespace BoletoBr.UnitTests
              */
             var banco = Fabricas.BancoFactory.ObterBanco("003", "5");
 
-            var contaBancariaCedente = new ContaBancaria("", "", "", "");
+            var contaBancariaCedente = new ContaBancaria("007", "8", "", "");
 
-            var cedente = new Cedente("8351202", 0, "99.999.999/0001-99", "Razao Social X", contaBancariaCedente, null);
+            var cedente = new Cedente("8351202", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
 
             var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
             {
@@ -114,21 +114,18 @@ namespace BoletoBr.UnitTests
             });
 
             var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("CNR"));
-            boleto.NumeroDocumento = "0000239104761";
-            boleto.Moeda = 9;
-            boleto.ValorBoleto = 1200;
-            boleto.DataFormatoJuliano = "1868";
-            boleto.CodigoDoProduto = "2";
-            boleto.SequencialNossoNumero = "0000239104761";
-            boleto.DataVencimento = new DateTime(2008, 7, 4);
+            boleto.NumeroDocumento = "123";
+            boleto.ValorBoleto = 15.56;
+            boleto.SequencialNossoNumero = "123";
+            boleto.DataVencimento = new DateTime(2008, 06, 27);
 
             banco.FormataNossoNumero(boleto);
             banco.FormataCodigoBarra(boleto);
             banco.FormataLinhaDigitavel(boleto);
 
-            var valorEsperado = "39998351210200002391704761186826439230000120000";
-            Assert.AreEqual(valorEsperado.Length, boleto.LinhaDigitavelBoleto.Length);
-            Assert.AreEqual(valorEsperado, boleto.LinhaDigitavelBoleto);
+            var valorEsperado = "00398391600000015560078000100000000000001238";
+            Assert.AreEqual(valorEsperado.Length, boleto.CodigoBarraBoleto.Length);
+            Assert.AreEqual(valorEsperado, boleto.CodigoBarraBoleto);
         }
     }
 }

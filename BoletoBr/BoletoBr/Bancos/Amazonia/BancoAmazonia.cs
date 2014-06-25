@@ -42,7 +42,7 @@ namespace BoletoBr.Bancos.Amazonia
 
         public void FormataLinhaDigitavel(Boleto boleto)
         {
-            string nossonumero = boleto.NossoNumeroFormatado.PadRight(16, '0');
+            string nossonumero = boleto.SequencialNossoNumero.PadLeft(16, '0');
 
             # region GRUPO 1
 
@@ -50,7 +50,10 @@ namespace BoletoBr.Bancos.Amazonia
             string moeda = boleto.Moeda.ToString("0");
             string agencia = Common.Right(boleto.CedenteBoleto.ContaBancariaCedente.Agencia, 3) +
                 boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia;
-            string convenioParte1 = boleto.CedenteBoleto.CodigoCedente.Substring(0, 1);
+
+            string convenio = boleto.CedenteBoleto.Convenio.PadLeft(4, '0');
+
+            string convenioParte1 = convenio.Substring(0, 1);
 
             string dv1 = Mod10_LinhaDigitavel(banco + moeda + agencia + convenioParte1).ToString("0");
 
@@ -60,7 +63,7 @@ namespace BoletoBr.Bancos.Amazonia
 
             #region GRUPO 2
 
-            string convenioParte2 = boleto.CedenteBoleto.CodigoCedente.Substring(1, 3);
+            string convenioParte2 = convenio.Substring(1, 3);
             string nossonumeroParte1 = nossonumero.Substring(0, 7);
 
             string dv2 = Mod10_LinhaDigitavel(convenioParte2 + nossonumeroParte1).ToString("0");
@@ -125,17 +128,22 @@ namespace BoletoBr.Bancos.Amazonia
 
             string agencia = Common.Right(boleto.CedenteBoleto.ContaBancariaCedente.Agencia, 3) +
                 boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia;
-            string convenio = boleto.CedenteBoleto.CodigoCedente.PadLeft(4, '0'); //ToString("0000");
-            string nossonumero = boleto.NossoNumeroFormatado.PadRight(16, '0');
+            string convenio = boleto.CedenteBoleto.Convenio.PadLeft(4, '0');
+            string nossonumero = boleto.SequencialNossoNumero.PadLeft(16, '0');
 
             // Este numero foi fornecido pelo BASA para o convenio testado.. nao sei se muda.
-            const string sistemaarrecadacao = "8";
+
+            /*
+             * Conforme documentação técnica do BASA o identificador será sempre '8'.
+             * Samuel R. (samuelro.net@gmail.com)
+             */
+            const string identificadorsistema = "8";
                 
             boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}",
                 banco, moeda, fatorvencimento, valorBoleto);
 
             boleto.CodigoBarraBoleto += string.Format("{0}{1}{2}{3}",
-                agencia, convenio, nossonumero, sistemaarrecadacao);
+                agencia, convenio, nossonumero, identificadorsistema);
 
             _dacBoleto = Mod11_CodigoBarra(boleto.CodigoBarraBoleto, 9);
 
@@ -163,38 +171,47 @@ namespace BoletoBr.Bancos.Amazonia
 
         public void FormataNossoNumero(Boleto boleto)
         {
-            boleto.SetNossoNumeroFormatado(string.Format("{0:0000}{1}", boleto.CedenteBoleto.CodigoCedente, boleto.NumeroDocumento));
+            boleto.SetNossoNumeroFormatado(string.Format("{0}", boleto.SequencialNossoNumero.PadLeft(16, '0')));
         }
 
         public void FormatarBoleto(Boleto boleto)
         {
-            throw new NotImplementedException();
+            boleto.ValidaDadosEssenciaisDoBoleto();
+
+            ValidaBoletoComNormasBanco(boleto);
+
+            //Atribui o nome do banco ao local de pagamento
+            boleto.LocalPagamento = "Pagável em qualquer banco até o vencimento. Após o vencimento pagar apenas nas agências do Banco da Amazônia S/A";
+
+            FormataNumeroDocumento(boleto);
+            FormataNossoNumero(boleto);
+            FormataLinhaDigitavel(boleto);
+            FormataCodigoBarra(boleto);
         }
 
         public void ValidaBoletoComNormasBanco(Boleto boleto)
         {
-            throw new NotImplementedException();
+            //Verifica as carteiras implementadas
+            if (!boleto.CarteiraCobranca.Codigo.Equals("CNR"))
+                throw new NotImplementedException("Carteira não implementada. Utilize a carteira 'CNR'.");
+
+            //Verifica se o nosso n�mero � v�lido
+            if (boleto.NossoNumeroFormatado.ToStringSafe() == string.Empty)
+                throw new NotImplementedException("Nosso número inválido");
+
+            //Verifica se o nosso n�mero � v�lido
+            if (boleto.NossoNumeroFormatado.ToStringSafe().ToLong() == 0)
+                throw new NotImplementedException("Nosso número inválido");
+
+            //Verifica se o tamanho para o NossoNumero s�o 10 d�gitos (5 range + 5 numero sequencial)
+            if (Convert.ToInt32(boleto.NossoNumeroFormatado).ToString().Length > 10)
+                throw new NotImplementedException("A quantidade de dígitos do nosso número para a carteira " + boleto.CarteiraCobranca.Codigo + ", são 10 números.");
+            else if (Convert.ToInt32(boleto.NossoNumeroFormatado).ToString().Length < 10)
+                boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(10, '0'));
         }
 
         public void ValidaBoleto(Boleto boleto)
         {
-            //Verifica se o nosso n�mero � v�lido
-            if ((boleto.NossoNumeroFormatado.Length) == 0)
-                throw new NotImplementedException("Nosso n�mero inv�lido");
-
-            //Verifica se o tamanho para o NossoNumero s�o 10 d�gitos
-            if (boleto.NossoNumeroFormatado.Length > 10)
-                throw new NotImplementedException("A quantidade de d�gitos do nosso n�mero para a carteira " +
-                                                  boleto.CarteiraCobranca.Codigo + ", s�o 10 n�meros.");
-            else if (boleto.NossoNumeroFormatado.Length < 10)
-                //boleto.NossoNumero = Utils.FormatCode(boleto.NossoNumero, 10);
-
-            if (boleto.CarteiraCobranca.Codigo != "CNR")
-                throw new NotImplementedException("Carteira n�o implementada. Utilize a carteira CNR.");
-
-            //Atribui o nome do banco ao local de pagamento
-            boleto.LocalPagamento += NomeBanco + "";
-
             //Verifica se data do processamento � valida
             //if (boleto.DataProcessamento.ToString("dd/MM/yyyy") == "01/01/0001")
             if (boleto.DataProcessamento == DateTime.MinValue) // diegomodolo (diego.ribeiro@nectarnet.com.br)
@@ -219,19 +236,19 @@ namespace BoletoBr.Bancos.Amazonia
             int Digito, Soma = 0, Peso = 2;
             for (int i = value.Length; i > 0; i--)
             {
-                Soma = Soma + (Convert.ToInt32(Common.Mid(value, i, 1))*Peso);
+                Soma = Soma + (Convert.ToInt32(Common.Mid(value, i, 1)) * Peso);
                 if (Peso == Base)
                     Peso = 2;
                 else
                     Peso = Peso + 1;
             }
-            if (((Soma%11) == 0) || ((Soma%11) == 10) || ((Soma%11) == 1))
+            if (((Soma % 11) == 0) || ((Soma % 11) == 10) || ((Soma % 11) == 1))
             {
                 Digito = 1;
             }
             else
             {
-                Digito = 11 - (Soma%11);
+                Digito = 11 - (Soma % 11);
             }
             return Digito;
         }
@@ -254,8 +271,8 @@ namespace BoletoBr.Bancos.Amazonia
                     Peso = 1;
                 else
                     Peso = Peso + 1;
-            }
-            Digito = ((10 - (Soma%10))%10);
+            }  
+            Digito = ((10 - (Soma % 10)) % 10);
             return Digito;
         }
 

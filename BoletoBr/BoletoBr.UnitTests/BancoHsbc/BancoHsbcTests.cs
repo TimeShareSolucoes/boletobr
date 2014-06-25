@@ -33,7 +33,7 @@ namespace BoletoBr.UnitTests
 
             var contaBancariaCedente = new ContaBancaria("", "", "", "");
 
-            var cedente = new Cedente("8351202", 0, "99.999.999/0001-99", "Razao Social X", contaBancariaCedente, null);
+            var cedente = new Cedente("8351202", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
 
             var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
             {
@@ -58,11 +58,10 @@ namespace BoletoBr.UnitTests
 
             banco.FormataNossoNumero(boleto);
             banco.FormataCodigoBarra(boleto);
-            banco.FormataLinhaDigitavel(boleto);
 
-            var valorEsperado = "39998351210200002391704761186826439230000120000";
-            Assert.AreEqual(valorEsperado.Length, boleto.LinhaDigitavelBoleto.Length);
-            Assert.AreEqual(valorEsperado, boleto.LinhaDigitavelBoleto);
+            var valorEsperado = "39994392300001200008351202000023910476118682";
+            Assert.AreEqual(valorEsperado.Length, boleto.CodigoBarraBoleto.Length);
+            Assert.AreEqual(valorEsperado, boleto.CodigoBarraBoleto);
         }
 
         [TestMethod]
@@ -73,7 +72,7 @@ namespace BoletoBr.UnitTests
 
             var contaBancariaCedente = new ContaBancaria("", "", "", "");
 
-            var cedente = new Cedente("4295579", 0, "03.863.763/0001-54", "Razao Social X", contaBancariaCedente, null);
+            var cedente = new Cedente("4295579", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
 
             var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
             {
@@ -98,11 +97,10 @@ namespace BoletoBr.UnitTests
 
             banco.FormataNossoNumero(boleto);
             banco.FormataCodigoBarra(boleto);
-            banco.FormataLinhaDigitavel(boleto);
 
-            var valorEsperado = "39994295527900000000440156320224155180000020000";
-            Assert.AreEqual(valorEsperado.Length, boleto.LinhaDigitavelBoleto.Length);
-            Assert.AreEqual(valorEsperado, boleto.LinhaDigitavelBoleto);
+            var valorEsperado = "39991551800000200004295579000000004015632022";
+            Assert.AreEqual(valorEsperado.Length, boleto.CodigoBarraBoleto.Length);
+            Assert.AreEqual(valorEsperado, boleto.CodigoBarraBoleto);
         }
 
         [TestMethod]
