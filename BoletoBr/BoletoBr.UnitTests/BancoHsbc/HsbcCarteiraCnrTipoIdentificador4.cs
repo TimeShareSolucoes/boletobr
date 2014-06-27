@@ -66,7 +66,7 @@ namespace BoletoBr.UnitTests.BancoHsbc
 
             var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("CNR"));
             boleto.NumeroDocumento = "40156";
-            boleto.Moeda = 9;
+            boleto.Moeda = "9";
             boleto.ValorBoleto = 200;
             boleto.DataFormatoJuliano = "3202";
             boleto.CodigoDoProduto = "2";

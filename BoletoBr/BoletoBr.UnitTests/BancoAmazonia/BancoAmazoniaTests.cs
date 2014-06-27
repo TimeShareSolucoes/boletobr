@@ -39,7 +39,7 @@ namespace BoletoBr.UnitTests
 
             var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("CNR"));
             boleto.NumeroDocumento = "123";
-            boleto.ValorBoleto = 15.56;
+            boleto.ValorBoleto = Convert.ToDecimal(15.56);
             boleto.SequencialNossoNumero = "123";
             boleto.DataVencimento = new DateTime(2008, 06, 27);
             
@@ -75,7 +75,7 @@ namespace BoletoBr.UnitTests
 
             var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("CNR"));
             boleto.NumeroDocumento = "123";
-            boleto.ValorBoleto = 15.56;
+            boleto.ValorBoleto = Convert.ToDecimal(15.56);
             boleto.SequencialNossoNumero = "123";
             boleto.DataVencimento = new DateTime(2008, 06, 27);
 
@@ -115,7 +115,7 @@ namespace BoletoBr.UnitTests
 
             var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("CNR"));
             boleto.NumeroDocumento = "123";
-            boleto.ValorBoleto = 15.56;
+            boleto.ValorBoleto = Convert.ToDecimal(15.56);
             boleto.SequencialNossoNumero = "123";
             boleto.DataVencimento = new DateTime(2008, 06, 27);
 

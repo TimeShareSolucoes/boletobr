@@ -49,7 +49,7 @@ namespace BoletoBr.UnitTests
 
             var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("CNR"));
             boleto.NumeroDocumento = "0000239104761";
-            boleto.Moeda = 9;
+            boleto.Moeda = "9";
             boleto.ValorBoleto = 1200;
             boleto.DataFormatoJuliano = "1868";
             boleto.CodigoDoProduto = "2";
@@ -88,7 +88,7 @@ namespace BoletoBr.UnitTests
 
             var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("CNR"));
             boleto.NumeroDocumento = "40156";
-            boleto.Moeda = 9;
+            boleto.Moeda = "9";
             boleto.ValorBoleto = 200;
             boleto.DataFormatoJuliano = "3202";
             boleto.CodigoDoProduto = "2";

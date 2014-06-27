@@ -21,7 +21,7 @@ namespace BoletoBr
         public DateTime DataDocumento { get; set; }
         public DateTime DataProcessamento { get; set; }
         public int NumeroParcela { get; set; }
-        public double ValorBoleto { get; set; }
+        public decimal ValorBoleto { get; set; }
         public decimal ValorCobrado { get; set; }
         public string LocalPagamento { get; set; }
         public int QuantidadeMoeda { get; set; }
@@ -29,7 +29,7 @@ namespace BoletoBr
         public string Aceite { get; set; }
         public string NumeroDocumento { get; set; }
         public string Especie { get; set; }
-        public int Moeda { get; set; }
+        public string Moeda { get; set; }
         public string UsoBanco { get; set; }
         public decimal ValorDesconto { get; set; }
         public bool JurosPermanente { get; set; }
@@ -73,11 +73,11 @@ namespace BoletoBr
         private void Inicializa()
         {
             this.LocalPagamento = "Até o vencimento, preferencialmente no ";
-            this.QuantidadeMoeda = 1;
+            this.QuantidadeMoeda = 0;
             this.ValorMoeda = "";
-            this.Aceite = "N";
-            this.Especie = "R$";
-            this.Moeda = 9;
+            this.Aceite = "";
+            this.Especie = "";
+            this.Moeda = "9";
         }
 
         public Boleto(Cedente cedente, Sacado sacado, CarteiraCobranca carteiraCobranca) : base()

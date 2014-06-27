@@ -47,7 +47,7 @@ namespace BoletoBr.Bancos.Amazonia
             # region GRUPO 1
 
             string banco = this.CodigoBanco.PadLeft(3, '0');
-            string moeda = boleto.Moeda.ToString("0");
+            string moeda = boleto.Moeda;
             string agencia = Common.Right(boleto.CedenteBoleto.ContaBancariaCedente.Agencia, 3) +
                 boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia;
 
@@ -119,7 +119,7 @@ namespace BoletoBr.Bancos.Amazonia
             //banco & moeda & fator & valor & carteira & nossonumero & dac_nossonumero & agencia & conta & dac_conta & "000"
 
             string banco = this.CodigoBanco.PadLeft(3, '0');
-            int moeda = boleto.Moeda;
+            string moeda = boleto.Moeda;
             //string digito = "";
             string valorBoleto = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "");
             valorBoleto = valorBoleto.PadLeft(10, '0');
