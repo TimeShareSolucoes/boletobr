@@ -16,7 +16,7 @@ namespace BoletoBr.Bancos.Amazonia
 
         public BancoAmazonia()
         {
-            CodigoBanco = "3";
+            CodigoBanco = "003";
             DigitoBanco = "5";
             NomeBanco = "Banco da Amazônia S/A";
 
