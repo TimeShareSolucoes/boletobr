@@ -56,6 +56,7 @@
     <Compile Include="Bancos\Hsbc\CarteiraCobrancaHsbcCsb.cs" />
     <Compile Include="Bancos\IBanco.cs" />
     <Compile Include="Bancos\ILeitorArquivoRetornoCnab400.cs" />
+    <Compile Include="Bancos\Itau\BancoItau.cs" />
     <Compile Include="Bancos\LeitorRetornoCnab400Generico.cs" />
     <Compile Include="Common\Common.cs" />
     <Compile Include="Common\MetodosExtensao.cs" />
