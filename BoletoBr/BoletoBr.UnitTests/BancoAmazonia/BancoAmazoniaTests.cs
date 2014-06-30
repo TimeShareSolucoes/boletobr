@@ -83,7 +83,7 @@ namespace BoletoBr.UnitTests
             banco.FormataCodigoBarra(boleto);
             banco.FormataLinhaDigitavel(boleto);
 
-            var valorEsperado = "00390.07802 00100.000009  00000.012385 8 39160000001556";
+            const string valorEsperado = "00390.07802 00100.000009  00000.012385 8 39160000001556";
             Assert.AreEqual(valorEsperado.Length, boleto.LinhaDigitavelBoleto.Length);
             Assert.AreEqual(valorEsperado, boleto.LinhaDigitavelBoleto);
         }
@@ -123,7 +123,7 @@ namespace BoletoBr.UnitTests
             banco.FormataCodigoBarra(boleto);
             banco.FormataLinhaDigitavel(boleto);
 
-            var valorEsperado = "00398391600000015560078000100000000000001238";
+            const string valorEsperado = "00398391600000015560078000100000000000001238";
             Assert.AreEqual(valorEsperado.Length, boleto.CodigoBarraBoleto.Length);
             Assert.AreEqual(valorEsperado, boleto.CodigoBarraBoleto);
         }

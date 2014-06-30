@@ -16,7 +16,6 @@ namespace BoletoBr
         public int SubConta { get; set; }
         public int Conta { get; set; }
         public string OrigemPagamento { get; set; }
-        public int BancoTamanho1 { get; set; }
         public string ControleParticipante { get; set; }
         public int NossoNumero { get; set; }
         public int DataDesconto2 { get; set; }
@@ -34,15 +33,12 @@ namespace BoletoBr
         public int AgenciaCobradora { get; set; }
         public int Especie { get; set; }
         public int TarifaCustos { get; set; }
-        public int BancoTamanho39 { get; set; }
         public int ValorAbatimento { get; set; }
         public int ValorDesconto { get; set; }
         public int ValorPago { get; set; }
         public int JurosDeMora { get; set; }
-        public int BancoTamanho22 { get; set; }
         public string ComplementoDaOcorrencia { get; set; }
         public int IndicativoDeCredito { get; set; }
-        public int BancoTamanho84 { get; set; }
         public int NumeroDoAviso { get; set; }
         public int TipoMoeda { get; set; }
         public int NumeroSequencial { get; set; }

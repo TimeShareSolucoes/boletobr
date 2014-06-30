@@ -51,6 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BancoAmazonia\BancoAmazoniaTests.cs" />
+    <Compile Include="BancoCef\BancoCefTests.cs" />
     <Compile Include="BancoHsbc\HsbcCarteiraCnrTipoIdentificador4.cs" />
     <Compile Include="CommonTests.cs" />
     <Compile Include="FatorVencimentoTests.cs" />

@@ -37,14 +37,14 @@ namespace BoletoBr
             this.Agencia = agencia;
             this.DigitoAgencia = digitoAgencia;
             this.Conta = conta;
-            this.DigitoConta = DigitoConta;
+            this.DigitoConta = digitoConta;
         }
         public ContaBancaria(string agencia, string digitoAgencia, string conta, string digitoConta, string operacaoConta)
         {
             this.Agencia = agencia;
             this.DigitoAgencia = digitoAgencia;
             this.Conta = conta;
-            this.DigitoConta = DigitoConta;
+            this.DigitoConta = digitoConta;
             this.OperacaoConta = operacaoConta;
         }
 

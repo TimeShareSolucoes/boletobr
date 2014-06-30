@@ -12,7 +12,7 @@ namespace BoletoBr.Bancos.Amazonia
         {
         this.Codigo = "CNR";
         this.Tipo = "";
-        this.Descricao = "CNR Cobrança Não Registrada Banco da Amazônia";
+        this.Descricao = "CNR Cobrança Não Registrada";
         }
     }
 }
