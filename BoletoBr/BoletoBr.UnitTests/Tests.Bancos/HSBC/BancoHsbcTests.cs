@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
-using BoletoBr.Bancos.Hsbc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BoletoBr.UnitTests
+namespace BoletoBr.UnitTests.Tests.Bancos.HSBC
 {
     [TestClass]
     public class BancoHsbcTests
@@ -110,7 +108,7 @@ namespace BoletoBr.UnitTests
             var resultadoEsperado = "9";
 
 
-            var banco = new Bancos.Hsbc.BancoHsbc();
+            var banco = new BoletoBr.Bancos.Hsbc.BancoHsbc();
 
             var resultadoObtido = banco.CalculaPrimeiroDigitoVerificadorCnrTipo4(codigoPagador);
             Assert.AreEqual(resultadoEsperado, resultadoObtido);
@@ -120,7 +118,7 @@ namespace BoletoBr.UnitTests
         [TestMethod]
         public void TestCalcularSegundoDigitoVerificadorNossoNumeroCarteiraCnrTipo4()
         {
-            var banco = new Bancos.Hsbc.BancoHsbc();
+            var banco = new BoletoBr.Bancos.Hsbc.BancoHsbc();
 
             var codigoPagador = "239104761";
             var primeiroDigitoVerificador = banco.CalculaPrimeiroDigitoVerificadorCnrTipo4(codigoPagador);

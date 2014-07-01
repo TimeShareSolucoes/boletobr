@@ -475,15 +475,16 @@ namespace BoletoBr.Bancos.Cef
                     IdentificadorEmissaoCedente +
                     boleto.NossoNumeroFormatado.PadLeft(15, '0'));
             }
-
             else if (boleto.CarteiraCobranca.Codigo.Equals("SR"))
+            {
                 boleto.SetNossoNumeroFormatado(
                     IdentificadorTipoCobrancaCarteiraSr +
                     IdentificadorEmissaoCedente +
                     boleto.NossoNumeroFormatado.PadLeft(12, '0'));
+            }
             else
             {
-                throw new Exception("Não há formatação para 'Nosso Número' informado");
+                throw new Exception("Erro ao formatar nosso número");
             }
         }
 

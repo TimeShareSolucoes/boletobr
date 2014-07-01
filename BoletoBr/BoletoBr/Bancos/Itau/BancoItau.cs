@@ -9,7 +9,7 @@ namespace BoletoBr.Bancos.Itau
     {
 
         private int _dacBoleto = 0;
-        private static int _dacNossoNumero = 0;
+        private int _dacNossoNumero = 0;
 
         public BancoItau()
         {
@@ -19,8 +19,25 @@ namespace BoletoBr.Bancos.Itau
 
             /* Adiciona carteiras de cobrança */
             _carteirasCobranca = new List<CarteiraCobranca>();
-            _carteirasCobranca.Add(new CarteiraCobranca());
-            _carteirasCobranca.Add(new CarteiraCobranca());
+            _carteirasCobranca.Add(new CarteiraCobranca107());
+            _carteirasCobranca.Add(new CarteiraCobranca109());
+            _carteirasCobranca.Add(new CarteiraCobranca121());
+            _carteirasCobranca.Add(new CarteiraCobranca122());
+            _carteirasCobranca.Add(new CarteiraCobranca126());
+            _carteirasCobranca.Add(new CarteiraCobranca131());
+            _carteirasCobranca.Add(new CarteiraCobranca142());
+            _carteirasCobranca.Add(new CarteiraCobranca143());
+            _carteirasCobranca.Add(new CarteiraCobranca146());
+            _carteirasCobranca.Add(new CarteiraCobranca150());
+            _carteirasCobranca.Add(new CarteiraCobranca169());
+            _carteirasCobranca.Add(new CarteiraCobranca175());
+            _carteirasCobranca.Add(new CarteiraCobranca176());
+            _carteirasCobranca.Add(new CarteiraCobranca178());
+            _carteirasCobranca.Add(new CarteiraCobranca196());
+            _carteirasCobranca.Add(new CarteiraCobranca198());
+
+            /* Testes de Carteira */
+            _carteirasCobranca.Add(new CarteiraCobranca110Temp());
         }
 
         public string CodigoBanco { get; set; }
@@ -44,8 +61,7 @@ namespace BoletoBr.Bancos.Itau
             try
             {
                 //Carteiras v�lidas
-                int[] cv = new int[] {175, 176, 178, 109, 198, 107, 122, 142, 143, 196, 126, 131, 146, 150, 169, 121};
-                    //Flavio(fhlviana@hotmail.com) - adicionado a carteira 109
+                int[] cv = new int[] { 107, 109, 121, 122, 126, 131, 142, 143, 146, 150, 169, 175, 176, 178, 196, 198 };
                 bool valida = false;
 
                 foreach (int c in cv)
@@ -72,9 +88,9 @@ namespace BoletoBr.Bancos.Itau
                     boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(8, '0'));
 
                 //� obrigat�rio o preenchimento do n�mero do documento
-                if (boleto.CarteiraCobranca.Codigo == "106" || boleto.CarteiraCobranca.Codigo == "107" || boleto.CarteiraCobranca.Codigo == "122" ||
-                    boleto.CarteiraCobranca.Codigo == "142" || boleto.CarteiraCobranca.Codigo == "143" || boleto.CarteiraCobranca.Codigo == "195" ||
-                    boleto.CarteiraCobranca.Codigo == "196" || boleto.CarteiraCobranca.Codigo == "198")
+                if (boleto.CarteiraCobranca.Codigo == "106" || boleto.CarteiraCobranca.Codigo == "107" || boleto.CarteiraCobranca.Codigo == "110" ||
+                    boleto.CarteiraCobranca.Codigo == "122" || boleto.CarteiraCobranca.Codigo == "142" || boleto.CarteiraCobranca.Codigo == "143" ||
+                    boleto.CarteiraCobranca.Codigo == "195" || boleto.CarteiraCobranca.Codigo == "196" || boleto.CarteiraCobranca.Codigo == "198")
                 {
                     if (Convert.ToInt32(boleto.NumeroDocumento) == 0)
                         throw new NotImplementedException("O n�mero do documento n�o pode ser igual a zero.");
@@ -139,26 +155,30 @@ namespace BoletoBr.Bancos.Itau
         {
             try
             {
-                // C�digo de Barras
-                //banco & moeda & fator & valor & carteira & nossonumero & dac_nossonumero & agencia & conta & dac_conta & "000"
-
+                /*
+                 * C�digo de Barras
+                 * banco & moeda & fator & valor & carteira & nossonumero & dac_nossonumero & agencia & conta & dac_conta & "000"
+                 */
                 string valorBoleto = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "");
                 valorBoleto = valorBoleto.PadLeft(10, '0');
 
                 string numeroDocumento = boleto.NumeroDocumento.PadLeft(7, '0');
                 string codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(5, '0');
-
-                if (boleto.CarteiraCobranca.Codigo == "109" || boleto.CarteiraCobranca.Codigo == "121" || boleto.CarteiraCobranca.Codigo == "175" || boleto.CarteiraCobranca.Codigo == "176" || boleto.CarteiraCobranca.Codigo == "178")
+                
+                /* Carteira 110 incluída somente para testes */
+                if ((boleto.CarteiraCobranca.Codigo == "109") || (boleto.CarteiraCobranca.Codigo == "198") ||
+                    (boleto.CarteiraCobranca.Codigo == "121") || (boleto.CarteiraCobranca.Codigo == "175") ||
+                    (boleto.CarteiraCobranca.Codigo == "176") || (boleto.CarteiraCobranca.Codigo == "178"))
                     
                     boleto.CodigoBarraBoleto =
                         string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}000", CodigoBanco, boleto.Moeda,
                                       Common.FatorVencimento(boleto.DataVencimento), valorBoleto, boleto.CarteiraCobranca.Codigo,
-                                      boleto.NossoNumeroFormatado, _dacNossoNumero, boleto.CedenteBoleto.ContaBancariaCedente.Agencia,
+                                      boleto.NossoNumeroFormatado.Replace("/", "").Replace("-", ""), _dacNossoNumero, boleto.CedenteBoleto.ContaBancariaCedente.Agencia,
                                       boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(5, '0'), boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta);
-            
-                else if (boleto.CarteiraCobranca.Codigo == "198" || boleto.CarteiraCobranca.Codigo == "107"
-                         || boleto.CarteiraCobranca.Codigo == "122" || boleto.CarteiraCobranca.Codigo == "142"
-                         || boleto.CarteiraCobranca.Codigo == "143" || boleto.CarteiraCobranca.Codigo == "196")
+                         
+                else if ((boleto.CarteiraCobranca.Codigo == "107") || (boleto.CarteiraCobranca.Codigo == "122") ||
+                    (boleto.CarteiraCobranca.Codigo == "142") || (boleto.CarteiraCobranca.Codigo == "143") ||
+                    (boleto.CarteiraCobranca.Codigo == "196"))
                 {
                     boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}0", CodigoBanco, boleto.Moeda,
                         Common.FatorVencimento(boleto.DataVencimento), boleto.ValorBoleto, boleto.CarteiraCobranca.Codigo,
@@ -187,11 +207,11 @@ namespace BoletoBr.Bancos.Itau
                 string AAA = CodigoBanco;
                 string B = boleto.Moeda;
                 string CCC = boleto.CarteiraCobranca.Codigo;
-                string DD = boleto.NossoNumeroFormatado.Substring(0, 2);
+                string DD = boleto.NossoNumeroFormatado.Replace("/", "").Replace("-", "").Substring(0, 2);
                 string X = Common.Mod10(AAA + B + CCC + DD).ToString();
-                string LD = string.Empty; //Linha Digit�vel
+                string LD = string.Empty; /* Linha Digit�vel */
 
-                string DDDDDD = boleto.NossoNumeroFormatado.Substring(2, 6);
+                string DDDDDD = boleto.NossoNumeroFormatado.Replace("/", "").Replace("-", "").Substring(2, 6);
 
                 string K = string.Format(" {0} ", _dacBoleto);
 
@@ -222,37 +242,37 @@ namespace BoletoBr.Bancos.Itau
                     #region Definições Carteiras 109 - 121 - 175 - 176 - 178
 
                     /* AAABC.CCDDX.DDDDD.DEFFFY.FGGGG.GGHHHZ.K.UUUUVVVVVVVVVV
-              * ------------------------------------------------------
-              * Campo 1
-              * AAABC.CCDDX
-              * AAA - C�digo do Banco
-              * B   - Moeda
-              * CCC - Carteira
-              * DD  - 2 primeiros n�meros Nosso N�mero
-              * X   - DAC Campo 1 (AAABC.CCDD) Mod10
-              * 
-              * Campo 2
-              * DDDDD.DEFFFY
-              * DDDDD.D - Restante Nosso N�mero
-              * E       - DAC (Ag�ncia/Conta/Carteira/Nosso N�mero)
-              * FFF     - Tr�s primeiros da ag�ncia
-              * Y       - DAC Campo 2 (DDDDD.DEFFF) Mod10
-              * 
-              * Campo 3
-              * FGGGG.GGHHHZ
-              * F       - Restante da Ag�ncia
-              * GGGG.GG - N�mero Conta Corrente + DAC
-              * HHH     - Zeros (N�o utilizado)
-              * Z       - DAC Campo 3
-              * 
-              * Campo 4
-              * K       - DAC C�digo de Barras
-              * 
-              * Campo 5
-              * UUUUVVVVVVVVVV
-              * UUUU       - Fator Vencimento
-              * VVVVVVVVVV - Valor do T�tulo 
-              */
+                     * ------------------------------------------------------
+                     * Campo 1
+                     * AAABC.CCDDX
+                     * AAA - C�digo do Banco
+                     * B   - Moeda
+                     * CCC - Carteira
+                     * DD  - 2 primeiros n�meros Nosso N�mero
+                     * X   - DAC Campo 1 (AAABC.CCDD) Mod10
+                     * 
+                     * Campo 2
+                     * DDDDD.DEFFFY
+                     * DDDDD.D - Restante Nosso N�mero
+                     * E       - DAC (Ag�ncia/Conta/Carteira/Nosso N�mero)
+                     * FFF     - Tr�s primeiros da ag�ncia
+                     * Y       - DAC Campo 2 (DDDDD.DEFFF) Mod10
+                     * 
+                     * Campo 3
+                     * FGGGG.GGHHHZ
+                     * F       - Restante da Ag�ncia
+                     * GGGG.GG - N�mero Conta Corrente + DAC
+                     * HHH     - Zeros (N�o utilizado)
+                     * Z       - DAC Campo 3
+                     * 
+                     * Campo 4
+                     * K       - DAC C�digo de Barras
+                     * 
+                     * Campo 5
+                     * UUUUVVVVVVVVVV
+                     * UUUU       - Fator Vencimento
+                     * VVVVVVVVVV - Valor do T�tulo 
+                     */
 
                     #endregion Defini��es
 
@@ -352,6 +372,8 @@ namespace BoletoBr.Bancos.Itau
 
         public void FormataNossoNumero(Boleto boleto)
         {
+            boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero.PadLeft(8, '0'));
+
             try
             {
                 boleto.SetNossoNumeroFormatado(string.Format("{0}/{1}-{2}", boleto.CarteiraCobranca.Codigo, boleto.NossoNumeroFormatado, _dacNossoNumero));

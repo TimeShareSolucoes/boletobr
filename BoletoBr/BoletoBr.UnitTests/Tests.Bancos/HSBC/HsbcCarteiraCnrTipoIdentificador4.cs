@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BoletoBr.UnitTests.BancoHsbc
+namespace BoletoBr.UnitTests.Tests.Bancos.HSBC
 {
     [TestClass]
     public class HsbcCarteiraCnrTipoIdentificador4

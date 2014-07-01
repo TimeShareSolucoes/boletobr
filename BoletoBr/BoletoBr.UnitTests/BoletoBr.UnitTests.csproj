@@ -50,13 +50,14 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="BancoAmazonia\BancoAmazoniaTests.cs" />
-    <Compile Include="BancoCef\BancoCefTests.cs" />
-    <Compile Include="BancoHsbc\HsbcCarteiraCnrTipoIdentificador4.cs" />
-    <Compile Include="CommonTests.cs" />
-    <Compile Include="FatorVencimentoTests.cs" />
-    <Compile Include="BancoHsbc\BancoHsbcTests.cs" />
-    <Compile Include="MetodosExtensaoTests.cs" />
+    <Compile Include="Tests.Bancos\BASA\BancoAmazoniaTests.cs" />
+    <Compile Include="Tests.Bancos\CEF\BancoCefTests.cs" />
+    <Compile Include="Tests.Bancos\HSBC\HsbcCarteiraCnrTipoIdentificador4.cs" />
+    <Compile Include="Tests.Bancos\ITAU\BancoItauTests.cs" />
+    <Compile Include="Tests.Common\CommonTests.cs" />
+    <Compile Include="Tests.Common\FatorVencimentoTests.cs" />
+    <Compile Include="Tests.Bancos\HSBC\BancoHsbcTests.cs" />
+    <Compile Include="Tests.Common\MetodosExtensaoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
