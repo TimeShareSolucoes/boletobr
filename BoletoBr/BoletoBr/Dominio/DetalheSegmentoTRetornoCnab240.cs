@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BoletoBr.Dominio
 {
-    class DetalheSegmentoTRetornoCnab240
+    public class DetalheSegmentoTRetornoCnab240
     {
 #region Vari�veis
 

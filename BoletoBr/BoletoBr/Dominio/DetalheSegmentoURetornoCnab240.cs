@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BoletoBr.Dominio
 {
-    internal class DetalheSegmentoURetornoCnab240
+    public class DetalheSegmentoURetornoCnab240
     {
         public DetalheSegmentoURetornoCnab240(string registro)
         {
@@ -16,7 +16,7 @@ namespace BoletoBr.Dominio
 
         #region Propriedades
 
-        public decimal Servico_Codigo_Movimento_Retorno { get; set; }
+        public decimal ServicoCodigoMovimentoRetorno { get; set; }
 
         public decimal JurosMultaEncargos { get; set; }
 
@@ -24,7 +24,7 @@ namespace BoletoBr.Dominio
 
         public decimal ValorAbatimentoConcedido { get; set; }
 
-        public decimal ValorIOFRecolhido { get; set; }
+        public decimal ValorIofRecolhido { get; set; }
 
         public decimal ValorPagoPeloSacado { get; set; }
 
@@ -69,8 +69,8 @@ namespace BoletoBr.Dominio
                 ValorDescontoConcedido = valorDescontoConcedido/100;
                 decimal valorAbatimentoConcedido = Convert.ToInt64(registro.Substring(47, 15));
                 ValorAbatimentoConcedido = valorAbatimentoConcedido/100;
-                decimal valorIOFRecolhido = Convert.ToInt64(registro.Substring(62, 15));
-                ValorIOFRecolhido = valorIOFRecolhido/100;
+                decimal valorIofRecolhido = Convert.ToInt64(registro.Substring(62, 15));
+                ValorIofRecolhido = valorIofRecolhido/100;
                 decimal valorPagoPeloSacado = Convert.ToInt64(registro.Substring(77, 15));
                 ValorPagoPeloSacado = valorPagoPeloSacado/100;
                 decimal valorLiquidoASerCreditado = Convert.ToInt64(registro.Substring(92, 15));

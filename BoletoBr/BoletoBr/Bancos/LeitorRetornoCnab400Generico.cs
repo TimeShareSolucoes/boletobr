@@ -43,7 +43,7 @@ namespace BoletoBr.Bancos
             /* Obter 1ª linha */
             var linha = _linhasArquivo[0];
 
-            objRetornar.TipoDeRegistro = linha.ExtrairValorDaLinha(1, 1).ToInt();
+            objRetornar.CodigoDoRegistro = linha.ExtrairValorDaLinha(1, 1).ToInt();
             objRetornar.CodigoDeRetorno = linha.ExtrairValorDaLinha(2, 2).ToInt();
 
             return objRetornar;

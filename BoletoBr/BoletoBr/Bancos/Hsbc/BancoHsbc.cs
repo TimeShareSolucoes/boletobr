@@ -9,9 +9,23 @@ namespace BoletoBr.Bancos.Hsbc
 {
     public class BancoHsbc : IBanco
     {
+        #region Variáveis
+
+        private int _digitoAutoConferenciaCodigoBarras;
+        private string _digitoAutoConferenciaNossoNumero;
+        private readonly List<CarteiraCobranca> _carteirasCobrancaHsbc;
+
+        #endregion
+
+        #region Propriedades
+
         public string CodigoBanco { get; set; }
         public string DigitoBanco { get; set; }
         public string NomeBanco { get; set; }
+
+        #endregion
+
+        #region Construtores
 
         public BancoHsbc()
         {
@@ -25,9 +39,9 @@ namespace BoletoBr.Bancos.Hsbc
             _carteirasCobrancaHsbc.Add(new CarteiraCobrancaHsbcCsb());
         }
 
-        private int _digitoAutoConferenciaCodigoBarras;
-        private string _digitoAutoConferenciaNossoNumero;
-        private readonly List<CarteiraCobranca> _carteirasCobrancaHsbc;
+        #endregion
+
+        #region Métodos de formatação do boleto
 
         public List<CarteiraCobranca> GetCarteirasCobranca()
         {
@@ -64,25 +78,6 @@ namespace BoletoBr.Bancos.Hsbc
                                                   boleto.CarteiraCobranca.Codigo + ", são 10 números.");
             else if (Convert.ToInt32(boleto.NossoNumeroFormatado).ToString().Length < 10)
                 boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(10, '0'));
-        }
-
-        public void FormatarBoleto(Boleto boleto)
-        {
-            boleto.ValidaDadosEssenciaisDoBoleto();
-
-            ValidaBoletoComNormasBanco(boleto);
-
-            // Calcula o DAC do Nosso N�mero
-            // Nosso N�mero = Range(5) + Numero Sequencial(5)
-            _digitoAutoConferenciaNossoNumero = Common.Mod11(boleto.NossoNumeroFormatado, 7).ToString();
-
-            //Atribui o nome do banco ao local de pagamento
-            boleto.LocalPagamento = "PAGAR PREFERENCIALMENTE EM AGÊNCIAS DO " + NomeBanco;
-
-            FormataNumeroDocumento(boleto);
-            FormataNossoNumero(boleto);
-            FormataLinhaDigitavel(boleto);
-            FormataCodigoBarra(boleto);
         }
 
         public void FormataNumeroDocumento(Boleto boleto)
@@ -331,6 +326,24 @@ namespace BoletoBr.Bancos.Hsbc
             }
         }
 
+        public void FormatarBoleto(Boleto boleto)
+        {
+            boleto.ValidaDadosEssenciaisDoBoleto();
+
+            ValidaBoletoComNormasBanco(boleto);
+
+            // Calcula o DAC do Nosso N�mero
+            // Nosso N�mero = Range(5) + Numero Sequencial(5)
+            _digitoAutoConferenciaNossoNumero = Common.Mod11(boleto.NossoNumeroFormatado, 7).ToString();
+
+            //Atribui o nome do banco ao local de pagamento
+            boleto.LocalPagamento = "PAGAR PREFERENCIALMENTE EM AGÊNCIAS DO " + NomeBanco;
+
+            FormataNumeroDocumento(boleto);
+            FormataNossoNumero(boleto);
+            FormataLinhaDigitavel(boleto);
+            FormataCodigoBarra(boleto);
+        }
 
         /// <summary>
         /// Calcula primeiro dígito verificador
@@ -356,75 +369,91 @@ namespace BoletoBr.Bancos.Hsbc
                 .ToString();
         }
 
+        #endregion
 
-        # region Métodos de geraçãoo do arquivo remessa
+        #region Métodos de geração do arquivo remessa
 
-        # region HEADER REMESSA
+        #region Header
 
         /// <summary>
         /// HEADER do arquivo CNAB
         /// Gera o HEADER do arquivo remessa de acordo com o lay-out informado
         /// </summary>
-        public override string GerarHeaderRemessa(string numeroConvenio, Cedente cedente, TipoArquivo tipoArquivo,
-            int numeroArquivoRemessa)
+        public string GerarHeaderRemessa(IBanco banco, TipoArquivo tipoArquivo, Sacado nomeSacado, int numeroArquivoRemessa, DateTime ddmmaaaaGeracao, DateTime hhmmssGeracao)
         {
-            try
-            {
-                string _header = " ";
+            throw new Exception("Função não implementada");
+            //try
+            //{
+            //    string _header = " ";
 
-                base.GerarHeaderRemessa("0", cedente, tipoArquivo, numeroArquivoRemessa);
+            //    base.GerarHeaderRemessa("0", cedente, tipoArquivo, numeroArquivoRemessa);
 
-                switch (tipoArquivo)
-                {
-                    case TipoArquivo.Cnab240:
-                        if (boletos.Remessa.TipoDocumento.Equals("2") || boletos.Remessa.TipoDocumento.Equals("1"))
-                            _header = GerarHeaderRemessaCNAB240SIGCB(cedente);
-                        else
-                            _header = GerarHeaderRemessaCNAB240(cedente);
-                        break;
-                    case TipoArquivo.Cnab400:
-                        _header = GerarHeaderRemessaCNAB400(0, cedente, numeroArquivoRemessa);
-                        break;
-                    case TipoArquivo.Outro:
-                        throw new Exception("Tipo de arquivo inexistente.");
-                }
+            //    switch (tipoArquivo)
+            //    {
+            //        case TipoArquivo.Cnab240:
+            //            if (boletos.Remessa.TipoDocumento.Equals("2") || boletos.Remessa.TipoDocumento.Equals("1"))
+            //                _header = GerarHeaderRemessaCNAB240(/*cedente*/); --> Banco CEF pede Cedente, confirmar na documentação do HSBC
+            //            else
+            //                _header = GerarHeaderRemessaCNAB240(/*cedente*/); --> Banco CEF pede Cedente, confirmar na documentação do HSBC
+            //            break;
+            //        case TipoArquivo.Cnab400:
+            //            _header = GerarHeaderRemessaCNAB400(0, cedente, numeroArquivoRemessa);
+            //            break;
+            //        case TipoArquivo.Outro:
+            //            throw new Exception("Tipo de arquivo inexistente.");
+            //    }
 
-                return _header;
+            //    return _header;
 
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Erro durante a gera��o do HEADER do arquivo de REMESSA.", ex);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new Exception("Erro durante a gera��o do HEADER do arquivo de REMESSA.", ex);
+            //}
         }
 
-        public string GerarHeaderRemessaCNAB240()
+        public string GerarHeaderRemessa(IBanco banco, TipoArquivo tipoArquivo, int numeroArquivoRemessa)
         {
-            throw new NotImplementedException("Fun��o n�o implementada.");
+            throw new Exception("Função não implementada");
         }
 
-        public string GerarHeaderRemessaCNAB400(int numeroConvenio, Cedente cedente, int numeroArquivoRemessa)
+        public string GerarHeaderRemessaCnab240()
         {
-            throw new NotImplementedException("Fun��o n�o implementada.");
+            throw new Exception("Função não implementada");
         }
 
-        public override string GerarHeaderRemessa(string numeroConvenio, Cedente cedente, TipoArquivo tipoArquivo,
-            int numeroArquivoRemessa, Boleto boletos)
+        public string GerarHeaderRemessaCnab400(int numeroConvenio, Cedente cedente, int numeroArquivoRemessa)
         {
-            throw new NotImplementedException("Fun��o n�o implementada.");
+            throw new Exception("Função não implementada");
+        }
+
+        public string GerarHeaderRemessa(string numeroConvenio, Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarHeaderRemessa(string numeroConvenio, Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa,
+            List<Boleto> boletos)
+        {
+            throw new NotImplementedException();
         }
 
         # endregion
 
-        # region DETALHE REMESSA
+        #region Detalhe
 
         /// <summary>
         /// DETALHE do arquivo CNAB
         /// Gera o DETALHE do arquivo remessa de acordo com o lay-out informado
         /// </summary>
-        public override string GerarDetalheRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
+        public string GerarDetalheRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
         {
             throw new NotImplementedException("Fun��o n�o implementada.");
+        }
+
+        public string GerarHeaderRemessa(Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa)
+        {
+            throw new NotImplementedException();
         }
 
         public string GerarDetalheRemessaCNAB240()
@@ -439,16 +468,103 @@ namespace BoletoBr.Bancos.Hsbc
 
         # endregion DETALHE
 
-        # region TRAILER REMESSA
+        # region Trailer
 
         /// <summary>
         /// TRAILER do arquivo CNAB
         /// Gera o TRAILER do arquivo remessa de acordo com o lay-out informado
         /// </summary>
-        public override string GerarTrailerRemessa(int numeroRegistro, TipoArquivo tipoArquivo, Cedente cedente,
+        public string GerarTrailerRemessa(int numeroRegistro, TipoArquivo tipoArquivo, Cedente cedente,
             decimal vltitulostotal)
         {
             throw new NotImplementedException("Fun��o n�o implementada.");
+        }
+
+        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa, TipoArquivo tipoArquivo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa, TipoArquivo tipoArquivo,
+            Boleto boletos)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio, Cedente cedente)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio, Cedente cedente,
+            Boleto boletos)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarDetalheSegmentoQRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarDetalheSegmentoQRemessa(Boleto boleto, int numeroRegistro, Sacado sacado)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarDetalheSegmentoRRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarTrailerArquivoRemessa(int numeroRegistro)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarTrailerArquivoRemessa(int numeroRegistro, Boleto boletos)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarTrailerLoteRemessa(int numeroRegistro)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarTrailerLoteRemessa(int numeroRegistro, Boleto boletos)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetalheSegmentoTRetornoCnab240 LerDetalheSegmentoTRetornoCnab240(string registro)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetalheSegmentoURetornoCnab240 LerDetalheSegmentoURetornoCnab240(string registro)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetalheSegmentoWRetornoCnab240 LerDetalheSegmentoWRetornoCnab240(string registro)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void LerDetalheRetornoCnab400(string registro)
+        {
+            LerDetalheRetornoCnab400(registro);
         }
 
         public string GerarTrailerRemessa240()
@@ -467,37 +583,44 @@ namespace BoletoBr.Bancos.Hsbc
 
         #region Métodos de processamento do arquivo retorno
 
-        # region HEADER RETORNO
+        #region Header
 
         /// <summary>
         /// HEADER do arquivo CNAB
         /// Gera o HEADER do arquivo remessa de acordo com o lay-out informado
         /// </summary>
-        public override string GerarHeaderRetorno(string numeroConvenio, Cedente cedente, TipoArquivo tipoArquivo,
-            int numeroArquivoRemessa)
+        public string GerarHeaderRetorno(IBanco banco, TipoArquivo tipoArquivo, int numeroArquivoRemessa)
         {
             throw new NotImplementedException("Fun��o n�o implementada.");
         }
 
-        public string GerarHeaderRetornoCNAB240()
+        public string GerarHeaderRetornoCnab240(IBanco banco, TipoArquivo tipoArquivo, int numeroArquivoRemessa)
         {
             throw new NotImplementedException("Fun��o n�o implementada.");
         }
 
-        public string GerarHeaderRetornoCNAB400(int numeroConvenio, Cedente cedente, int numeroArquivoRemessa)
+        public string GerarHeaderRetornoCnab400(string registro)
         {
-            throw new NotImplementedException("Fun��o n�o implementada.");
+            try
+            {
+                LerDetalheRetornoCnab400(registro);
+                return registro;
+            }
+            catch (Exception ex)
+            {
+                throw new NotImplementedException("Erro ao efetuar leitura do arquivo de retorno.", ex);
+            }    
         }
 
         # endregion
 
-        # region DETALHE RETORNO
+        # region Detalhe
 
         /// <summary>
         /// DETALHE do arquivo CNAB
         /// Gera o DETALHE do arquivo remessa de acordo com o lay-out informado
         /// </summary>
-        public override string GerarDetalheRetorno(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
+        public string GerarDetalheRetorno(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
         {
             throw new NotImplementedException("Fun��o n�o implementada.");
         }
@@ -514,13 +637,13 @@ namespace BoletoBr.Bancos.Hsbc
 
         # endregion DETALHE
 
-        # region TRAILER RETORNO
+        # region Trailer
 
         /// <summary>
         /// TRAILER do arquivo CNAB
         /// Gera o TRAILER do arquivo remessa de acordo com o lay-out informado
         /// </summary>
-        public override string GerarTrailerRetorno(int numeroRegistro, TipoArquivo tipoArquivo, Cedente cedente,
+        public string GerarTrailerRetorno(int numeroRegistro, TipoArquivo tipoArquivo, Cedente cedente,
             decimal vltitulostotal)
         {
             throw new NotImplementedException("Fun��o n�o implementada.");
@@ -538,9 +661,9 @@ namespace BoletoBr.Bancos.Hsbc
 
         # endregion
 
-
         #endregion
 
+        #region Métodos de validação para geração do arquivo remessa
 
         /// <summary>
         /// Efetua as Valida��es dentro da classe Boleto, para garantir a gera��o da remessa
@@ -570,7 +693,8 @@ namespace BoletoBr.Bancos.Hsbc
             bool vRetorno = true;
             string vMsg = string.Empty;
             //
-            #region Pr� Valida��es
+
+            #region Pré Validações
             if (banco == null)
             {
                 vMsg += String.Concat("Remessa: O Banco � Obrigat�rio!", Environment.NewLine);
@@ -587,8 +711,8 @@ namespace BoletoBr.Bancos.Hsbc
                 vRetorno = false;
             }
             #endregion
+
             //
-            //valida��o de cada boleto
             foreach (Boleto boleto in boletos)
             {
                 #region Validação de cada boleto
@@ -618,7 +742,7 @@ namespace BoletoBr.Bancos.Hsbc
             string vMsg = string.Empty;
             //
 
-            #region Pr� Valida��es
+            #region Pré Validações
 
             if (banco == null)
             {
@@ -642,7 +766,7 @@ namespace BoletoBr.Bancos.Hsbc
             //
             foreach (Boleto boleto in boletos)
             {
-                #region Valida��o de cada boleto
+                #region Validação de cada boleto
 
                 if (boleto.Remessa == null)
                 {
@@ -657,5 +781,6 @@ namespace BoletoBr.Bancos.Hsbc
             mensagem = vMsg;
             return vRetorno;
         }
+        #endregion
     }
 }
