@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using BoletoBr.Bancos;
+using BoletoBr.Dominio;
 
 namespace BoletoBr
 {
@@ -70,6 +71,8 @@ namespace BoletoBr
         /// ARRECADAÇÃO BASA – CONVÊNIO XXXX – AGÊNCIA ZZZ-Z
         /// </summary>
         public string InstrucoesDoBoletoRodape { get; set; }
+
+        public Remessa Remessa { get; set; }
 
         public Boleto()
         {
