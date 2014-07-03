@@ -581,88 +581,6 @@ namespace BoletoBr.Bancos.Hsbc
 
         #endregion
 
-        #region Métodos de processamento do arquivo retorno
-
-        #region Header
-
-        /// <summary>
-        /// HEADER do arquivo CNAB
-        /// Gera o HEADER do arquivo remessa de acordo com o lay-out informado
-        /// </summary>
-        public string GerarHeaderRetorno(IBanco banco, TipoArquivo tipoArquivo, int numeroArquivoRemessa)
-        {
-            throw new NotImplementedException("Fun��o n�o implementada.");
-        }
-
-        public string GerarHeaderRetornoCnab240(IBanco banco, TipoArquivo tipoArquivo, int numeroArquivoRemessa)
-        {
-            throw new NotImplementedException("Fun��o n�o implementada.");
-        }
-
-        public string GerarHeaderRetornoCnab400(string registro)
-        {
-            try
-            {
-                LerDetalheRetornoCnab400(registro);
-                return registro;
-            }
-            catch (Exception ex)
-            {
-                throw new NotImplementedException("Erro ao efetuar leitura do arquivo de retorno.", ex);
-            }    
-        }
-
-        # endregion
-
-        # region Detalhe
-
-        /// <summary>
-        /// DETALHE do arquivo CNAB
-        /// Gera o DETALHE do arquivo remessa de acordo com o lay-out informado
-        /// </summary>
-        public string GerarDetalheRetorno(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException("Fun��o n�o implementada.");
-        }
-
-        public string GerarDetalheRetornoCNAB240()
-        {
-            throw new NotImplementedException("Fun��o n�o implementada.");
-        }
-
-        public string GerarDetalheRetornoCNAB400(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException("Fun��o n�o implementada.");
-        }
-
-        # endregion DETALHE
-
-        # region Trailer
-
-        /// <summary>
-        /// TRAILER do arquivo CNAB
-        /// Gera o TRAILER do arquivo remessa de acordo com o lay-out informado
-        /// </summary>
-        public string GerarTrailerRetorno(int numeroRegistro, TipoArquivo tipoArquivo, Cedente cedente,
-            decimal vltitulostotal)
-        {
-            throw new NotImplementedException("Fun��o n�o implementada.");
-        }
-
-        public string GerarTrailerRetorno240()
-        {
-            throw new NotImplementedException("Fun��o n�o implementada.");
-        }
-
-        public string GerarTrailerRetorno400(int numeroRegistro)
-        {
-            throw new NotImplementedException("Fun��o n�o implementada.");
-        }
-
-        # endregion
-
-        #endregion
-
         #region Métodos de validação para geração do arquivo remessa
 
         /// <summary>
@@ -782,5 +700,7 @@ namespace BoletoBr.Bancos.Hsbc
             return vRetorno;
         }
         #endregion
+
+
     }
 }

@@ -75,6 +75,7 @@
     <Compile Include="Bancos\Itau\CarteiraCobranca196.cs" />
     <Compile Include="Bancos\Itau\CarteiraCobranca198.cs" />
     <Compile Include="Bancos\LeitorRetornoCnab400Generico.cs" />
+    <Compile Include="Bancos\Hsbc\LeitorRetornoCnab400Hsbc.cs" />
     <Compile Include="Common\Common.cs" />
     <Compile Include="Common\MetodosExtensao.cs" />
     <Compile Include="Dominio\Boleto.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Dominio\CNAB240\DetalheRetornoCnab240.cs" />
     <Compile Include="Dominio\CNAB400\DetalheRetornoCnab400.cs" />
     <Compile Include="Dominio\DetalheRetorno.cs" />
+    <Compile Include="Dominio\DetalheSegmentoERetornoCnab240.cs" />
     <Compile Include="Dominio\DetalheSegmentoTRetornoCnab240.cs" />
     <Compile Include="Dominio\DetalheSegmentoURetornoCnab240.cs" />
     <Compile Include="Dominio\DetalheSegmentoWRetornoCnab240.cs" />

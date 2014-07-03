@@ -33,20 +33,15 @@ namespace BoletoBr.Bancos
 
             /* Processar Header */
             objRetornar.Header = ObterHeader();
+            objRetornar.RegistrosDetalhe = ObterRegistrosDetalhe();
+            objRetornar.Trailer = ObterTrailer();
 
             return objRetornar;
         }
 
         public HeaderRetornoCnab400 ObterHeader()
         {
-            var objRetornar = new HeaderRetornoCnab400();
-            /* Obter 1ª linha */
-            var linha = _linhasArquivo[0];
-
-            objRetornar.CodigoDoRegistro = linha.ExtrairValorDaLinha(1, 1).ToInt();
-            objRetornar.CodigoDeRetorno = linha.ExtrairValorDaLinha(2, 2).ToInt();
-
-            return objRetornar;
+            return null;
         }
 
         public List<DetalheRetornoCnab400> ObterRegistrosDetalhe()
