@@ -73,6 +73,10 @@ namespace BoletoBr.Bancos
 
         public List<DetalheRetornoCnab400> ObterRegistrosDetalhe()
         {
+            var objRetornar = new List<DetalheRetornoCnab400>();
+
+            var linha = _linhasArquivo[0];
+
             return null;
         }
 
