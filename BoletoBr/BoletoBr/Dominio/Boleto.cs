@@ -1,18 +1,23 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using BoletoBr.Bancos;
 using BoletoBr.Dominio;
+using BoletoBr.Dominio.EspecieDocumento;
+using BoletoBr.Dominio.Instrucao;
 
 namespace BoletoBr
 {
     public class Boleto
     {
+        #region Propriedades
+
         public IBanco BancoBoleto { get; set; }
         public Cedente CedenteBoleto { get; set; }
         public Sacado SacadoBoleto { get; set; }
         public CarteiraCobranca CarteiraCobranca { get; set; }
         public string SequencialNossoNumero { get; set; }
-
         /// <summary>
         /// Deve ser gerado pelo componente
         /// </summary>
@@ -29,7 +34,7 @@ namespace BoletoBr
         public string ValorMoeda { get; set; }
         public string Aceite { get; set; }
         public string NumeroDocumento { get; set; }
-        public string Especie { get; set; }
+        public IEspecieDocumento Especie { get; set; }
         public string Moeda { get; set; }
         public string UsoBanco { get; set; }
         public decimal? ValorAbatimentoDesconto { get; set; }
@@ -50,8 +55,7 @@ namespace BoletoBr
         public string TipoModalidade { get; set; }
         public string CodigoBarraBoleto { get; set; }
         public string LinhaDigitavelBoleto { get; set; }
-        /// <summary>
-        /// Data de Vencimento no formato Juliano.
+        /// <summary> DATA DE VENCIMENTO NO FORMATO JULIANO
         /// A data de vencimento no formato juliano somente deve ser utilizada quando o cliente optar pelo uso do Tipo Identificador “4” no Código do Documento, com retorno dos três dígitos no arquivo magnético e no demonstrativo de liquidação (condição cadastral).  
         /// As três primeiras posições correspondem à data de vencimento informada pelo mês juliano. Exemplos:
         /// 001 = corresponde a 01 de janeiro.
@@ -64,15 +68,16 @@ namespace BoletoBr
         /// </summary>
         public string DataFormatoJuliano { get; set; }
         public string CodigoDoProduto { get; set; }
-        public string InstrucoesDoBoleto { get; set; }
+        public IList<IInstrucao> InstrucoesDoBoleto { get; set; }
         /// <summary>
         /// Propriedade: Instruçõe do Boleto Rodapé
         /// Objetivo: Criado para atender exigência do Banco BASA. Onde, deve constar:
         /// ARRECADAÇÃO BASA – CONVÊNIO XXXX – AGÊNCIA ZZZ-Z
         /// </summary>
         public string InstrucoesDoBoletoRodape { get; set; }
-
         public Remessa Remessa { get; set; }
+
+        #endregion
 
         public Boleto()
         {
@@ -85,9 +90,8 @@ namespace BoletoBr
             //this.QuantidadeMoeda = 0;
             this.ValorMoeda = "";
             this.Aceite = "";
-            this.Especie = "";
+            //this.Especie = "";
             this.Moeda = "9";
-            this.InstrucoesDoBoleto = "";
         }
 
         public Boleto(Cedente cedente, Sacado sacado, CarteiraCobranca carteiraCobranca) : base()

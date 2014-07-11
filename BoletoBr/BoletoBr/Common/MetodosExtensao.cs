@@ -227,7 +227,7 @@ namespace BoletoBr
         /// </summary>
         /// <param name="obj">Objeto alvo do método de extensão</param>
         /// <returns>Retorna própria instância do objeto ou uma nova instância com dados default</returns>
-        public static T ToBind<T>(this T obj) where T : class, new()
+        public static T ToVincular<T>(this T obj) where T : class, new()
         {
             if (obj != null)
                 return obj;
@@ -240,7 +240,7 @@ namespace BoletoBr
         /// </summary>
         /// <param name="texto"></param>
         /// <returns>String.Empty caso o texto seja nulo</returns>
-        public static string ToBind(this string texto)
+        public static string ToVincular(this string texto)
         {
             if (texto == null)
                 return "";
@@ -253,7 +253,7 @@ namespace BoletoBr
         /// </summary>
         /// <param name="obj">Objeto alvo do método de extensão</param>
         /// <returns>Retorna própria instância do objeto ou uma nova instância com dados default</returns>
-        public static IList<T> ToBind<T>(this IList<T> obj) where T : class, new()
+        public static IList<T> ToVincular<T>(this IList<T> obj) where T : class, new()
         {
             if (obj != null)
                 return obj;

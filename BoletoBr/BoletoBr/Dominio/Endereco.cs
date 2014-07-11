@@ -37,7 +37,7 @@ namespace BoletoBr
 
         public string CepSemFormatacao
         {
-            get { return Cep.ToBind().Replace(".", "").Replace("-", ""); }
+            get { return Cep.ToVincular().Replace(".", "").Replace("-", ""); }
         }
     }
 }
