@@ -37,7 +37,15 @@ namespace BoletoBr
         public DateTime DataVencimento { get; set; }
         public DateTime DataDocumento { get; set; }
         public DateTime? DataProcessamento { get; set; }
+        public int QtdParcelas { get; set; }
         public int NumeroParcela { get; set; }
+        public string NumeroParcelaFormatado
+        {
+            get
+            {
+                return String.Format("{0} / {1}", NumeroParcela, QtdParcelas);
+            } 
+        }
         public decimal ValorBoleto { get; set; }
         public decimal? ValorCobrado { get; set; }
         public string LocalPagamento { get; set; }
@@ -119,7 +127,7 @@ namespace BoletoBr
             this.QuantidadeMoeda = null;
             this.Aceite = "";
             this.ValorMoeda = "";
-            this.Moeda = "9";
+            //this.Moeda = "9";
             this.InstrucoesDoBoleto = new List<IInstrucao>();
         }
 

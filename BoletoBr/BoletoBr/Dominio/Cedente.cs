@@ -19,11 +19,10 @@ namespace BoletoBr
                 valorBaseTratado = valorBaseTratado.Replace(".", "").Replace("-", "").Replace("/", "");
 
                 if (valorBaseTratado.Length > 11)
-                    return Convert.ToUInt64(valorBaseTratado).ToString(@"00\.000\.000\/0000\-00");
-                
-                return Convert.ToUInt64(valorBaseTratado).ToString(@"000\.000\.000\-00");
-            }
+                    return MetodosExtensao.SetMascara(valorBaseTratado, "##.###.###/####-##");
 
+                return MetodosExtensao.SetMascara(valorBaseTratado, "###.###.###-##");
+            }
         }
 
         public Cedente(string codigoCedente, int digitoCedente, string cpfCnpj, string nome, ContaBancaria contaBancaria, Endereco enderecoCedente)

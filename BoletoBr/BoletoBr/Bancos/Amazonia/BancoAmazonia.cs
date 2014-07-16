@@ -33,6 +33,7 @@ namespace BoletoBr.Bancos.Amazonia
         private readonly List<CarteiraCobranca> _carteirasCobrancaBasa;
 
         public string LocalDePagamento { get; private set; }
+        public string MoedaBanco { get; private set; }
 
         public List<CarteiraCobranca> GetCarteirasCobranca()
         {
@@ -294,6 +295,11 @@ namespace BoletoBr.Bancos.Amazonia
         public void FormataNossoNumero(Boleto boleto)
         {
             boleto.SetNossoNumeroFormatado(string.Format("{0}", boleto.SequencialNossoNumero.PadLeft(16, '0')));
+        }
+
+        public void FormataMoedaBoleto(Boleto boleto)
+        {
+            throw new NotImplementedException();
         }
 
         public void FormatarBoleto(Boleto boleto)

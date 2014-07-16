@@ -33,6 +33,7 @@ namespace BoletoBr.Bancos.Hsbc
             DigitoBanco = "9";
             NomeBanco = "HSBC";
             this.LocalDePagamento = "Pagável em qualquer banco até o vencimento.";
+            this.MoedaBanco = "R$";
 
             /* Adiciona carteiras de cobrança */
             _carteirasCobrancaHsbc = new List<CarteiraCobranca>();
@@ -45,6 +46,7 @@ namespace BoletoBr.Bancos.Hsbc
         #region Métodos de formatação do boleto
 
         public string LocalDePagamento { get; private set; }
+        public string MoedaBanco { get; private set; }
 
         public List<CarteiraCobranca> GetCarteirasCobranca()
         {
@@ -87,6 +89,17 @@ namespace BoletoBr.Bancos.Hsbc
             //if (boleto.DataDocumento.ToString("dd/MM/yyyy") == "01/01/0001")
             if (boleto.DataDocumento == DateTime.MinValue)
                 boleto.DataDocumento = DateTime.Now;
+        }
+
+        public void FormataMoedaBoleto(Boleto boleto)
+        {
+            if (string.IsNullOrEmpty(boleto.Moeda))
+                throw new Exception("Espécie/Moeda para o boleto não foi informada.");
+
+            if ((boleto.Moeda == "9") || (boleto.Moeda == "REAL") || (boleto.Moeda == "R$"))
+                boleto.Moeda = "R$";
+            else
+                boleto.Moeda = "0";
         }
 
         public void FormataNumeroDocumento(Boleto boleto)

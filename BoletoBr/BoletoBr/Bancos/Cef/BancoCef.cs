@@ -51,6 +51,7 @@ namespace BoletoBr.Bancos.Cef
         private readonly List<CarteiraCobranca> _carteirasCobrancaCef;
 
         public string LocalDePagamento { get; private set; }
+        public string MoedaBanco { get; private set; }
 
         public List<CarteiraCobranca> GetCarteirasCobranca()
         {
@@ -134,6 +135,11 @@ namespace BoletoBr.Bancos.Cef
                 FormataLinhaDigitavel(boleto);
                 FormataNossoNumero(boleto);
             }
+        }
+
+        public void FormataMoedaBoleto(Boleto boleto)
+        {
+            throw new NotImplementedException();
         }
 
         public void FormatarBoleto(Boleto boleto)

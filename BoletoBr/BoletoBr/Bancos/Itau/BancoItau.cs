@@ -48,6 +48,7 @@ namespace BoletoBr.Bancos.Itau
         private readonly List<CarteiraCobranca> _carteirasCobranca;
 
         public string LocalDePagamento { get; private set; }
+        public string MoedaBanco { get; private set; }
 
         public List<CarteiraCobranca> GetCarteirasCobranca()
         {
@@ -140,6 +141,11 @@ namespace BoletoBr.Bancos.Itau
                 throw new Exception("Erro ao validar boletos.", e);
             }
 
+        }
+
+        public void FormataMoedaBoleto(Boleto boleto)
+        {
+            throw new NotImplementedException();
         }
 
         public void FormatarBoleto(Boleto boleto)

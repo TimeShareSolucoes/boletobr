@@ -32,6 +32,7 @@ namespace BoletoBr.Bancos.Bradesco
         private readonly List<CarteiraCobranca> _carteirasCobranca;
 
         public string LocalDePagamento { get; private set; }
+        public string MoedaBanco { get; private set; }
 
         public List<CarteiraCobranca> GetCarteirasCobranca()
         {
@@ -91,6 +92,11 @@ namespace BoletoBr.Bancos.Bradesco
             //if (boleto.DataDocumento.ToString("dd/MM/yyyy") == "01/01/0001")
             if (boleto.DataDocumento == DateTime.MinValue) // diegomodolo (diego.ribeiro@nectarnet.com.br)
                 boleto.DataDocumento = DateTime.Now;
+        }
+
+        public void FormataMoedaBoleto(Boleto boleto)
+        {
+            throw new NotImplementedException();
         }
 
         public void FormatarBoleto(Boleto boleto)

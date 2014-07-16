@@ -32,6 +32,7 @@ namespace BoletoBr.Bancos.BancoBrasil
         private readonly List<CarteiraCobranca> _carteirasCobranca;
 
         public string LocalDePagamento { get; private set; }
+        public string MoedaBanco { get; private set; }
 
         public List<CarteiraCobranca> GetCarteirasCobranca()
         {
@@ -449,6 +450,12 @@ namespace BoletoBr.Bancos.BancoBrasil
                 boleto.CedenteBoleto.ContaBancariaCedente.Conta = boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(8, '0');
             #endregion Agência e Conta Corrente
         }
+
+        public void FormataMoedaBoleto(Boleto boleto)
+        {
+            throw new NotImplementedException();
+        }
+
         public void FormatarBoleto(Boleto boleto)
         {
             boleto.LocalPagamento = "PAGÁVEL EM QUALQUER AGÊNCIA BANCÁRIA ATÉ O VENCIMENTO";

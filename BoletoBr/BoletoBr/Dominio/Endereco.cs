@@ -32,8 +32,16 @@ namespace BoletoBr
         /// GO, SP, MG, PR etc.
         /// </summary>
         public string SiglaUf { get; set; }
-
         public string Cep { get; set; }
+        public string CepFormatado
+        {
+            get
+            {
+                var valorATratar = Cep;
+                valorATratar = valorATratar.Replace(".", "").Replace("-", "");
+                return MetodosExtensao.SetMascara(valorATratar, "##.###-###");
+            }
+        }
 
         public string CepSemFormatacao
         {

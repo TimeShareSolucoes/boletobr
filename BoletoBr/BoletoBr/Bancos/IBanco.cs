@@ -10,9 +10,24 @@ namespace BoletoBr.Bancos
         string DigitoBanco { get; set; }
         string NomeBanco { get; set; }
         string LocalDePagamento { get; }
+        /// <summary>
+        /// O código da moeda é especifico em cada banco.
+        ///                MOEDA
+        /// COD - BANCO |REAL|VARIÁVEL
+        /// 104 - CAIXA |  9 |   ?
+        /// 341 - ITAÚ  |  0 |   1          
+        /// 399 - HSBC  |  9 |   0            
+        /// </summary>
+        string MoedaBanco { get; }
         List<CarteiraCobranca> GetCarteirasCobranca();
         CarteiraCobranca GetCarteiraCobrancaPorCodigo(string codigoCarteira);
         void ValidaBoletoComNormasBanco(Boleto boleto);
+
+        /// <summary>
+        /// Formata o código/sigla da Espécie/Moeda do boleto.
+        /// </summary>
+        /// <param name="boleto"></param>
+        void FormataMoedaBoleto(Boleto boleto);
 
         /// <summary>
         /// Efetua os cálculos de linha digitável do boleto.
