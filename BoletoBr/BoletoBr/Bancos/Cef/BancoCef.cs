@@ -36,6 +36,7 @@ namespace BoletoBr.Bancos.Cef
             this.CodigoBanco = "104";
             this.DigitoBanco = "0";
             this.NomeBanco = "Caixa Econômica Federal";
+            this.LocalDePagamento = "Pagável preferencialmente nas agências da Caixa ou Lotéricas.";
 
             /* Adiciona carteiras de cobrança */
             _carteirasCobrancaCef = new List<CarteiraCobranca>();
@@ -48,6 +49,8 @@ namespace BoletoBr.Bancos.Cef
         public string NomeBanco { get; set; }
 
         private readonly List<CarteiraCobranca> _carteirasCobrancaCef;
+
+        public string LocalDePagamento { get; private set; }
 
         public List<CarteiraCobranca> GetCarteirasCobranca()
         {

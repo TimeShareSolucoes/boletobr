@@ -9,6 +9,7 @@ namespace BoletoBr.Bancos
         string CodigoBanco { get; set; }
         string DigitoBanco { get; set; }
         string NomeBanco { get; set; }
+        string LocalDePagamento { get; }
         List<CarteiraCobranca> GetCarteirasCobranca();
         CarteiraCobranca GetCarteiraCobrancaPorCodigo(string codigoCarteira);
         void ValidaBoletoComNormasBanco(Boleto boleto);

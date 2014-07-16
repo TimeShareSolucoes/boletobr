@@ -16,6 +16,7 @@ namespace BoletoBr.Bancos.Bradesco
             CodigoBanco = "237";
             DigitoBanco = "2";
             NomeBanco = "Bradesco";
+            this.LocalDePagamento = "Pagável em qualquer banco até o vencimento.";
 
             _carteirasCobranca = new List<CarteiraCobranca>();
             _carteirasCobranca.Add(new CarteiraCobrancaBradesco09());
@@ -29,6 +30,8 @@ namespace BoletoBr.Bancos.Bradesco
         private string _digitoAutoConferenciaNossoNumero;
 
         private readonly List<CarteiraCobranca> _carteirasCobranca;
+
+        public string LocalDePagamento { get; private set; }
 
         public List<CarteiraCobranca> GetCarteirasCobranca()
         {

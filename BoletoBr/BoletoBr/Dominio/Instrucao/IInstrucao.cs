@@ -9,14 +9,9 @@ namespace BoletoBr.Dominio.Instrucao
 {
     public interface IInstrucao
     {
-        /// <summary>
-        /// Valida os dados referentes a instrução
-        /// </summary>
-        void Valida();
-
         IBanco Banco { get; set; }
         int Codigo { get; set; }
-        string Descricao { get; set; }
-        int QuantidadeDias { get; set; }
+        int QtdDias { get; set; }
+        string TextoInstrucao { get; }
     }
 }

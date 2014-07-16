@@ -1,4 +1,6 @@
-﻿namespace BoletoBr
+﻿using System;
+
+namespace BoletoBr
 {
     public class Cedente
     {
@@ -9,6 +11,21 @@
         public string CpfCnpj { get; set; }
         public string Nome { get; set; }
         public Endereco EnderecoCedente { get; set; }
+        public string CpfCnpjFormatado
+        {
+            get
+            {
+                var valorBaseTratado = CpfCnpj;
+                valorBaseTratado = valorBaseTratado.Replace(".", "").Replace("-", "").Replace("/", "");
+
+                if (valorBaseTratado.Length > 11)
+                    return Convert.ToUInt64(valorBaseTratado).ToString(@"00\.000\.000\/0000\-00");
+                
+                return Convert.ToUInt64(valorBaseTratado).ToString(@"000\.000\.000\-00");
+            }
+
+        }
+
         public Cedente(string codigoCedente, int digitoCedente, string cpfCnpj, string nome, ContaBancaria contaBancaria, Endereco enderecoCedente)
         {
             this.CodigoCedente = codigoCedente;

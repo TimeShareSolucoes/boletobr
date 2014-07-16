@@ -47,6 +47,8 @@ namespace BoletoBr.Bancos.Itau
 
         private readonly List<CarteiraCobranca> _carteirasCobranca;
 
+        public string LocalDePagamento { get; private set; }
+
         public List<CarteiraCobranca> GetCarteirasCobranca()
         {
             return _carteirasCobranca;

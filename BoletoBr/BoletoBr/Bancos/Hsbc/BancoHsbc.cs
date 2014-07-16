@@ -32,6 +32,7 @@ namespace BoletoBr.Bancos.Hsbc
             CodigoBanco = "399";
             DigitoBanco = "9";
             NomeBanco = "HSBC";
+            this.LocalDePagamento = "Pagável em qualquer banco até o vencimento.";
 
             /* Adiciona carteiras de cobrança */
             _carteirasCobrancaHsbc = new List<CarteiraCobranca>();
@@ -42,6 +43,8 @@ namespace BoletoBr.Bancos.Hsbc
         #endregion
 
         #region Métodos de formatação do boleto
+
+        public string LocalDePagamento { get; private set; }
 
         public List<CarteiraCobranca> GetCarteirasCobranca()
         {
@@ -72,12 +75,18 @@ namespace BoletoBr.Bancos.Hsbc
             if (boleto.NossoNumeroFormatado.ToStringSafe().ToLong() == 0)
                 throw new NotImplementedException("Nosso número inválido");
 
-            //Verifica se o tamanho para o NossoNumero s�o 10 d�gitos (5 range + 5 numero sequencial)
+            //Verifica se o tamanho para o NossoNumero s�o 10 d�gitos (5 range + 5 numero sequencial) - Válido para carteira CSB
+            if (boleto.CarteiraCobranca.Codigo.Equals("CSB"))
             if (Convert.ToInt32(boleto.NossoNumeroFormatado).ToString().Length > 10)
                 throw new NotImplementedException("A quantidade de dígitos do nosso número para a carteira " +
                                                   boleto.CarteiraCobranca.Codigo + ", são 10 números.");
             else if (Convert.ToInt32(boleto.NossoNumeroFormatado).ToString().Length < 10)
                 boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(10, '0'));
+
+            //Verifica se data do documento � valida
+            //if (boleto.DataDocumento.ToString("dd/MM/yyyy") == "01/01/0001")
+            if (boleto.DataDocumento == DateTime.MinValue)
+                boleto.DataDocumento = DateTime.Now;
         }
 
         public void FormataNumeroDocumento(Boleto boleto)
@@ -700,7 +709,5 @@ namespace BoletoBr.Bancos.Hsbc
             return vRetorno;
         }
         #endregion
-
-
     }
 }

@@ -134,15 +134,9 @@
     <Compile Include="Dominio\EspecieDocumento\EspecieDocumentoItau.cs" />
     <Compile Include="Dominio\EspecieDocumento\EspeciesDocumento.cs" />
     <Compile Include="Dominio\EspecieDocumento\IEspecieDocumento.cs" />
-    <Compile Include="Dominio\Instrucao\AbstractInstrucao.cs" />
     <Compile Include="Dominio\Instrucao\IInstrucao.cs" />
-    <Compile Include="Dominio\Instrucao\Instrucao.cs" />
-    <Compile Include="Dominio\Instrucao\InstrucaoBancoBrasil.cs" />
-    <Compile Include="Dominio\Instrucao\InstrucaoBradesco.cs" />
-    <Compile Include="Dominio\Instrucao\InstrucaoCef.cs" />
-    <Compile Include="Dominio\Instrucao\InstrucaoHsbc.cs" />
-    <Compile Include="Dominio\Instrucao\InstrucaoItau.cs" />
-    <Compile Include="Dominio\Instrucao\Instrucoes.cs" />
+    <Compile Include="Dominio\Instrucao\InstrucaoPadronizada.cs" />
+    <Compile Include="Dominio\Instrucao\InstrucaoCustomizada.cs" />
     <Compile Include="Dominio\Remessa.cs" />
     <Compile Include="Dominio\Sacado.cs" />
     <Compile Include="Dominio\CNAB240\TrailerRemessaCnab240.cs" />
@@ -158,6 +152,7 @@
     <Compile Include="CalculoModulo\CalculadoraMod11Generica.cs" />
     <Compile Include="CalculoModulo\ICalculadoraModulo10.cs" />
     <Compile Include="CalculoModulo\ICalculadoraModulo11.cs" />
+    <Compile Include="Fabricas\InstrucaoFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

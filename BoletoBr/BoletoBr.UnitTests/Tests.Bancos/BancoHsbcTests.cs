@@ -20,6 +20,17 @@ namespace BoletoBr.UnitTests.Tests.Bancos.HSBC
          */
 
         [TestMethod]
+        public void Formatacpfcnpj()
+        {
+            string cnpjFormatado = Convert.ToUInt64("03863763000154").ToString(@"00\.000\.000\/0000\-00");
+
+            const string valorEsperado = "03.863.763/0001-54";
+
+            Assert.AreEqual(valorEsperado, cnpjFormatado);
+        }
+
+
+        [TestMethod]
         public void TesteCalculoCodigoBarrasCarteiraCnrHsbcBoletoDocumentacaoHsbc()
         {
             /* 

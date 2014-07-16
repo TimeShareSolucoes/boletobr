@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BoletoBr.Bancos.BancoBrasil;
+using BoletoBr.Bancos.Hsbc;
 
 namespace BoletoBr.Dominio.EspecieDocumento
 {
@@ -142,7 +143,7 @@ namespace BoletoBr.Dominio.EspecieDocumento
         {
             try
             {
-                this.Banco = new BancoBrasil();
+                this.Banco = new BancoHsbc();
 
                 switch (getEnumEspecieByCodigo(idCodigo))
                 {

@@ -14,6 +14,17 @@ namespace BoletoBr
         #region Propriedades
 
         public IBanco BancoBoleto { get; set; }
+
+        public string CodigoEDigitoBancoBind
+        {
+            get
+            {
+                if (this.BancoBoleto != null)
+                    return BancoBoleto.CodigoBanco + "-" + BancoBoleto.DigitoBanco;
+
+                return "";
+            }
+        }
         public Cedente CedenteBoleto { get; set; }
         public Sacado SacadoBoleto { get; set; }
         public CarteiraCobranca CarteiraCobranca { get; set; }
@@ -68,7 +79,25 @@ namespace BoletoBr
         /// </summary>
         public string DataFormatoJuliano { get; set; }
         public string CodigoDoProduto { get; set; }
-        public IList<IInstrucao> InstrucoesDoBoleto { get; set; }
+        public List<IInstrucao> InstrucoesDoBoleto { get; set; }
+
+        public string InstrucoesBoletoConcatenadas
+        {
+            get
+            {
+                if (this.InstrucoesDoBoleto == null || this.InstrucoesDoBoleto.Count <= 0)
+                    return "";
+
+                string textoConcatenado = "";
+
+                foreach (var instrucao in this.InstrucoesDoBoleto)
+                {
+                    textoConcatenado += instrucao.TextoInstrucao + Environment.NewLine;
+                }
+
+                return textoConcatenado;
+            }
+        }
         /// <summary>
         /// Propriedade: Instruçõe do Boleto Rodapé
         /// Objetivo: Criado para atender exigência do Banco BASA. Onde, deve constar:
@@ -86,17 +115,18 @@ namespace BoletoBr
 
         private void Inicializa()
         {
-            this.LocalPagamento = "Até o vencimento, preferencialmente no ";
-            //this.QuantidadeMoeda = 0;
-            this.ValorMoeda = "";
+            this.LocalPagamento = "";
+            this.QuantidadeMoeda = null;
             this.Aceite = "";
-            //this.Especie = "";
+            this.ValorMoeda = "";
             this.Moeda = "9";
+            this.InstrucoesDoBoleto = new List<IInstrucao>();
         }
 
-        public Boleto(Cedente cedente, Sacado sacado, CarteiraCobranca carteiraCobranca) : base()
+        public Boleto(Cedente cedente, Sacado sacado, CarteiraCobranca carteiraCobranca)
         {
             Inicializa();
+
             this.CedenteBoleto = cedente;
             this.SacadoBoleto = sacado;
             this.CarteiraCobranca = carteiraCobranca;

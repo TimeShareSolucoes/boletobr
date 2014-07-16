@@ -22,7 +22,7 @@ namespace BoletoBr.Bancos.BancoBrasil
             this.CodigoBanco = "001";
             this.DigitoBanco = "9";
             this.NomeBanco = "Banco do Brasil";
-
+            this.LocalDePagamento = "Pagável em qualquer banco até o vencimento.";
             this._carteirasCobranca = new List<CarteiraCobranca>();
             this._carteirasCobranca.Add(new CarteiraCobrancaBancoBrasil17019());
             this._carteirasCobranca.Add(new CarteiraCobrancaBancoBrasil18019());
@@ -30,6 +30,8 @@ namespace BoletoBr.Bancos.BancoBrasil
         }
 
         private readonly List<CarteiraCobranca> _carteirasCobranca;
+
+        public string LocalDePagamento { get; private set; }
 
         public List<CarteiraCobranca> GetCarteirasCobranca()
         {

@@ -20,6 +20,7 @@ namespace BoletoBr.Bancos.Amazonia
             CodigoBanco = "003";
             DigitoBanco = "5";
             NomeBanco = "Banco da Amazônia S/A";
+            this.LocalDePagamento = "Pagável em qualquer banco até o vencimento.";
 
             /* Adiciona carteiras de cobrança */
             _carteirasCobrancaBasa = new List<CarteiraCobranca>();
@@ -30,6 +31,8 @@ namespace BoletoBr.Bancos.Amazonia
         private string _dacNossoNumero = string.Empty;
         private int _dacBoleto = 0;
         private readonly List<CarteiraCobranca> _carteirasCobrancaBasa;
+
+        public string LocalDePagamento { get; private set; }
 
         public List<CarteiraCobranca> GetCarteirasCobranca()
         {
