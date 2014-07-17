@@ -37,6 +37,7 @@ namespace BoletoBr.Bancos.Cef
             this.DigitoBanco = "0";
             this.NomeBanco = "Caixa Econômica Federal";
             this.LocalDePagamento = "Pagável preferencialmente nas agências da Caixa ou Lotéricas.";
+            this.MoedaBanco = "9";
 
             /* Adiciona carteiras de cobrança */
             _carteirasCobrancaCef = new List<CarteiraCobranca>();
@@ -271,7 +272,7 @@ namespace BoletoBr.Bancos.Cef
                     string primeiraParteNossoNumero = boleto.NossoNumeroFormatado.Substring(2, 3);
 
                     //104 - Caixa Econ�mica Federal S.A. 
-                    //Carteira 01. 
+                    //Carteira 02. 
                     //Cobran�a r�pida. 
                     //Cobran�a sem registro. 
                     //Cobran�a sem registro, nosso n�mero com 16 d�gitos. 

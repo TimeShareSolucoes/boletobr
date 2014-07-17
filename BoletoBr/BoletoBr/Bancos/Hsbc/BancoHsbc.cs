@@ -33,7 +33,7 @@ namespace BoletoBr.Bancos.Hsbc
             DigitoBanco = "9";
             NomeBanco = "HSBC";
             this.LocalDePagamento = "Pagável em qualquer banco até o vencimento.";
-            this.MoedaBanco = "R$";
+            this.MoedaBanco = "9";
 
             /* Adiciona carteiras de cobrança */
             _carteirasCobrancaHsbc = new List<CarteiraCobranca>();
