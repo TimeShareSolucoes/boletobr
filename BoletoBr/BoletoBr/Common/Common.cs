@@ -143,6 +143,66 @@ namespace BoletoBr
             }
         }
 
+        internal static string Mod11Base7Bradesco(string value)
+        {
+            #region Trecho do manual DVMD11.doc
+            /* 
+            Posição 71 a 81: Nosso Número - poderá ser gerado a partir de 00000000001,
+            00000000002 etc - 11 posições, devendo ser atribuído numero diferenciado para
+            identificação de cada documento na Cobrança Bradesco.
+            • posição 82 a 82: Dígito de auto-conferência do Nosso Número - 1 posição
+            Obs.: Para o cálculo do dígito, será necessário acrescentar o número da
+            carteira à esquerda antes do Nosso Número, e aplicar o módulo 11, com base
+            7.
+            Exemplo
+            a) efetuar a multiplicação:
+            CARTEIRA    NOSSO NÚMERO
+               |              |
+            --------    ------------     
+               19       00000000002
+                MULTIPLICAÇÃO
+             * INCLUIR RESTANTE DO MANUAL
+             *
+               
+
+            Se o resto da divisão for igual a 10 o D.V. será igual a X. 
+            Se o resto da divisão for igual a 0 o D.V. será igual a 0.
+            Se o resto for menor que 10, o D.V.  será igual ao resto.
+
+            No exemplo acima, o dígito verificador será igual a 3
+            */
+            #endregion
+
+            /* d - Dígito
+             * s - Soma
+             * p - Peso
+             * b - Base
+             * r - Resto
+             */
+
+            string d;
+            int s = 0, p = 7, b = 2;
+
+            for (int i = value.Length - 1; i >= 0; i--)
+            {
+                s += (int.Parse(value[i].ToString()) * p);
+                if (p == b)
+                    p = 9;
+                else
+                    p--;
+            }
+
+            int r = (s % 11);
+            if (r == 10)
+                d = "P";
+            else if (r == 0)
+                d = "0";
+            else
+                d = r.ToString();
+
+            return d;
+        }
+
         public static int Mod11(string seq, int lim, int flag)
         {
             int mult = 0;

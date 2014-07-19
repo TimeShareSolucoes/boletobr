@@ -18,11 +18,15 @@ namespace BoletoBr.Bancos.Bradesco
             CodigoBanco = "237";
             DigitoBanco = "2";
             NomeBanco = "Bradesco";
-            this.LocalDePagamento = "Pagável preferencialmente em agências do Bradesco.";
+            this.LocalDePagamento = "Pagável preferencialmente nas Agências Bradesco.";
             this.MoedaBanco = "9";
 
             _carteirasCobranca = new List<CarteiraCobranca>();
+            _carteirasCobranca.Add(new CarteiraCobrancaBradesco02());
+            _carteirasCobranca.Add(new CarteiraCobrancaBradesco03());
+            _carteirasCobranca.Add(new CarteiraCobrancaBradesco06());
             _carteirasCobranca.Add(new CarteiraCobrancaBradesco09());
+            _carteirasCobranca.Add(new CarteiraCobrancaBradesco19());
         }
 
         public string CalcularDigitoNossoNumero(Boleto boleto)
@@ -144,6 +148,17 @@ namespace BoletoBr.Bancos.Bradesco
         ///   *******
         /// 
         /// </summary>
+        
+        public void FormataNossoNumero(Boleto boleto)
+        {
+            boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero);
+
+            boleto.SetNossoNumeroFormatado(
+                string.Format("{0}/{1}-{2}",
+                    boleto.CarteiraCobranca.Codigo,
+                    boleto.NossoNumeroFormatado,
+                    boleto.DigitoNossoNumero));
+        }
         public void FormataCodigoBarra(Boleto boleto)
         {
             string valorBoleto = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "");
@@ -191,7 +206,7 @@ namespace BoletoBr.Bancos.Bradesco
         {
 
             string FormataCampoLivre = string.Format("{0}{1}{2}{3}{4}", boleto.CedenteBoleto.ContaBancariaCedente.Agencia, boleto.CarteiraCobranca.Codigo,
-                                            boleto.NossoNumeroFormatado, boleto.CedenteBoleto.ContaBancariaCedente.Conta, "0");
+                                            boleto.NossoNumeroFormatado.Replace("-", "").Replace("/", ""), boleto.CedenteBoleto.ContaBancariaCedente.Conta, "0");
 
             return FormataCampoLivre;
         }
@@ -394,15 +409,6 @@ namespace BoletoBr.Bancos.Bradesco
             int numeroArquivoRemessa, out string mensagem)
         {
             throw new NotImplementedException();
-        }
-
-        public void FormataNossoNumero(Boleto boleto)
-        {
-            boleto.SetNossoNumeroFormatado(
-                string.Format("{0}/{1}-{2}",
-                    boleto.CarteiraCobranca.Codigo,
-                    boleto.NossoNumeroFormatado,
-                    boleto.DigitoNossoNumero));
         }
     }
 }
