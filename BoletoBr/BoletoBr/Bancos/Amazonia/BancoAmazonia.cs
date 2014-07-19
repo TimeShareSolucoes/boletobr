@@ -137,9 +137,7 @@ namespace BoletoBr.Bancos.Amazonia
             string agencia = Common.Right(boleto.CedenteBoleto.ContaBancariaCedente.Agencia, 3) +
                 boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia;
             string convenio = boleto.CedenteBoleto.Convenio.PadLeft(4, '0');
-            string nossonumero = boleto.SequencialNossoNumero.PadLeft(16, '0');
-
-            // Este numero foi fornecido pelo BASA para o convenio testado.. nao sei se muda.
+            string nossonumero = boleto.SequencialNossoNumero.PadLeft(16, '0');            
 
             /*
              * Conforme documentação técnica do BASA o identificador será sempre '8'.
@@ -159,17 +157,10 @@ namespace BoletoBr.Bancos.Amazonia
                                         Common.Right(boleto.CodigoBarraBoleto, 39);
         }
 
-        //public override string GerarHeaderRemessa(string numeroConvenio, Cedente cedente, TipoArquivo tipoArquivo,
-        //    int numeroArquivoRemessa, Boleto boletos)
-        //{
-        //    throw new NotImplementedException("Fun��o n�o implementada.");
-        //}
-
         public string FormataCampoLivre(Boleto boleto)
         {
             throw new NotImplementedException();
         }
-
 
         public void FormataNumeroDocumento(Boleto boleto)
         {
@@ -293,7 +284,6 @@ namespace BoletoBr.Bancos.Amazonia
         {
             throw new NotImplementedException();
         }
-
 
         public void FormataNossoNumero(Boleto boleto)
         {

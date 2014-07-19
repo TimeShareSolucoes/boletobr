@@ -39,9 +39,6 @@ namespace BoletoBr.Bancos.Itau
             _carteirasCobranca.Add(new CarteiraCobranca178());
             _carteirasCobranca.Add(new CarteiraCobranca196());
             _carteirasCobranca.Add(new CarteiraCobranca198());
-
-            /* Testes de Carteira */
-            _carteirasCobranca.Add(new CarteiraCobranca110Temp());
         }
 
         public string CodigoBanco { get; set; }
@@ -96,9 +93,9 @@ namespace BoletoBr.Bancos.Itau
                     boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(8, '0'));
 
                 //� obrigat�rio o preenchimento do n�mero do documento
-                if (boleto.CarteiraCobranca.Codigo == "106" || boleto.CarteiraCobranca.Codigo == "107" || boleto.CarteiraCobranca.Codigo == "110" ||
-                    boleto.CarteiraCobranca.Codigo == "122" || boleto.CarteiraCobranca.Codigo == "142" || boleto.CarteiraCobranca.Codigo == "143" ||
-                    boleto.CarteiraCobranca.Codigo == "195" || boleto.CarteiraCobranca.Codigo == "196" || boleto.CarteiraCobranca.Codigo == "198")
+                if (boleto.CarteiraCobranca.Codigo == "106" || boleto.CarteiraCobranca.Codigo == "107" || boleto.CarteiraCobranca.Codigo == "122" ||
+                    boleto.CarteiraCobranca.Codigo == "142" || boleto.CarteiraCobranca.Codigo == "143" || boleto.CarteiraCobranca.Codigo == "195" ||
+                    boleto.CarteiraCobranca.Codigo == "196" || boleto.CarteiraCobranca.Codigo == "198")
                 {
                     if (Convert.ToInt32(boleto.NumeroDocumento) == 0)
                         throw new NotImplementedException("O n�mero do documento n�o pode ser igual a zero.");
@@ -123,8 +120,6 @@ namespace BoletoBr.Bancos.Itau
                 // Calcula o DAC da Conta Corrente
                 boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta =
                     Common.Mod10(boleto.CedenteBoleto.ContaBancariaCedente.Agencia + boleto.CedenteBoleto.ContaBancariaCedente.Conta).ToString();
-                //Atribui o nome do banco ao local de pagamento
-                boleto.LocalPagamento = "Após o vencimento, somente no ITAÚ";
 
                 //Verifica se o nosso n�mero � v�lido
                 if (Convert.ToInt64(boleto.NossoNumeroFormatado) == 0)

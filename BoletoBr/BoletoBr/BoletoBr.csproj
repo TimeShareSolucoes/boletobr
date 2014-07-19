@@ -58,7 +58,6 @@
     <Compile Include="Bancos\IBanco.cs" />
     <Compile Include="Bancos\ILeitorArquivoRetornoCnab400.cs" />
     <Compile Include="Bancos\Itau\BancoItau.cs" />
-    <Compile Include="Bancos\Itau\CarteiraCobranca110Temp.cs" />
     <Compile Include="Bancos\Itau\CarteiraCobranca176.cs" />
     <Compile Include="Bancos\Itau\CarteiraCobranca107.cs" />
     <Compile Include="Bancos\Itau\CarteiraCobranca109.cs" />
