@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Text;
 using BoletoBr.Dominio;
@@ -17,6 +18,8 @@ namespace BoletoBr.Bancos.Itau
             this.CodigoBanco = "341";
             this.DigitoBanco = "7";
             this.NomeBanco = "Itaú";
+            this.LocalDePagamento = "Pagável em qualquer banco até o vencimento.";
+            this.MoedaBanco = "0";
 
             /* Adiciona carteiras de cobrança */
             _carteirasCobranca = new List<CarteiraCobranca>();
@@ -44,6 +47,7 @@ namespace BoletoBr.Bancos.Itau
         public string CodigoBanco { get; set; }
         public string DigitoBanco { get; set; }
         public string NomeBanco { get; set; }
+        public Image LogotipoBancoParaExibicao { get; set; }
 
         private readonly List<CarteiraCobranca> _carteirasCobranca;
 
@@ -143,21 +147,33 @@ namespace BoletoBr.Bancos.Itau
 
         }
 
-        public void FormataMoedaBoleto(Boleto boleto)
+        public void FormataMoeda(Boleto boleto)
         {
-            throw new NotImplementedException();
+            boleto.Moeda = this.MoedaBanco;
+
+            if (string.IsNullOrEmpty(boleto.Moeda))
+                throw new Exception("Espécie/Moeda para o boleto não foi informada.");
+
+            if ((boleto.Moeda == "0") || (boleto.Moeda == "REAL") || (boleto.Moeda == "R$"))
+                boleto.Moeda = "R$";
+            else
+                boleto.Moeda = "1";
         }
 
         public void FormatarBoleto(Boleto boleto)
         {
-            boleto.ValidaDadosEssenciaisDoBoleto();
+            //Atribui o local de pagamento
+            boleto.LocalPagamento = this.LocalDePagamento;
 
-            ValidaBoletoComNormasBanco(boleto);
+            boleto.ValidaDadosEssenciaisDoBoleto();
 
             FormataNumeroDocumento(boleto);
             FormataNossoNumero(boleto);
-            FormataLinhaDigitavel(boleto);
             FormataCodigoBarra(boleto);
+            FormataLinhaDigitavel(boleto);
+            FormataMoeda(boleto);
+
+            ValidaBoletoComNormasBanco(boleto);
         }
 
         public void FormataCodigoBarra(Boleto boleto)

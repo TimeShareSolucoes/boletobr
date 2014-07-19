@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -37,7 +38,7 @@ namespace BoletoBr.Bancos.Cef
             this.DigitoBanco = "0";
             this.NomeBanco = "Caixa Econômica Federal";
             this.LocalDePagamento = "Pagável preferencialmente nas agências da Caixa ou Lotéricas.";
-            this.MoedaBanco = "9";
+            this.MoedaBanco = "1";
 
             /* Adiciona carteiras de cobrança */
             _carteirasCobrancaCef = new List<CarteiraCobranca>();
@@ -48,6 +49,7 @@ namespace BoletoBr.Bancos.Cef
         public string CodigoBanco { get; set; }
         public string DigitoBanco { get; set; }
         public string NomeBanco { get; set; }
+        public Image LogotipoBancoParaExibicao { get; set; }
 
         private readonly List<CarteiraCobranca> _carteirasCobrancaCef;
 
@@ -97,32 +99,32 @@ namespace BoletoBr.Bancos.Cef
                     throw new Exception(
                         "Nosso N�mero inv�lido, Para Caixa Econ�mica carteira indefinida, o Nosso N�mero deve conter 10 caracteres.");
                 }
+            }
 
-                if (!boleto.CedenteBoleto.CodigoCedente.Equals(0))
+            if (!boleto.CedenteBoleto.CodigoCedente.Equals(0))
                 {
+                    if (boleto.CedenteBoleto.CodigoCedente.Length > 6)
+                        throw new Exception("O c�digo do cedente deve conter apenas 6 d�gitos");
+
                     string codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(6, '0');
-                    string dvCodigoCedente = Common.Mod10(codigoCedente).ToString(); //Base9 
+                    string dvCodigoCedente = Common.Mod11Base9(codigoCedente).ToString(); //Base9 
 
                     if (boleto.CedenteBoleto.DigitoCedente.Equals(-1))
                         boleto.CedenteBoleto.DigitoCedente = Convert.ToInt32(dvCodigoCedente);
+
+                    boleto.CedenteBoleto.CodigoCedente = String.Format("{0}/{1}-{2}",
+                        boleto.CedenteBoleto.ContaBancariaCedente.Agencia, codigoCedente, dvCodigoCedente);
                 }
                 else
                 {
                     throw new Exception("Informe o c�digo do cedente.");
                 }
-            }
 
-            if (boleto.CedenteBoleto.DigitoCedente == -1)
-                boleto.CedenteBoleto.DigitoCedente = Common.Mod11Base9(boleto.CedenteBoleto.CodigoCedente);
+            //if (boleto.CedenteBoleto.DigitoCedente == -1)
+            //    boleto.CedenteBoleto.DigitoCedente = Common.Mod11Base9(boleto.CedenteBoleto.CodigoCedente);
 
-            if (boleto.DataDocumento == DateTime.MinValue)
-                boleto.DataDocumento = DateTime.Now;
-
-            if (boleto.CedenteBoleto.CodigoCedente.Length > 6)
-                throw new Exception("O c�digo do cedente deve conter apenas 6 d�gitos");
-
-            //Atribui o nome do banco ao local de pagamento
-            boleto.LocalPagamento = "PREFERENCIALMENTE NAS CASAS LOT�RICAS E AG�NCIAS DA CAIXA";
+            //if (boleto.DataDocumento == DateTime.MinValue)
+            //    boleto.DataDocumento = DateTime.Now;
 
             /* 
              * Na Carteira Simples n�o � necess�rio gerar a impress�o do boleto,
@@ -130,32 +132,41 @@ namespace BoletoBr.Bancos.Cef
              * J�ferson (jefhtavares) em 10/03/14
              */
 
-            if (!boleto.CarteiraCobranca.Codigo.Equals("CS"))
-            {
-                FormataCodigoBarra(boleto);
-                FormataLinhaDigitavel(boleto);
-                FormataNossoNumero(boleto);
-            }
+            //if (!boleto.CarteiraCobranca.Codigo.Equals("CS"))
+            //{
+            //    FormataCodigoBarra(boleto);
+            //    FormataLinhaDigitavel(boleto);
+            //    FormataNossoNumero(boleto);
+            //}
         }
 
-        public void FormataMoedaBoleto(Boleto boleto)
+        public void FormataMoeda(Boleto boleto)
         {
-            throw new NotImplementedException();
+            boleto.Moeda = this.MoedaBanco;
+
+            if (string.IsNullOrEmpty(boleto.Moeda))
+                throw new Exception("Espécie/Moeda para o boleto não foi informada.");
+
+            if ((boleto.Moeda == "1") || (boleto.Moeda == "REAL") || (boleto.Moeda == "R$"))
+                boleto.Moeda = "R$";
+            else
+                boleto.Moeda = "0";
         }
 
         public void FormatarBoleto(Boleto boleto)
         {
-            boleto.ValidaDadosEssenciaisDoBoleto();
-
-            ValidaBoletoComNormasBanco(boleto);
-
             //Atribui o local de pagamento
-            boleto.LocalPagamento = "Preferencialmente nas casas lotéricas até o vencimento.";
+            boleto.LocalPagamento = this.LocalDePagamento;
+            
+            boleto.ValidaDadosEssenciaisDoBoleto();
 
             FormataNumeroDocumento(boleto);
             FormataNossoNumero(boleto);
-            FormataLinhaDigitavel(boleto);
             FormataCodigoBarra(boleto);
+            FormataLinhaDigitavel(boleto);
+            FormataMoeda(boleto);
+
+            ValidaBoletoComNormasBanco(boleto);
         }
 
         public void FormataCodigoBarra(Boleto boleto)
@@ -164,7 +175,7 @@ namespace BoletoBr.Bancos.Cef
             string banco = CodigoBanco;
 
             //Posi��o 04
-            string moeda = "9";
+            string moeda = MoedaBanco;
 
             //Posi��o 05 - No final ...   
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using BoletoBr.CalculoModulo;
 using BoletoBr.Dominio;
 
@@ -9,6 +10,7 @@ namespace BoletoBr.Bancos
         string CodigoBanco { get; set; }
         string DigitoBanco { get; set; }
         string NomeBanco { get; set; }
+        Image LogotipoBancoParaExibicao { get; set; }
         string LocalDePagamento { get; }
         /// <summary>
         /// O código da moeda é especifico em cada banco.
@@ -27,7 +29,7 @@ namespace BoletoBr.Bancos
         /// Formata o código/sigla da Espécie/Moeda do boleto.
         /// </summary>
         /// <param name="boleto"></param>
-        void FormataMoedaBoleto(Boleto boleto);
+        void FormataMoeda(Boleto boleto);
 
         /// <summary>
         /// Efetua os cálculos de linha digitável do boleto.

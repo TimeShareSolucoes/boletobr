@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace BoletoBr.Bancos.BancoBrasil
         public string CodigoBanco { get; set; }
         public string DigitoBanco { get; set; }
         public string NomeBanco { get; set; }
+        public Image LogotipoBancoParaExibicao { get; set; }
 
         private string _digitoAutoConferenciaNossoNumero = String.Empty;
         private int _digitoAutoConferenciaBoleto = 0;
@@ -23,6 +25,8 @@ namespace BoletoBr.Bancos.BancoBrasil
             this.DigitoBanco = "9";
             this.NomeBanco = "Banco do Brasil";
             this.LocalDePagamento = "Pagável em qualquer banco até o vencimento.";
+            this.MoedaBanco = "9";
+
             this._carteirasCobranca = new List<CarteiraCobranca>();
             this._carteirasCobranca.Add(new CarteiraCobrancaBancoBrasil17019());
             this._carteirasCobranca.Add(new CarteiraCobrancaBancoBrasil18019());
@@ -451,24 +455,33 @@ namespace BoletoBr.Bancos.BancoBrasil
             #endregion Agência e Conta Corrente
         }
 
-        public void FormataMoedaBoleto(Boleto boleto)
+        public void FormataMoeda(Boleto boleto)
         {
-            throw new NotImplementedException();
+            boleto.Moeda = this.MoedaBanco;
+
+            if (string.IsNullOrEmpty(boleto.Moeda))
+                throw new Exception("Espécie/Moeda para o boleto não foi informada.");
+
+            if ((boleto.Moeda == "9") || (boleto.Moeda == "REAL") || (boleto.Moeda == "R$"))
+                boleto.Moeda = "R$";
+            else
+                boleto.Moeda = "0";
         }
 
         public void FormatarBoleto(Boleto boleto)
         {
-            boleto.LocalPagamento = "PAGÁVEL EM QUALQUER AGÊNCIA BANCÁRIA ATÉ O VENCIMENTO";
+            //Atribui o local de pagamento
+            boleto.LocalPagamento = this.LocalDePagamento;
 
-            if (boleto.DataProcessamento == DateTime.MinValue)
-                boleto.DataProcessamento = DateTime.Now;
+            boleto.ValidaDadosEssenciaisDoBoleto();
 
-            if (boleto.DataDocumento == DateTime.MinValue)
-                boleto.DataDocumento = DateTime.Now;
+            FormataNumeroDocumento(boleto);
+            FormataNossoNumero(boleto);
+            FormataCodigoBarra(boleto);
+            FormataLinhaDigitavel(boleto);
+            FormataMoeda(boleto);
 
-            this.FormataCodigoBarra(boleto);
-            this.FormataLinhaDigitavel(boleto);
-            this.FormataNossoNumero(boleto);
+            ValidaBoletoComNormasBanco(boleto);
         }
         private string LimparCarteira(string carteira)
         {

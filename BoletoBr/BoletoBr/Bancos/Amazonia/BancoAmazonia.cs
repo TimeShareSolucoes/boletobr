@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -14,13 +15,15 @@ namespace BoletoBr.Bancos.Amazonia
         public string CodigoBanco { get; set; }
         public string DigitoBanco { get; set; }
         public string NomeBanco { get; set; }
+        public Image LogotipoBancoParaExibicao { get; set; }
 
         public BancoAmazonia()
         {
             CodigoBanco = "003";
             DigitoBanco = "5";
             NomeBanco = "Banco da Amazônia S/A";
-            this.LocalDePagamento = "Pagável em qualquer banco até o vencimento.";
+            this.LocalDePagamento = "Pagável em qualquer banco até o vencimento. Após o vencimento pagar apenas nas agências do Banco da Amazônia S/A";
+            this.MoedaBanco = "9";
 
             /* Adiciona carteiras de cobrança */
             _carteirasCobrancaBasa = new List<CarteiraCobranca>();
@@ -297,24 +300,33 @@ namespace BoletoBr.Bancos.Amazonia
             boleto.SetNossoNumeroFormatado(string.Format("{0}", boleto.SequencialNossoNumero.PadLeft(16, '0')));
         }
 
-        public void FormataMoedaBoleto(Boleto boleto)
+        public void FormataMoeda(Boleto boleto)
         {
-            throw new NotImplementedException();
+            boleto.Moeda = this.MoedaBanco;
+
+            if (string.IsNullOrEmpty(boleto.Moeda))
+                throw new Exception("Espécie/Moeda para o boleto não foi informada.");
+
+            if ((boleto.Moeda == "9") || (boleto.Moeda == "REAL") || (boleto.Moeda == "R$"))
+                boleto.Moeda = "R$";
+            else
+                boleto.Moeda = "0";
         }
 
         public void FormatarBoleto(Boleto boleto)
         {
+            //Atribui o local de pagamento
+            boleto.LocalPagamento = this.LocalDePagamento;
+
             boleto.ValidaDadosEssenciaisDoBoleto();
-
-            ValidaBoletoComNormasBanco(boleto);
-
-            //Atribui o nome do banco ao local de pagamento
-            boleto.LocalPagamento = "Pagável em qualquer banco até o vencimento. Após o vencimento pagar apenas nas agências do Banco da Amazônia S/A";
 
             FormataNumeroDocumento(boleto);
             FormataNossoNumero(boleto);
-            FormataLinhaDigitavel(boleto);
             FormataCodigoBarra(boleto);
+            FormataLinhaDigitavel(boleto);
+            FormataMoeda(boleto);
+
+            ValidaBoletoComNormasBanco(boleto);
         }
 
         public void ValidaBoletoComNormasBanco(Boleto boleto)

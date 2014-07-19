@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using BoletoBr.Bancos;
 using BoletoBr.Dominio;
 using BoletoBr.Dominio.EspecieDocumento;
@@ -14,7 +15,6 @@ namespace BoletoBr
         #region Propriedades
 
         public IBanco BancoBoleto { get; set; }
-
         public string CodigoEDigitoBancoBind
         {
             get
@@ -123,11 +123,9 @@ namespace BoletoBr
 
         private void Inicializa()
         {
-            this.LocalPagamento = "";
             this.QuantidadeMoeda = null;
             this.Aceite = "";
             this.ValorMoeda = "";
-            //this.Moeda = "9";
             this.InstrucoesDoBoleto = new List<IInstrucao>();
         }
 
@@ -140,12 +138,18 @@ namespace BoletoBr
             this.CarteiraCobranca = carteiraCobranca;
         }
 
+        /// <summary>
+        /// Dados que já tem que ser informados na criação do boleto
+        /// </summary>
         public void ValidaDadosEssenciaisDoBoleto()
         {
             if (this.CarteiraCobranca == null)
                 throw new ApplicationException("Informe a carteira de cobrança.");
 
-            if (String.IsNullOrEmpty(this.NossoNumeroFormatado))
+            if (String.IsNullOrEmpty(this.NumeroDocumento))
+                throw new ApplicationException("Número do documento não consta no boleto.");
+
+            if (String.IsNullOrEmpty(this.SequencialNossoNumero))
                 throw new ApplicationException("Nosso número não foi informado.");
         }
 

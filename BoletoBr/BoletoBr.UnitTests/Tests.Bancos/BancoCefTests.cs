@@ -160,8 +160,8 @@ namespace BoletoBr.UnitTests.Tests.Bancos.CEF
 
             banco.FormataNossoNumero(boleto);
 
-            //Providenciar boleto rela para efetuar o teste da Carteira SEM REGISTRO
-            Assert.AreEqual("24000000000019-", boleto.NossoNumeroFormatado);
+            //Providenciar boleto real para efetuar o teste da Carteira SEM REGISTRO
+            Assert.AreEqual("24000000000019", boleto.NossoNumeroFormatado);
         }
 
         [TestMethod]

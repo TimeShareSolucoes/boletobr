@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using BoletoBr.CalculoModulo;
 using BoletoBr.Dominio;
 
@@ -10,13 +11,15 @@ namespace BoletoBr.Bancos.Bradesco
         public string CodigoBanco { get; set; }
         public string DigitoBanco { get; set; }
         public string NomeBanco { get; set; }
+        public Image LogotipoBancoParaExibicao { get; set; }
 
         public BancoBradesco()
         {
             CodigoBanco = "237";
             DigitoBanco = "2";
             NomeBanco = "Bradesco";
-            this.LocalDePagamento = "Pagável em qualquer banco até o vencimento.";
+            this.LocalDePagamento = "Pagável preferencialmente em agências do Bradesco.";
+            this.MoedaBanco = "9";
 
             _carteirasCobranca = new List<CarteiraCobranca>();
             _carteirasCobranca.Add(new CarteiraCobrancaBradesco09());
@@ -94,28 +97,37 @@ namespace BoletoBr.Bancos.Bradesco
                 boleto.DataDocumento = DateTime.Now;
         }
 
-        public void FormataMoedaBoleto(Boleto boleto)
+        public void FormataMoeda(Boleto boleto)
         {
-            throw new NotImplementedException();
+            boleto.Moeda = this.MoedaBanco;
+
+            if (string.IsNullOrEmpty(boleto.Moeda))
+                throw new Exception("Espécie/Moeda para o boleto não foi informada.");
+
+            if ((boleto.Moeda == "9") || (boleto.Moeda == "REAL") || (boleto.Moeda == "R$"))
+                boleto.Moeda = "R$";
+            else
+                boleto.Moeda = "0";
         }
 
         public void FormatarBoleto(Boleto boleto)
         {
+            //Atribui o local de pagamento
+            boleto.LocalPagamento = this.LocalDePagamento;
+
             boleto.ValidaDadosEssenciaisDoBoleto();
-            ValidaBoletoComNormasBanco(boleto);
-
-            boleto.QuantidadeMoeda = 0;
-
-            //Atribui o nome do banco ao local de pagamento
-            boleto.LocalPagamento = "PAGÁVEL PREFERENCIALMENTE NAS AGÊNCIAS DO BRADESCO";
 
             // Calcula o DAC do Nosso Número
             _digitoAutoConferenciaNossoNumero = CalcularDigitoNossoNumero(boleto);
             boleto.DigitoNossoNumero = _digitoAutoConferenciaNossoNumero;
 
+            FormataNumeroDocumento(boleto);
             FormataNossoNumero(boleto);
             FormataCodigoBarra(boleto);
             FormataLinhaDigitavel(boleto);
+            FormataMoeda(boleto);
+
+            ValidaBoletoComNormasBanco(boleto);
         }
         /// <summary>
         /// 

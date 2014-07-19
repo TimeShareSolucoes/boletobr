@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Security.AccessControl;
 using BoletoBr.CalculoModulo;
 using BoletoBr.Bancos;
@@ -22,6 +23,7 @@ namespace BoletoBr.Bancos.Hsbc
         public string CodigoBanco { get; set; }
         public string DigitoBanco { get; set; }
         public string NomeBanco { get; set; }
+        public Image LogotipoBancoParaExibicao { get; set; }
 
         #endregion
 
@@ -91,7 +93,7 @@ namespace BoletoBr.Bancos.Hsbc
                 boleto.DataDocumento = DateTime.Now;
         }
 
-        public void FormataMoedaBoleto(Boleto boleto)
+        public void FormataMoeda(Boleto boleto)
         {
             if (string.IsNullOrEmpty(boleto.Moeda))
                 throw new Exception("Espécie/Moeda para o boleto não foi informada.");
@@ -350,21 +352,20 @@ namespace BoletoBr.Bancos.Hsbc
 
         public void FormatarBoleto(Boleto boleto)
         {
+            //Atribui local de pagamento
+            boleto.LocalPagamento = this.LocalDePagamento;
+
             boleto.ValidaDadosEssenciaisDoBoleto();
-
-            ValidaBoletoComNormasBanco(boleto);
-
-            // Calcula o DAC do Nosso N�mero
-            // Nosso N�mero = Range(5) + Numero Sequencial(5)
-            _digitoAutoConferenciaNossoNumero = Common.Mod11(boleto.NossoNumeroFormatado, 7).ToString();
-
-            //Atribui o nome do banco ao local de pagamento
-            boleto.LocalPagamento = "PAGAR PREFERENCIALMENTE EM AGÊNCIAS DO " + NomeBanco;
 
             FormataNumeroDocumento(boleto);
             FormataNossoNumero(boleto);
-            FormataLinhaDigitavel(boleto);
+            // Calcula o DAC do Nosso N�mero
+            // Nosso N�mero = Range(5) + Numero Sequencial(5)
+            _digitoAutoConferenciaNossoNumero = Common.Mod11(boleto.NossoNumeroFormatado, 7).ToString();
             FormataCodigoBarra(boleto);
+            FormataLinhaDigitavel(boleto);
+
+            ValidaBoletoComNormasBanco(boleto);
         }
 
         /// <summary>
