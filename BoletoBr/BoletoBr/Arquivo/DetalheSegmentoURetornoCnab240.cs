@@ -8,6 +8,8 @@ namespace BoletoBr.Dominio
 {
     public class DetalheSegmentoURetornoCnab240
     {
+        public DetalheSegmentoURetornoCnab240() { }
+
         public DetalheSegmentoURetornoCnab240(string registro)
         {
             ListaDetalhe = new List<DetalheSegmentoURetornoCnab240>();

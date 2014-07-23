@@ -8,11 +8,15 @@ namespace BoletoBr
 {
     public class TrailerRetornoCnab400
     {
+        #region Propriedades
+
         public int CodigoDoRegistro { get; set; }
         public int CodigoDeRetorno { get; set; }
         public int CodigoDoServico { get; set; }
         public int CodigoDoBanco { get; set; }
         public int NumeroSequencial { get; set; }
+
+        #endregion
 
         #region Banco HSBC
 
@@ -20,8 +24,6 @@ namespace BoletoBr
         {
             try
             {
-                int dataGravacao = Convert.ToInt32(registro.Substring(95, 6));
-
                 CodigoDoRegistro = Convert.ToInt32(registro.Substring(0, 1));
                 CodigoDeRetorno = Convert.ToInt32(registro.Substring(2, 1));
                 CodigoDoServico = Convert.ToInt32(registro.Substring(3, 2));

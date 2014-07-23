@@ -49,7 +49,7 @@ namespace BoletoBr
 
         #region Banco HSBC
 
-        public void LerHeaderRetornoCnab400Hsbc(string registro)
+        public void LerDetalheRetornoCnab400Hsbc(string registro)
         {
             try
             {

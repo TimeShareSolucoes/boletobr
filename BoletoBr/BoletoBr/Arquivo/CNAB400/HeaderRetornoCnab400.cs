@@ -20,7 +20,6 @@ namespace BoletoBr
         public string Constante { get; set; }
         public int ContaCorrente { get; set; }
         public string TipoRetorno { get; set; }
-        /* public string Brancos { get; set; } */
         public string NomeDoBeneficiario { get; set; }
         public int CodigoDoBanco { get; set; }
         public string NomeDoBanco { get; set; }

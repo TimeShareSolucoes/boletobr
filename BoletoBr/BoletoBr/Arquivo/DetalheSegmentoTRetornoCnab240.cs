@@ -16,6 +16,8 @@ namespace BoletoBr.Dominio
 
         #region Construtores
 
+        public DetalheSegmentoTRetornoCnab240() { }
+
         public DetalheSegmentoTRetornoCnab240(string registro)
         {
             ListaDetalhe = new List<DetalheSegmentoTRetornoCnab240>();
