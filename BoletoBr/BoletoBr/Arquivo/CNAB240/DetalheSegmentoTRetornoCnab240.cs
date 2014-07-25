@@ -8,7 +8,7 @@ namespace BoletoBr.Dominio
 {
     public class DetalheSegmentoTRetornoCnab240
     {
-#region Vari�veis
+        #region Vari�veis
 
         private CodigoMovimento.CodigoMovimento _codigoMovimento;
 
@@ -56,7 +56,7 @@ namespace BoletoBr.Dominio
 
         public string DigitoConta { get; set; }
 
-        public int DACAgenciaConta { get; set; }
+        public int DacAgenciaConta { get; set; }
 
         public string NossoNumero { get; set; }
 
@@ -94,31 +94,31 @@ namespace BoletoBr.Dominio
             {
                 Registro = registro;
 
-                if (registro.Substring(13, 1) != "T")
-                    throw new Exception("Registro inv�lido. O detalhe n�o possu� as caracter�sticas do segmento T.");
+                if (MetodosExtensao.ExtrairValorDaLinha(registro, 14, 14) != "T")
+                    throw new Exception("Registro inválido. O detalhe não possui as características do segmento T.");
 
-                CodigoBanco = Convert.ToInt32(registro.Substring(0, 3));
-                IdCodigoMovimento = Convert.ToInt32(registro.Substring(15, 2));
-                Agencia = Convert.ToInt32(registro.Substring(17, 5));
-                DigitoAgencia = registro.Substring(22, 1);
-                Conta = Convert.ToInt32(registro.Substring(23, 12));
-                DigitoConta = registro.Substring(35, 1);
+                CodigoBanco = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 0, 3));
+                IdCodigoMovimento = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 15, 17));
+                Agencia = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 18, 22));
+                DigitoAgencia = MetodosExtensao.ExtrairValorDaLinha(registro, 23, 23);
+                Conta = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 24, 35));
+                DigitoConta = MetodosExtensao.ExtrairValorDaLinha(registro, 36, 36);
 
-                NossoNumero = registro.Substring(37, 20);
-                CodigoCarteira = Convert.ToInt32(registro.Substring(57, 1));
-                NumeroDocumento = registro.Substring(58, 15);
-                int dataVencimento = Convert.ToInt32(registro.Substring(73, 8));
+                NossoNumero = MetodosExtensao.ExtrairValorDaLinha(registro, 37, 57);
+                CodigoCarteira = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 58, 58));
+                NumeroDocumento = MetodosExtensao.ExtrairValorDaLinha(registro, 59, 73);
+                int dataVencimento = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 74, 81));
                 DataVencimento = Convert.ToDateTime(dataVencimento.ToString("##-##-####"));
-                decimal valorTitulo = Convert.ToInt64(registro.Substring(81, 15));
+                decimal valorTitulo = Convert.ToInt64(MetodosExtensao.ExtrairValorDaLinha(registro, 82, 96));
                 ValorTitulo = valorTitulo / 100;
-                IdentificacaoTituloEmpresa = registro.Substring(105, 25);
-                TipoInscricao = Convert.ToInt32(registro.Substring(132, 1));
-                NumeroInscricao = registro.Substring(133, 15);
-                NomeSacado = registro.Substring(148, 40);
-                decimal valorTarifas = Convert.ToUInt64(registro.Substring(198, 15));
+                IdentificacaoTituloEmpresa = MetodosExtensao.ExtrairValorDaLinha(registro, 105, 130);
+                TipoInscricao = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 132, 132));
+                NumeroInscricao = MetodosExtensao.ExtrairValorDaLinha(registro, 133, 148);
+                NomeSacado = MetodosExtensao.ExtrairValorDaLinha(registro, 149, 188);
+                decimal valorTarifas = Convert.ToUInt64(MetodosExtensao.ExtrairValorDaLinha(registro, 198, 213));
                 ValorTarifas = valorTarifas / 100;
-                CodigoRejeicao = registro.Substring(213, 10);
-                UsoFebraban = registro.Substring(224, 17);
+                CodigoRejeicao = MetodosExtensao.ExtrairValorDaLinha(registro, 214, 223);
+                UsoFebraban = MetodosExtensao.ExtrairValorDaLinha(registro, 224, 241);
             }
             catch (Exception ex)
             {

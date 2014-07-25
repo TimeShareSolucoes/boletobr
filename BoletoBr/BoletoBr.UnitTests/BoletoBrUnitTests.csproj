@@ -50,15 +50,21 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Tests.Bancos\BancoAmazoniaTests.cs" />
-    <Compile Include="Tests.Bancos\BancoBradescoTests.cs" />
-    <Compile Include="Tests.Bancos\BancoCefTests.cs" />
-    <Compile Include="Tests.Bancos\HsbcCarteiraCnrTipoIdentificador4.cs" />
-    <Compile Include="Tests.Bancos\BancoItauTests.cs" />
-    <Compile Include="Tests.Common\CommonTests.cs" />
-    <Compile Include="Tests.Common\FatorVencimentoTests.cs" />
-    <Compile Include="Tests.Bancos\BancoHsbcTests.cs" />
-    <Compile Include="Tests.Common\MetodosExtensaoTests.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="TestsBancosRetorno\TestRetornoHsbcCnr.cs" />
+    <Compile Include="TestsBancos\BancoAmazoniaTests.cs" />
+    <Compile Include="TestsBancos\BancoBradescoTests.cs" />
+    <Compile Include="TestsBancos\BancoCefTests.cs" />
+    <Compile Include="TestsBancos\HsbcCarteiraCnrTipoIdentificador4.cs" />
+    <Compile Include="TestsBancos\BancoItauTests.cs" />
+    <Compile Include="TestsCommon\CommonTests.cs" />
+    <Compile Include="TestsCommon\FatorVencimentoTests.cs" />
+    <Compile Include="TestsBancos\BancoHsbcTests.cs" />
+    <Compile Include="TestsCommon\MetodosExtensaoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +72,17 @@
       <Project>{ea3ebd2b-932e-42e1-9914-20c13185ebe2}</Project>
       <Name>BoletoBr</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestsBancosRetorno\ModeloHeaderRetornoHsbcCnr.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestsBancosRetorno\ModeloTrailerRetornoHsbcCnr.txt" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

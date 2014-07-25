@@ -279,7 +279,7 @@ namespace BoletoBr.Dominio
 
         #endregion
 
-        #region M�todos de Inst�ncia
+        #region Métodos de Instância
 
         public void LerDetalheRetornoCnab400(string registro)
         {

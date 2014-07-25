@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30324.0
+VisualStudioVersion = 12.0.30626.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoletoBr", "BoletoBr\BoletoBr.csproj", "{EA3EBD2B-932E-42E1-9914-20C13185EBE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoletoBr.UnitTests", "BoletoBr.UnitTests\BoletoBr.UnitTests.csproj", "{D99DF35D-54A4-46F7-9B41-61F3029B104A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoletoBrUnitTests", "BoletoBr.UnitTests\BoletoBrUnitTests.csproj", "{D99DF35D-54A4-46F7-9B41-61F3029B104A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -24,7 +24,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\ReleaseTss\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -33,6 +33,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Arquivo\HeaderDeArquivoCnab240.cs" />
+    <Compile Include="Arquivo\CNAB240\HeaderDeArquivoCnab240.cs" />
     <Compile Include="Arquivo\IArquivoRemessa.cs" />
     <Compile Include="Arquivo\LinhaDeArquivoGeradaArgs.cs" />
     <Compile Include="Bancos\Amazonia\BancoAmazonia.cs" />
@@ -113,11 +114,11 @@
     <Compile Include="Arquivo\CNAB400\DetalheRemessaCnab400.cs" />
     <Compile Include="Arquivo\CNAB240\DetalheRetornoCnab240.cs" />
     <Compile Include="Arquivo\CNAB400\DetalheRetornoCnab400.cs" />
-    <Compile Include="Arquivo\DetalheRetornoCnab400.cs" />
-    <Compile Include="Arquivo\DetalheSegmentoERetornoCnab240.cs" />
-    <Compile Include="Arquivo\DetalheSegmentoTRetornoCnab240.cs" />
-    <Compile Include="Arquivo\DetalheSegmentoURetornoCnab240.cs" />
-    <Compile Include="Arquivo\DetalheSegmentoWRetornoCnab240.cs" />
+    <Compile Include="Arquivo\DetalheRetornoGenericoCnab400.cs" />
+    <Compile Include="Arquivo\CNAB240\DetalheSegmentoERetornoCnab240.cs" />
+    <Compile Include="Arquivo\CNAB240\DetalheSegmentoTRetornoCnab240.cs" />
+    <Compile Include="Arquivo\CNAB240\DetalheSegmentoURetornoCnab240.cs" />
+    <Compile Include="Arquivo\CNAB240\DetalheSegmentoWRetornoCnab240.cs" />
     <Compile Include="Dominio\Endereco.cs" />
     <Compile Include="Arquivo\CNAB150\DetalheRemessaCnab150.cs" />
     <Compile Include="Arquivo\CNAB150\DetalheRetornoCnab150.cs" />
@@ -153,7 +154,15 @@
     <Compile Include="Arquivo\CNAB400\TrailerRemessaCnab400.cs" />
     <Compile Include="Arquivo\CNAB240\TrailerRetornoCnab240.cs" />
     <Compile Include="Arquivo\CNAB400\TrailerRetornoCnab400.cs" />
-    <Compile Include="Arquivo\TipoArquivo.cs" />
+    <Compile Include="Enums\TipoArquivo.cs" />
+    <Compile Include="Enums\CategoriaLancamento.cs" />
+    <Compile Include="Enums\IsencaoCpmf.cs" />
+    <Compile Include="Enums\TipoComplementoLancamento.cs" />
+    <Compile Include="Enums\TipoInscricao.cs" />
+    <Compile Include="Enums\TipoLancamento.cs" />
+    <Compile Include="Enums\TipoMovimento.cs" />
+    <Compile Include="Enums\TipoOcorrencia.cs" />
+    <Compile Include="Enums\TipoPessoa.cs" />
     <Compile Include="Exceptions\ValidacaoBoletoException.cs" />
     <Compile Include="Fabricas\BancoFactory.cs" />
     <Compile Include="CalculoModulo\CalculadoraMod10Basa.cs" />

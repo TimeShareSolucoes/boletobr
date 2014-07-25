@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoletoBr.Enums;
 
 namespace BoletoBr.Dominio
 {
@@ -61,7 +62,7 @@ namespace BoletoBr.Dominio
         /// Preenchimento deste campo � obrigat�rio para DOC e TED (Forma de Lan�amento = 03, 41, 43)
         /// Para pagamento para o SIAPE com cr�dito em conta, o CPF dever� ser do 1� titular.
         /// </summary>
-        //public TipoInscricao TipoInscricaoCliente { get; private set; }
+        public TipoInscricao TipoInscricaoCliente { get; private set; }
 
         /// <summary>
         /// N�mero de inscri��o da Empresa ou Pessoa F�sica perante uma Institui��o governamental.
@@ -138,7 +139,7 @@ namespace BoletoBr.Dominio
         /// '00' = Sem Informa��o do Complemento do Lan�amento
         /// '01' = Identifica��o da Origem do Lan�amento
         /// </summary>
-        //public TipoComplementoLancamento TipoComplementoLancamento { get; private set; }
+        public TipoComplementoLancamento TipoComplementoLancamento { get; private set; }
 
         /// <summary>
         /// Texto de informa��es complementares ao Lan�amento.
@@ -155,7 +156,7 @@ namespace BoletoBr.Dominio
         /// 'S' = Isento
         /// 'N' = N�o Isento
         /// </summary>
-        //public IsencaoCpmf IdentificacaoIsencaoCpmf { get; private set; }
+        public IsencaoCpmf IdentificacaoIsencaoCpmf { get; private set; }
 
         /// <summary>
         /// Data de efetiva��o do Lan�amento.
@@ -186,7 +187,7 @@ namespace BoletoBr.Dominio
         /// 'D' = D�bito
         /// 'C' = Cr�dito
         /// </summary>
-        //public TipoLancamento TipoLancamento { get; private set; }
+        public TipoLancamento TipoLancamento { get; private set; }
 
         /// <summary>
         /// C�digo adotado pela FEBRABAN, para identificar a categoria padr�o do Lan�amento, para concilia��o entre Bancos.
@@ -234,7 +235,7 @@ namespace BoletoBr.Dominio
         /// '218' = Pagamentos Diversos
         /// '219' = Pagamentos Sal�rios
         /// </summary>
-        //public CategoriaLancamento CategoriaLancamento { get; private set; }
+        public CategoriaLancamento CategoriaLancamento { get; private set; }
 
         /// <summary>
         /// C�digo adotado por cada Banco para identificar o descritivo do Lan�amento. Observar que no Extrato de Conta Corrente para Concilia��o Banc�ria este campo possui 4 caracteres, enquanto no Extrato para Gest�o de Caixa ele possui 5 caracteres.
@@ -251,41 +252,41 @@ namespace BoletoBr.Dominio
         /// </summary>
         public string NumeroDocumentoComplemento { get; private set; }
 
-        public void LerDetalheSegmentoERetornoCNAB240(string registro)
+        public void LerDetalheSegmentoERetornoCnab240(string registro)
         {
             try
             {
-                if (registro.Substring(13, 1) != "E")
-                    throw new Exception("Registro inv�lido. O detalhe n�o possu� as caracter�sticas do segmento E.");
+                if (MetodosExtensao.ExtrairValorDaLinha(registro, 14, 14) != "E")
+                    throw new Exception("Registro inválido. O detalhe não possui as características do segmento E.");
 
-                //CodigoBanco = LeitorLinhaPosicao.ExtrairInt32DaPosicao(registro, 1, 3);
-                //LoteServico = LeitorLinhaPosicao.ExtrairInt32DaPosicao(registro, 4, 7);
-                //TipoRegistro = LeitorLinhaPosicao.ExtrairDaPosicao(registro, 8, 8);
-                //NumeroRegistro = LeitorLinhaPosicao.ExtrairInt32DaPosicao(registro, 9, 13);
-                //Segmento = LeitorLinhaPosicao.ExtrairDaPosicao(registro, 14, 14);
-                //UsoExclusivoFebrabanCnab = LeitorLinhaPosicao.ExtrairDaPosicao(registro, 15, 17);
-                //TipoInscricaoCliente = (TipoInscricao)LeitorLinhaPosicao.ExtrairInt32DaPosicao(registro, 18, 18);
-                //NumeroInscricaoCliente = LeitorLinhaPosicao.ExtrairInt64DaPosicao(registro, 19, 32);
-                //CodigoConvenioBanco = LeitorLinhaPosicao.ExtrairDaPosicao(registro, 33, 52);
-                //AgenciaMantenedoraConta = LeitorLinhaPosicao.ExtrairInt32DaPosicao(registro, 53, 57);
-                //DigitoVerificadorAgencia = LeitorLinhaPosicao.ExtrairDaPosicao(registro, 58, 58);
-                //NumeroContaCorrente = LeitorLinhaPosicao.ExtrairInt64DaPosicao(registro, 59, 70);
-                //DigitoVerificadorConta = LeitorLinhaPosicao.ExtrairDaPosicao(registro, 71, 71);
-                //DigitoVerificadorAgenciaConta = LeitorLinhaPosicao.ExtrairDaPosicao(registro, 72, 72);
-                //NomeEmpresa = LeitorLinhaPosicao.ExtrairDaPosicao(registro, 73, 102);
-                //UsoExclusivoFebrabanCnab2 = LeitorLinhaPosicao.ExtrairDaPosicao(registro, 103, 108);
-                //NaturezaLancamento = LeitorLinhaPosicao.ExtrairDaPosicao(registro, 109, 111);
-                //TipoComplementoLancamento = (TipoComplementoLancamento)LeitorLinhaPosicao.ExtrairInt32OpcionalDaPosicao(registro, 112, 113).GetValueOrDefault();
-                //ComplementoLancamento = LeitorLinhaPosicao.ExtrairDaPosicao(registro, 114, 133);
-                //IdentificacaoIsencaoCpmf = (IsencaoCpmf)LeitorLinhaPosicao.ExtrairDaPosicao(registro, 134, 134)[0];
-                //DataContabil = LeitorLinhaPosicao.ExtrairDataOpcionalDaPosicao(registro, 135, 142);
-                //DataLancamento = LeitorLinhaPosicao.ExtrairDataDaPosicao(registro, 143, 150);
-                //ValorLancamento = decimal.Parse(LeitorLinhaPosicao.ExtrairDaPosicao(registro, 151, 168)) / 100m;
-                //TipoLancamento = (TipoLancamento)LeitorLinhaPosicao.ExtrairDaPosicao(registro, 169, 169)[0];
-                //CategoriaLancamento = (CategoriaLancamento)LeitorLinhaPosicao.ExtrairInt32DaPosicao(registro, 170, 172);
-                //CodigoHistorico = LeitorLinhaPosicao.ExtrairDaPosicao(registro, 173, 176);
-                //HistoricoLancamento = LeitorLinhaPosicao.ExtrairDaPosicao(registro, 177, 201);
-                //NumeroDocumentoComplemento = LeitorLinhaPosicao.ExtrairDaPosicao(registro, 202, 240);
+                CodigoBanco = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 1, 3));
+                LoteServico = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 4, 7));
+                TipoRegistro = MetodosExtensao.ExtrairValorDaLinha(registro, 8, 8);
+                NumeroRegistro = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 9, 13));
+                Segmento = MetodosExtensao.ExtrairValorDaLinha(registro, 14, 14);
+                UsoExclusivoFebrabanCnab = MetodosExtensao.ExtrairValorDaLinha(registro, 15, 17);
+                TipoInscricaoCliente = (TipoInscricao) MetodosExtensao.ExtrairValorDaLinha(registro, 18, 18)[0];
+                NumeroInscricaoCliente = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 19, 32));
+                CodigoConvenioBanco = MetodosExtensao.ExtrairValorDaLinha(registro, 33, 52);
+                AgenciaMantenedoraConta = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 53, 57));
+                DigitoVerificadorAgencia = MetodosExtensao.ExtrairValorDaLinha(registro, 58, 58);
+                NumeroContaCorrente = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 59, 70));
+                DigitoVerificadorConta = MetodosExtensao.ExtrairValorDaLinha(registro, 71, 71);
+                DigitoVerificadorAgenciaConta = MetodosExtensao.ExtrairValorDaLinha(registro, 72, 72);
+                NomeEmpresa = MetodosExtensao.ExtrairValorDaLinha(registro, 73, 102);
+                UsoExclusivoFebrabanCnab2 = MetodosExtensao.ExtrairValorDaLinha(registro, 103, 108);
+                NaturezaLancamento = MetodosExtensao.ExtrairValorDaLinha(registro, 109, 111);
+                TipoComplementoLancamento = (TipoComplementoLancamento) MetodosExtensao.ExtrairValorDaLinha(registro, 112, 113)[0];
+                ComplementoLancamento = MetodosExtensao.ExtrairValorDaLinha(registro, 114, 133);
+                IdentificacaoIsencaoCpmf = (IsencaoCpmf)MetodosExtensao.ExtrairValorDaLinha(registro, 134, 134)[0];
+                DataContabil = Convert.ToDateTime(MetodosExtensao.ExtrairValorDaLinha(registro, 135, 142));
+                DataLancamento = Convert.ToDateTime(MetodosExtensao.ExtrairValorDaLinha(registro, 143, 150));
+                ValorLancamento = decimal.Parse(MetodosExtensao.ExtrairValorDaLinha(registro, 151, 168)) / 100m;
+                TipoLancamento = (TipoLancamento)MetodosExtensao.ExtrairValorDaLinha(registro, 169, 169)[0];
+                CategoriaLancamento = (CategoriaLancamento)MetodosExtensao.ExtrairValorDaLinha(registro, 170, 172)[0];
+                CodigoHistorico = MetodosExtensao.ExtrairValorDaLinha(registro, 173, 176);
+                HistoricoLancamento = MetodosExtensao.ExtrairValorDaLinha(registro, 177, 201);
+                NumeroDocumentoComplemento = MetodosExtensao.ExtrairValorDaLinha(registro, 202, 240);
             }
             catch (Exception ex)
             {

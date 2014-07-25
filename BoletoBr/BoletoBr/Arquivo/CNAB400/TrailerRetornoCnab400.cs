@@ -8,28 +8,30 @@ namespace BoletoBr
 {
     public class TrailerRetornoCnab400
     {
-        #region Propriedades
-
         public int CodigoDoRegistro { get; set; }
         public int CodigoDeRetorno { get; set; }
-        public int CodigoDoServico { get; set; }
-        public int CodigoDoBanco { get; set; }
+        public string CodigoDoServico { get; set; }
+        public string CodigoDoBanco { get; set; }
         public int NumeroSequencial { get; set; }
-
-        #endregion
 
         #region Banco HSBC
 
+        /// <summary>
+        /// Faz a leitura do Trailer para arquivos do formato CNAB 400
+        /// Bancos:
+        /// HSBC
+        /// </summary>
+        /// <param name="registro"></param>
         public void LerTrailerRetornoCnab400Hsbc(string registro)
         {
             try
             {
-                CodigoDoRegistro = Convert.ToInt32(registro.Substring(0, 1));
-                CodigoDeRetorno = Convert.ToInt32(registro.Substring(2, 1));
-                CodigoDoServico = Convert.ToInt32(registro.Substring(3, 2));
-                CodigoDoBanco = Convert.ToInt32(registro.Substring(5, 3));
+                CodigoDoRegistro = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 1, 1));
+                CodigoDeRetorno = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 2, 2));
+                CodigoDoServico = MetodosExtensao.ExtrairValorDaLinha(registro, 3, 4);
+                CodigoDoBanco = MetodosExtensao.ExtrairValorDaLinha(registro, 5, 7);
                 // 8 - 394 -> 387 brancos
-                NumeroSequencial = Convert.ToInt32(registro.Substring(395, 6));
+                NumeroSequencial = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 395, 400));
             }
             catch (Exception)
             {

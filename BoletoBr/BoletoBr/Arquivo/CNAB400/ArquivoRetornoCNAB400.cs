@@ -15,18 +15,13 @@ namespace BoletoBr.Dominio.CNAB400
 
         public event EventHandler<LinhaDeArquivoLidaArgs> LinhaDeArquivoLida;
 
-        private List<DetalheRetorno> _listaDetalhe = new List<DetalheRetorno>();
-
-        public List<DetalheRetorno> ListaDetalhe
-        {
-            get { return _listaDetalhe; }
-            set { _listaDetalhe = value; }
-        }
+        public List<DetalheRetorno> ListaDetalhe { get; set; }
 
         #region Construtores
 
         public ArquivoRetornoCNAB400()
-		{
+        {
+            ListaDetalhe = new List<DetalheRetorno>();
             this.TipoArquivo = TipoArquivo.Cnab400;
         }
 
