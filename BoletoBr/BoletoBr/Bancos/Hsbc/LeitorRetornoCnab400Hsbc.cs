@@ -84,11 +84,8 @@ namespace BoletoBr.Bancos
         public HeaderRetornoCnab400 ObterHeader(string linhaObterInformacoes)
         {
             var objRetornar = new HeaderRetornoCnab400();
-            /* Obter 1ª linha */
-            var linha = linhaObterInformacoes;
 
-            if (linha.ExtrairValorDaLinha(1, 1) != "0")
-                throw new Exception("Linha informada não possui características do  Registro Header do arquivo");
+            var linha = linhaObterInformacoes;
 
             objRetornar.CodigoDoRegistro = linha.ExtrairValorDaLinha(1, 1).ToInt();
             objRetornar.CodigoDeRetorno = linha.ExtrairValorDaLinha(2, 2).ToInt();
@@ -103,7 +100,7 @@ namespace BoletoBr.Bancos
             objRetornar.NomeDoBeneficiario = linha.ExtrairValorDaLinha(47, 76);
             objRetornar.CodigoDoBanco = linha.ExtrairValorDaLinha(77, 79);
             objRetornar.NomeDoBanco = linha.ExtrairValorDaLinha(80, 94);
-            objRetornar.DataGravacao = Convert.ToInt32(linha.ExtrairValorDaLinha(95, 100));
+            objRetornar.DataGeracaoGravacao = Convert.ToInt32(linha.ExtrairValorDaLinha(95, 100));
             objRetornar.Densidade = linha.ExtrairValorDaLinha(101, 105);
             objRetornar.LiteralDensidade = linha.ExtrairValorDaLinha(106, 108);
             objRetornar.CodigoDoBeneficiario = linha.ExtrairValorDaLinha(109, 118).ToInt();

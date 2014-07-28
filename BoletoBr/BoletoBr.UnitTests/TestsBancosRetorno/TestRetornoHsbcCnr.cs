@@ -58,7 +58,13 @@ namespace BoletoBr.UnitTests.Tests.BancosRetorno
 
         public void TestRegistrosArquivoRetornoBancoHsbcCarteiraCnr()
         {
-            
+            LeitorRetornoCnab400Hsbc leitor = new LeitorRetornoCnab400Hsbc(null);
+
+            string dadosTesteTrailer =
+    "02RETORNO01COBRANÇA CNR   12345001234567890 1 EMPRESA ABCDEFGHIJKLMNOPQRSTUV399HSBC           23071406250BPI1234567890AGENCIA ABCDEFGHIJKL1234                                                                                                                                                                                                                                                      VOLSER000001" +
+    "9201399                                                                                                                                                                                                                                                                                                                                                                                                        1";
+
+            var resultado = leitor.ProcessarRetorno();
         }
     }
 }

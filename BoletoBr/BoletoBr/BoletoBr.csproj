@@ -61,6 +61,7 @@
     <Compile Include="Bancos\Cef\BancoCef.cs" />
     <Compile Include="Bancos\Cef\CarteiraCobrancaCefRg.cs" />
     <Compile Include="Bancos\Cef\CarteiraCobrancaCefSr.cs" />
+    <Compile Include="Bancos\Cef\LeitorRetornoCnab400Cef.cs" />
     <Compile Include="Bancos\Hsbc\BancoHsbc.cs" />
     <Compile Include="Bancos\Hsbc\CarteiraCobrancaHsbcCnr.cs" />
     <Compile Include="Bancos\Hsbc\CarteiraCobrancaHsbcCsb.cs" />

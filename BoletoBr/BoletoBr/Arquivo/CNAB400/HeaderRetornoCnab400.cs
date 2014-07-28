@@ -10,26 +10,52 @@ namespace BoletoBr
 {
     public class HeaderRetornoCnab400
     {
+        #region Propriedades Comuns
+
         public int CodigoDoRegistro { get; set; }
         public int CodigoDeRetorno { get; set; }
         public string LiteralRetorno { get; set; }
         public string CodigoDoServico { get; set; }
         public string LiteralServico { get; set; }
         public int CodigoAgenciaCedente { get; set; }
-        public string Constante { get; set; }
-        public long ContaCorrente { get; set; }
-        public string TipoRetorno { get; set; }
         public string NomeDoBeneficiario { get; set; }
         public string CodigoDoBanco { get; set; }
         public string NomeDoBanco { get; set; }
-        public int DataGravacao { get; set; }
+        public int DataGeracaoGravacao { get; set; }
+        public int CodigoDoBeneficiario { get; set; }
+        public string NumeroSequencial { get; set; }
+
+        #endregion
+
+        #region HSBC
+
+        public string Constante { get; set; }
+        public long ContaCorrente { get; set; }
+        public string TipoRetorno { get; set; }
         public string Densidade { get; set; }
         public string LiteralDensidade { get; set; }
-        public int CodigoDoBeneficiario { get; set; }
         public string NomeAgencia { get; set; }
         public int CodigoFormulario { get; set; }
         public string Volser { get; set; }
-        public string NumeroSequencial { get; set; }
+
+        #endregion
+
+        #region Bradesco
+
+        public int IdentificacaoArquivoRetorno { get; set; }
+        public string Zeros { get; set; }
+        public int NumeroAvisoBancario { get; set; }
+
+        #endregion
+
+        #region Caixa Econômica Federal
+
+        public string UsoExclusivo { get; set; }
+        public string MensagemRetorno { get; set; }
+        public string NumeroSequencialA { get; set; }
+        public string NumeroSequencialB { get; set; }
+
+        #endregion
 
         #region Banco HSBC
 
@@ -58,7 +84,7 @@ namespace BoletoBr
                 NomeDoBeneficiario = MetodosExtensao.ExtrairValorDaLinha(registro, 47, 76);
                 CodigoDoBanco = MetodosExtensao.ExtrairValorDaLinha(registro, 77, 79);
                 NomeDoBanco = MetodosExtensao.ExtrairValorDaLinha(registro, 80, 94);
-                DataGravacao = dataGravacao;
+                DataGeracaoGravacao = dataGravacao;
                 Densidade = MetodosExtensao.ExtrairValorDaLinha(registro, 101, 105);
                 LiteralDensidade = MetodosExtensao.ExtrairValorDaLinha(registro, 106, 108);
                 CodigoDoBeneficiario = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 109, 118));
