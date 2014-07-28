@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace BoletoBr.Dominio
 {
-    public class DetalheRetorno
+    public class DetalheRetornoGenericoCnab400
     {
 
         #region Construtores
 
-        public DetalheRetorno()
+        public DetalheRetornoGenericoCnab400()
         {
             Sequencial = 0;
             DataLiquidacao = new DateTime(1, 1, 1);
@@ -75,7 +75,7 @@ namespace BoletoBr.Dominio
             CodigoInscricao = 0;
         }
 
-        public DetalheRetorno(string registro)
+        public DetalheRetornoGenericoCnab400(string registro)
         {
             Sequencial = 0;
             DataLiquidacao = new DateTime(1, 1, 1);

@@ -76,13 +76,21 @@
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="TestsBancosRetorno\ModeloHeaderRetornoHsbcCnr.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TestsBancosRetorno\ModeloTrailerRetornoHsbcCnr.txt" />
+    <None Include="TestsBancosRetorno\399.TRD.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestsBancosRetorno\399.TRH.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestsBancosRetorno\399.TRT.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestsBancosRetorno\RetornoCompletoHsbc.txt" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

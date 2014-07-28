@@ -520,5 +520,123 @@ namespace BoletoBr.Bancos.Cef
         {
             throw new NotImplementedException();
         }
+
+        public string GerarHeaderRemessa(string numeroConvenio, Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarHeaderRemessa(string numeroConvenio, Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa,
+            Boleto boletos)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarDetalheRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarHeaderRemessa(Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarTrailerRemessa(int numeroRegistro, TipoArquivo tipoArquivo, Cedente cedente, decimal vltitulostotal)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa, TipoArquivo tipoArquivo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa, TipoArquivo tipoArquivo,
+            Boleto boletos)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio, Cedente cedente)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio, Cedente cedente,
+            Boleto boletos)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarDetalheSegmentoQRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarDetalheSegmentoQRemessa(Boleto boleto, int numeroRegistro, Sacado sacado)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarDetalheSegmentoRRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarTrailerArquivoRemessa(int numeroRegistro)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarTrailerArquivoRemessa(int numeroRegistro, Boleto boletos)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarTrailerLoteRemessa(int numeroRegistro)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GerarTrailerLoteRemessa(int numeroRegistro, Boleto boletos)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetalheSegmentoTRetornoCnab240 LerDetalheSegmentoTRetornoCnab240(string registro)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetalheSegmentoURetornoCnab240 LerDetalheSegmentoURetornoCnab240(string registro)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetalheSegmentoWRetornoCnab240 LerDetalheSegmentoWRetornoCnab240(string registro)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetalheRetornoGenericoCnab400 LerDetalheRetornoCnab400(string registro)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Cedente Cedente { get; private set; }
+        public int Codigo { get; set; }
+        public string Nome { get; private set; }
+        public string Digito { get; private set; }
     }
 }

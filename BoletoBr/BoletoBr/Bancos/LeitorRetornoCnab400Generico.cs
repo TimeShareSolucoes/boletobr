@@ -39,6 +39,21 @@ namespace BoletoBr.Bancos
             return objRetornar;
         }
 
+        public HeaderRetornoCnab400 ObterHeader(string valor)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetalheRetornoCnab400 ObterRegistrosDetalhe(string valor)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TrailerRetornoCnab400 ObterTrailer(string valor)
+        {
+            throw new NotImplementedException();
+        }
+
         public HeaderRetornoCnab400 ObterHeader()
         {
             return null;

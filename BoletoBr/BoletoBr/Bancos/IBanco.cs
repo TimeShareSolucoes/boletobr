@@ -67,5 +67,88 @@ namespace BoletoBr.Bancos
         /// </summary>
         /// <param name="banco"></param><param name="arquivo"></param>
         void LerArquivoRetorno(IBanco banco, Stream arquivo);
+
+        string GerarHeaderRemessa(string numeroConvenio, Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa);
+        /// <summary>
+        /// Gera o header do arquivo de remessa
+        /// </summary>
+        string GerarHeaderRemessa(string numeroConvenio, Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa, Boleto boletos);
+        /// <summary>
+        /// Gera os registros de detalhe do arquivo de remessa
+        /// </summary>
+        string GerarDetalheRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo);
+        /// <summary>
+        /// Gera o header de arquivo do arquivo de remessa
+        /// </summary>
+        string GerarHeaderRemessa(Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa);
+        /// <summary>
+        /// Gera o Trailer do arquivo de remessa
+        /// </summary>
+        string GerarTrailerRemessa(int numeroRegistro, TipoArquivo tipoArquivo, Cedente cedente, decimal vltitulostotal);
+        /// <summary>
+        /// Gera o header de lote do arquivo de remessa
+        /// </summary>
+        string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa);
+        /// <summary>
+        /// Gera o header de lote do arquivo de remessa
+        /// </summary>
+        string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa, TipoArquivo tipoArquivo);
+        /// <summary>
+        /// Gera o header de lote do arquivo de remessa
+        /// </summary>
+        string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa, TipoArquivo tipoArquivo, Boleto boletos);
+        /// <summary>
+        /// Gera os registros de detalhe do arquivo de remessa - SEGMENTO P
+        /// </summary>
+        string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio);
+        /// <summary>
+        /// Gera os registros de detalhe do arquivo de remessa - SEGMENTO P
+        /// </summary>
+        string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio, Cedente cedente);
+        /// <summary>
+        /// Gera os registros de detalhe do arquivo de remessa - SEGMENTO P
+        /// </summary>
+        string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio, Cedente cedente, Boleto boletos);
+        /// <summary>
+        /// Gera os registros de detalhe do arquivo de remessa - SEGMENTO Q
+        /// </summary>
+        string GerarDetalheSegmentoQRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo);
+        /// <summary>
+        /// Gera os registros de detalhe do arquivo de remessa - SEGMENTO Q
+        /// </summary>
+        string GerarDetalheSegmentoQRemessa(Boleto boleto, int numeroRegistro, Sacado sacado);
+        /// <summary>
+        /// Gera os registros de detalhe do arquivo de remessa - SEGMENTO R
+        /// </summary>
+        string GerarDetalheSegmentoRRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo);
+        /// <summary>
+        /// Gera o Trailer de arquivo do arquivo de remessa
+        /// </summary>
+        string GerarTrailerArquivoRemessa(int numeroRegistro);
+        /// <summary>
+        /// Gera o Trailer de arquivo do arquivo de remessa
+        /// </summary>
+        string GerarTrailerArquivoRemessa(int numeroRegistro, Boleto boletos);
+        /// <summary>
+        /// Gera o Trailer de lote do arquivo de remessa
+        /// </summary>
+        string GerarTrailerLoteRemessa(int numeroRegistro);
+        /// <summary>
+        /// Gera o Trailer de lote do arquivo de remessa
+        /// </summary>
+        string GerarTrailerLoteRemessa(int numeroRegistro, Boleto boletos);
+
+        DetalheSegmentoTRetornoCnab240 LerDetalheSegmentoTRetornoCnab240(string registro);
+
+        DetalheSegmentoURetornoCnab240 LerDetalheSegmentoURetornoCnab240(string registro);
+
+        DetalheSegmentoWRetornoCnab240 LerDetalheSegmentoWRetornoCnab240(string registro);
+
+        DetalheRetornoGenericoCnab400 LerDetalheRetornoCnab400(string registro);
+
+        Cedente Cedente { get; }
+        int Codigo { get; set; }
+        string Nome { get; }
+        string Digito { get; }
     }
 }

@@ -43,7 +43,8 @@
   <ItemGroup>
     <Compile Include="Arquivo\CNAB240\HeaderDeArquivoCnab240.cs" />
     <Compile Include="Arquivo\IArquivoRemessa.cs" />
-    <Compile Include="Arquivo\LinhaDeArquivoGeradaArgs.cs" />
+    <Compile Include="Arquivo\TipoLinhaArquivoGerado.cs" />
+    <Compile Include="Arquivo\TipoLinhaArquivoLido.cs" />
     <Compile Include="Bancos\Amazonia\BancoAmazonia.cs" />
     <Compile Include="Bancos\Amazonia\CarteiraCobrancaBancoAmazoniaCnr.cs" />
     <Compile Include="Bancos\Amazonia\CarteiraCobrancaBancoAmazoniaCsb.cs" />
@@ -147,7 +148,6 @@
     <Compile Include="Dominio\Instrucao\IInstrucao.cs" />
     <Compile Include="Dominio\Instrucao\InstrucaoPadronizada.cs" />
     <Compile Include="Dominio\Instrucao\InstrucaoCustomizada.cs" />
-    <Compile Include="Arquivo\LinhaDeArquivoLidaArgs.cs" />
     <Compile Include="Arquivo\Remessa.cs" />
     <Compile Include="Dominio\Sacado.cs" />
     <Compile Include="Arquivo\CNAB240\TrailerRemessaCnab240.cs" />

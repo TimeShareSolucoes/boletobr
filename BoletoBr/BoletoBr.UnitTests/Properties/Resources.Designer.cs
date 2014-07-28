@@ -61,20 +61,38 @@ namespace BoletoBr.UnitTests.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 19912345678909876123450012345678901  1234567890123456 2       1234567890123456    250720149                   10725072014001060                        25072014       10003991234599                                                             100        950         500       0123456789011234567890                         33                                                  1.
+        /// </summary>
+        internal static string _399_TRD {
+            get {
+                return ResourceManager.GetString("_399_TRD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 02RETORNO01COBRANÇA CNR   12345001234567890 1 EMPRESA ABCDEFGHIJKLMNOPQRSTUV399HSBC           23071406250BPI1234567890AGENCIA ABCDEFGHIJKL1234                                                                                                                                                                                                                                                      VOLSER000001.
         /// </summary>
-        internal static string ModeloHeaderRetornoHsbcCnr {
+        internal static string _399_TRH {
             get {
-                return ResourceManager.GetString("ModeloHeaderRetornoHsbcCnr", resourceCulture);
+                return ResourceManager.GetString("_399_TRH", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to 9201399                                                                                                                                                                                                                                                                                                                                                                                                        1.
         /// </summary>
-        internal static string ModeloTrailerRetornoHsbcCnr {
+        internal static string _399_TRT {
             get {
-                return ResourceManager.GetString("ModeloTrailerRetornoHsbcCnr", resourceCulture);
+                return ResourceManager.GetString("_399_TRT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string RetornoCompletoHsbc {
+            get {
+                return ResourceManager.GetString("RetornoCompletoHsbc", resourceCulture);
             }
         }
     }

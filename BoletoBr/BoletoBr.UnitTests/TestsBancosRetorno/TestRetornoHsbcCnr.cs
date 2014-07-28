@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using BoletoBr.Bancos;
@@ -13,73 +14,51 @@ namespace BoletoBr.UnitTests.Tests.BancosRetorno
         [TestMethod]
         public void TestHeaderArquivoRetornoBancoHsbcCarteiraCnr()
         {
-            var resourceTxt = Properties.Resources.ModeloHeaderRetornoHsbcCnr;
+            LeitorRetornoCnab400Hsbc leitor = new LeitorRetornoCnab400Hsbc(null);
 
-            var linhas = new List<string>(resourceTxt.Split(new[] { Environment.NewLine }, StringSplitOptions.None));
+            string valorTesteRegistro = 
+                "02RETORNO01COBRANÇA CNR   12345001234567890 1 EMPRESA ABCDEFGHIJKLMNOPQRSTUV399HSBC           23071406250BPI1234567890AGENCIA ABCDEFGHIJKL1234                                                                                                                                                                                                                                                      VOLSER000001";
+            
+            var resultado = leitor.ObterHeader(valorTesteRegistro);
 
-            LeitorRetornoCnab400Hsbc leitor = new LeitorRetornoCnab400Hsbc(linhas);
+            Assert.AreEqual(resultado.CodigoDoBanco, "399");
+        }
 
-            var resultado = leitor.ObterHeader();
+        [TestMethod]
+        public void TestDetalheArquivoRetornoBancoHsbcCarteiraCnr()
+        {
+            LeitorRetornoCnab400Hsbc leitor = new LeitorRetornoCnab400Hsbc(null);
 
-            StringBuilder b = new StringBuilder();
 
-            b.Append(resultado.CodigoDoRegistro)
-                .Append(resultado.CodigoDeRetorno)
-                .Append(resultado.LiteralRetorno)
-                .Append(resultado.CodigoDoServico)
-                .Append(resultado.LiteralServico)
-                .Append(resultado.CodigoAgenciaCedente)
-                .Append(resultado.Constante)
-                .Append(resultado.ContaCorrente)
-                .Append(" ")
-                .Append(resultado.TipoRetorno)
-                .Append(" ")
-                .Append(resultado.NomeDoBeneficiario)
-                .Append(resultado.CodigoDoBanco)
-                .Append(resultado.NomeDoBanco)
-                .Append(resultado.DataGravacao)
-                .Append(resultado.Densidade)
-                .Append(resultado.LiteralDensidade)
-                .Append(resultado.CodigoDoBeneficiario)
-                .Append(resultado.NomeAgencia)
-                .Append(resultado.CodigoFormulario)
-                .Append("                                                                                                                                                                                                                                                      ")
-                .Append(resultado.Volser)
-                .Append(resultado.NumeroSequencial);     
+            // Linha detalhe de outro banco.
+            string valorTesteRegistro =
+                "19912345678909876123450012345678901  1234567890123456 2       1234567890123456    250720149                   10725072014001060                        25072014       10003991234599                                                               0000000000000100        0950         5000123456789011234567890212345600000000000000000000331                                                                1";
+            
+            var resultado = leitor.ObterRegistrosDetalhe(valorTesteRegistro);
 
-            var builder = b.ToString();
-
-            var conteudoArquivoResource = resourceTxt;
-
-            Assert.AreEqual(conteudoArquivoResource, builder);
+            Assert.AreEqual(resultado.AgenciaCobradora, 12345);
         }
 
         [TestMethod]
         public void TestTrailerArquivoRetornoBancoHsbcCarteiraCnr()
         {
-            var resourceTxt = Properties.Resources.ModeloTrailerRetornoHsbcCnr;
+            LeitorRetornoCnab400Hsbc leitor = new LeitorRetornoCnab400Hsbc(null);
 
-            var linhas = new List<string>(resourceTxt.Split(new[] { Environment.NewLine }, StringSplitOptions.None));
+            string dadosTesteTrailer = 
+                "9201399                                                                                                                                                                                                                                                                                                                                                                                                        1";
 
-            LeitorRetornoCnab400Hsbc leitor = new LeitorRetornoCnab400Hsbc(linhas);
+            var resultado = leitor.ObterTrailer(dadosTesteTrailer);
 
-            var resultado = leitor.ObterTrailer();
+            Assert.AreEqual(resultado.CodigoDeRetorno, 2);
+            Assert.AreEqual(resultado.CodigoDoBanco, "399");
+            Assert.AreEqual(resultado.CodigoDoRegistro, 9);
+            Assert.AreEqual(resultado.CodigoDoServico, "01");
+            Assert.AreEqual(resultado.NumeroSequencial, 1);
+        }
 
-            StringBuilder b = new StringBuilder();
-
-            b.Append(resultado.CodigoDoRegistro)
-                .Append(resultado.CodigoDeRetorno)
-                .Append(resultado.CodigoDoServico)
-                .Append(resultado.CodigoDoBanco)
-                .Append("                                                                                                                                                                                                                                                                                                                                                                                                        ")
-                .Append(resultado.NumeroSequencial);
-
-            var builder = b.ToString();
-
-            // Pega último caractere da cadeia.
-            var conteudoArquivoResource = resourceTxt.Split().LastOrDefault();
-
-            Assert.AreEqual(conteudoArquivoResource, builder);
+        public void TestRegistrosArquivoRetornoBancoHsbcCarteiraCnr()
+        {
+            
         }
     }
 }

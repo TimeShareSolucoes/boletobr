@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,34 @@ namespace BoletoBr.Bancos
         {
             /* Validações */
             #region Validações
+            ValidaArquivoRetorno();
+            #endregion
+
+            var objRetornar = new RetornoCnab400();
+            objRetornar.RegistrosDetalhe = new List<DetalheRetornoCnab400>();
+
+            foreach (var linhaAtual in _linhasArquivo)
+            {
+                if (linhaAtual.ExtrairValorDaLinha(1, 1) == "0")
+                {
+                   objRetornar.Header = ObterHeader(linhaAtual);
+                }
+                if (linhaAtual.ExtrairValorDaLinha(1, 1) == "1")
+                {
+                    var objDetalhe = ObterRegistrosDetalhe(linhaAtual);
+                    objRetornar.RegistrosDetalhe.Add(objDetalhe);
+                }
+                if (linhaAtual.ExtrairValorDaLinha(1, 1) == "9")
+                {
+                    objRetornar.Trailer = ObterTrailer(linhaAtual);
+                }
+            }
+
+            return objRetornar;
+        }
+
+        void ValidaArquivoRetorno()
+        {
             if (_linhasArquivo == null)
                 throw new Exception("Dados do arquivo de retorno estão nulos. Impossível processar.");
 
@@ -28,23 +57,35 @@ namespace BoletoBr.Bancos
 
             if (_linhasArquivo.Count < 3)
                 throw new Exception("Dados do arquivo de retorno não contém o mínimo de 3 linhas. Impossível processar.");
-            #endregion
 
-            var objRetornar = new RetornoCnab400();
+            var qtdLinhasHeader =
+                _linhasArquivo.Count(wh => wh.ExtrairValorDaLinha(1, 1) == "0");
 
-            /* Processar Header */
-            objRetornar.Header = ObterHeader();
-            objRetornar.RegistrosDetalhe = ObterRegistrosDetalhe();
-            objRetornar.Trailer = ObterTrailer();
+            if (qtdLinhasHeader <= 0)
+                throw new Exception("Não foi encontrado HEADER do arquivo de retorno.");
 
-            return objRetornar;
+            if (qtdLinhasHeader > 1)
+                throw new Exception("Não é permitido mais de um HEADER no arquivo de retorno.");
+
+            var qtdLinhasDetalhe = _linhasArquivo.Count(wh => wh.ExtrairValorDaLinha(1, 1) == "1");
+
+            if (qtdLinhasDetalhe <= 0)
+                throw new Exception("Não foi encontrado DETALHE do arquivo de retorno.");
+
+            var qtdLinhasTrailer = _linhasArquivo.Count(wh => wh.ExtrairValorDaLinha(1, 1) == "9");
+
+            if (qtdLinhasTrailer <= 0)
+                throw new Exception("Não foi encontrado TRAILER do arquivo de retorno.");
+
+            if (qtdLinhasTrailer > 1)
+                throw new Exception("Não é permitido mais de um TRAILER no arquivo de retorno.");
         }
 
-        public HeaderRetornoCnab400 ObterHeader()
+        public HeaderRetornoCnab400 ObterHeader(string linhaObterInformacoes)
         {
             var objRetornar = new HeaderRetornoCnab400();
             /* Obter 1ª linha */
-            var linha = _linhasArquivo[0];
+            var linha = linhaObterInformacoes;
 
             if (linha.ExtrairValorDaLinha(1, 1) != "0")
                 throw new Exception("Linha informada não possui características do  Registro Header do arquivo");
@@ -75,85 +116,84 @@ namespace BoletoBr.Bancos
             return objRetornar;
         }
 
-        public List<DetalheRetornoCnab400> ObterRegistrosDetalhe()
+        public DetalheRetornoCnab400 ObterRegistrosDetalhe(string linhaProcessar)
         {
-            var contador = 1;
-
-            var objRetornar = new List<DetalheRetornoCnab400>();
+            var objRetornar = new DetalheRetornoCnab400();
             /* Obter 2ª linha */
-            var linha = _linhasArquivo[1];
-
-            if (linha.ExtrairValorDaLinha(1, 1) != "1")
-                throw new Exception("Linha informada não possui características do  Registro Detalhe do arquivo");
-
-            foreach (var infoLinha in objRetornar)
-            {
-                infoLinha.CodigoDoRegistro = MetodosExtensao.ExtrairValorDaLinha(linha, 1, 1).ToInt();
-                infoLinha.CodigoDeInscricao = MetodosExtensao.ExtrairValorDaLinha(linha, 2, 3).ToInt();
-                infoLinha.CodigoDoBeneficiario = MetodosExtensao.ExtrairValorDaLinha(linha, 4, 17).ToInt();
-                infoLinha.CodigoAgenciaCedente = MetodosExtensao.ExtrairValorDaLinha(linha, 18, 22).ToInt();
-                infoLinha.SubConta = MetodosExtensao.ExtrairValorDaLinha(linha, 23, 24).ToInt();
-                infoLinha.ContaCorrente = MetodosExtensao.ExtrairValorDaLinha(linha, 25, 35).ToInt();
-                // Posição 36-37 brancos
-                infoLinha.CodigoDoDocumentoEmpresa = MetodosExtensao.ExtrairValorDaLinha(linha, 38, 53).ToInt();
-                // Posição 54 branco
-                infoLinha.CodigoDePostagem = MetodosExtensao.ExtrairValorDaLinha(linha, 55, 55).ToInt();
-                // Posição 56-62 brancos
-                infoLinha.CodigoDoDocumentoBanco = MetodosExtensao.ExtrairValorDaLinha(linha, 63, 78).ToInt();
-                // Posição 79-82 brancos
-                infoLinha.DataDeCredito = MetodosExtensao.ExtrairValorDaLinha(linha, 83, 88).ToInt();
-                infoLinha.Moeda = MetodosExtensao.ExtrairValorDaLinha(linha, 89, 89).ToInt();
-                // Posição 90-107 brancos
-                infoLinha.Carteira = MetodosExtensao.ExtrairValorDaLinha(linha, 108, 108).ToInt();
-                infoLinha.CodigoDeOcorrencia = MetodosExtensao.ExtrairValorDaLinha(linha, 109, 110).ToInt();
-                infoLinha.DataDaOcorrencia = MetodosExtensao.ExtrairValorDaLinha(linha, 111, 116).ToInt();
-                infoLinha.SeuNumero = MetodosExtensao.ExtrairValorDaLinha(linha, 117, 122).ToInt();
-                infoLinha.MotivoDaOcorrencia = MetodosExtensao.ExtrairValorDaLinha(linha, 123, 131).ToInt();
-                // Posição 132-146 brancos
-                infoLinha.DataDeVencimento = MetodosExtensao.ExtrairValorDaLinha(linha, 147, 152).ToInt();
-                infoLinha.ValorDoTituloParcela = MetodosExtensao.ExtrairValorDaLinha(linha, 153, 165).ToDecimal();
-                infoLinha.BancoCobrador = MetodosExtensao.ExtrairValorDaLinha(linha, 166, 168).ToInt();
-                infoLinha.AgenciaCobradora = MetodosExtensao.ExtrairValorDaLinha(linha, 169, 173).ToInt();
-                infoLinha.Especie = MetodosExtensao.ExtrairValorDaLinha(linha, 174, 175).ToInt();
-                infoLinha.Iof = MetodosExtensao.ExtrairValorDaLinha(linha, 176, 186).ToDecimal();
-                // Posição 187-240 brancos
-                infoLinha.Desconto = MetodosExtensao.ExtrairValorDaLinha(linha, 241, 253).ToInt();
-                infoLinha.ValorPago = MetodosExtensao.ExtrairValorDaLinha(linha, 254, 266).ToInt();
-                infoLinha.JurosDeMora = MetodosExtensao.ExtrairValorDaLinha(linha, 267, 279).ToInt();
-                infoLinha.Constante = MetodosExtensao.ExtrairValorDaLinha(linha, 280, 280).ToInt();
-                infoLinha.QuantidadeMoeda = MetodosExtensao.ExtrairValorDaLinha(linha, 281, 293).ToInt();
-                infoLinha.CotacaoMoeda = MetodosExtensao.ExtrairValorDaLinha(linha, 294, 308).ToInt();
-                infoLinha.StatusDaParcela = MetodosExtensao.ExtrairValorDaLinha(linha, 309, 309).ToInt();
-                infoLinha.IdentificadorLancamentoConta = MetodosExtensao.ExtrairValorDaLinha(linha, 310, 315).ToInt();
-                // Posição 316-341 brancos
-                infoLinha.TipoLiquidacao = MetodosExtensao.ExtrairValorDaLinha(linha, 342, 342).ToInt();
-                infoLinha.OrigemDaTarifa = MetodosExtensao.ExtrairValorDaLinha(linha, 343, 343).ToInt();
-                // Posição 344-394 brancos
-                infoLinha.NumeroSequencial = MetodosExtensao.ExtrairValorDaLinha(linha, 395, 400).ToInt();
-
-                contador++;
-            }
-
-            return objRetornar;
-        }
-
-        public TrailerRetornoCnab400 ObterTrailer()
-        {
-            var objRetornar = new TrailerRetornoCnab400();
-            /* Obter última linha */
-            var linha = _linhasArquivo.LastOrDefault();
-
-            if (linha.ExtrairValorDaLinha(1, 1) != "9")
-                throw new Exception("Linha informada não possui características do  Registro Trailer do arquivo");
+            var linha = linhaProcessar;
 
             objRetornar.CodigoDoRegistro = MetodosExtensao.ExtrairValorDaLinha(linha, 1, 1).ToInt();
-            objRetornar.CodigoDeRetorno = MetodosExtensao.ExtrairValorDaLinha(linha, 2, 2).ToInt();
-            objRetornar.CodigoDoServico = MetodosExtensao.ExtrairValorDaLinha(linha, 3, 4);
-            objRetornar.CodigoDoBanco = MetodosExtensao.ExtrairValorDaLinha(linha, 5, 7);
-            // Brancos
+            objRetornar.CodigoDeInscricao = MetodosExtensao.ExtrairValorDaLinha(linha, 2, 3).ToInt();
+            objRetornar.CodigoDoBeneficiario = MetodosExtensao.ExtrairValorDaLinha(linha, 4, 17).ToInt();
+            objRetornar.CodigoAgenciaCedente = MetodosExtensao.ExtrairValorDaLinha(linha, 18, 22).ToInt();
+            objRetornar.SubConta = MetodosExtensao.ExtrairValorDaLinha(linha, 23, 24).ToInt();
+            objRetornar.ContaCorrente = MetodosExtensao.ExtrairValorDaLinha(linha, 25, 35).ToInt();
+            // Posição 36-37 brancos
+            objRetornar.CodigoDoDocumentoEmpresa = MetodosExtensao.ExtrairValorDaLinha(linha, 38, 53).ToInt();
+            // Posição 54 branco
+            objRetornar.CodigoDePostagem = MetodosExtensao.ExtrairValorDaLinha(linha, 55, 55).ToInt();
+            // Posição 56-62 brancos
+            objRetornar.CodigoDoDocumentoBanco = MetodosExtensao.ExtrairValorDaLinha(linha, 63, 78).ToInt();
+            // Posição 79-82 brancos
+            objRetornar.DataDeCredito = MetodosExtensao.ExtrairValorDaLinha(linha, 83, 88).ToInt();
+            objRetornar.Moeda = MetodosExtensao.ExtrairValorDaLinha(linha, 89, 89).ToInt();
+            // Posição 90-107 brancos
+            objRetornar.Carteira = MetodosExtensao.ExtrairValorDaLinha(linha, 108, 108).ToInt();
+            objRetornar.CodigoDeOcorrencia = MetodosExtensao.ExtrairValorDaLinha(linha, 109, 110).ToInt();
+            objRetornar.DataDaOcorrencia = MetodosExtensao.ExtrairValorDaLinha(linha, 111, 116).ToInt();
+            objRetornar.SeuNumero = MetodosExtensao.ExtrairValorDaLinha(linha, 117, 122).ToInt();
+            objRetornar.MotivoDaOcorrencia = MetodosExtensao.ExtrairValorDaLinha(linha, 123, 131).ToInt();
+            // Posição 132-146 brancos
+            objRetornar.DataDeVencimento = MetodosExtensao.ExtrairValorDaLinha(linha, 147, 152).ToInt();
+            objRetornar.ValorDoTituloParcela = MetodosExtensao.ExtrairValorDaLinha(linha, 153, 165).ToDecimal();
+            objRetornar.BancoCobrador = MetodosExtensao.ExtrairValorDaLinha(linha, 166, 168).ToInt();
+            objRetornar.AgenciaCobradora = MetodosExtensao.ExtrairValorDaLinha(linha, 169, 173).ToInt();
+            objRetornar.Especie = MetodosExtensao.ExtrairValorDaLinha(linha, 174, 175).ToInt();
+            objRetornar.Iof = MetodosExtensao.ExtrairValorDaLinha(linha, 176, 186).ToDecimal();
+            // Posição 187-240 brancos
+            objRetornar.Desconto = MetodosExtensao.ExtrairValorDaLinha(linha, 241, 253).ToDecimal();
+            objRetornar.ValorPago = MetodosExtensao.ExtrairValorDaLinha(linha, 254, 266).ToDecimal();
+            objRetornar.JurosDeMora = MetodosExtensao.ExtrairValorDaLinha(linha, 267, 279).ToDecimal();
+            objRetornar.Constante = MetodosExtensao.ExtrairValorDaLinha(linha, 280, 280).ToInt();
+            objRetornar.QuantidadeMoeda = MetodosExtensao.ExtrairValorDaLinha(linha, 281, 293).ToInt();
+            objRetornar.CotacaoMoeda = MetodosExtensao.ExtrairValorDaLinha(linha, 294, 308).ToDecimal();
+            objRetornar.StatusDaParcela = MetodosExtensao.ExtrairValorDaLinha(linha, 309, 309).ToInt();
+            objRetornar.IdentificadorLancamentoConta = MetodosExtensao.ExtrairValorDaLinha(linha, 310, 315).ToInt();
+            // Posição 316-341 brancos
+            objRetornar.TipoLiquidacao = MetodosExtensao.ExtrairValorDaLinha(linha, 342, 342).ToInt();
+            objRetornar.OrigemDaTarifa = MetodosExtensao.ExtrairValorDaLinha(linha, 343, 343).ToInt();
+            // Posição 344-394 brancos
             objRetornar.NumeroSequencial = MetodosExtensao.ExtrairValorDaLinha(linha, 395, 400).ToInt();
             
             return objRetornar;
+        }
+
+        public TrailerRetornoCnab400 ObterTrailer(string linhaObterInformacoes)
+        {
+            var objRetornar = new TrailerRetornoCnab400();
+            /* Obter última linha */
+            var linha = linhaObterInformacoes;
+
+            objRetornar.CodigoDoRegistro = linha.ExtrairValorDaLinha(1, 1).ToInt();
+            objRetornar.CodigoDeRetorno = linha.ExtrairValorDaLinha(2, 2).ToInt();
+            objRetornar.CodigoDoServico = linha.ExtrairValorDaLinha(3, 4);
+            objRetornar.CodigoDoBanco = linha.ExtrairValorDaLinha(5, 7);
+            // Brancos
+            objRetornar.NumeroSequencial = linha.ExtrairValorDaLinha(395, 400).ToInt();
+            
+            return objRetornar;
+        }
+
+        public static string PrimeiroCaracter(string retorno)
+        {
+            try
+            {
+                return retorno.ExtrairValorDaLinha(1, 1);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao desmembrar registro.", ex);
+            }
         }
     }
 }

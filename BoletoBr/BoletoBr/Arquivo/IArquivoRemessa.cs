@@ -27,7 +27,5 @@ namespace BoletoBr.Arquivo
         string NumeroConvenio { get; set; }
         int NumeroArquivoRemessa { get; set; }
         TipoArquivo TipoArquivo { get; }
-
-        event EventHandler<LinhaDeArquivoGeradaArgs> LinhaDeArquivoGerada;
     }
 }
