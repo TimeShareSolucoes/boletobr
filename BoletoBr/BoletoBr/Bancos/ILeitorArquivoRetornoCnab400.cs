@@ -9,8 +9,8 @@ namespace BoletoBr.Bancos
     interface ILeitorArquivoRetornoCnab400
     {
         RetornoCnab400 ProcessarRetorno();
-        HeaderRetornoCnab400 ObterHeader(string valor);
-        DetalheRetornoCnab400 ObterRegistrosDetalhe(string valor);
-        TrailerRetornoCnab400 ObterTrailer(string valor);
+        HeaderRetornoCnab400 ObterHeader(string linha);
+        DetalheRetornoCnab400 ObterRegistrosDetalhe(string linha);
+        TrailerRetornoCnab400 ObterTrailer(string linha);
     }
 }

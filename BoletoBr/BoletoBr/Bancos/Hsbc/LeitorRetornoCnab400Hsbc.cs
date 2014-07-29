@@ -100,7 +100,7 @@ namespace BoletoBr.Bancos
             objRetornar.NomeDoBeneficiario = linha.ExtrairValorDaLinha(47, 76);
             objRetornar.CodigoDoBanco = linha.ExtrairValorDaLinha(77, 79);
             objRetornar.NomeDoBanco = linha.ExtrairValorDaLinha(80, 94);
-            objRetornar.DataGeracaoGravacao = Convert.ToInt32(linha.ExtrairValorDaLinha(95, 100));
+            objRetornar.DataGeracaoGravacao = linha.ExtrairValorDaLinha(95, 100).ToInt();
             objRetornar.Densidade = linha.ExtrairValorDaLinha(101, 105);
             objRetornar.LiteralDensidade = linha.ExtrairValorDaLinha(106, 108);
             objRetornar.CodigoDoBeneficiario = linha.ExtrairValorDaLinha(109, 118).ToInt();
@@ -116,7 +116,7 @@ namespace BoletoBr.Bancos
         public DetalheRetornoCnab400 ObterRegistrosDetalhe(string linhaProcessar)
         {
             var objRetornar = new DetalheRetornoCnab400();
-            /* Obter 2ª linha */
+            
             var linha = linhaProcessar;
 
             objRetornar.CodigoDoRegistro = MetodosExtensao.ExtrairValorDaLinha(linha, 1, 1).ToInt();
@@ -146,11 +146,11 @@ namespace BoletoBr.Bancos
             objRetornar.BancoCobrador = MetodosExtensao.ExtrairValorDaLinha(linha, 166, 168).ToInt();
             objRetornar.AgenciaCobradora = MetodosExtensao.ExtrairValorDaLinha(linha, 169, 173).ToInt();
             objRetornar.Especie = MetodosExtensao.ExtrairValorDaLinha(linha, 174, 175).ToInt();
-            objRetornar.Iof = MetodosExtensao.ExtrairValorDaLinha(linha, 176, 186).ToDecimal();
+            objRetornar.ValorIof = MetodosExtensao.ExtrairValorDaLinha(linha, 176, 186).ToDecimal();
             // Posição 187-240 brancos
-            objRetornar.Desconto = MetodosExtensao.ExtrairValorDaLinha(linha, 241, 253).ToDecimal();
-            objRetornar.ValorPago = MetodosExtensao.ExtrairValorDaLinha(linha, 254, 266).ToDecimal();
-            objRetornar.JurosDeMora = MetodosExtensao.ExtrairValorDaLinha(linha, 267, 279).ToDecimal();
+            objRetornar.ValorDesconto = MetodosExtensao.ExtrairValorDaLinha(linha, 241, 253).ToDecimal();
+            objRetornar.ValorPrincipal = MetodosExtensao.ExtrairValorDaLinha(linha, 254, 266).ToDecimal();
+            objRetornar.ValorJuros = MetodosExtensao.ExtrairValorDaLinha(linha, 267, 279).ToDecimal();
             objRetornar.Constante = MetodosExtensao.ExtrairValorDaLinha(linha, 280, 280).ToInt();
             objRetornar.QuantidadeMoeda = MetodosExtensao.ExtrairValorDaLinha(linha, 281, 293).ToInt();
             objRetornar.CotacaoMoeda = MetodosExtensao.ExtrairValorDaLinha(linha, 294, 308).ToDecimal();
@@ -168,7 +168,7 @@ namespace BoletoBr.Bancos
         public TrailerRetornoCnab400 ObterTrailer(string linhaObterInformacoes)
         {
             var objRetornar = new TrailerRetornoCnab400();
-            /* Obter última linha */
+            
             var linha = linhaObterInformacoes;
 
             objRetornar.CodigoDoRegistro = linha.ExtrairValorDaLinha(1, 1).ToInt();

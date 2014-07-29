@@ -90,33 +90,83 @@ namespace BoletoBr.Bancos.Cef
             objRetornar.LiteralRetorno = linha.ExtrairValorDaLinha(3, 9);
             objRetornar.CodigoDoServico = linha.ExtrairValorDaLinha(10, 11);
             objRetornar.LiteralServico = linha.ExtrairValorDaLinha(12, 26);
-            objRetornar.CodigoAgenciaCedente = linha.ExtrairValorDaLinha(27, 31).ToInt();
-            objRetornar.Constante = linha.ExtrairValorDaLinha(32, 33);
-            objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(34, 44).ToInt();
-            objRetornar.TipoRetorno = linha.ExtrairValorDaLinha(45, 45);
-            // Posição 46 branco
+            objRetornar.CodigoAgenciaCedente = linha.ExtrairValorDaLinha(27, 30).ToInt();
+            objRetornar.CodigoDoBeneficiario = linha.ExtrairValorDaLinha(31, 36).ToInt();
+            // Uso Exclusivo CAIXA (37 - 46)
             objRetornar.NomeDoBeneficiario = linha.ExtrairValorDaLinha(47, 76);
             objRetornar.CodigoDoBanco = linha.ExtrairValorDaLinha(77, 79);
             objRetornar.NomeDoBanco = linha.ExtrairValorDaLinha(80, 94);
             objRetornar.DataGeracaoGravacao = Convert.ToInt32(linha.ExtrairValorDaLinha(95, 100));
-            objRetornar.Densidade = linha.ExtrairValorDaLinha(101, 105);
-            objRetornar.LiteralDensidade = linha.ExtrairValorDaLinha(106, 108);
-            objRetornar.CodigoDoBeneficiario = linha.ExtrairValorDaLinha(109, 118).ToInt();
-            objRetornar.NomeAgencia = linha.ExtrairValorDaLinha(119, 138);
-            objRetornar.CodigoFormulario = linha.ExtrairValorDaLinha(139, 142).ToInt();
-            // Posição 143 - 388 brancos
-            objRetornar.Volser = linha.ExtrairValorDaLinha(389, 394);
-            objRetornar.NumeroSequencial = linha.ExtrairValorDaLinha(395, 400);
+            objRetornar.MensagemRetorno = linha.ExtrairValorDaLinha(101, 158);
+            // Uso Exclusivo CAIXA (159 - 389)
+            objRetornar.NumeroSequencialA = linha.ExtrairValorDaLinha(390, 394);
+            objRetornar.NumeroSequencialB = linha.ExtrairValorDaLinha(395, 400);
+
+            return objRetornar;
         }
 
         public DetalheRetornoCnab400 ObterRegistrosDetalhe(string linhaProcessar)
         {
-            throw new NotImplementedException();
+            var objRetornar = new DetalheRetornoCnab400();
+            
+            var linha = linhaProcessar;
+
+            objRetornar.CodigoDoRegistro = linha.ExtrairValorDaLinha(1, 1).ToInt();
+            objRetornar.CodigoDeInscricao = linha.ExtrairValorDaLinha(2, 3).ToInt();
+            objRetornar.CodigoDoBeneficiario = linha.ExtrairValorDaLinha(4, 17).ToInt();
+            objRetornar.CodigoAgenciaCedente = linha.ExtrairValorDaLinha(18, 21).ToInt();
+            objRetornar.CodigoDoBeneficiario = linha.ExtrairValorDaLinha(22, 27).ToInt();
+            objRetornar.IdEmissao = linha.ExtrairValorDaLinha(28, 28).ToInt();
+            objRetornar.IdPostagem = linha.ExtrairValorDaLinha(29, 29).ToInt();
+            // Uso Exclusivo CAIXA (30 - 31)
+            objRetornar.UsoDaEmpresa = linha.ExtrairValorDaLinha(32, 56);
+            objRetornar.ModalidadeNossoNumero = linha.ExtrairValorDaLinha(57, 58).ToInt();
+            objRetornar.NossoNumero = linha.ExtrairValorDaLinha(59, 73).ToInt();
+            objRetornar.CodigoRejeicao = linha.ExtrairValorDaLinha(80, 82).ToInt();
+            objRetornar.Carteira = linha.ExtrairValorDaLinha(107, 108).ToInt();
+            objRetornar.CodigoDeOcorrencia = linha.ExtrairValorDaLinha(109, 110).ToInt();
+            objRetornar.DataDaOcorrencia = linha.ExtrairValorDaLinha(111, 116).ToInt();
+            objRetornar.NumeroDocumento = linha.ExtrairValorDaLinha(117, 126);
+            // Uso Exclusivo CAIXA (127 - 146)
+            objRetornar.DataDeVencimento = linha.ExtrairValorDaLinha(147, 152).ToInt();
+            objRetornar.ValorDoTituloParcela = linha.ExtrairValorDaLinha(153, 165).ToDecimal();
+            objRetornar.BancoCobrador = linha.ExtrairValorDaLinha(166, 168).ToInt();
+            objRetornar.AgenciaCobradora = linha.ExtrairValorDaLinha(169, 173).ToInt();
+            objRetornar.Especie = linha.ExtrairValorDaLinha(174, 175).ToInt();
+            objRetornar.ValorTarifa = linha.ExtrairValorDaLinha(176, 188).ToDecimal();
+            objRetornar.CodigoBaixaTitulo = linha.ExtrairValorDaLinha(189, 191).ToInt();
+            objRetornar.CodigoFormaPagamento = linha.ExtrairValorDaLinha(192, 192).ToInt();
+            objRetornar.FloatNegociado = linha.ExtrairValorDaLinha(193, 194).ToInt();
+            objRetornar.DataDebitoTarifa = linha.ExtrairValorDaLinha(195, 200).ToInt();
+            // Uso Exclusivo CAIXA (201 - 214)
+            objRetornar.ValorIof = linha.ExtrairValorDaLinha(215, 227).ToDecimal();
+            objRetornar.ValorAbatimento = linha.ExtrairValorDaLinha(228, 240).ToDecimal();
+            objRetornar.ValorDesconto = linha.ExtrairValorDaLinha(241, 253).ToDecimal();
+            objRetornar.ValorPrincipal = linha.ExtrairValorDaLinha(254, 266).ToDecimal();
+            objRetornar.ValorJuros = linha.ExtrairValorDaLinha(267, 279).ToDecimal();
+            objRetornar.ValorMulta = linha.ExtrairValorDaLinha(280, 292).ToDecimal();
+            objRetornar.Moeda = linha.ExtrairValorDaLinha(293, 293).ToInt();
+            objRetornar.DataDeCredito = linha.ExtrairValorDaLinha(294, 299).ToInt();
+            // Uso Exclusivo CAIXA (300 - 394)
+            objRetornar.NumeroSequencial = linha.ExtrairValorDaLinha(395, 400).ToInt();
+
+            return objRetornar;
         }
 
         public TrailerRetornoCnab400 ObterTrailer(string linhaObterInformacoes)
         {
-            throw new NotImplementedException();
+            var objRetornar = new TrailerRetornoCnab400();
+
+            var linha = linhaObterInformacoes;
+
+            objRetornar.CodigoDoRegistro = linha.ExtrairValorDaLinha(1, 1).ToInt();
+            objRetornar.CodigoDeRetorno = linha.ExtrairValorDaLinha(2, 2).ToInt();
+            objRetornar.CodigoDoServico = linha.ExtrairValorDaLinha(3, 4);
+            objRetornar.CodigoDoBanco = linha.ExtrairValorDaLinha(5, 7);
+            // Uso Exclusivo CAIXA (8 - 394)
+            objRetornar.NumeroSequencial = linha.ExtrairValorDaLinha(395, 400).ToInt();
+
+            return objRetornar;
         }
     }
 }

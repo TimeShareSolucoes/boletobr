@@ -21,22 +21,23 @@ namespace BoletoBr
         public string NomeDoBeneficiario { get; set; }
         public string CodigoDoBanco { get; set; }
         public string NomeDoBanco { get; set; }
+        public long ContaCorrente { get; set; }
         public int DataGeracaoGravacao { get; set; }
         public int CodigoDoBeneficiario { get; set; }
         public string NumeroSequencial { get; set; }
 
         #endregion
 
-        #region HSBC
+        #region Banco do Brasil CBR 643
 
-        public string Constante { get; set; }
-        public long ContaCorrente { get; set; }
-        public string TipoRetorno { get; set; }
-        public string Densidade { get; set; }
-        public string LiteralDensidade { get; set; }
-        public string NomeAgencia { get; set; }
-        public int CodigoFormulario { get; set; }
-        public string Volser { get; set; }
+        public int DvAgenciaCedente { get; set; }
+        public int DvContaCorrente { get; set; }
+        public string CodigoENomeBanco { get; set; }
+        /// <summary>
+        /// Número sequencial atribuído pelo sistema do banco.
+        /// </summary>
+        public string SequencialRetorno { get; set; }
+        public int NumeroConvenio { get; set; }
 
         #endregion
 
@@ -57,7 +58,20 @@ namespace BoletoBr
 
         #endregion
 
-        #region Banco HSBC
+        #region HSBC
+
+        public string Constante { get; set; }
+        
+        public string TipoRetorno { get; set; }
+        public string Densidade { get; set; }
+        public string LiteralDensidade { get; set; }
+        public string NomeAgencia { get; set; }
+        public int CodigoFormulario { get; set; }
+        public string Volser { get; set; }
+
+        #endregion
+
+        #region Método de Leitura HEADER Banco HSBC
 
         /// <summary>
         /// Faz a leitura do Header para arquivos do formato CNAB 400

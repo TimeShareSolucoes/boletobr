@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Arquivo\CNAB240\HeaderDeArquivoCnab240.cs" />
+    <Compile Include="Arquivo\CNAB240\HeaderLoteRetornoCnab240.cs" />
+    <Compile Include="Arquivo\CNAB240\LoteRetornoCnab240.cs" />
+    <Compile Include="Arquivo\CNAB240\TrailerLoteRetornoCnab240.cs" />
     <Compile Include="Arquivo\IArquivoRemessa.cs" />
     <Compile Include="Arquivo\TipoLinhaArquivoGerado.cs" />
     <Compile Include="Arquivo\TipoLinhaArquivoLido.cs" />
@@ -61,11 +64,13 @@
     <Compile Include="Bancos\Cef\BancoCef.cs" />
     <Compile Include="Bancos\Cef\CarteiraCobrancaCefRg.cs" />
     <Compile Include="Bancos\Cef\CarteiraCobrancaCefSr.cs" />
+    <Compile Include="Bancos\Cef\LeitorRetornoCnab240Cef.cs" />
     <Compile Include="Bancos\Cef\LeitorRetornoCnab400Cef.cs" />
     <Compile Include="Bancos\Hsbc\BancoHsbc.cs" />
     <Compile Include="Bancos\Hsbc\CarteiraCobrancaHsbcCnr.cs" />
     <Compile Include="Bancos\Hsbc\CarteiraCobrancaHsbcCsb.cs" />
     <Compile Include="Bancos\IBanco.cs" />
+    <Compile Include="Bancos\ILeitorArquivoRetornoCnab240.cs" />
     <Compile Include="Bancos\ILeitorArquivoRetornoCnab400.cs" />
     <Compile Include="Bancos\Itau\BancoItau.cs" />
     <Compile Include="Bancos\Itau\CarteiraCobranca176.cs" />

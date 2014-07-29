@@ -19,6 +19,26 @@ namespace BoletoBr
 
         #endregion
 
+        #region Banco do Brasil CBR 643
+
+        public long QtdTitulosCobrancaSimples { get; set; }
+        public decimal ValorTitulosCobrancaSimples { get; set; }
+        public long NumeroAvisoCobrancaSimples { get; set; }
+        public long QtdTitulosCobrancaVinculada { get; set; }
+        public decimal ValorTitulosCobrancaVinculada { get; set; }
+        public long NumeroAvisoCobrancaVinculada { get; set; }
+        public long QtdTitulosCobrancaCaucionada { get; set; }
+        public decimal ValorTitulosCobrancaCaucionada { get; set; }
+        public long NumeroAvisoCobrancaCaucionada { get; set; }
+        public long QtdTitulosCobrancaDescontada { get; set; }
+        public decimal ValorTitulosCobrancaDescontada { get; set; }
+        public long NumeroAvisoCobrancaDescontada { get; set; }
+        public long QtdTitulosCobrancaVendor { get; set; }
+        public decimal ValorTitulosCobrancaVendor { get; set; }
+        public long NumeroAvisoCobrancaVendor { get; set; }
+
+        #endregion
+
         #region Bradesco
 
         public int QtdTitulosCobranca { get; set; }
