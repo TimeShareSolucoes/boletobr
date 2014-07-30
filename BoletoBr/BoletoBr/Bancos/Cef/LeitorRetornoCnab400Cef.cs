@@ -129,22 +129,22 @@ namespace BoletoBr.Bancos.Cef
             objRetornar.NumeroDocumento = linha.ExtrairValorDaLinha(117, 126);
             // Uso Exclusivo CAIXA (127 - 146)
             objRetornar.DataDeVencimento = linha.ExtrairValorDaLinha(147, 152).ToInt();
-            objRetornar.ValorDoTituloParcela = linha.ExtrairValorDaLinha(153, 165).ToDecimal();
+            objRetornar.ValorDoTituloParcela = linha.ExtrairValorDaLinha(153, 165).ToDecimal() / 100;
             objRetornar.BancoCobrador = linha.ExtrairValorDaLinha(166, 168).ToInt();
             objRetornar.AgenciaCobradora = linha.ExtrairValorDaLinha(169, 173).ToInt();
             objRetornar.Especie = linha.ExtrairValorDaLinha(174, 175).ToInt();
-            objRetornar.ValorTarifa = linha.ExtrairValorDaLinha(176, 188).ToDecimal();
+            objRetornar.ValorTarifa = linha.ExtrairValorDaLinha(176, 188).ToDecimal() / 100;
             objRetornar.CodigoBaixaTitulo = linha.ExtrairValorDaLinha(189, 191).ToInt();
             objRetornar.CodigoFormaPagamento = linha.ExtrairValorDaLinha(192, 192).ToInt();
             objRetornar.FloatNegociado = linha.ExtrairValorDaLinha(193, 194).ToInt();
             objRetornar.DataDebitoTarifa = linha.ExtrairValorDaLinha(195, 200).ToInt();
             // Uso Exclusivo CAIXA (201 - 214)
-            objRetornar.ValorIof = linha.ExtrairValorDaLinha(215, 227).ToDecimal();
-            objRetornar.ValorAbatimento = linha.ExtrairValorDaLinha(228, 240).ToDecimal();
-            objRetornar.ValorDesconto = linha.ExtrairValorDaLinha(241, 253).ToDecimal();
-            objRetornar.ValorPrincipal = linha.ExtrairValorDaLinha(254, 266).ToDecimal();
-            objRetornar.ValorJuros = linha.ExtrairValorDaLinha(267, 279).ToDecimal();
-            objRetornar.ValorMulta = linha.ExtrairValorDaLinha(280, 292).ToDecimal();
+            objRetornar.ValorIof = linha.ExtrairValorDaLinha(215, 227).ToDecimal() / 100;
+            objRetornar.ValorAbatimento = linha.ExtrairValorDaLinha(228, 240).ToDecimal() / 100;
+            objRetornar.ValorDesconto = linha.ExtrairValorDaLinha(241, 253).ToDecimal() / 100;
+            objRetornar.ValorPrincipal = linha.ExtrairValorDaLinha(254, 266).ToDecimal() / 100;
+            objRetornar.ValorJuros = linha.ExtrairValorDaLinha(267, 279).ToDecimal() / 100;
+            objRetornar.ValorMulta = linha.ExtrairValorDaLinha(280, 292).ToDecimal() / 100;
             objRetornar.Moeda = linha.ExtrairValorDaLinha(293, 293).ToInt();
             objRetornar.DataDeCredito = linha.ExtrairValorDaLinha(294, 299).ToInt();
             // Uso Exclusivo CAIXA (300 - 394)

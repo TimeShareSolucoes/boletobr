@@ -10,8 +10,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace BoletoBr.UnitTests.Tests.BancosRetorno
 {
     [TestClass]
-    public class TestRetornoHsbcCef
+    public class TestRetornoCef
     {
+        #region CNAB 240
+
         [TestMethod]
         public void TestHeaderArquivoRetornoCnab240BancoCef()
         {
@@ -26,6 +28,88 @@ namespace BoletoBr.UnitTests.Tests.BancosRetorno
         }
 
         [TestMethod]
+        public void TestHeaderLoteArquivoRetornoCnab240BancoCef()
+        {
+            LeitorRetornoCnab240Cef leitor = new LeitorRetornoCnab240Cef(null);
+
+            string valorTesteRegistro =
+                "10400011T0100030 20106230130001700000000000000000000001839220301600000000RMEX CONSTRUTORA E INCORPORADO                                                                                00000362250720140000000000                          00   ";
+
+            var resultado = leitor.ObterHeaderLote(valorTesteRegistro);
+
+            Assert.AreEqual(resultado.TipoOperacao, "T");
+        }
+
+        [TestMethod]
+        public void TestDetalheSegmentoTArquivoRetornoCnab240BancoCef()
+        {
+            LeitorRetornoCnab240Cef leitor = new LeitorRetornoCnab240Cef(null);
+
+            string valorTesteRegistro =
+                "1040001300001T 060000002030160000000   110000000588426997100002055010    1007201400000000003818100004222000002055010              090000000000000000NATANNI SANTANA PINHEIRO                          000000000000320030100                     ";
+
+            var resultado = leitor.ObterRegistrosDetalheT(valorTesteRegistro);
+
+            Assert.AreEqual(resultado.CodigoSegmento, "T");
+        }
+
+        [TestMethod]
+        public void TestDetalheSegmentoUArquivoRetornoCnab240BancoCef()
+        {
+            LeitorRetornoCnab240Cef leitor = new LeitorRetornoCnab240Cef(null);
+
+            string valorTesteRegistro =
+                "1040001300790U 09000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000250720140000000000000000000000000000000000000000000000000000000000000000000000000000000000000000       ";
+
+            var resultado = leitor.ObterRegistrosDetalheU(valorTesteRegistro);
+
+            Assert.AreEqual(resultado.CodigoSegmento, "U");
+        }
+
+        [TestMethod]
+        public void TestTrailerLoteArquivoRetornoCnab240BancoCef()
+        {
+            LeitorRetornoCnab240Cef leitor = new LeitorRetornoCnab240Cef(null);
+
+            string valorTesteRegistro =
+                "10400015         00079600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000                                                                                                                             ";
+
+            var resultado = leitor.ObterTrailerLote(valorTesteRegistro);
+
+            Assert.AreEqual(resultado.QtdRegistrosLote, 796);
+        }
+
+        [TestMethod]
+        public void TestTrailerArquivoRetornoCnab240BancoCef()
+        {
+            LeitorRetornoCnab240Cef leitor = new LeitorRetornoCnab240Cef(null);
+
+            string valorTesteRegistro =
+                "10499999         000001000798                                                                                                                                                                                                                ";
+
+            var resultado = leitor.ObterTrailer(valorTesteRegistro);
+
+            Assert.AreEqual(resultado.LoteServico, "9999");
+        }
+
+        #endregion
+
+        #region CNAB 400
+
+        [TestMethod]
+        public void TestHeaderArquivoRetornoCnab400BancoCef()
+        {
+            LeitorRetornoCnab400Cef leitor = new LeitorRetornoCnab400Cef(null);
+
+            string valorTesteRegistro =
+                "10400000         2106230130001700000000000000000000001839220301600000000RMEX CONSTRUTORA E INCORPORADOC ECON FEDERAL                          22507201400562700036204000000                    RETORNO-PRODUCAO                  000         ";
+
+            var resultado = leitor.ObterHeader(valorTesteRegistro);
+
+            Assert.AreEqual(resultado.NomeDoBeneficiario, "RMEX CONSTRUTORA E INCORPORADO");
+        }
+
+        [TestMethod]
         public void TestDetalheArquivoRetornoBancoCef()
         {
             LeitorRetornoCnab400Hsbc leitor = new LeitorRetornoCnab400Hsbc(null);
@@ -33,11 +117,11 @@ namespace BoletoBr.UnitTests.Tests.BancosRetorno
 
             // Linha detalhe de outro banco.
             string valorTesteRegistro =
-                "19912345678909876123450012345678901  1234567890123456 2       1234567890123456    250720149                   10725072014001060                        25072014       10003991234599                                                               0000000000000100        0950         5000123456789011234567890212345600000000000000000000331                                                                1";
+                "";
             
             var resultado = leitor.ObterRegistrosDetalhe(valorTesteRegistro);
 
-            Assert.AreEqual(resultado.AgenciaCobradora, 12345);
+            Assert.AreEqual(resultado.ValorDoTituloParcela, 10.60);
         }
 
         [TestMethod]
@@ -57,16 +141,7 @@ namespace BoletoBr.UnitTests.Tests.BancosRetorno
             Assert.AreEqual(resultado.NumeroSequencial, 1);
         }
 
-        public void TestRegistrosArquivoRetornoBancoHsbcCarteiraCnr()
-        {
-            LeitorRetornoCnab400Hsbc leitor = new LeitorRetornoCnab400Hsbc(null);
-
-            string dadosTesteTrailer =
-    "02RETORNO01COBRANÇA CNR   12345001234567890 1 EMPRESA ABCDEFGHIJKLMNOPQRSTUV399HSBC           23071406250BPI1234567890AGENCIA ABCDEFGHIJKL1234                                                                                                                                                                                                                                                      VOLSER000001" +
-    "9201399                                                                                                                                                                                                                                                                                                                                                                                                        1";
-
-            var resultado = leitor.ProcessarRetorno();
-        }
+        #endregion
     }
 }
 

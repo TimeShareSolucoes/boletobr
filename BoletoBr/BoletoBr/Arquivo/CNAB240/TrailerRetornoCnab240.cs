@@ -13,5 +13,11 @@ namespace BoletoBr
         public int CodigoRegistro { get; set; }
         public int QtdLotesArquivo { get; set; }
         public int QtdRegistrosArquivo { get; set; }
+
+        #region Bradesco
+
+        public int QtdContasConc { get; set; }
+
+        #endregion
     }
 }

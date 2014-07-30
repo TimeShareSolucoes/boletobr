@@ -8,16 +8,12 @@ namespace BoletoBr.Dominio
 {
     public class DetalheSegmentoURetornoCnab240
     {
-        #region 104 - Caixa Econômica Federal
-
-        #region Segmento U
-
         public int CodigoBanco { get; set; }
         public string LoteServico { get; set; }
         public int CodigoRegistro { get; set; }
         public int NumeroRegistro { get; set; }
         public string CodigoSegmento { get; set; }
-        public int CodigoMovimentoRetorno { get; set; }
+        public int CodigoMovimento { get; set; }
         public decimal JurosMultaEncargos { get; set; }
         public decimal ValorDescontoConcedido { get; set; }
         public decimal ValorAbatimentoConcedido { get; set; }
@@ -26,15 +22,24 @@ namespace BoletoBr.Dominio
         public decimal ValorLiquidoASerCreditado { get; set; }
         public decimal ValorOutrasDespesas { get; set; }
         public decimal ValorOutrosCreditos { get; set; }
-        public DateTime DataOcorrencia { get; set; }
-        public DateTime DataCredito { get; set; }
-        public DateTime DataDebitoTarifa { get; set; }
+        public int DataOcorrencia { get; set; }
+        public int DataCredito { get; set; }
+        public int DataDebitoTarifa { get; set; }
         public long CodigoSacadoNoBanco { get; set; }
         public int CodigoBancoCompensacao { get; set; }
         public string NossoNumeroBancoCompensacao { get; set; }
         public string CodigoOcorrenciaSacado { get; set; }
 
+        #region Bradesco
+
+        public string CodigoOcorrenciaPagador { get; set; }
+        public int DataOcorrenciaPagador { get; set; }
+        public decimal ValorOcorrenciaPagador { get; set; }
+        public string ComplementoOcorrenciaPagador { get; set; }
+
         #endregion
+
+        #region Caixa
 
         #region Segmento U para códigos de movimento 35,36 e 37
 
