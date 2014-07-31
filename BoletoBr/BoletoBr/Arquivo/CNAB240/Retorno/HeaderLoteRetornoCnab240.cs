@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoletoBr
+namespace BoletoBr.Arquivo.CNAB240
 {
-    public class HeaderRetornoCnab240
+    public class HeaderLoteRetornoCnab240
     {
-        /// <summary>
-        /// Caixa -> Código do Banco na Compensação
-        /// </summary>
         public int CodigoBanco { get; set; }
         public string LoteServico { get; set; }
         public int CodigoRegistro { get; set; }
+        public string TipoOperacao { get; set; }
+        public int TipoServico { get; set; }
+        public int VersaoLayoutLote { get; set; }
         public int TipoInscricaoEmpresa { get; set; }
         public long NumeroInscricaoEmpresa { get; set; }
         public string Convenio { get; set; }
@@ -22,20 +22,20 @@ namespace BoletoBr
         public long ContaCorrente { get; set; }
         public string DvContaCorrente { get; set; }
         public int CodigoCedente { get; set; }
+        public int CodigoModeloPersonalizado { get; set; }
         public string NomeDoBeneficiario { get; set; }
-        public string NomeDoBanco { get; set; }
-        public int CodigoRemessaRetorno { get; set; }
+        public string Mensagem1 { get; set; }
+        public string Mensagem2 { get; set; }
+        public long NumeroRemessaRetorno { get; set; }
         public int DataGeracaoGravacao { get; set; }
-        public int HoraGeracaoGravacao { get; set; }
-        public int NumeroSequencial { get; set; }
-        public string VersaoLayout { get; set; }
-        public string Densidade { get; set; }
-        public string UsoBanco { get; set; }
-        public string UsoEmpresa { get; set; }
+        public int DataDeCredito { get; set; }
 
-        #region Caixa
+        #region Banco do Brasil
 
-        public string VersaoAplicativo { get; set; }
+        public long ConvenioNumeroCobranca { get; set; }
+        public int CedenteCobranca { get; set; }
+        public int CarteiraCobranca { get; set; }
+        public int VariacaoCarteiraCobranca { get; set; }
 
         #endregion
 

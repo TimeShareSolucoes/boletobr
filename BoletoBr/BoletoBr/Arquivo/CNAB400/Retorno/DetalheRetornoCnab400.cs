@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,21 +30,22 @@ namespace BoletoBr
         /// PPP/TTT
         /// </summary>
         public int SeuNumero { get; set; }
-        public int NossoNumero { get; set; }
+        public string NossoNumero { get; set; }
         public int MotivoDaOcorrencia { get; set; }
         public int DataDeVencimento { get; set; }
         public decimal ValorDoTituloParcela { get; set; }
         public int BancoCobrador { get; set; }
         public int AgenciaCobradora { get; set; }
-        public int Especie { get; set; }
+        public string Especie { get; set; }
         public decimal ValorIof { get; set; }
         public decimal ValorOutrasDespesas { get; set; }
         public decimal ValorDesconto { get; set; }
         public decimal ValorPrincipal { get; set; }
-        public decimal ValorJuros { get; set; }
+        public decimal ValorJurosDeMora { get; set; }
         public decimal ValorAbatimento { get; set; }
         public decimal ValorMulta { get; set; }
         public decimal ValorLiquidoRecebido { get; set; }
+        public decimal OutrosCreditos { get; set; }
         public int Constante { get; set; }
         public decimal QuantidadeMoeda { get; set; }
         public decimal CotacaoMoeda { get; set; }
@@ -52,6 +54,26 @@ namespace BoletoBr
         public int TipoLiquidacao { get; set; }
         public int OrigemDaTarifa { get; set; }
         public int NumeroSequencial { get; set; }
+
+        #endregion
+
+        #region Bradesco
+
+        public string IdentificacaoEmpresaNoBanco { get; set; }
+        public string IndicadorRateioCredito { get; set; }
+        /// <summary>
+        /// Despesas de cobrança para os códigos de ocorrência:
+        /// 02 - Entrada Confirmada
+        /// 28 - Débito de Tarifas
+        /// </summary>
+        public decimal ValorDespesas { get; set; }
+        public decimal ValorJurosAtraso { get; set; }
+        public string MotivoCodigoOcorrencia { get; set; }
+        public int OrigemPagamento { get; set; }
+        public string Cheque { get; set; }
+        public string MotivoCodigoRejeicao { get; set; }
+        public int NumeroCartorio { get; set; }
+        public string NumeroProtocolo { get; set; }
 
         #endregion
 
@@ -174,8 +196,8 @@ namespace BoletoBr
 
         #region Caixa Econômica Federal
 
-        public TipoInscricao TipoInscricao { get; set; }
-        public int NumeroInscricao { get; set; }
+        public int TipoInscricao { get; set; }
+        public long NumeroInscricao { get; set; }
         public int IdEmissao { get; set; }
         public int IdPostagem { get; set; }
         /// <summary>
@@ -205,6 +227,30 @@ namespace BoletoBr
         /// Data do débito da tarifa
         /// </summary>
         public int DataDebitoTarifa { get; set; }
+
+        #endregion
+
+        #region Itaú
+
+        public int CodigoLayout { get; set; }
+        public int DacAgenciaConta { get; set; }
+        public int DacNossoNumero { get; set; }
+        public string LiteralMoeda { get; set; }
+        public string Aceite { get; set; }
+        public int DataEmissao { get; set; }
+        public int TipoInscricaoSacado { get; set; }
+        public long NumeroInscricaoSacado { get; set; }
+        public string NomeSacado { get; set; }
+        public string LogradouroSacado { get; set; }
+        public string BairroSacado { get; set; }
+        public string CepSacado { get; set; }
+        public string CidadeSacado { get; set; }
+        public string EstadoSacado { get; set; }
+        public string SacadorAvalista { get; set; }
+        public string LocalPagamento1 { get; set; }
+        public string LocalPagamento2 { get; set; }
+        public int TipoInscricaoSacadorAvalista { get; set; }
+        public long NumeroInscricaoSacadorAvalista { get; set; }
 
         #endregion
     }

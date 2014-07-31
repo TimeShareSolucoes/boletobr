@@ -23,7 +23,8 @@ namespace BoletoBr
         public string NomeDoBanco { get; set; }
         public long ContaCorrente { get; set; }
         public int DataGeracaoGravacao { get; set; }
-        public int CodigoDoBeneficiario { get; set; }
+        public int DataCredito { get; set; }
+        public long CodigoDoBeneficiario { get; set; }
         public string NumeroSequencial { get; set; }
 
         #endregion
@@ -68,6 +69,12 @@ namespace BoletoBr
         public string NomeAgencia { get; set; }
         public int CodigoFormulario { get; set; }
         public string Volser { get; set; }
+
+        #endregion
+
+        #region Itaú
+
+        public int DacAgenciaConta { get; set; }
 
         #endregion
 

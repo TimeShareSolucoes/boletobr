@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoletoBr.Arquivo.CNAB400.Retorno;
 
 namespace BoletoBr.Bancos.Cef
 {
@@ -45,7 +46,7 @@ namespace BoletoBr.Bancos.Cef
             return objRetornar;
         }
 
-        void ValidaArquivoRetorno()
+        public void ValidaArquivoRetorno()
         {
             if (_linhasArquivo == null)
                 throw new Exception("Dados do arquivo de retorno estão nulos. Impossível processar.");
@@ -121,7 +122,7 @@ namespace BoletoBr.Bancos.Cef
             // Uso Exclusivo CAIXA (30 - 31)
             objRetornar.UsoDaEmpresa = linha.ExtrairValorDaLinha(32, 56);
             objRetornar.ModalidadeNossoNumero = linha.ExtrairValorDaLinha(57, 58).ToInt();
-            objRetornar.NossoNumero = linha.ExtrairValorDaLinha(59, 73).ToInt();
+            objRetornar.NossoNumero = linha.ExtrairValorDaLinha(59, 73);
             objRetornar.CodigoRejeicao = linha.ExtrairValorDaLinha(80, 82).ToInt();
             objRetornar.Carteira = linha.ExtrairValorDaLinha(107, 108).ToInt();
             objRetornar.CodigoDeOcorrencia = linha.ExtrairValorDaLinha(109, 110).ToInt();
@@ -132,7 +133,7 @@ namespace BoletoBr.Bancos.Cef
             objRetornar.ValorDoTituloParcela = linha.ExtrairValorDaLinha(153, 165).ToDecimal() / 100;
             objRetornar.BancoCobrador = linha.ExtrairValorDaLinha(166, 168).ToInt();
             objRetornar.AgenciaCobradora = linha.ExtrairValorDaLinha(169, 173).ToInt();
-            objRetornar.Especie = linha.ExtrairValorDaLinha(174, 175).ToInt();
+            objRetornar.Especie = linha.ExtrairValorDaLinha(174, 175);
             objRetornar.ValorTarifa = linha.ExtrairValorDaLinha(176, 188).ToDecimal() / 100;
             objRetornar.CodigoBaixaTitulo = linha.ExtrairValorDaLinha(189, 191).ToInt();
             objRetornar.CodigoFormaPagamento = linha.ExtrairValorDaLinha(192, 192).ToInt();
@@ -143,7 +144,7 @@ namespace BoletoBr.Bancos.Cef
             objRetornar.ValorAbatimento = linha.ExtrairValorDaLinha(228, 240).ToDecimal() / 100;
             objRetornar.ValorDesconto = linha.ExtrairValorDaLinha(241, 253).ToDecimal() / 100;
             objRetornar.ValorPrincipal = linha.ExtrairValorDaLinha(254, 266).ToDecimal() / 100;
-            objRetornar.ValorJuros = linha.ExtrairValorDaLinha(267, 279).ToDecimal() / 100;
+            objRetornar.ValorJurosDeMora = linha.ExtrairValorDaLinha(267, 279).ToDecimal() / 100;
             objRetornar.ValorMulta = linha.ExtrairValorDaLinha(280, 292).ToDecimal() / 100;
             objRetornar.Moeda = linha.ExtrairValorDaLinha(293, 293).ToInt();
             objRetornar.DataDeCredito = linha.ExtrairValorDaLinha(294, 299).ToInt();
@@ -151,6 +152,11 @@ namespace BoletoBr.Bancos.Cef
             objRetornar.NumeroSequencial = linha.ExtrairValorDaLinha(395, 400).ToInt();
 
             return objRetornar;
+        }
+
+        public DetalheRateioRetornoCnab400 ObterRegistrosDetalheRateio(string linha)
+        {
+            throw new NotImplementedException();
         }
 
         public TrailerRetornoCnab400 ObterTrailer(string linhaObterInformacoes)

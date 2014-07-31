@@ -28,7 +28,6 @@ namespace BoletoBr.Dominio
         public long CodigoSacadoNoBanco { get; set; }
         public int CodigoBancoCompensacao { get; set; }
         public string NossoNumeroBancoCompensacao { get; set; }
-        public string CodigoOcorrenciaSacado { get; set; }
 
         #region Bradesco
 

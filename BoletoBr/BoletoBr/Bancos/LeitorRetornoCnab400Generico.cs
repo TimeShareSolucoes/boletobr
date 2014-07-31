@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoletoBr.Arquivo.CNAB400.Retorno;
 
 namespace BoletoBr.Bancos
 {
@@ -39,12 +40,22 @@ namespace BoletoBr.Bancos
             return objRetornar;
         }
 
+        public void ValidaArquivoRetorno()
+        {
+            throw new NotImplementedException();
+        }
+
         public HeaderRetornoCnab400 ObterHeader(string valor)
         {
             throw new NotImplementedException();
         }
 
         public DetalheRetornoCnab400 ObterRegistrosDetalhe(string valor)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetalheRateioRetornoCnab400 ObterRegistrosDetalheRateio(string linha)
         {
             throw new NotImplementedException();
         }

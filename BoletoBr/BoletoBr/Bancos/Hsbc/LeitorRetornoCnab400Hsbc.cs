@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoletoBr.Arquivo.CNAB400.Retorno;
 
 namespace BoletoBr.Bancos
 {
@@ -47,7 +48,7 @@ namespace BoletoBr.Bancos
             return objRetornar;
         }
 
-        void ValidaArquivoRetorno()
+        public void ValidaArquivoRetorno()
         {
             if (_linhasArquivo == null)
                 throw new Exception("Dados do arquivo de retorno estão nulos. Impossível processar.");
@@ -145,12 +146,12 @@ namespace BoletoBr.Bancos
             objRetornar.ValorDoTituloParcela = linha.ExtrairValorDaLinha(153, 165).ToDecimal() / 100;
             objRetornar.BancoCobrador = linha.ExtrairValorDaLinha(166, 168).ToInt();
             objRetornar.AgenciaCobradora = linha.ExtrairValorDaLinha(169, 173).ToInt();
-            objRetornar.Especie = linha.ExtrairValorDaLinha(174, 175).ToInt();
+            objRetornar.Especie = linha.ExtrairValorDaLinha(174, 175);
             objRetornar.ValorIof = linha.ExtrairValorDaLinha(176, 186).ToDecimal() / 100;
             // Posição 187-240 brancos
             objRetornar.ValorDesconto = linha.ExtrairValorDaLinha(241, 253).ToDecimal() / 100;
             objRetornar.ValorPrincipal = linha.ExtrairValorDaLinha(254, 266).ToDecimal() / 100;
-            objRetornar.ValorJuros = linha.ExtrairValorDaLinha(267, 279).ToDecimal() / 100;
+            objRetornar.ValorJurosDeMora = linha.ExtrairValorDaLinha(267, 279).ToDecimal() / 100;
             objRetornar.Constante = linha.ExtrairValorDaLinha(280, 280).ToInt();
             objRetornar.QuantidadeMoeda = linha.ExtrairValorDaLinha(281, 293).ToInt();
             objRetornar.CotacaoMoeda = linha.ExtrairValorDaLinha(294, 308).ToDecimal() / 100;
@@ -163,6 +164,11 @@ namespace BoletoBr.Bancos
             objRetornar.NumeroSequencial = linha.ExtrairValorDaLinha(395, 400).ToInt();
             
             return objRetornar;
+        }
+
+        public DetalheRateioRetornoCnab400 ObterRegistrosDetalheRateio(string linha)
+        {
+            throw new NotImplementedException();
         }
 
         public TrailerRetornoCnab400 ObterTrailer(string linhaObterInformacoes)

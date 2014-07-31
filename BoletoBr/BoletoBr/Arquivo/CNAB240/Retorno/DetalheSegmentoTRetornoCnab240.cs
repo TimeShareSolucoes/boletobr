@@ -49,6 +49,12 @@ namespace BoletoBr.Dominio
 
         public string UsoFebraban { get; set; }
 
+        #region Banco do Brasil
+
+        public string IdentificacaoTitulo { get; set; }
+
+        #endregion
+
         #region Bradesco
 
         /// <summary>
