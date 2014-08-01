@@ -108,45 +108,59 @@ namespace BoletoBr.Bancos.Bradesco
             DetalheRetornoCnab400 objRetornar = new DetalheRetornoCnab400();
 
             objRetornar.CodigoDoRegistro = linha.ExtrairValorDaLinha(1, 1).ToInt();
-            objRetornar.TipoInscricao = linha.ExtrairValorDaLinha(2, 3).ToInt();
-            objRetornar.NumeroInscricao = linha.ExtrairValorDaLinha(4, 17).ToLong();
-            objRetornar.IdentificacaoEmpresaNoBanco = linha.ExtrairValorDaLinha(21, 37);
-            objRetornar.NumeroControle = linha.ExtrairValorDaLinha(38, 62);
-            objRetornar.NossoNumero = linha.ExtrairValorDaLinha(71, 82);
-            objRetornar.IndicadorRateioCredito = linha.ExtrairValorDaLinha(105, 105);
-            objRetornar.Carteira = linha.ExtrairValorDaLinha(108, 108).ToInt();
-            objRetornar.CodigoDeOcorrencia = linha.ExtrairValorDaLinha(109, 110).ToInt();
-            objRetornar.DataDaOcorrencia = linha.ExtrairValorDaLinha(111, 116).ToInt();
-            objRetornar.NumeroDocumento = linha.ExtrairValorDaLinha(117, 126);
-            // 127 a 146 - Identificação do Título no Banco (Nosso Número)
-            // Mesmo nosso número informado nas posições 71 a 82 do registro de transação.
-            objRetornar.NossoNumero = linha.ExtrairValorDaLinha(127, 146);
-            objRetornar.DataDeVencimento = linha.ExtrairValorDaLinha(147, 152).ToInt();
-            objRetornar.ValorDoTituloParcela = linha.ExtrairValorDaLinha(153, 165).ToDecimal()/100;
-            objRetornar.BancoCobrador = linha.ExtrairValorDaLinha(166, 168).ToInt();
-            objRetornar.AgenciaCobradora = linha.ExtrairValorDaLinha(169, 173).ToInt();
-            objRetornar.Especie = linha.ExtrairValorDaLinha(174, 175);
-            objRetornar.ValorDespesas = linha.ExtrairValorDaLinha(176, 188).ToDecimal()/100;
-            objRetornar.ValorOutrasDespesas = linha.ExtrairValorDaLinha(189, 201).ToDecimal()/100;
-            objRetornar.ValorJurosAtraso = linha.ExtrairValorDaLinha(202, 214).ToDecimal()/100;
-            objRetornar.ValorIof = linha.ExtrairValorDaLinha(215, 227).ToDecimal()/100;
-            objRetornar.ValorAbatimento = linha.ExtrairValorDaLinha(228, 240).ToDecimal()/100;
-            objRetornar.ValorDesconto = linha.ExtrairValorDaLinha(241, 253).ToDecimal()/100;
-            objRetornar.ValorLiquidoRecebido = linha.ExtrairValorDaLinha(254, 266).ToDecimal()/100;
-            objRetornar.ValorJurosDeMora = linha.ExtrairValorDaLinha(267, 279).ToDecimal()/100;
-            objRetornar.OutrosCreditos = linha.ExtrairValorDaLinha(280, 292).ToDecimal()/100;
-            objRetornar.MotivoCodigoOcorrencia = linha.ExtrairValorDaLinha(295, 295);
-            objRetornar.DataDeCredito = linha.ExtrairValorDaLinha(296, 301).ToInt();
-            objRetornar.OrigemPagamento = linha.ExtrairValorDaLinha(302, 304).ToInt();
-            objRetornar.Cheque = linha.ExtrairValorDaLinha(315, 318);
-            objRetornar.MotivoCodigoRejeicao = linha.ExtrairValorDaLinha(319, 328);
-            objRetornar.NumeroCartorio = linha.ExtrairValorDaLinha(369, 370).ToInt();
-            objRetornar.NumeroProtocolo = linha.ExtrairValorDaLinha(371, 380);
-            objRetornar.NumeroSequencial = linha.ExtrairValorDaLinha(395, 400).ToInt();
+
+            if (objRetornar.CodigoDoRegistro == 1)
+            {
+                objRetornar.CodigoDoRegistro = linha.ExtrairValorDaLinha(1, 1).ToInt();
+                objRetornar.TipoInscricao = linha.ExtrairValorDaLinha(2, 3).ToInt();
+                objRetornar.NumeroInscricao = linha.ExtrairValorDaLinha(4, 17).ToLong();
+                objRetornar.IdentificacaoEmpresaNoBanco = linha.ExtrairValorDaLinha(21, 37);
+                objRetornar.NumeroControle = linha.ExtrairValorDaLinha(38, 62);
+                objRetornar.NossoNumero = linha.ExtrairValorDaLinha(71, 82);
+                objRetornar.IndicadorRateioCredito = linha.ExtrairValorDaLinha(105, 105);
+                objRetornar.CodigoCarteira = linha.ExtrairValorDaLinha(108, 108);
+                objRetornar.CodigoDeOcorrencia = linha.ExtrairValorDaLinha(109, 110).ToInt();
+                objRetornar.DataDaOcorrencia = linha.ExtrairValorDaLinha(111, 116).ToInt();
+                objRetornar.NumeroDocumento = linha.ExtrairValorDaLinha(117, 126);
+                // 127 a 146 - Identificação do Título no Banco (Nosso Número)
+                // Mesmo nosso número informado nas posições 71 a 82 do registro de transação.
+                objRetornar.NossoNumero = linha.ExtrairValorDaLinha(127, 146);
+                objRetornar.DataDeVencimento = linha.ExtrairValorDaLinha(147, 152).ToInt();
+                objRetornar.ValorDoTituloParcela = linha.ExtrairValorDaLinha(153, 165).ToDecimal()/100;
+                objRetornar.BancoCobrador = linha.ExtrairValorDaLinha(166, 168).ToInt();
+                objRetornar.AgenciaCobradora = linha.ExtrairValorDaLinha(169, 173).ToInt();
+                objRetornar.Especie = linha.ExtrairValorDaLinha(174, 175);
+                objRetornar.ValorDespesas = linha.ExtrairValorDaLinha(176, 188).ToDecimal()/100;
+                objRetornar.ValorOutrasDespesas = linha.ExtrairValorDaLinha(189, 201).ToDecimal()/100;
+                objRetornar.ValorJurosAtraso = linha.ExtrairValorDaLinha(202, 214).ToDecimal()/100;
+                objRetornar.ValorIof = linha.ExtrairValorDaLinha(215, 227).ToDecimal()/100;
+                objRetornar.ValorAbatimento = linha.ExtrairValorDaLinha(228, 240).ToDecimal()/100;
+                objRetornar.ValorDesconto = linha.ExtrairValorDaLinha(241, 253).ToDecimal()/100;
+                objRetornar.ValorLiquidoRecebido = linha.ExtrairValorDaLinha(254, 266).ToDecimal()/100;
+                objRetornar.ValorJurosDeMora = linha.ExtrairValorDaLinha(267, 279).ToDecimal()/100;
+                objRetornar.ValorOutrosCreditos = linha.ExtrairValorDaLinha(280, 292).ToDecimal()/100;
+                objRetornar.MotivoCodigoOcorrencia = linha.ExtrairValorDaLinha(295, 295);
+                objRetornar.DataDeCredito = linha.ExtrairValorDaLinha(296, 301).ToInt();
+                objRetornar.OrigemPagamento = linha.ExtrairValorDaLinha(302, 304).ToInt();
+                objRetornar.Cheque = linha.ExtrairValorDaLinha(315, 318);
+                objRetornar.MotivoCodigoRejeicao = linha.ExtrairValorDaLinha(319, 328);
+                objRetornar.NumeroCartorio = linha.ExtrairValorDaLinha(369, 370).ToInt();
+                objRetornar.NumeroProtocolo = linha.ExtrairValorDaLinha(371, 380);
+                objRetornar.NumeroSequencial = linha.ExtrairValorDaLinha(395, 400).ToInt();
+            }
+
+            if (objRetornar.CodigoDoRegistro == 3)
+                ObterRegistrosDetalheRateio(linha);
 
             return objRetornar;
         }
 
+
+        /// <summary>
+        /// Registro de Transação - TIPO 3 - Rateio de Crédito
+        /// </summary>
+        /// <param name="linha"></param>
+        /// <returns></returns>
         public DetalheRateioRetornoCnab400 ObterRegistrosDetalheRateio(string linha)
         {
             DetalheRateioRetornoCnab400 objRetornar = new DetalheRateioRetornoCnab400();

@@ -31,8 +31,8 @@ namespace BoletoBr
 
         #region Banco do Brasil CBR 643
 
-        public int DvAgenciaCedente { get; set; }
-        public int DvContaCorrente { get; set; }
+        public string DvAgenciaCedente { get; set; }
+        public string DvContaCorrente { get; set; }
         public string CodigoENomeBanco { get; set; }
         /// <summary>
         /// Número sequencial atribuído pelo sistema do banco.
@@ -62,7 +62,6 @@ namespace BoletoBr
         #region HSBC
 
         public string Constante { get; set; }
-        
         public string TipoRetorno { get; set; }
         public string Densidade { get; set; }
         public string LiteralDensidade { get; set; }

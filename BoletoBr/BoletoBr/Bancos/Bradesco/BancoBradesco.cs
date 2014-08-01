@@ -162,6 +162,8 @@ namespace BoletoBr.Bancos.Bradesco
         }
         public void FormataCodigoBarra(Boleto boleto)
         {
+            boleto.Moeda = this.MoedaBanco;
+
             string valorBoleto = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "");
             valorBoleto = valorBoleto.PadLeft(10, '0');
 
@@ -216,7 +218,6 @@ namespace BoletoBr.Bancos.Bradesco
         {
 
             //BBBMC.CCCCD1 CCCCC.CCCCCD2 CCCCC.CCCCCD3 D4 FFFFVVVVVVVVVV
-
 
             #region Campo 1
 

@@ -13,7 +13,6 @@ namespace BoletoBr.Bancos
         void ValidaArquivoRetorno();
         HeaderRetornoCnab400 ObterHeader(string linha);
         DetalheRetornoCnab400 ObterRegistrosDetalhe(string linha);
-        DetalheRateioRetornoCnab400 ObterRegistrosDetalheRateio(string linha);
         TrailerRetornoCnab400 ObterTrailer(string linha);
     }
 }

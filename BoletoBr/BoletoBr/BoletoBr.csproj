@@ -65,6 +65,7 @@
     <Compile Include="Bancos\Bradesco\BancoBradesco.cs" />
     <Compile Include="Bancos\Bradesco\CarteiraCobrancaBradesco09.cs" />
     <Compile Include="Bancos\Brasil\LeitorRetornoCnab240BancoDoBrasil.cs" />
+    <Compile Include="Bancos\Brasil\LeitorRetornoCnab400BancoDoBrasil.cs" />
     <Compile Include="Bancos\Cef\BancoCef.cs" />
     <Compile Include="Bancos\Cef\CarteiraCobrancaCefRg.cs" />
     <Compile Include="Bancos\Cef\CarteiraCobrancaCefSr.cs" />

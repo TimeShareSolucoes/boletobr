@@ -96,5 +96,17 @@ namespace BoletoBr
         }
 
         #endregion
+
+        #region Itaú
+
+        public string ReferenciaAvisoBancario1 { get; set; }
+        public string ReferenciaAvisoBancario2 { get; set; }
+        public string ReferenciaAvisoBancario3 { get; set; }
+        public int QtdTitulosCobrancaDiretivaEscritural { get; set; }
+        public decimal ValorTitulosCobrancaDiretivaEscritural { get; set; }
+        public int NumeroSequencialRetorno { get; set; }
+        public int QtdRegistrosDetalhe { get; set; }
+
+        #endregion
     }
 }

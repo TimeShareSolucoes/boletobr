@@ -96,6 +96,8 @@ namespace BoletoBr.Bancos.Hsbc
 
         public void FormataMoeda(Boleto boleto)
         {
+            boleto.Moeda = this.MoedaBanco;
+
             if (string.IsNullOrEmpty(boleto.Moeda))
                 throw new Exception("Espécie/Moeda para o boleto não foi informada.");
 
@@ -166,6 +168,8 @@ namespace BoletoBr.Bancos.Hsbc
 
         public void FormataLinhaDigitavel(Boleto boleto)
         {
+            boleto.Moeda = this.MoedaBanco;
+
             string nossoNumeroLinhaDigitavel = boleto.NossoNumeroFormatado.PadLeft(13, '0');
             string codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0');
             string digitoAutoConferenciaNossoNumero = Common.Mod11(boleto.NossoNumeroFormatado, 7).ToString();
@@ -283,6 +287,8 @@ namespace BoletoBr.Bancos.Hsbc
 
         public void FormataCodigoBarra(Boleto boleto)
         {
+            boleto.Moeda = this.MoedaBanco;
+
             try
             {
                 /* Preenche com 0´s a esquerda

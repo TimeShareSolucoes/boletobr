@@ -127,16 +127,16 @@ namespace BoletoBr.Bancos
             objRetornar.SubConta = linha.ExtrairValorDaLinha(23, 24).ToInt();
             objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(25, 35).ToInt();
             // Posição 36-37 brancos
-            objRetornar.CodigoDoDocumentoEmpresa = linha.ExtrairValorDaLinha(38, 53).ToInt();
+            objRetornar.CodigoDoDocumentoEmpresa = linha.ExtrairValorDaLinha(38, 53);
             // Posição 54 branco
             objRetornar.CodigoDePostagem = linha.ExtrairValorDaLinha(55, 55).ToInt();
             // Posição 56-62 brancos
-            objRetornar.CodigoDoDocumentoBanco = linha.ExtrairValorDaLinha(63, 78).ToInt();
+            objRetornar.CodigoDoDocumentoBanco = linha.ExtrairValorDaLinha(63, 78);
             // Posição 79-82 brancos
             objRetornar.DataDeCredito = linha.ExtrairValorDaLinha(83, 88).ToInt();
             objRetornar.Moeda = linha.ExtrairValorDaLinha(89, 89).ToInt();
             // Posição 90-107 brancos
-            objRetornar.Carteira = linha.ExtrairValorDaLinha(108, 108).ToInt();
+            objRetornar.CodigoCarteira = linha.ExtrairValorDaLinha(108, 108);
             objRetornar.CodigoDeOcorrencia = linha.ExtrairValorDaLinha(109, 110).ToInt();
             objRetornar.DataDaOcorrencia = linha.ExtrairValorDaLinha(111, 116).ToInt();
             objRetornar.SeuNumero = linha.ExtrairValorDaLinha(117, 122).ToInt();
@@ -164,11 +164,6 @@ namespace BoletoBr.Bancos
             objRetornar.NumeroSequencial = linha.ExtrairValorDaLinha(395, 400).ToInt();
             
             return objRetornar;
-        }
-
-        public DetalheRateioRetornoCnab400 ObterRegistrosDetalheRateio(string linha)
-        {
-            throw new NotImplementedException();
         }
 
         public TrailerRetornoCnab400 ObterTrailer(string linhaObterInformacoes)

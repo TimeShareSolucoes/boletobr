@@ -13,16 +13,17 @@ namespace BoletoBr
         #region Propriedades Comuns
 
         public int CodigoDoRegistro { get; set; }
+        public string CodigoDoServico { get; set; }
         public int CodigoDoBeneficiario { get; set; }
         public int CodigoAgenciaCedente { get; set; }
         public int SubConta { get; set; }
-        public int ContaCorrente { get; set; }
-        public int CodigoDoDocumentoEmpresa { get; set; }
+        public long ContaCorrente { get; set; }
+        public string CodigoDoDocumentoEmpresa { get; set; }
         public int CodigoDePostagem { get; set; }
-        public int CodigoDoDocumentoBanco { get; set; }
+        public string CodigoDoDocumentoBanco { get; set; }
         public int DataDeCredito { get; set; }
         public int Moeda { get; set; }
-        public int Carteira { get; set; }
+        public int NumeroCarteira { get; set; }
         public int CodigoDeOcorrencia { get; set; }
         public int DataDaOcorrencia { get; set; }
         /// <summary>
@@ -38,14 +39,16 @@ namespace BoletoBr
         public int AgenciaCobradora { get; set; }
         public string Especie { get; set; }
         public decimal ValorIof { get; set; }
+        public decimal ValorIofDesconto { get; set; }
         public decimal ValorOutrasDespesas { get; set; }
         public decimal ValorDesconto { get; set; }
         public decimal ValorPrincipal { get; set; }
         public decimal ValorJurosDeMora { get; set; }
+        public decimal ValorJurosDesconto { get; set; }
         public decimal ValorAbatimento { get; set; }
         public decimal ValorMulta { get; set; }
         public decimal ValorLiquidoRecebido { get; set; }
-        public decimal OutrosCreditos { get; set; }
+        public decimal ValorOutrosCreditos { get; set; }
         public int Constante { get; set; }
         public decimal QuantidadeMoeda { get; set; }
         public decimal CotacaoMoeda { get; set; }
@@ -83,7 +86,11 @@ namespace BoletoBr
 
         #endregion
 
-        #region Banco do Brasil CBR 643
+        #region Banco do Brasil
+
+        #region CBR 643
+
+        #region Detalhe Tipo 7 - GERAL
 
         public string DvAgenciaCedente { get; set; }
         public string DvContaCorrente { get; set; }
@@ -101,6 +108,12 @@ namespace BoletoBr
         /// <summary>
         /// Tipo de Cobrança Específico para Comando 72
         /// Alteração de tipo de cobrança de títulos das carteiras 11 e 17
+        /// 0 - Caso não haja alteração de tipo de cobrança
+        /// 1 - Simples
+        /// 2 - Vinculada
+        /// 4 - Descontada
+        /// 7 - Cobrança Simples Carteira 17
+        /// 8 - Vendor
         /// </summary>
         public int TipoCobrancaCmd17 { get; set; }
         public int DiasCalculo { get; set; }
@@ -194,6 +207,146 @@ namespace BoletoBr
 
         #endregion
 
+        #region Detalhe Tipo 2 - Cobrança Partilhada
+
+        // Informações Partilha 1
+        public int BancoParaCredito1 { get; set; }
+        public int CamaraCompensacao1 { get; set; }
+        public int AgenciaParaCredito1 { get; set; }
+        public string DvAgenciaParaCredito1 { get; set; }
+        public long ContaParaCredito1 { get; set; }
+        public string DvContaParaCredito1 { get; set; }
+        public string NomeFavorecido1 { get; set; }
+        public decimal ValorInformadoPartilha1 { get; set; }
+        public decimal ValorEfetivamentePartilhado1 { get; set; }
+        // Informações Partilha 2
+        public int BancoParaCredito2 { get; set; }
+        public int CamaraCompensacao2 { get; set; }
+        public int AgenciaParaCredito2 { get; set; }
+        public string DvAgenciaParaCredito2 { get; set; }
+        public long ContaParaCredito2 { get; set; }
+        public string DvContaParaCredito2 { get; set; }
+        public string NomeFavorecido2 { get; set; }
+        public decimal ValorInformadoPartilha2 { get; set; }
+        public decimal ValorEfetivamentePartilhado2 { get; set; }
+        // Informações Partilha 3
+        public int BancoParaCredito3 { get; set; }
+        public int CamaraCompensacao3 { get; set; }
+        public int AgenciaParaCredito3 { get; set; }
+        public string DvAgenciaParaCredito3 { get; set; }
+        public long ContaParaCredito3 { get; set; }
+        public string DvContaParaCredito3 { get; set; }
+        public string NomeFavorecido3 { get; set; }
+        public decimal ValorInformadoPartilha3 { get; set; }
+        public decimal ValorEfetivamentePartilhado3 { get; set; }
+        // Informações Partilha 4
+        public int BancoParaCredito4 { get; set; }
+        public int CamaraCompensacao4 { get; set; }
+        public int AgenciaParaCredito4 { get; set; }
+        public string DvAgenciaParaCredito4 { get; set; }
+        public long ContaParaCredito4 { get; set; }
+        public string DvContaParaCredito4 { get; set; }
+        public string NomeFavorecido4 { get; set; }
+        public decimal ValorInformadoPartilha4 { get; set; }
+        public decimal ValorEfetivamentePartilhado4 { get; set; }
+        // Tipos e Inscrições Partilha
+        public int TipoInscricaoFavorecido1 { get; set; }
+        public long NumeroInscricaoFavorecido1 { get; set; }
+        public int TipoInscricaoFavorecido2 { get; set; }
+        public long NumeroInscricaoFavorecido2 { get; set; }
+        public int TipoInscricaoFavorecido3 { get; set; }
+        public long NumeroInscricaoFavorecido3 { get; set; }
+        public int TipoInscricaoFavorecido4 { get; set; }
+        public long NumeroInscricaoFavorecido4 { get; set; }
+
+        #endregion
+
+        #region Detalhe Tipo 3 - Cobrança Vendor
+
+        public string DvNossoNumero { get; set; }
+        /// <summary>
+        /// Número da operação BBVendor no aplicativo CIOPE
+        /// </summary>
+        public long NumeroOperacaoBBVendor { get; set; }
+        /// <summary>
+        /// Data da operação BBVendor (DDMMAAAA)
+        /// </summary>
+        public int DataOperacaoBBVendor { get; set; }
+        public int TaxaJurosVendedor { get; set; }
+        public int TaxaJurosComprador { get; set; }
+        /// <summary>
+        /// Valor do título no vencimento
+        /// </summary>
+        public decimal ValorTituloVencimento { get; set; }
+        /// <summary>
+        /// Valor original da venda
+        /// </summary>
+        public decimal ValorOriginal { get; set; }
+        public decimal ValorEncargosComprador { get; set; }
+        public decimal ValorIofFinanciado { get; set; }
+        public decimal ValorAcumuladoAbatimento { get; set; }
+        public int IndicativoEpocaEqualizacao { get; set; }
+        public int IndicativoNaturezaEqualizacao { get; set; }
+        public decimal ValorEqualizacao { get; set; }
+        public decimal ValorJurosProrrogacao { get; set; }
+        public decimal ValorIofProrrogacao { get; set; }
+        public decimal ValorIofPeriodoAtraso { get; set; }
+        public string NomeComprador { get; set; }
+        public int TipoInscricaoComprador { get; set; }
+        public long NumeroInscricaoComprador { get; set; }
+        public int TipoConversaoCnab240 { get; set; }
+        public string NossoNumero17Posicoes { get; set; }
+        public decimal NovoValorTitulo { get; set; }
+        public decimal ValorEqualizacaoEstornada { get; set; }
+        public decimal ValorNovaEqualizacao { get; set; }
+        public decimal ValorDiferencaEqualizacao { get; set; }
+        /// <summary>
+        /// Indicativo de débito/crédito (corresponde ao valor indicado no campo 25)
+        /// </summary>
+        public int IndicativoDebitoCreditoCampo25 { get; set; }
+        /// <summary>
+        /// Indicativo da natureza da equalização (corresponde ao valor indicado no campo 25)
+        /// </summary>
+        public int IndicativoNaturezaEqualizacao1 { get; set; }
+        /// <summary>
+        /// Indicativo da natureza da equalização (corresponde ao valor indicado no campo 26)
+        /// </summary>
+        public int IndicativoNaturezaEqualizacao2 { get; set; }
+        public decimal ValorIofNaoFinanciado { get; set; }
+        public decimal ValorComissaoPermanencia { get; set; }
+
+        #endregion
+
+        #region Detalhe Tipo 5 - Bloqueto por e-mail
+
+        /// <summary>
+        /// Endereços de e-mail informado no arquivo-remessa
+        /// </summary>
+        public string EnderecosEmail { get; set; }
+
+        #endregion
+
+        #region Detalhe Tipo 5 - Dados do cheque utilizado para liquidação de título
+
+        public int DataPagamento { get; set; }
+        public decimal ValorCheque { get; set; }
+        public int PrazoBloqueioCheque { get; set; }
+        public int MotivoDevolucaoCheque { get; set; }
+        public string TrilhaDoCheque { get; set; }
+        public string TipoCaptura { get; set; }
+
+        #endregion
+
+        #region Detalhe Tipo 5 - Número do título do cedente com 15 posições (OPCIONAL)
+
+        public string NumeroTituloCedente { get; set; }
+
+        #endregion
+
+        #endregion CBR 643
+
+        #endregion
+
         #region Caixa Econômica Federal
 
         public int TipoInscricao { get; set; }
@@ -218,7 +371,7 @@ namespace BoletoBr
         /// <summary>
         /// Código que identifica a forma de pagamento
         /// </summary>
-        public int CodigoFormaPagamento { get; set; }
+        public string CodigoFormaPagamento { get; set; }
         /// <summary>
         /// Informação de float negociado
         /// </summary>
@@ -251,6 +404,14 @@ namespace BoletoBr
         public string LocalPagamento2 { get; set; }
         public int TipoInscricaoSacadorAvalista { get; set; }
         public long NumeroInscricaoSacadorAvalista { get; set; }
+        public string CodigoCarteira { get; set; }
+        public string BandaMagneticaCheque { get; set; }
+        public string IndicadorBoletoDDA { get; set; }
+        public int CodigoInstrucaoCancelada { get; set; }
+        /// <summary>
+        /// Registros rejeitados ou alegação do sacado ou registro de mensagem informativa
+        /// </summary>
+        public string MensagemInformativa { get; set; }
 
         #endregion
     }
