@@ -8,19 +8,10 @@ namespace BoletoBr
 {
     public class ValidacaoBoletoException : Exception
     {
-        public ValidacaoBoletoException()
-        {
-            
-        }
+        public ValidacaoBoletoException() { }
 
-        public ValidacaoBoletoException(string mensagem) : base(mensagem)
-        {
-            
-        }
+        public ValidacaoBoletoException(string mensagem) : base(mensagem) { }
 
-        public ValidacaoBoletoException(string mensagem, Exception inner) : base(mensagem, inner)
-        {
-            
-        }
+        public ValidacaoBoletoException(string mensagem, Exception inner) : base(mensagem, inner) { }
     }
 }

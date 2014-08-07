@@ -1,4 +1,5 @@
 ﻿using System;
+using BoletoBr.Bancos.Hsbc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BoletoBr.UnitTests.Tests.Bancos.HSBC
@@ -27,6 +28,24 @@ namespace BoletoBr.UnitTests.Tests.Bancos.HSBC
             const string valorEsperado = "03.863.763/0001-54";
 
             Assert.AreEqual(valorEsperado, cnpjFormatado);
+        }
+
+        [TestMethod]
+        public void FormataNumeroDocumentoHsbc()
+        {
+            Boleto boleto = new Boleto();
+            BancoHsbc hsbc = new BancoHsbc();
+
+            string numeroDocumento = "123";
+
+            const string valorEsperado = "0000000000123";
+
+            boleto.NumeroDocumento = numeroDocumento;
+            hsbc.FormataNumeroDocumento(boleto);
+
+            string numeroDocumentoFormatado = boleto.NumeroDocumento;
+
+            Assert.AreEqual(valorEsperado, numeroDocumentoFormatado);
         }
 
 
@@ -60,7 +79,6 @@ namespace BoletoBr.UnitTests.Tests.Bancos.HSBC
             boleto.NumeroDocumento = "0000239104761";
             boleto.Moeda = "9";
             boleto.ValorBoleto = 1200;
-            boleto.DataFormatoJuliano = "1868";
             boleto.CodigoDoProduto = "2";
             boleto.SequencialNossoNumero = "0000239104761";
             boleto.DataVencimento = new DateTime(2008, 7, 4);
@@ -99,7 +117,6 @@ namespace BoletoBr.UnitTests.Tests.Bancos.HSBC
             boleto.NumeroDocumento = "40156";
             boleto.Moeda = "9";
             boleto.ValorBoleto = 200;
-            boleto.DataFormatoJuliano = "3202";
             boleto.CodigoDoProduto = "2";
             boleto.SequencialNossoNumero = "40156";
             boleto.DataVencimento = new DateTime(2012, 11, 15);

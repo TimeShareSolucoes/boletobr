@@ -107,9 +107,26 @@ namespace BoletoBr.Bancos.Hsbc
                 boleto.Moeda = "0";
         }
 
+        /// <summary>
+        /// Formata número do documento conforme Tipo de Arquivo escolhido na emissão
+        /// </summary>
+        /// <param name="boleto"></param>
         public void FormataNumeroDocumento(Boleto boleto)
         {
-            boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(7, '0');
+            boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(13, '0');
+
+            //try
+            //{
+            //    if (boleto.TipoArquivo == TipoArquivo.Cnab240)
+            //        boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(10, '0');
+
+            //    if (boleto.TipoArquivo == TipoArquivo.Cnab400)
+            //        boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(13, '0');
+            //}
+            //catch (Exception e)
+            //{
+            //    throw new Exception("Erro ao formatar número do documento", e);
+            //}
         }
 
         public void FormataNossoNumero(Boleto boleto)

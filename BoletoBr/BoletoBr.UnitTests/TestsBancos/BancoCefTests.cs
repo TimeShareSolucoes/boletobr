@@ -12,6 +12,22 @@ namespace BoletoBr.UnitTests.Tests.Bancos.CEF
          * Teste 3 - Código de barras
          */
 
+        [TestMethod]
+        public void formatanumerodoc()
+        {
+            var tamanhomaximo = 15;
+            var valor1 = 1234;
+            var valor2 = "XxXX";
+
+            var lenghtValor1 = valor1.ToString().Length;
+
+            //var numeroDocCalculado = valor1 + valor2.PadRight(tamanhomaximo - lenghtValor1, '0');
+            var numeroDocCalculado = valor1.ToString().PadLeft(tamanhomaximo - lenghtValor1, '0') + valor2;
+
+            Assert.AreEqual(numeroDocCalculado.Length, tamanhomaximo);
+
+        }
+
         #region Carteira RG - REGISTRADA
 
         [TestMethod]

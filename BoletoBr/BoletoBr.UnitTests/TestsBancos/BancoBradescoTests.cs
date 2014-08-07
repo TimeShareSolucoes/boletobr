@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoletoBr.Bancos.Bradesco;
+using BoletoBr.Dominio;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BoletoBr.UnitTests.Tests.Bancos
@@ -10,6 +12,26 @@ namespace BoletoBr.UnitTests.Tests.Bancos
     [TestClass]
     public class BancoBradescoTests
     {
+        [TestMethod]
+        public void FormataNumeroDocumentoHsbc()
+        {
+            Boleto boleto = new Boleto();
+            BancoBradesco bradesco = new BancoBradesco();
+
+            string numeroDocumento = "123";
+
+            const string valorEsperadoCnab240 = "000000000000123";
+            const string valorEsperadoCnab400 = "0000000123";
+
+            boleto.NumeroDocumento = numeroDocumento;
+            boleto.TipoArquivo = TipoArquivo.Cnab400;
+            bradesco.FormataNumeroDocumento(boleto);
+
+            string numeroDocumentoFormatado = boleto.NumeroDocumento;
+
+            Assert.AreEqual(valorEsperadoCnab400, numeroDocumentoFormatado);
+        }
+
         [TestMethod]
         public void CalculoNossoNumeroCarteira06DocumentacaoBradesco()
         {
@@ -49,9 +71,9 @@ namespace BoletoBr.UnitTests.Tests.Bancos
              * Teste baseado em um boleto apresentado na documentação oficial do Banco da Amazônia versão 1
              * Manual de Cobrança Registrada Simples
              */
-            var banco = Fabricas.BancoFactory.ObterBanco("003", "5");
+            var banco = Fabricas.BancoFactory.ObterBanco("237", "2");
 
-            var contaBancariaCedente = new ContaBancaria("007", "8", "", "");
+            var contaBancariaCedente = new ContaBancaria("1234", "8", "12345", "6");
 
             var cedente = new Cedente("99999", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
 
@@ -67,15 +89,13 @@ namespace BoletoBr.UnitTests.Tests.Bancos
                 Numero = "9"
             });
 
-            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("CNR"));
-            boleto.NumeroDocumento = "123";
-            boleto.ValorBoleto = Convert.ToDecimal(15.56);
-            boleto.SequencialNossoNumero = "123";
-            boleto.DataVencimento = new DateTime(2008, 06, 27);
+            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("06"));
+            boleto.NumeroDocumento = "3242";
+            boleto.ValorBoleto = Convert.ToDecimal(275);
+            boleto.SequencialNossoNumero = "3242";
+            boleto.DataVencimento = new DateTime(2014, 08, 04);
 
-            banco.FormataNossoNumero(boleto);
-            banco.FormataCodigoBarra(boleto);
-            banco.FormataLinhaDigitavel(boleto);
+            banco.FormatarBoleto(boleto);
 
             const string valorEsperado = "00390.07802 00100.000009  00000.012385 8 39160000001556";
             Assert.AreEqual(valorEsperado.Length, boleto.LinhaDigitavelBoleto.Length);

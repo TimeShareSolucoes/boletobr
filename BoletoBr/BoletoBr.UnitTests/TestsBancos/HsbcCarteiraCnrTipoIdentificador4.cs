@@ -64,7 +64,6 @@ namespace BoletoBr.UnitTests.Tests.Bancos.HSBC
             boleto.NumeroDocumento = "40156";
             boleto.Moeda = "9";
             boleto.ValorBoleto = 200;
-            boleto.DataFormatoJuliano = "3202";
             boleto.CodigoDoProduto = "2";
             boleto.SequencialNossoNumero = "40156";
             boleto.DataVencimento = new DateTime(2012, 11, 15);

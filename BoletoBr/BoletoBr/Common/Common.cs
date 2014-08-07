@@ -305,7 +305,7 @@ namespace BoletoBr
             return result;
         }
 
-        public static string Mod11Bradesco(string seq, int b)
+        public static string Mod11Base7Bradesco(string seq, int b)
         {
             #region Trecho do manual layout_cobranca_port.pdf do BRADESCO
             /* 

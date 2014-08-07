@@ -86,6 +86,7 @@ namespace BoletoBr
         /// Nota: Se utilizado o Tipo Identificador “5”, a data de vencimento no formato juliano deverá ser preenchida com quatro zeros = 0000. 
         /// </summary>
         public string DataFormatoJuliano { get; set; }
+        public TipoArquivo TipoArquivo { get; set; }
         public string CodigoDoProduto { get; set; }
         public List<IInstrucao> InstrucoesDoBoleto { get; set; }
 

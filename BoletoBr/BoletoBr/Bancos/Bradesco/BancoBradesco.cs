@@ -32,7 +32,7 @@ namespace BoletoBr.Bancos.Bradesco
 
         public string CalcularDigitoNossoNumero(Boleto boleto)
         {
-            return Common.Mod11Bradesco(boleto.CarteiraCobranca.Codigo + boleto.NossoNumeroFormatado, 7);
+            return Common.Mod11Base7Bradesco(boleto.CarteiraCobranca.Codigo + boleto.NossoNumeroFormatado, 7);
         }
         private int _digitoAutoConferenciaBoleto;
         private string _digitoAutoConferenciaNossoNumero;
@@ -72,20 +72,19 @@ namespace BoletoBr.Bancos.Bradesco
             }
 
             //Verifica se o nosso n�mero � v�lido
-            if (boleto.NossoNumeroFormatado.Length > 11)
-                throw new ValidacaoBoletoException("A quantidade de d�gitos do nosso n�mero, s�o 11 n�meros.");
-            else if (boleto.NossoNumeroFormatado.Length < 11)
-                boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(11, '0'));
+            //if (boleto.NossoNumeroFormatado.Length > 16)
+            //    throw new ValidacaoBoletoException("A quantidade de dígitos do nosso número deve ser 16 números."
+            //        + Environment.NewLine + "02->Carteira/" + Environment.NewLine + "11->Nosso Número-" + Environment.NewLine + "01->DV");
 
-            //Verificar se a Agencia esta correta
+            //Verifica se a Agencia esta correta
             if (boleto.CedenteBoleto.ContaBancariaCedente.Agencia.Length > 4)
-                throw new ValidacaoBoletoException("A quantidade de d�gitos da Ag�ncia " + boleto.CedenteBoleto.ContaBancariaCedente.Agencia + ", s�o de 4 n�meros.");
+                throw new ValidacaoBoletoException("A quantidade de dígitos da Agência " + boleto.CedenteBoleto.ContaBancariaCedente.Agencia + ", deve ser de 4 números.");
             else if (boleto.CedenteBoleto.ContaBancariaCedente.Agencia.Length < 4)
                 boleto.CedenteBoleto.ContaBancariaCedente.Agencia = boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4,'0');
 
-            //Verificar se a Conta esta correta
+            //Verifica se a Conta esta correta
             if (boleto.CedenteBoleto.ContaBancariaCedente.Conta.Length > 7)
-                throw new ValidacaoBoletoException("A quantidade de d�gitos da Conta " + boleto.CedenteBoleto.ContaBancariaCedente.Conta + ", s�o de 07 n�meros.");
+                throw new ValidacaoBoletoException("A quantidade de dígitos da Conta " + boleto.CedenteBoleto.ContaBancariaCedente.Conta + ", deve ser de 07 números.");
             else if (boleto.CedenteBoleto.ContaBancariaCedente.Conta.Length < 7)
                 boleto.CedenteBoleto.ContaBancariaCedente.Conta =
                     boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(7, '0');
@@ -130,6 +129,7 @@ namespace BoletoBr.Bancos.Bradesco
             FormataNossoNumero(boleto);
             FormataCodigoBarra(boleto);
             FormataLinhaDigitavel(boleto);
+            
             FormataMoeda(boleto);
 
             ValidaBoletoComNormasBanco(boleto);
@@ -157,13 +157,12 @@ namespace BoletoBr.Bancos.Bradesco
             boleto.SetNossoNumeroFormatado(
                 string.Format("{0}/{1}-{2}",
                     boleto.CarteiraCobranca.Codigo,
-                    boleto.NossoNumeroFormatado,
+                    boleto.NossoNumeroFormatado.PadLeft(11, '0'),
                     boleto.DigitoNossoNumero));
         }
+
         public void FormataCodigoBarra(Boleto boleto)
         {
-            boleto.Moeda = this.MoedaBanco;
-
             string valorBoleto = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "");
             valorBoleto = valorBoleto.PadLeft(10, '0');
 
@@ -208,10 +207,10 @@ namespace BoletoBr.Bancos.Bradesco
         public string FormataCampoLivre(Boleto boleto)
         {
 
-            string FormataCampoLivre = string.Format("{0}{1}{2}{3}{4}", boleto.CedenteBoleto.ContaBancariaCedente.Agencia, boleto.CarteiraCobranca.Codigo,
-                                            boleto.NossoNumeroFormatado.Replace("-", "").Replace("/", ""), boleto.CedenteBoleto.ContaBancariaCedente.Conta, "0");
+            string formataCampoLivre = string.Format("{0}{1}{2}{3}{4}", boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'), boleto.CarteiraCobranca.Codigo,
+                                            boleto.NossoNumeroFormatado.Replace("/", "").Replace("-", "").ExtrairValorDaLinha(1,11), boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(7, '0'), "0");
 
-            return FormataCampoLivre;
+            return formataCampoLivre;
         }
 
         public void FormataLinhaDigitavel(Boleto boleto)
@@ -253,7 +252,6 @@ namespace BoletoBr.Bancos.Bradesco
 
             Grupo3 = string.Format("{0}.{1}{2} ", CCCCCCCCCC3.Substring(0, 5), CCCCCCCCCC3.Substring(5, 5), D3);
 
-
             #endregion Campo 3
 
             #region Campo 4
@@ -273,13 +271,13 @@ namespace BoletoBr.Bancos.Bradesco
             //string FFFF = boleto.CodigoBarra.Codigo.Substring(5, 4);//FatorVencimento(boleto).ToString() ;
             string FFFF = Common.FatorVencimento(boleto.DataVencimento).ToString();
 
-            //if (boleto.Carteira == "06" && !Utils.DataValida(boleto.DataVencimento))
+            //if (boleto.CarteiraCobranca.Codigo == "06" && boleto.DataVencimento == DateTime.MinValue)
             //    FFFF = "0000";
 
             string VVVVVVVVVV = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "");
             VVVVVVVVVV = VVVVVVVVVV.PadLeft(10, '0');
 
-            //if (Utils.ToInt64(VVVVVVVVVV) == 0)
+            //if (Convert.ToInt64(VVVVVVVVVV) == 0)
             //    VVVVVVVVVV = "000";
 
             Grupo5 = string.Format("{0}{1}", FFFF, VVVVVVVVVV);
@@ -292,7 +290,16 @@ namespace BoletoBr.Bancos.Bradesco
 
         public void FormataNumeroDocumento(Boleto boleto)
         {
-            throw new NotImplementedException("Função ainda não implementada.");
+            boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(11, '0');
+
+            //if (boleto.TipoArquivo == TipoArquivo.Cnab240)
+            //    boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(15, '0');
+
+            //if (boleto.TipoArquivo == TipoArquivo.Cnab400)
+            //    boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(10, '0');
+
+            //if (boleto.TipoArquivo == TipoArquivo.Outro)
+            //    throw new Exception("Tipo de arquivo incorreto!" + Environment.NewLine + "Tipos aceitos: CNAB240 ou CNAB400");
         }
 
         public void LerArquivoRetorno(IBanco banco, Stream arquivo)

@@ -193,7 +193,7 @@ namespace BoletoBr.Bancos.Cef
             //ESSA IMPLEMENTA��O FOI FEITA PARA CARTEIAS SIGCB "SR" COM NOSSO NUMERO DE 14 e 17 POSI��ES
             if (boleto.CarteiraCobranca != null)
             {
-                if ((boleto.CarteiraCobranca.Equals("SR")) || (boleto.CarteiraCobranca.Equals("RG")))
+                if (boleto.CarteiraCobranca.Codigo.Equals("SR") || boleto.CarteiraCobranca.Codigo.Equals("RG"))
                 {
                     //14 POSI�OES
                     if (boleto.NossoNumeroFormatado.Length == 14)
@@ -271,58 +271,6 @@ namespace BoletoBr.Bancos.Cef
                         string dvCampoLivre = Common.Mod11Base9(ccc).ToString();
                         campoLivre = string.Format("{0}{1}", ccc, dvCampoLivre);
                     }
-                }
-                else
-                {
-                    //Posi��o 20 - 25
-                    string codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(6, '0');
-
-                    // Posi��o 26
-                    string dvCodigoCedente = Common.Mod11Base9(codigoCedente).ToString();
-
-                    //Posi��o 27 - 29
-                    string primeiraParteNossoNumero = boleto.NossoNumeroFormatado.Substring(2, 3);
-
-                    //104 - Caixa Econ�mica Federal S.A. 
-                    //Carteira 02. 
-                    //Cobran�a r�pida. 
-                    //Cobran�a sem registro. 
-                    //Cobran�a sem registro, nosso n�mero com 16 d�gitos. 
-                    //Cobran�a simples 
-
-                    //Posi��o 30
-                    string primeiraConstante;
-                    switch (boleto.CarteiraCobranca.Codigo)
-                    {
-                        case "SR":
-                            primeiraConstante = "2";
-                            break;
-                        case "RG":
-                            primeiraConstante = "1";
-                            break;
-                        default:
-                            primeiraConstante = boleto.CarteiraCobranca.Codigo;
-                            break;
-                    }
-
-                    // Posi��o 31 - 33
-                    string segundaParteNossoNumero = boleto.NossoNumeroFormatado.Substring(5, 3); //(3, 3);
-
-                    // Posi��o 24
-                    string segundaConstante = IdentificadorEmissaoCedente;
-
-                    //Posi��o 35 - 43
-                    string terceiraParteNossoNumero = boleto.NossoNumeroFormatado.Substring(8, 9);
-
-                    //Posi��o 44
-                    string ccc = string.Format("{0}{1}{2}{3}{4}{5}{6}", codigoCedente, dvCodigoCedente,
-                        primeiraParteNossoNumero,
-                        primeiraConstante, segundaParteNossoNumero, segundaConstante,
-                        terceiraParteNossoNumero);
-
-                    string dvCampoLivre = Common.Mod11Base9(ccc).ToString();
-
-                    campoLivre = string.Format("{0}{1}", ccc, dvCampoLivre);
                 }
 
                 string xxxx = string.Format("{0}{1}{2}{3}{4}", banco, moeda, fatorVencimento, valorDocumento, campoLivre);
@@ -513,7 +461,16 @@ namespace BoletoBr.Bancos.Cef
 
         public void FormataNumeroDocumento(Boleto boleto)
         {
-            boleto.NumeroDocumento = string.Format("{0}", boleto.NumeroDocumento);
+            boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(10, '0');
+
+            //if (boleto.TipoArquivo == TipoArquivo.Cnab240)
+            //    boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(11, '0');
+
+            //if (boleto.TipoArquivo == TipoArquivo.Cnab400)
+            //    boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(10, '0');
+
+            //if (boleto.TipoArquivo == TipoArquivo.Outro)
+            //    throw new Exception("Tipo de arquivo incorreto!" + Environment.NewLine + "Tipos aceitos: CNAB240 ou CNAB400");
         }
 
         public void LerArquivoRetorno(IBanco banco, Stream arquivo)
