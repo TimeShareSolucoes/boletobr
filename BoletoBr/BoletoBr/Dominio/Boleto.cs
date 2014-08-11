@@ -56,7 +56,9 @@ namespace BoletoBr
         public IEspecieDocumento Especie { get; set; }
         public string Moeda { get; set; }
         public string UsoBanco { get; set; }
-        public decimal? ValorAbatimentoDesconto { get; set; }
+        //public decimal? ValorAbatimentoDesconto { get; set; }
+        public decimal? ValorAbatimento { get; set; }
+        public decimal? ValorDesconto { get; set; }
         public bool JurosPermanente { get; set; }
         public decimal? PercentualJurosMora { get; set; }
         public decimal? JurosMora { get; set; }
