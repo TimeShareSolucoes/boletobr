@@ -8,11 +8,11 @@ namespace BoletoBr.UnitTests
         [TestMethod]
         public void TestPreenchimentoCadeia()
         {
-            string texto = "TEST";
+            string texto = "SAMUEL ROCHA";
 
-            string resultado = Common.CompletarCadeia(texto, '-', 7);
+            string resultado = texto.PadRight(30, '*');
 
-            Assert.AreEqual("TEST---", resultado);
+            Assert.AreEqual("SAMUEL ROCHA******************", resultado);
         }
 
 

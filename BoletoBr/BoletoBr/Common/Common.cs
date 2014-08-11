@@ -542,16 +542,6 @@ namespace BoletoBr
 
         #region Funções de uso geral
 
-        public static string CompletarCadeia(string texto, char caractere, int qtd)
-        {
-            if (texto.Length > qtd)
-                throw new Exception("O texto não pode ser maior que a quantidade de caracteres da cadeia");
-
-            string resultado = new string(caractere, qtd - texto.Length);
-            
-            return texto + caractere;
-        }
-
         public static string CompletarCadeia(string texto, string caractere, int qtd)
         {
             return null;

@@ -912,11 +912,11 @@ namespace BoletoBr.Bancos.Cef
                 header += "  "; // Uso Exclusivo FEBRABAN/CNAB
                 header += "020"; // N�mero da Vers�o do Layout do Arquivo 
                 header += " "; // Uso Exclusivo FEBRABAN/CNAB
-                header += (cedente.CpfCnpj.Length == 11 ? "1" : "2"); // Tipo de Inscri��o 
-                header += Common.CompletarCadeia(cedente.CpfCnpj, "0", 15); // CPF/CNPJ do cedente
-                header += Common.CompletarCadeia(cedente.CodigoCedente.ToString() + cedente.DigitoCedente, "0", 16);
+                header += cedente.CpfCnpj.Length == 11 ? "1" : "2"; // Tipo de Inscri��o 
+                header += cedente.CpfCnpj; // CPF/CNPJ do cedente
+                header += cedente.CodigoCedente + cedente.DigitoCedente.ToString().PadRight(16, ' ');
                 // C�digo do Conv�nio no Banco 
-                header += Common.CompletarCadeia("", " ", 4); // Uso Exclusivo CAIXA
+                header += "".PadRight(4, ' '); // Uso Exclusivo CAIXA
                 header += Common.CompletarCadeia(cedente.ContaBancariaCedente.Agencia, "0", 5);
                 // Ag�ncia Mantenedora da Conta 
                 header += Common.CompletarCadeia(cedente.ContaBancariaCedente.DigitoAgencia, "0", 5);
