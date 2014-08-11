@@ -11,6 +11,7 @@ namespace BoletoBr
         public string CpfCnpj { get; set; }
         public string Nome { get; set; }
         public Endereco EnderecoCedente { get; set; }
+        public string NumeroSequencial { get; set; }
         public string CpfCnpjFormatado
         {
             get
