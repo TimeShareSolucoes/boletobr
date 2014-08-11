@@ -7,6 +7,8 @@ namespace BoletoBr
         public string Nome { get; set; }
         public string CpfCnpj { get; set; }
         public Endereco EnderecoSacado { get; set; }
+        public string NomeAvalista { get; set; }
+        public string CpfCnpjAvalista { get; set; }
         public string CpfCnpjFormatado
         {
             get
