@@ -6,6 +6,17 @@ namespace BoletoBr.UnitTests
     public class CommonTests
     {
         [TestMethod]
+        public void TestPreenchimentoCadeia()
+        {
+            string texto = "TEST";
+
+            string resultado = Common.CompletarCadeia(texto, '-', 7);
+
+            Assert.AreEqual("TEST---", resultado);
+        }
+
+
+        [TestMethod]
         public void TestFormatarCep()
         {
             var cep = "75690000";
