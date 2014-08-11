@@ -68,11 +68,11 @@ namespace BoletoBr.Bancos
         /// <param name="banco"></param><param name="arquivo"></param>
         void LerArquivoRetorno(IBanco banco, Stream arquivo);
 
-        string GerarHeaderRemessa(string numeroConvenio, Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa);
+        string GerarHeaderRemessa(string numeroConvenio, Cedente cedente, TipoArquivo tipoArquivo, int numeroArquivoRemessa);
         /// <summary>
         /// Gera o header do arquivo de remessa
         /// </summary>
-        string GerarHeaderRemessa(string numeroConvenio, Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa, Boleto boletos);
+        string GerarHeaderRemessa(string numeroConvenio, Cedente cedente, TipoArquivo tipoArquivo, int numeroArquivoRemessa, Boleto boletos);
         /// <summary>
         /// Gera os registros de detalhe do arquivo de remessa
         /// </summary>
@@ -80,7 +80,7 @@ namespace BoletoBr.Bancos
         /// <summary>
         /// Gera o header de arquivo do arquivo de remessa
         /// </summary>
-        string GerarHeaderRemessa(Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa);
+        string GerarHeaderRemessa(Cedente cedente, TipoArquivo tipoArquivo, int numeroArquivoRemessa);
         /// <summary>
         /// Gera o Trailer do arquivo de remessa
         /// </summary>
@@ -88,15 +88,15 @@ namespace BoletoBr.Bancos
         /// <summary>
         /// Gera o header de lote do arquivo de remessa
         /// </summary>
-        string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa);
+        string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cedente, int numeroArquivoRemessa);
         /// <summary>
         /// Gera o header de lote do arquivo de remessa
         /// </summary>
-        string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa, TipoArquivo tipoArquivo);
+        string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cedente, int numeroArquivoRemessa, TipoArquivo tipoArquivo);
         /// <summary>
         /// Gera o header de lote do arquivo de remessa
         /// </summary>
-        string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa, TipoArquivo tipoArquivo, Boleto boletos);
+        string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cedente, int numeroArquivoRemessa, TipoArquivo tipoArquivo, Boleto boletos);
         /// <summary>
         /// Gera os registros de detalhe do arquivo de remessa - SEGMENTO P
         /// </summary>
