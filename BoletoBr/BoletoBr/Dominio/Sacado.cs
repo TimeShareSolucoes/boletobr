@@ -17,9 +17,9 @@ namespace BoletoBr
                 valorBaseTratado = valorBaseTratado.Replace(".", "").Replace("-", "").Replace("/", "");
 
                 if (valorBaseTratado.Length > 11)
-                    return MetodosExtensao.SetMascara(valorBaseTratado, "##.###.###/####-##");
+                    return valorBaseTratado.BoletoBrSetMascara("##.###.###/####-##");
 
-                return MetodosExtensao.SetMascara(valorBaseTratado, "###.###.###-##");
+                return valorBaseTratado.BoletoBrSetMascara("###.###.###-##");
             }
         }
 
