@@ -16,7 +16,7 @@ namespace BoletoBr
         /// <param name="textoformatar">Texto a ser formatado</param>
         /// <param name="mascara">Máscara utilizando cerquilha.</param>
         /// <returns>Texto com máscara aplicada</returns>
-        public static string SetMascara(this string textoformatar, string mascara)
+        public static string BoletoBrSetMascara(this string textoformatar, string mascara)
         {
             string novoValor = string.Empty;
             int posicao = 0;
@@ -43,7 +43,7 @@ namespace BoletoBr
             return novoValor;
         }
 
-        public static bool SomenteNumeros(this string texto)
+        public static bool BoletoBrSomenteNumeros(this string texto)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace BoletoBr
             }
         }
 
-        public static string RemoveAcentos(this string text)
+        public static string BoletoBrRemoveAcentos(this string text)
         {
             StringBuilder sbReturn = new StringBuilder();
             var arrayText = text.Normalize(NormalizationForm.FormD).ToCharArray();
@@ -75,7 +75,7 @@ namespace BoletoBr
             return sbReturn.ToString();
         }
 
-        public static Nullable<T> ToNullable<T>(this string s) where T : struct
+        public static Nullable<T> BoletoBrToNullable<T>(this string s) where T : struct
         {
             Nullable<T> result = new Nullable<T>();
             try
@@ -90,7 +90,7 @@ namespace BoletoBr
             return result;
         }
 
-        public static long ToLong(this string s)
+        public static long BoletoBrToLong(this string s)
         {
             long result = new long();
             try
@@ -106,7 +106,7 @@ namespace BoletoBr
             return result;
         }
 
-        public static string ToStringSafe(this object obj)
+        public static string BoletoBrToStringSafe(this object obj)
         {
             if (obj == null)
                 return String.Empty;
@@ -120,7 +120,7 @@ namespace BoletoBr
             return resultado;
         }
 
-        public static int ToInt(this string s)
+        public static int BoletoBrToInt(this string s)
         {
             if (String.IsNullOrEmpty(s))
                 return 0;
@@ -130,7 +130,7 @@ namespace BoletoBr
             return valorRetornar;
         }
 
-        public static int? ToNullableInt(this string s)
+        public static int? BoletoBrToNullableInt(this string s)
         {
             if (String.IsNullOrEmpty(s))
                 return new int?();
@@ -140,7 +140,7 @@ namespace BoletoBr
             return valorretornar;
         }
 
-        public static decimal ToDecimal(this string s)
+        public static decimal BoletoBrToDecimal(this string s)
         {
             decimal result = new decimal();
             try
@@ -156,7 +156,7 @@ namespace BoletoBr
             return result;
         }
 
-        public static double ToDouble(this string s)
+        public static double BoletoBrToDouble(this string s)
         {
             double result = new double();
             try
@@ -172,7 +172,7 @@ namespace BoletoBr
             return result;
         }
 
-        public static DateTime ToDateTime(this string s)
+        public static DateTime BoletoBrToDateTime(this string s)
         {
             DateTime result = new DateTime();
 
@@ -192,7 +192,7 @@ namespace BoletoBr
             return result;
         }
 
-        public static bool ToBool(this string s)
+        public static bool BoletoBrToBool(this string s)
         {
             if (s == null)
                 return false;
@@ -206,15 +206,15 @@ namespace BoletoBr
             return false;
         }
 
-        public static bool? ToBoolNullable(this string s)
+        public static bool? BoletoBrToBoolNullable(this string s)
         {
             if (String.IsNullOrEmpty(s))
                 return new bool?();
 
-            return s.ToBool();
+            return s.BoletoBrToBool();
         }
 
-        public static string ToBoolString(this bool b)
+        public static string BoletoBrToBoolString(this bool b)
         {
             if (b == true)
                 return "Sim";
@@ -227,7 +227,7 @@ namespace BoletoBr
         /// </summary>
         /// <param name="obj">Objeto alvo do método de extensão</param>
         /// <returns>Retorna própria instância do objeto ou uma nova instância com dados default</returns>
-        public static T ToVincular<T>(this T obj) where T : class, new()
+        public static T BoletoBrToBind<T>(this T obj) where T : class, new()
         {
             if (obj != null)
                 return obj;
@@ -240,7 +240,7 @@ namespace BoletoBr
         /// </summary>
         /// <param name="texto"></param>
         /// <returns>String.Empty caso o texto seja nulo</returns>
-        public static string ToVincular(this string texto)
+        public static string BoletoBrToBind(this string texto)
         {
             if (texto == null)
                 return "";
@@ -253,7 +253,7 @@ namespace BoletoBr
         /// </summary>
         /// <param name="obj">Objeto alvo do método de extensão</param>
         /// <returns>Retorna própria instância do objeto ou uma nova instância com dados default</returns>
-        public static IList<T> ToVincular<T>(this IList<T> obj) where T : class, new()
+        public static IList<T> BoletoBrToBind<T>(this IList<T> obj) where T : class, new()
         {
             if (obj != null)
                 return obj;
@@ -267,7 +267,7 @@ namespace BoletoBr
         /// <param name="s">String</param>
         /// <param name="caractereRemover">Caractere a se remover</param>
         /// <returns>Retorna a String</returns>
-        public static string DeletarCaractere(this string s, string caractereRemover)
+        public static string BoletoBrDeletarCaractere(this string s, string caractereRemover)
         {
             var stringRemover = s;
 
@@ -280,7 +280,7 @@ namespace BoletoBr
             return stringRemover;
         }
 
-        public static string CopiarTextoAteCaractere(this string s, string caractereEncontrar)
+        public static string BoletoBrCopiarTextoAteCaractere(this string s, string caractereEncontrar)
         {
             var stringBase = s;
 
@@ -300,7 +300,7 @@ namespace BoletoBr
         /// <param name="s"></param>
         /// <param name="caracteres"></param>
         /// <returns></returns>
-        public static string DeletarCaracteres(this string s, string[] caracteresRemover)
+        public static string BoletoBrDeletarCaracteres(this string s, string[] caracteresRemover)
         {
             var stringVerificar = s;
 
