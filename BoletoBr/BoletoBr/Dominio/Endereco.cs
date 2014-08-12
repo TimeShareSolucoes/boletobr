@@ -39,13 +39,13 @@ namespace BoletoBr
             {
                 var valorATratar = Cep;
                 valorATratar = valorATratar.Replace(".", "").Replace("-", "");
-                return MetodosExtensao.SetMascara(valorATratar, "##.###-###");
+                return valorATratar.BoletoBrSetMascara("##.###-###");
             }
         }
 
         public string CepSemFormatacao
         {
-            get { return Cep.ToVincular().Replace(".", "").Replace("-", ""); }
+            get { return Cep.BoletoBrToBind().Replace(".", "").Replace("-", ""); }
         }
     }
 }
