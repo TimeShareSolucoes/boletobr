@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.Dominio;
 
 namespace BoletoBr.Bancos.Itau
@@ -416,6 +417,22 @@ namespace BoletoBr.Bancos.Itau
                 throw new Exception("Erro ao formatar n�mero do documento.", ex);
             }
         }
+
+        public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RemessaCnab240 GerarArquivoRemessaCnab240(List<Boleto> boletos)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RemessaCnab400 GerarArquivoRemessaCnab400(List<Boleto> boletos)
+        {
+            throw new NotImplementedException();
+        }
+
         public void LerArquivoRetorno(IBanco banco, Stream arquivo)
         {
             throw new NotImplementedException();

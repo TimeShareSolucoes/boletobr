@@ -46,6 +46,10 @@
     <Compile Include="Arquivo\CNAB240\Retorno\LoteRetornoCnab240.cs" />
     <Compile Include="Arquivo\CNAB240\Retorno\TrailerLoteRetornoCnab240.cs" />
     <Compile Include="Arquivo\CNAB400\Retorno\DetalheRateioRetornoCnab400.cs" />
+    <Compile Include="Arquivo\Generico\Retorno\RetornoDetalheGenerico.cs" />
+    <Compile Include="Arquivo\Generico\Retorno\RetornoTrailerGenerico.cs" />
+    <Compile Include="Arquivo\Generico\Retorno\RetornoGenerico.cs" />
+    <Compile Include="Arquivo\Generico\Retorno\RetornoHeaderGenerico.cs" />
     <Compile Include="Arquivo\IArquivoRemessa.cs" />
     <Compile Include="Arquivo\TipoLinhaArquivoGerado.cs" />
     <Compile Include="Arquivo\TipoLinhaArquivoLido.cs" />
@@ -69,12 +73,15 @@
     <Compile Include="Bancos\Cef\BancoCef.cs" />
     <Compile Include="Bancos\Cef\CarteiraCobrancaCefRg.cs" />
     <Compile Include="Bancos\Cef\CarteiraCobrancaCefSr.cs" />
+    <Compile Include="Bancos\Cef\EscritorRemessaCnab240CefSigcb.cs" />
     <Compile Include="Bancos\Cef\LeitorRetornoCnab240Cef.cs" />
     <Compile Include="Bancos\Cef\LeitorRetornoCnab400Cef.cs" />
+    <Compile Include="Bancos\EscritorArquivoRemessaGenericoCnab240.cs" />
     <Compile Include="Bancos\Hsbc\BancoHsbc.cs" />
     <Compile Include="Bancos\Hsbc\CarteiraCobrancaHsbcCnr.cs" />
     <Compile Include="Bancos\Hsbc\CarteiraCobrancaHsbcCsb.cs" />
     <Compile Include="Bancos\IBanco.cs" />
+    <Compile Include="Bancos\IEscritorArquivoRemessa.cs" />
     <Compile Include="Bancos\ILeitorArquivoRetornoCnab240.cs" />
     <Compile Include="Bancos\ILeitorArquivoRetornoCnab400.cs" />
     <Compile Include="Bancos\Itau\BancoItau.cs" />
@@ -187,6 +194,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Arquivo\Generico\Remessa\" />
     <Folder Include="Implementacoes\" />
     <Folder Include="Interfaces\" />
   </ItemGroup>

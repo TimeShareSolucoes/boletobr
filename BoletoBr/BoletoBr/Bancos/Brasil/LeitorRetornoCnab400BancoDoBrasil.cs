@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using BoletoBr.Arquivo.CNAB400.Retorno;
+using BoletoBr.Dominio;
 
 namespace BoletoBr.Bancos.Brasil
 {
@@ -45,6 +46,11 @@ namespace BoletoBr.Bancos.Brasil
             }
 
             return objRetornar;
+        }
+
+        public RetornoCnab400 ProcessarRetorno(TipoArquivo tipoArquivo)
+        {
+            throw new NotImplementedException();
         }
 
         public void ValidaArquivoRetorno()

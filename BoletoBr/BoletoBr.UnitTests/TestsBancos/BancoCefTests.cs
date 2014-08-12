@@ -1,4 +1,5 @@
 ﻿using System;
+using BoletoBr.Dominio;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BoletoBr.UnitTests.Tests.Bancos.CEF
@@ -99,7 +100,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos.CEF
             banco.FormataCodigoBarra(boleto);
             banco.FormataLinhaDigitavel(boleto);
 
-            const string valorEsperado = "10490.05505 77222.133348 77777.777713 4 32420000032112";
+            const string valorEsperado = "10410.05503 77222.133348 77777.777713 1 32420000032112";
             Assert.AreEqual(valorEsperado.Length, boleto.LinhaDigitavelBoleto.Length);
             Assert.AreEqual(valorEsperado, boleto.LinhaDigitavelBoleto);
         }

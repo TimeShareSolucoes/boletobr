@@ -8,11 +8,12 @@ namespace BoletoBr.UnitTests
         [TestMethod]
         public void TestPreenchimentoCadeia()
         {
-            string texto = "SAMUEL ROCHA";
+            string texto = "75.690-";
 
-            string resultado = texto.PadRight(30, '*');
+            //string resultado = texto.PadRight(30, '*');
+            string resultado = Common.CompletarCadeia(true, false, texto, '0', 3);
 
-            Assert.AreEqual("SAMUEL ROCHA******************", resultado);
+            Assert.AreEqual("75.690-000", resultado);
         }
 
 

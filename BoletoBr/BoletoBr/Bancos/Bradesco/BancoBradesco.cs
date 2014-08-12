@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.CalculoModulo;
 using BoletoBr.Dominio;
 
@@ -300,6 +301,21 @@ namespace BoletoBr.Bancos.Bradesco
 
             //if (boleto.TipoArquivo == TipoArquivo.Outro)
             //    throw new Exception("Tipo de arquivo incorreto!" + Environment.NewLine + "Tipos aceitos: CNAB240 ou CNAB400");
+        }
+
+        public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RemessaCnab240 GerarArquivoRemessaCnab240(List<Boleto> boletos)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RemessaCnab400 GerarArquivoRemessaCnab400(List<Boleto> boletos)
+        {
+            throw new NotImplementedException();
         }
 
         public void LerArquivoRetorno(IBanco banco, Stream arquivo)

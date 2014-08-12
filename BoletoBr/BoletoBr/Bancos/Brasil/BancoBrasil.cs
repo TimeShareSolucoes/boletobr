@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.Dominio;
 
 namespace BoletoBr.Bancos.BancoBrasil
@@ -1102,6 +1103,21 @@ namespace BoletoBr.Bancos.BancoBrasil
         }
 
         public void FormataNumeroDocumento(Boleto boleto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RemessaCnab240 GerarArquivoRemessaCnab240(List<Boleto> boletos)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RemessaCnab400 GerarArquivoRemessaCnab400(List<Boleto> boletos)
         {
             throw new NotImplementedException();
         }

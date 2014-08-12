@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Security.AccessControl;
+using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.CalculoModulo;
 using BoletoBr.Bancos;
 using BoletoBr.Dominio;
@@ -127,6 +128,21 @@ namespace BoletoBr.Bancos.Hsbc
             //{
             //    throw new Exception("Erro ao formatar número do documento", e);
             //}
+        }
+
+        public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RemessaCnab240 GerarArquivoRemessaCnab240(List<Boleto> boletos)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RemessaCnab400 GerarArquivoRemessaCnab400(List<Boleto> boletos)
+        {
+            throw new NotImplementedException();
         }
 
         public void FormataNossoNumero(Boleto boleto)

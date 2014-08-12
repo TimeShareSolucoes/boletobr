@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.Bancos.Hsbc;
 using BoletoBr.Dominio;
 
@@ -166,6 +167,21 @@ namespace BoletoBr.Bancos.Amazonia
         public void FormataNumeroDocumento(Boleto boleto)
         {
             boleto.NumeroDocumento = string.Format("{0}", boleto.NumeroDocumento);
+        }
+
+        public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RemessaCnab240 GerarArquivoRemessaCnab240(List<Boleto> boletos)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RemessaCnab400 GerarArquivoRemessaCnab400(List<Boleto> boletos)
+        {
+            throw new NotImplementedException();
         }
 
         public void LerArquivoRetorno(IBanco banco, Stream arquivo)

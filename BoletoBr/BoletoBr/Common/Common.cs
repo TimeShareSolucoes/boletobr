@@ -542,7 +542,30 @@ namespace BoletoBr
 
         #region Funções de uso geral
 
-        public static string CompletarCadeia(string texto, string caractere, int qtd)
+        public static string CompletarCadeia(bool t, bool n, string texto, char caractere, int tamanho)
+        {
+            string resultado = string.Empty;
+            int i;
+            bool conversao = Int32.TryParse(texto, out i);
+
+            if (t == true)
+                resultado = texto.ToUpper().PadRight(tamanho, caractere);
+            if (n == true)
+                resultado = texto.PadLeft(tamanho, caractere);
+            if (t && n == false)
+                if (true == conversao)
+                resultado = texto.PadLeft(tamanho, caractere);
+                else
+                    resultado = texto.ToUpper().PadRight(tamanho, caractere);
+
+            return resultado;
+        }
+
+        public static string CompletarCadeiaADireita(string texto, char caractere,  int tamanho)
+        {
+            return null;
+        }
+        public static string CompletarCadeiaAEsquerda(string texto, string caractere, int tamanho)
         {
             return null;
         }
