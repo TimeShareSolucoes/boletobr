@@ -20,7 +20,7 @@ namespace BoletoBr.UnitTests
         public void TestFormatarCep()
         {
             var cep = "75690000";
-            var cepFormatado = cep.SetMascara("#####-###");
+            var cepFormatado = cep.BoletoBrSetMascara("#####-###");
 
             Assert.AreEqual("75690-000", cepFormatado);
         }
