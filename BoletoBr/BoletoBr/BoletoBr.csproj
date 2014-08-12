@@ -73,7 +73,7 @@
     <Compile Include="Bancos\Cef\BancoCef.cs" />
     <Compile Include="Bancos\Cef\CarteiraCobrancaCefRg.cs" />
     <Compile Include="Bancos\Cef\CarteiraCobrancaCefSr.cs" />
-    <Compile Include="Bancos\Cef\EscritorRemessaCnab240CefSigcb.cs" />
+    <Compile Include="Bancos\Cef\EscritorRemessaCnab240CefSicgb.cs" />
     <Compile Include="Bancos\Cef\LeitorRetornoCnab240Cef.cs" />
     <Compile Include="Bancos\Cef\LeitorRetornoCnab400Cef.cs" />
     <Compile Include="Bancos\EscritorArquivoRemessaGenericoCnab240.cs" />

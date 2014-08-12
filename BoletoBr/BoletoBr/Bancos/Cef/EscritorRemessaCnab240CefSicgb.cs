@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace BoletoBr.Bancos.Cef
 {
-    public class EscritorRemessaCnab240CefSigcb : IEscritorArquivoRemessa
+    public class EscritorRemessaCnab240CefSicgb : IEscritorArquivoRemessa
     {
         private readonly string _sequencial;
 
-        public EscritorRemessaCnab240CefSigcb(string sequencial)
+        public EscritorRemessaCnab240CefSicgb(string sequencial)
         {
             _sequencial = sequencial;
         }
