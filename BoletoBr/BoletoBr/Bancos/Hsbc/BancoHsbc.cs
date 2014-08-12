@@ -73,11 +73,11 @@ namespace BoletoBr.Bancos.Hsbc
                 throw new NotImplementedException("Carteira n�o implementada. Utilize a carteira 'CSB' ou 'CNR'.");
 
             //Verifica se o nosso n�mero � v�lido
-            if (boleto.NossoNumeroFormatado.ToStringSafe() == string.Empty)
+            if (boleto.NossoNumeroFormatado.BoletoBrToStringSafe() == string.Empty)
                 throw new NotImplementedException("Nosso número inválido");
 
             //Verifica se o nosso n�mero � v�lido
-            if (boleto.NossoNumeroFormatado.ToStringSafe().ToLong() == 0)
+            if (boleto.NossoNumeroFormatado.BoletoBrToStringSafe().BoletoBrToLong() == 0)
                 throw new NotImplementedException("Nosso número inválido");
 
             //Verifica se o tamanho para o NossoNumero s�o 10 d�gitos (5 range + 5 numero sequencial) - Válido para carteira CSB

@@ -332,11 +332,11 @@ namespace BoletoBr.Bancos.Amazonia
                 throw new NotImplementedException("Carteira não implementada. Utilize a carteira 'CNR'.");
 
             //Verifica se o nosso n�mero � v�lido
-            if (boleto.NossoNumeroFormatado.ToStringSafe() == string.Empty)
+            if (boleto.NossoNumeroFormatado.BoletoBrToStringSafe() == string.Empty)
                 throw new NotImplementedException("Nosso número inválido");
 
             //Verifica se o nosso n�mero � v�lido
-            if (boleto.NossoNumeroFormatado.ToStringSafe().ToLong() == 0)
+            if (boleto.NossoNumeroFormatado.BoletoBrToStringSafe().BoletoBrToLong() == 0)
                 throw new NotImplementedException("Nosso número inválido");
 
             //Verifica se o tamanho para o NossoNumero s�o 10 d�gitos (5 range + 5 numero sequencial)
