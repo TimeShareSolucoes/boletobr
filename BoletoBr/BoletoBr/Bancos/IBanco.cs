@@ -71,10 +71,5 @@ namespace BoletoBr.Bancos
         RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo);
         RemessaCnab240 GerarArquivoRemessaCnab240(List<Boleto> boletos);
         RemessaCnab400 GerarArquivoRemessaCnab400(List<Boleto> boletos);
-
-        Cedente Cedente { get; }
-        int Codigo { get; set; }
-        string Nome { get; }
-        string Digito { get; }
     }
 }

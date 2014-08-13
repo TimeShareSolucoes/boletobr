@@ -19,5 +19,10 @@ namespace BoletoBr.Bancos.Cef
         {
             throw new NotImplementedException();
         }
+
+        public void ValidarArquivoRemessa()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

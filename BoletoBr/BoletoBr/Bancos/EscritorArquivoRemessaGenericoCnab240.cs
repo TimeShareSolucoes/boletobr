@@ -13,6 +13,9 @@ namespace BoletoBr.Bancos
             throw new NotImplementedException();
         }
 
-
+        public void ValidarArquivoRemessa()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

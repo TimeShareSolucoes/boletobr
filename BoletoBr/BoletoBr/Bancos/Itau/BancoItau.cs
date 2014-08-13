@@ -68,10 +68,10 @@ namespace BoletoBr.Bancos.Itau
             try
             {
                 //Carteiras v�lidas
-                int[] cv = new int[] { 107, 109, 121, 122, 126, 131, 142, 143, 146, 150, 169, 175, 176, 178, 196, 198 };
+                string[] cv = new string[] { "107", "109", "121", "122", "126", "131", "142", "143", "146", "150", "169", "175", "176", "178", "196", "198" };
                 bool valida = false;
 
-                foreach (int c in cv)
+                foreach (string c in cv)
                     if ((boleto.CarteiraCobranca.Codigo) == c.ToString(CultureInfo.InvariantCulture))
                         valida = true;
 
@@ -80,7 +80,7 @@ namespace BoletoBr.Bancos.Itau
                     var carteirasImplementadas = new StringBuilder(100);
 
                     carteirasImplementadas.Append(". Carteiras implementadas: ");
-                    foreach (int c in cv)
+                    foreach (string c in cv)
                     {
                         carteirasImplementadas.AppendFormat(" {0}", c);
                     }
@@ -92,7 +92,7 @@ namespace BoletoBr.Bancos.Itau
                     throw new NotImplementedException("A quantidade de d�gitos do nosso n�mero para a carteira " +
                                                       boleto.CarteiraCobranca.Codigo + ", s�o 8 n�meros.");
                 else if (Convert.ToInt32(boleto.NossoNumeroFormatado).ToString().Length < 8)
-                    boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(8, '0'));
+                    boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero.PadLeft(8, '0'));
 
                 //� obrigat�rio o preenchimento do n�mero do documento
                 if (boleto.CarteiraCobranca.Codigo == "106" || boleto.CarteiraCobranca.Codigo == "107" || boleto.CarteiraCobranca.Codigo == "122" ||
@@ -109,15 +109,18 @@ namespace BoletoBr.Bancos.Itau
 
                 // Calcula o DAC do Nosso N�mero a maioria das carteiras
                 // agencia/conta/carteira/nosso numero
-                if (boleto.CarteiraCobranca.Codigo != "126" && boleto.CarteiraCobranca.Codigo != "131"
-                    && boleto.CarteiraCobranca.Codigo != "146" && boleto.CarteiraCobranca.Codigo != "150"
-                    && boleto.CarteiraCobranca.Codigo != "168")
-                    _dacNossoNumero = Common.Mod10(boleto.CedenteBoleto.ContaBancariaCedente.Agencia + boleto.CedenteBoleto.ContaBancariaCedente.Conta +
-                              boleto.CarteiraCobranca.Codigo + boleto.NossoNumeroFormatado);
-                else
-                    // Excess�o 126 - 131 - 146 - 150 - 168
-                    // carteira/nosso numero
-                    _dacNossoNumero = Common.Mod10(boleto.CarteiraCobranca + boleto.NossoNumeroFormatado);
+                //if (boleto.CarteiraCobranca.Codigo != "126" && boleto.CarteiraCobranca.Codigo != "131"
+                //    && boleto.CarteiraCobranca.Codigo != "145" && boleto.CarteiraCobranca.Codigo != "150"
+                //    && boleto.CarteiraCobranca.Codigo != "168")
+                //    _dacNossoNumero = Common.Mod10(boleto.CedenteBoleto.ContaBancariaCedente.Agencia + boleto.CedenteBoleto.ContaBancariaCedente.Conta +
+                //              boleto.CarteiraCobranca.Codigo + boleto.NossoNumeroFormatado);
+                //else
+                //    // Excess�o 126 - 131 - 146 - 150 - 168
+                //    // carteira/nosso numero
+                //    _dacNossoNumero = Common.Mod10(boleto.CarteiraCobranca + boleto.NossoNumeroFormatado);
+
+                // Usando Métodod e Geração do DAC do Nosso Número
+                GerarDacNossoNumero(boleto);
 
                 // Calcula o DAC da Conta Corrente
                 boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta =
@@ -141,7 +144,21 @@ namespace BoletoBr.Bancos.Itau
             {
                 throw new Exception("Erro ao validar boletos.", e);
             }
+        }
 
+        public void GerarDacNossoNumero(Boleto boleto)
+        {
+            // Calcula o DAC do Nosso N�mero a maioria das carteiras
+            // agencia/conta/carteira/nosso numero
+            if (boleto.CarteiraCobranca.Codigo != "126" && boleto.CarteiraCobranca.Codigo != "131"
+                && boleto.CarteiraCobranca.Codigo != "145" && boleto.CarteiraCobranca.Codigo != "150"
+                && boleto.CarteiraCobranca.Codigo != "168")
+                _dacNossoNumero = Common.Mod10(boleto.CedenteBoleto.ContaBancariaCedente.Agencia + boleto.CedenteBoleto.ContaBancariaCedente.Conta +
+                          boleto.CarteiraCobranca.Codigo + boleto.NossoNumeroFormatado);
+            else
+                // Excess�o 126 - 131 - 146 - 150 - 168
+                // carteira/nosso numero
+                _dacNossoNumero = Common.Mod10(boleto.CarteiraCobranca + boleto.NossoNumeroFormatado);
         }
 
         public void FormataMoeda(Boleto boleto)
@@ -193,9 +210,9 @@ namespace BoletoBr.Bancos.Itau
                     (boleto.CarteiraCobranca.Codigo == "176") || (boleto.CarteiraCobranca.Codigo == "178"))
                     
                     boleto.CodigoBarraBoleto =
-                        string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}000", CodigoBanco, boleto.Moeda,
+                        string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}000", CodigoBanco, MoedaBanco,
                                       Common.FatorVencimento(boleto.DataVencimento), valorBoleto, boleto.CarteiraCobranca.Codigo,
-                                      boleto.NossoNumeroFormatado.Replace("/", "").Replace("-", ""), _dacNossoNumero, boleto.CedenteBoleto.ContaBancariaCedente.Agencia,
+                                      boleto.SequencialNossoNumero, _dacNossoNumero, boleto.CedenteBoleto.ContaBancariaCedente.Agencia,
                                       boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(5, '0'), boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta);
                          
                 else if ((boleto.CarteiraCobranca.Codigo == "107") || (boleto.CarteiraCobranca.Codigo == "122") ||
@@ -227,7 +244,7 @@ namespace BoletoBr.Bancos.Itau
                 string codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(5, '0');
 
                 string AAA = CodigoBanco;
-                string B = boleto.Moeda;
+                string B = MoedaBanco;
                 string CCC = boleto.CarteiraCobranca.Codigo;
                 string DD = boleto.NossoNumeroFormatado.Replace("/", "").Replace("-", "").Substring(0, 2);
                 string X = Common.Mod10(AAA + B + CCC + DD).ToString();
@@ -371,7 +388,7 @@ namespace BoletoBr.Bancos.Itau
 
                     string EEE = numeroDocumento.Substring(4, 3);
                     string FFFFF = codigoCedente;
-                    string G = Common.Mod10(boleto.CarteiraCobranca.Codigo + boleto.NossoNumeroFormatado + numeroDocumento + codigoCedente).ToString();
+                    string G = Common.Mod10(boleto.CarteiraCobranca.Codigo + boleto.SequencialNossoNumero.PadLeft(8, '0') + numeroDocumento + codigoCedente).ToString();
                     string H = "0";
                     string Z = Common.Mod10(EEE + FFFFF + G + H).ToString();
                     C3 = string.Format("{0}{1}.{2}{3}{4}{5}", EEE, FFFFF.Substring(0, 2), FFFFF.Substring(2, 3), G, H, Z);
@@ -432,128 +449,5 @@ namespace BoletoBr.Bancos.Itau
         {
             throw new NotImplementedException();
         }
-
-        public void LerArquivoRetorno(IBanco banco, Stream arquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderRemessa(string numeroConvenio, Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderRemessa(string numeroConvenio, Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa,
-            Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderRemessa(Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerRemessa(int numeroRegistro, TipoArquivo tipoArquivo, Cedente cedente, decimal vltitulostotal)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa, TipoArquivo tipoArquivo,
-            Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio, Cedente cedente)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio, Cedente cedente,
-            Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoQRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoQRemessa(Boleto boleto, int numeroRegistro, Sacado sacado)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoRRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerArquivoRemessa(int numeroRegistro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerArquivoRemessa(int numeroRegistro, Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerLoteRemessa(int numeroRegistro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerLoteRemessa(int numeroRegistro, Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheSegmentoTRetornoCnab240 LerDetalheSegmentoTRetornoCnab240(string registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheSegmentoURetornoCnab240 LerDetalheSegmentoURetornoCnab240(string registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheSegmentoWRetornoCnab240 LerDetalheSegmentoWRetornoCnab240(string registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheRetornoGenericoCnab400 LerDetalheRetornoCnab400(string registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Cedente Cedente { get; private set; }
-        public int Codigo { get; set; }
-        public string Nome { get; private set; }
-        public string Digito { get; private set; }
     }
 }

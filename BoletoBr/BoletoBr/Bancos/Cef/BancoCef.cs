@@ -1010,76 +1010,76 @@ namespace BoletoBr.Bancos.Cef
             {
                 ValidaInstrucoes240(boleto); // Para protestar, devolver ou desconto.
 
-                string header = Codigo.ToString().PadLeft(3, '0'); // c�digo do banco na compensa��o
-                header += "0001"; // Lote de Servi�o
-                header += "3"; // Tipo de Registro 
-                header += Common.CompletarCadeiaAEsquerda(numeroRegistro.ToString(), "0", 5);
+                string detalhe = Codigo.ToString().PadLeft(3, '0'); // c�digo do banco na compensa��o
+                detalhe += "0001"; // Lote de Servi�o
+                detalhe += "3"; // Tipo de Registro 
+                detalhe += Common.CompletarCadeiaAEsquerda(numeroRegistro.ToString(), "0", 5);
                 // N� Sequencial do Registro no Lote 
-                header += "P"; // C�d. Segmento do Registro Detalhe
-                header += " "; // Uso Exclusivo FEBRABAN/CNAB
-                header += "01"; // C�digo de Movimento Remessa 
-                header += Common.CompletarCadeiaAEsquerda(cedente.ContaBancariaCedente.Agencia, "0", 5);
+                detalhe += "P"; // C�d. Segmento do Registro Detalhe
+                detalhe += " "; // Uso Exclusivo FEBRABAN/CNAB
+                detalhe += "01"; // C�digo de Movimento Remessa 
+                detalhe += Common.CompletarCadeiaAEsquerda(cedente.ContaBancariaCedente.Agencia, "0", 5);
                 // Ag�ncia Mantenedora da Conta 
-                header += cedente.ContaBancariaCedente.DigitoAgencia; // D�gito Verificador da Ag�ncia 
-                header += Common.CompletarCadeiaAEsquerda(cedente.ContaBancariaCedente.Conta, "0", 12);
+                detalhe += cedente.ContaBancariaCedente.DigitoAgencia; // D�gito Verificador da Ag�ncia 
+                detalhe += Common.CompletarCadeiaAEsquerda(cedente.ContaBancariaCedente.Conta, "0", 12);
                 // N�mero da Conta Corrente 
-                header += cedente.ContaBancariaCedente.DigitoConta; // Digito Verificador da Conta Corrente 
-                header +=
+                detalhe += cedente.ContaBancariaCedente.DigitoConta; // Digito Verificador da Conta Corrente 
+                detalhe +=
                     Common.Mod11(cedente.ContaBancariaCedente.Agencia + cedente.ContaBancariaCedente.Conta).ToString();
                 // D�gito Verif. Ag./Ced  (sem opera��o)
-                header += Common.CompletarCadeiaAEsquerda("", "0", 9); // Uso Exclusivo CAIXA
-                header += Common.CompletarCadeiaAEsquerda(boleto.NossoNumeroFormatado, "0", 11);
+                detalhe += Common.CompletarCadeiaAEsquerda("", "0", 9); // Uso Exclusivo CAIXA
+                detalhe += Common.CompletarCadeiaAEsquerda(boleto.NossoNumeroFormatado, "0", 11);
                 // Identifica��o do T�tulo no Banco 
-                header += "01"; // C�digo da Carteira 
-                header += (boleto.CarteiraCobranca.Codigo == "14" ? "2" : "1"); // Forma de Cadastr. do T�tulo no Banco 
+                detalhe += "01"; // C�digo da Carteira 
+                detalhe += (boleto.CarteiraCobranca.Codigo == "14" ? "2" : "1"); // Forma de Cadastr. do T�tulo no Banco 
                 // '1' = Com Cadastramento (Cobran�a Registrada) 
                 // '2' = Sem Cadastramento (Cobran�a sem Registro) 
-                header += "2"; // Tipo de Documento 
-                header += "2"; // Identifica��o da Emiss�o do Bloqueto 
-                header += "2"; // Identifica��o da Distribui��o
-                header += Common.CompletarCadeiaAEsquerda(boleto.NumeroDocumento, "0", 11); // N�mero do Documento de Cobran�a 
-                header += "    "; // Uso Exclusivo CAIXA
-                header += boleto.DataVencimento.ToString("ddMMyyyy"); // Data de Vencimento do T�tulo
-                header += Common.CompletarCadeiaAEsquerda(boleto.ValorBoleto.ToString().Replace(",", "").Replace(".", ""), "0",
+                detalhe += "2"; // Tipo de Documento 
+                detalhe += "2"; // Identifica��o da Emiss�o do Bloqueto 
+                detalhe += "2"; // Identifica��o da Distribui��o
+                detalhe += Common.CompletarCadeiaAEsquerda(boleto.NumeroDocumento, "0", 11); // N�mero do Documento de Cobran�a 
+                detalhe += "    "; // Uso Exclusivo CAIXA
+                detalhe += boleto.DataVencimento.ToString("ddMMyyyy"); // Data de Vencimento do T�tulo
+                detalhe += Common.CompletarCadeiaAEsquerda(boleto.ValorBoleto.ToString().Replace(",", "").Replace(".", ""), "0",
                     13);
                 // Valor Nominal do T�tulo 13
-                header += Common.CompletarCadeiaAEsquerda(cedente.ContaBancariaCedente.Agencia, "0", 5);
+                detalhe += Common.CompletarCadeiaAEsquerda(cedente.ContaBancariaCedente.Agencia, "0", 5);
                 // Ag�ncia Encarregada da Cobran�a 
-                header += cedente.ContaBancariaCedente.DigitoAgencia; // D�gito Verificador da Ag�ncia 
-                header += boleto.Especie.Codigo; // Esp�cie do T�tulo 
-                header += boleto.Aceite; // Identific. de T�tulo Aceito/N�o Aceito
+                detalhe += cedente.ContaBancariaCedente.DigitoAgencia; // D�gito Verificador da Ag�ncia 
+                detalhe += boleto.Especie.Codigo; // Esp�cie do T�tulo 
+                detalhe += boleto.Aceite; // Identific. de T�tulo Aceito/N�o Aceito
                 // Data da Emiss�o do T�tulo 
                 if (boleto.DataProcessamento == DateTime.MinValue)
                     DateTime.Now.ToString("ddMMyyyy");
                 else
                     boleto.DataProcessamento.ToString().ToDateTimeFromDdMmAaaa();
-                header += boleto.DataProcessamento;
-                header += "1"; // C�digo do Juros de Mora '1' = Valor por Dia - '2' = Taxa Mensal 
-                header += (boleto.DataMulta.ToString("ddMMyyyy") == "01010001"
+                detalhe += boleto.DataProcessamento;
+                detalhe += "1"; // C�digo do Juros de Mora '1' = Valor por Dia - '2' = Taxa Mensal 
+                detalhe += (boleto.DataMulta.ToString("ddMMyyyy") == "01010001"
                     ? "00000000"
                     : boleto.DataMulta.ToString("ddMMyyyy")); // Data do Juros de Mora 
-                header += Common.CompletarCadeiaAEsquerda(boleto.ValorMulta.ToString().Replace(",", "").Replace(".", ""), "0", 13);
+                detalhe += Common.CompletarCadeiaAEsquerda(boleto.ValorMulta.ToString().Replace(",", "").Replace(".", ""), "0", 13);
                 // Juros de Mora por Dia/Taxa 
-                header += (desconto ? "1" : "0"); // C�digo do Desconto 
-                header += (boleto.DataDesconto.ToString("ddMMyyyy") == "01010001"
+                detalhe += (desconto ? "1" : "0"); // C�digo do Desconto 
+                detalhe += (boleto.DataDesconto.ToString("ddMMyyyy") == "01010001"
                     ? "00000000"
                     : boleto.DataDesconto.ToString("ddMMyyyy")); // Data do Desconto
-                header += Common.CompletarCadeiaAEsquerda(boleto.ValorDesconto.ToString().Replace(",", "").Replace(".", ""), "0", 13);
+                detalhe += Common.CompletarCadeiaAEsquerda(boleto.ValorDesconto.ToString().Replace(",", "").Replace(".", ""), "0", 13);
                 // Valor/Percentual a ser Concedido 
-                header += Common.CompletarCadeiaAEsquerda(boleto.Iof.ToString().Replace(",", "").Replace(".", ""), "0", 13);
+                detalhe += Common.CompletarCadeiaAEsquerda(boleto.Iof.ToString().Replace(",", "").Replace(".", ""), "0", 13);
                 // Valor do IOF a ser Recolhido 
-                header += Common.CompletarCadeiaAEsquerda(boleto.ValorAbatimento.ToString().Replace(",", "").Replace(".", ""), "0", 13);
+                detalhe += Common.CompletarCadeiaAEsquerda(boleto.ValorAbatimento.ToString().Replace(",", "").Replace(".", ""), "0", 13);
                 // Valor do Abatimento 
-                header += Common.CompletarCadeiaAEsquerda("", " ", 25); // Identifica��o do T�tulo na Empresa
-                header += (protestar ? "1" : "3"); // C�digo para Protesto
-                header += diasProtesto.ToString("00"); // N�mero de Dias para Protesto 2 posi
-                header += (baixaDevolver ? "1" : "2"); // C�digo para Baixa/Devolu��o 1 posi
-                header += diasDevolucao.ToString("00"); // N�mero de Dias para Baixa/Devolu��o 3 posi
-                header += boleto.Moeda.PadLeft(2, '0'); // C�digo da Moeda 
-                header += Common.CompletarCadeiaAEsquerda("", " ", 10); // Uso Exclusivo FEBRABAN/CNAB 
-                header += Common.CompletarCadeiaAEsquerda("", " ", 1); // Uso Exclusivo FEBRABAN/CNAB 
+                detalhe += Common.CompletarCadeiaAEsquerda("", " ", 25); // Identifica��o do T�tulo na Empresa
+                detalhe += (protestar ? "1" : "3"); // C�digo para Protesto
+                detalhe += diasProtesto.ToString("00"); // N�mero de Dias para Protesto 2 posi
+                detalhe += (baixaDevolver ? "1" : "2"); // C�digo para Baixa/Devolu��o 1 posi
+                detalhe += diasDevolucao.ToString("00"); // N�mero de Dias para Baixa/Devolu��o 3 posi
+                detalhe += boleto.Moeda.PadLeft(2, '0'); // C�digo da Moeda 
+                detalhe += Common.CompletarCadeiaAEsquerda("", " ", 10); // Uso Exclusivo FEBRABAN/CNAB 
+                detalhe += Common.CompletarCadeiaAEsquerda("", " ", 1); // Uso Exclusivo FEBRABAN/CNAB 
 
-                return header;
+                return detalhe;
             }
             catch (Exception e)
             {

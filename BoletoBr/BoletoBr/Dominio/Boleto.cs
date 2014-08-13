@@ -49,7 +49,7 @@ namespace BoletoBr
         public decimal ValorBoleto { get; set; }
         public decimal? ValorCobrado { get; set; }
         public string LocalPagamento { get; set; }
-        public int? QuantidadeMoeda { get; set; }
+        public decimal? QuantidadeMoeda { get; set; }
         public string ValorMoeda { get; set; }
         public string Aceite { get; set; }
         public string NumeroDocumento { get; set; }

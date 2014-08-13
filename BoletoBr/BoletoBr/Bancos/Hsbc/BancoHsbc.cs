@@ -51,7 +51,7 @@ namespace BoletoBr.Bancos.Hsbc
 
         public string LocalDePagamento { get; private set; }
         public string MoedaBanco { get; private set; }
-
+        
         public List<CarteiraCobranca> GetCarteirasCobranca()
         {
             return _carteirasCobrancaHsbc;

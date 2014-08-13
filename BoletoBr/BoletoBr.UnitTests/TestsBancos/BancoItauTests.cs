@@ -11,7 +11,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos.ITAU
         {
             var banco = Fabricas.BancoFactory.ObterBanco("341", "7");
 
-            var contaBancariaCedente = new ContaBancaria("0057", "", "", "");
+            var contaBancariaCedente = new ContaBancaria("0057", "", "72192", "");
 
             var cedente = new Cedente("9999999", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente, null);
 
@@ -27,15 +27,16 @@ namespace BoletoBr.UnitTests.Tests.Bancos.ITAU
                 Numero = "9"
             });
 
-            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("110"));
+            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("198"));
             boleto.NumeroDocumento = "1234567";
             boleto.ValorBoleto = 12345;
             boleto.SequencialNossoNumero = "1234567";
             boleto.DataVencimento = new DateTime(2002, 05, 01);
 
+            banco.ValidaBoletoComNormasBanco(boleto);
             banco.FormataNossoNumero(boleto);
 
-            Assert.AreEqual("110/01234567-0", boleto.NossoNumeroFormatado);
+            Assert.AreEqual("198/01234567-8", boleto.NossoNumeroFormatado);
         }
 
         [TestMethod]
@@ -46,9 +47,9 @@ namespace BoletoBr.UnitTests.Tests.Bancos.ITAU
              */
             var banco = Fabricas.BancoFactory.ObterBanco("341", "7");
 
-            var contaBancariaCedente = new ContaBancaria("0057", "", "01234", "5");
+            var contaBancariaCedente = new ContaBancaria("0057", "", "72192", "");
 
-            var cedente = new Cedente("99999", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
+            var cedente = new Cedente("9999999", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
 
             var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
             {
@@ -62,12 +63,13 @@ namespace BoletoBr.UnitTests.Tests.Bancos.ITAU
                 Numero = "9"
             });
 
-            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("109"));
+            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("198"));
             boleto.NumeroDocumento = "1234567";
             boleto.ValorBoleto = Convert.ToDecimal(123.45);
             boleto.SequencialNossoNumero = "1234567";
             boleto.DataVencimento = new DateTime(2014, 05, 01);
 
+            banco.ValidaBoletoComNormasBanco(boleto);
             banco.FormataNossoNumero(boleto);
             banco.FormataCodigoBarra(boleto);
             banco.FormataLinhaDigitavel(boleto);
@@ -85,7 +87,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos.ITAU
              */
             var banco = Fabricas.BancoFactory.ObterBanco("341", "7");
 
-            var contaBancariaCedente = new ContaBancaria("0057", "", "12345", "");
+            var contaBancariaCedente = new ContaBancaria("4343", "", "29550", "9");
 
             var cedente = new Cedente("12345", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
 
@@ -101,12 +103,13 @@ namespace BoletoBr.UnitTests.Tests.Bancos.ITAU
                 Numero = "9"
             });
 
-            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("110"));
-            boleto.NumeroDocumento = "1234567";
-            boleto.ValorBoleto = Convert.ToDecimal(123.45);
-            boleto.SequencialNossoNumero = "1234567";
+            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("175"));
+            boleto.NumeroDocumento = "71194120";
+            boleto.ValorBoleto = Convert.ToDecimal(1419.04);
+            boleto.SequencialNossoNumero = "71194120";
             boleto.DataVencimento = new DateTime(2014, 05, 01);
 
+            banco.ValidaBoletoComNormasBanco(boleto);
             banco.FormataNossoNumero(boleto);
             banco.FormataCodigoBarra(boleto);
 

@@ -101,9 +101,14 @@
     <Compile Include="Bancos\Itau\CarteiraCobranca178.cs" />
     <Compile Include="Bancos\Itau\CarteiraCobranca196.cs" />
     <Compile Include="Bancos\Itau\CarteiraCobranca198.cs" />
+    <Compile Include="Bancos\Itau\EscritorRemessaCnab400Itau.cs" />
     <Compile Include="Bancos\Itau\LeitorRetornoCnab400Itau.cs" />
     <Compile Include="Bancos\LeitorRetornoCnab400Generico.cs" />
     <Compile Include="Bancos\Hsbc\LeitorRetornoCnab400Hsbc.cs" />
+    <Compile Include="Bancos\Santander\BancoSantander.cs" />
+    <Compile Include="Bancos\Santander\CarteiraCobrancaSantander101.cs" />
+    <Compile Include="Bancos\Santander\CarteiraCobrancaSantander102.cs" />
+    <Compile Include="Bancos\Santander\CarteiraCobrancaSantander201.cs" />
     <Compile Include="Common\Common.cs" />
     <Compile Include="Common\MetodosExtensao.cs" />
     <Compile Include="Dominio\Boleto.cs" />
@@ -161,6 +166,7 @@
     <Compile Include="Dominio\EspecieDocumento\EspecieDocumentoCaixa.cs" />
     <Compile Include="Dominio\EspecieDocumento\EspecieDocumentoHsbc.cs" />
     <Compile Include="Dominio\EspecieDocumento\EspecieDocumentoItau.cs" />
+    <Compile Include="Dominio\EspecieDocumento\EspecieDocumentoSantander.cs" />
     <Compile Include="Dominio\EspecieDocumento\EspeciesDocumento.cs" />
     <Compile Include="Dominio\EspecieDocumento\IEspecieDocumento.cs" />
     <Compile Include="Arquivo\IArquivoRetorno.cs" />

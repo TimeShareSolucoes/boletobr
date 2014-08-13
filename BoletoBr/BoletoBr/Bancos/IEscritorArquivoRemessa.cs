@@ -9,5 +9,6 @@ namespace BoletoBr.Bancos
     interface IEscritorArquivoRemessa
     {
         List<string> EscreverArquivo(List<Boleto> boletosEscrever);
+        void ValidarArquivoRemessa();
     }
 }
