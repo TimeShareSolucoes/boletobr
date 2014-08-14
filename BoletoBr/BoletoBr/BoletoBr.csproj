@@ -101,6 +101,7 @@
     <Compile Include="Bancos\Itau\CarteiraCobranca178.cs" />
     <Compile Include="Bancos\Itau\CarteiraCobranca196.cs" />
     <Compile Include="Bancos\Itau\CarteiraCobranca198.cs" />
+    <Compile Include="Bancos\Itau\CodigoOcorrenciaItau.cs" />
     <Compile Include="Bancos\Itau\EscritorRemessaCnab400Itau.cs" />
     <Compile Include="Bancos\Itau\LeitorRetornoCnab400Itau.cs" />
     <Compile Include="Bancos\LeitorRetornoCnab400Generico.cs" />

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using BoletoBr.Arquivo.CNAB400.Retorno;
 using BoletoBr.Dominio;
+using BoletoBr.Dominio.Instrucao;
 
 namespace BoletoBr.Bancos.Itau
 {
@@ -52,6 +53,12 @@ namespace BoletoBr.Bancos.Itau
         public string EscreverDetalhe(Boleto boleto, int numeroRegistro)
         {
             string carteiraCob = boleto.CarteiraCobranca.Codigo.PadLeft(3, ' ');
+            string instrucao1 = string.Empty;
+            string instrucao2 = string.Empty;
+            string enderecoSacado = boleto.SacadoBoleto.EnderecoSacado.TipoLogradouro + " " +
+                                    boleto.SacadoBoleto.EnderecoSacado.Logradouro + " " +
+                                    boleto.SacadoBoleto.EnderecoSacado.Numero + " " +
+                                    boleto.SacadoBoleto.EnderecoSacado.Complemento.PadRight(40, ' ');
 
             string detalhe = string.Empty;
             try
@@ -84,7 +91,7 @@ namespace BoletoBr.Bancos.Itau
                 // Modalidade de Carteira E - Escritural
                 if (carteiraCob == "104" || carteiraCob == "112" || carteiraCob == "138" || carteiraCob == "147")
                     detalhe += "E";
-                //detalhe += boleto.CodigoOcorrencia; // Identificação da Ocorrência
+                detalhe += boleto.CodigoOcorrencia; // Identificação da Ocorrência
                 detalhe += boleto.NumeroDocumento.PadLeft(10, ' '); // Nro do Documento de Cobrança
                 detalhe += boleto.DataVencimento.ToString().ToDateTimeFromDdMmAa(); // Data de Vencimento do Título
                 detalhe += String.Format("{0:0.##}", boleto.ValorBoleto).PadLeft(11, '0'); // Valor Nominal do Título
@@ -93,10 +100,41 @@ namespace BoletoBr.Bancos.Itau
                 detalhe += boleto.Especie; // Espécie do Título
                 detalhe += boleto.Aceite; // Identificação de Título Aceitou ou Não Aceito
                 detalhe += DateTime.Now.ToString().ToDateTimeFromDdMmAa(); // Data da Emissão do Título
-                //detalhe += boleto.InstrucoesDoBoleto1; // Instrução de Cobrança 1
-                //detalhe += boleto.InstrucoesDoBoleto2; // Instrução de Cobrança 2
+
+                switch (boleto.InstrucoesDoBoleto.Count)
+                {
+                    case 1:
+                        instrucao1 = boleto.InstrucoesDoBoleto[0].Codigo.ToString();
+                        instrucao2 = "0";
+                        break;
+                    case 2:
+                        instrucao1 = boleto.InstrucoesDoBoleto[0].Codigo.ToString();
+                        instrucao2 = boleto.InstrucoesDoBoleto[1].Codigo.ToString();                        
+                        break;
+                }
+
+                detalhe += instrucao1; // Instrução de Cobrança 1
+                detalhe += instrucao2; // Instrução de Cobrança 2
                 detalhe += String.Format("{0:0.##}", boleto.JurosMora).PadLeft(11, '0'); // Valor de Mora Por Dia de Atraso
                 detalhe += boleto.DataDesconto.ToString().ToDateTimeFromDdMmAa(); // Data Limite para Concesão de Desconto
+                detalhe += String.Format("{0:0.##}", boleto.ValorDesconto).PadLeft(11, '0'); // Valor do Desconto a ser Concedido
+                detalhe += String.Format("{0:0.##}", boleto.Iof).PadLeft(11, '0'); // Valor do I.O.F. recolhido p/ notas seguro
+                detalhe += String.Format("{0:0.##}", boleto.ValorAbatimento).PadLeft(11, '0'); // Valor do Abatimento a ser concedido
+                detalhe += boleto.SacadoBoleto.CpfCnpj.Length == 11 ? "01" : "02"; // Identificação do tipo de inscrição/sacado
+                detalhe += boleto.SacadoBoleto.CpfCnpj.Replace(".", "").Replace("/", "").Replace("-", ""); // Nro de Inscrição do Sacado (CPF/CNPJ)
+                detalhe += boleto.SacadoBoleto.Nome.PadRight(30, ' '); // Nome do Sacado
+                detalhe += string.Empty.PadRight(10, '0'); // Complemento de Registro
+                detalhe += enderecoSacado; // Rua, Número, e Complemento do Sacado
+                detalhe += boleto.SacadoBoleto.EnderecoSacado.Bairro.PadRight(12, ' '); // Bairro do Sacado
+                detalhe += boleto.SacadoBoleto.EnderecoSacado.Cep.PadLeft(8, ' '); // Cep do Sacado
+                detalhe += boleto.SacadoBoleto.EnderecoSacado.Cidade.PadRight(15, ' '); // Cidado do Sacado
+                detalhe += boleto.SacadoBoleto.EnderecoSacado.SiglaUf.PadRight(2, ' '); // UF do Sacado
+                detalhe += boleto.SacadoBoleto.NomeAvalista.PadRight(30, ' '); // Nome do Sacador ou Avalista
+                detalhe += string.Empty.PadRight(4, '0'); // Complemento do Registro
+                detalhe += boleto.DataJurosMora.ToString().ToDateTimeFromDdMmAa(); // Data de Mora
+                //detalhe += boleto.QtdDias; // Quantidade de Dias
+                detalhe += string.Empty.PadRight(1, '0'); // Complemento do Registro
+                detalhe += numeroRegistro; // Nro Sequencial do Registro no Arquivo
 
                 return detalhe;
             }

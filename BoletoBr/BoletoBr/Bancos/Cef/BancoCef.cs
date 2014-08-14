@@ -24,7 +24,7 @@ namespace BoletoBr.Bancos.Cef
         * TipoDocumento 2 - SICGB - Sem registro
         */
 
-        // Identificador de Tipo de Cobrança
+        // Identificador de Tipo de CobrançaII
         private const string IdentificadorTipoCobrancaCarteiraSicgbRg = "1";
         private const string IdentificadorTipoCobrancaCarteiraSicgbSr = "2";
         // Identificador de Emissão do Boleto (4 - Beneficiário)
