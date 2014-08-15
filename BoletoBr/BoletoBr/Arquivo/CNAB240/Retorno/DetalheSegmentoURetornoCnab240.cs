@@ -22,17 +22,19 @@ namespace BoletoBr.Dominio
         public decimal ValorLiquidoASerCreditado { get; set; }
         public decimal ValorOutrasDespesas { get; set; }
         public decimal ValorOutrosCreditos { get; set; }
-        public int DataOcorrencia { get; set; }
-        public int DataCredito { get; set; }
-        public int DataDebitoTarifa { get; set; }
-        public long CodigoSacadoNoBanco { get; set; }
+        public DateTime DataOcorrencia { get; set; }
+        public DateTime DataPagamento { get; set; }
+        public DateTime DataLiquidacao { get; set; }
+        public DateTime DataCredito { get; set; }
+        public DateTime DataDebitoTarifa { get; set; }
+        public string CodigoSacadoNoBanco { get; set; }
         public int CodigoBancoCompensacao { get; set; }
         public string NossoNumeroBancoCompensacao { get; set; }
 
         #region Bradesco
 
         public string CodigoOcorrenciaPagador { get; set; }
-        public int DataOcorrenciaPagador { get; set; }
+        public DateTime DataOcorrenciaPagador { get; set; }
         public decimal ValorOcorrenciaPagador { get; set; }
         public string ComplementoOcorrenciaPagador { get; set; }
 

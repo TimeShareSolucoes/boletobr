@@ -91,7 +91,7 @@ namespace BoletoBr.Bancos.Itau
                 // Modalidade de Carteira E - Escritural
                 if (carteiraCob == "104" || carteiraCob == "112" || carteiraCob == "138" || carteiraCob == "147")
                     detalhe += "E";
-                detalhe += boleto.CodigoOcorrencia; // Identificação da Ocorrência
+                //detalhe += boleto.CodigoOcorrencia; // Identificação da Ocorrência
                 detalhe += boleto.NumeroDocumento.PadLeft(10, ' '); // Nro do Documento de Cobrança
                 detalhe += boleto.DataVencimento.ToString().ToDateTimeFromDdMmAa(); // Data de Vencimento do Título
                 detalhe += String.Format("{0:0.##}", boleto.ValorBoleto).PadLeft(11, '0'); // Valor Nominal do Título

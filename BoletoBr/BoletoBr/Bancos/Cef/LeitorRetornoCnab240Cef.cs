@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BoletoBr.Arquivo.CNAB240;
+using BoletoBr.Arquivo.CNAB240.Retorno;
 using BoletoBr.Dominio;
 using BoletoBr.Dominio.CodigoMovimento;
 
@@ -39,6 +40,7 @@ namespace BoletoBr.Bancos.Cef
                 if (linhaAtual.ExtrairValorDaLinha(8, 8) == "1")
                 {
                     ultimoLoteIdentificado = new LoteRetornoCnab240();
+                    
                     objRetornar.Lotes.Add(ultimoLoteIdentificado);
 
                     ultimoLoteIdentificado.HeaderLote = ObterHeaderLote(linhaAtual);
@@ -51,7 +53,7 @@ namespace BoletoBr.Bancos.Cef
                         if (ultimoLoteIdentificado == null)
                             throw new Exception("Não foi encontrado header de lote para o segmento atual.");
 
-                        ultimoLoteIdentificado.RegistrosDetalheSegmentoT.Add(objDetalhe);
+                        //ultimoLoteIdentificado.RegistrosDetalheSegmentoU.Add(objDetalhe);
                     }
                     if (linhaAtual.ExtrairValorDaLinha(14, 14) == "U")
                     {
@@ -59,7 +61,7 @@ namespace BoletoBr.Bancos.Cef
                         if (ultimoLoteIdentificado == null)
                             throw new Exception("Não foi encontrado header de lote para o segmento atual.");
 
-                        ultimoLoteIdentificado.RegistrosDetalheSegmentoU.Add(objDetalhe);
+                        //ultimoLoteIdentificado.RegistrosDetalheSegmentoU.Add(objDetalhe);
                     }
                 }
                 /* Trailer de Lote */
@@ -245,8 +247,8 @@ namespace BoletoBr.Bancos.Cef
             objRetornar.ValorLiquidoASerCreditado = linha.ExtrairValorDaLinha(93, 107).BoletoBrToDecimal() / 100;
             objRetornar.ValorOutrasDespesas = linha.ExtrairValorDaLinha(108, 122).BoletoBrToDecimal() / 100;
             objRetornar.ValorOutrosCreditos = linha.ExtrairValorDaLinha(123, 137).BoletoBrToDecimal() / 100;
-            objRetornar.DataOcorrencia = linha.ExtrairValorDaLinha(138, 145).BoletoBrToInt();
-            objRetornar.DataCredito = linha.ExtrairValorDaLinha(146, 153).BoletoBrToInt();
+            objRetornar.DataOcorrencia = Convert.ToDateTime(linha.ExtrairValorDaLinha(138, 145));
+            objRetornar.DataCredito = Convert.ToDateTime(linha.ExtrairValorDaLinha(146, 153));
             
             if (objRetornar.CodigoMovimento == 35 || objRetornar.CodigoMovimento == 36 ||
                 objRetornar.CodigoMovimento == 37)
@@ -259,12 +261,12 @@ namespace BoletoBr.Bancos.Cef
                 objRetornar.IdViaEntregaDistribuicao = linha.ExtrairValorDaLinha(181, 181);
                 objRetornar.IdEspecieTitulo = linha.ExtrairValorDaLinha(182, 183);
                 objRetornar.IdAceite = linha.ExtrairValorDaLinha(184, 184);
-                objRetornar.CodigoSacadoNoBanco = linha.ExtrairValorDaLinha(185, 199).BoletoBrToLong();
+                objRetornar.CodigoSacadoNoBanco = linha.ExtrairValorDaLinha(185, 199);
             }
             else
             {
-                objRetornar.DataDebitoTarifa = linha.ExtrairValorDaLinha(158, 165).BoletoBrToInt();
-                objRetornar.CodigoSacadoNoBanco = linha.ExtrairValorDaLinha(166, 180).BoletoBrToLong();
+                objRetornar.DataDebitoTarifa = Convert.ToDateTime(linha.ExtrairValorDaLinha(158, 165));
+                objRetornar.CodigoSacadoNoBanco = linha.ExtrairValorDaLinha(166, 180);
                 objRetornar.CodigoBancoCompensacao = linha.ExtrairValorDaLinha(211, 213).BoletoBrToInt();
                 objRetornar.NossoNumeroBancoCompensacao = linha.ExtrairValorDaLinha(214, 233);
             }

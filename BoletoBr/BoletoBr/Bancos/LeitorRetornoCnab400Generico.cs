@@ -16,7 +16,7 @@ namespace BoletoBr.Bancos
         {
             _linhasArquivo = linhasArquivo;
         }
-
+        
         public RetornoCnab400 ProcessarRetorno()
         {
             /* Validações */

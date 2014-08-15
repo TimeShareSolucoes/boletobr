@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Arquivo\CNAB240\Remessa\HeaderDeArquivoCnab240.cs" />
+    <Compile Include="Arquivo\CNAB240\Retorno\DetalheSegmentoRetornoCnab240.cs" />
     <Compile Include="Arquivo\CNAB240\Retorno\HeaderLoteRetornoCnab240.cs" />
     <Compile Include="Arquivo\CNAB240\Retorno\LoteRetornoCnab240.cs" />
     <Compile Include="Arquivo\CNAB240\Retorno\TrailerLoteRetornoCnab240.cs" />

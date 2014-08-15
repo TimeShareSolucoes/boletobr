@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace BoletoBr.Bancos.Itau
 {
-
-
     public enum CodigoOcorrenciaRemessaItau
     {
         Remessa = 01,
