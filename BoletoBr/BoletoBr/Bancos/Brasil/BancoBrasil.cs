@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.Dominio;
+using BoletoBr.Dominio.Instrucao;
+using BoletoBr.Enums;
 
 namespace BoletoBr.Bancos.BancoBrasil
 {
@@ -1103,6 +1105,11 @@ namespace BoletoBr.Bancos.BancoBrasil
         }
 
         public void FormataNumeroDocumento(Boleto boleto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao)
         {
             throw new NotImplementedException();
         }

@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.Dominio.EspecieDocumento;
+using BoletoBr.Dominio.Instrucao;
+using BoletoBr.Enums;
 
 namespace BoletoBr.Bancos.Santander
 {
@@ -198,6 +200,11 @@ namespace BoletoBr.Bancos.Santander
         public void FormataNumeroDocumento(Boleto boleto)
         {
             throw new NotImplementedException("Função não implementada.");
+        }
+
+        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao)
+        {
+            throw new NotImplementedException();
         }
 
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)

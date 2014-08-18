@@ -479,6 +479,11 @@ namespace BoletoBr.Bancos.Cef
             //    throw new Exception("Tipo de arquivo incorreto!" + Environment.NewLine + "Tipos aceitos: CNAB240 ou CNAB400");
         }
 
+        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao)
+        {
+            throw new NotImplementedException();
+        }
+
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
         {
             if (linhasArquivo == null || linhasArquivo.Any() == false)

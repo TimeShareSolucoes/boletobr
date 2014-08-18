@@ -7,12 +7,21 @@ using System.Threading.Tasks;
 using System.Xml;
 using BoletoBr.Arquivo.CNAB400.Retorno;
 using BoletoBr.Dominio;
+using BoletoBr.Dominio.EspecieDocumento;
 using BoletoBr.Dominio.Instrucao;
+using BoletoBr.Fabricas;
 
 namespace BoletoBr.Bancos.Itau
 {
     public class EscritorRemessaCnab400Itau : IEscritorArquivoRemessa
     {
+        private readonly int _numeroRegistro = 1;
+
+        public EscritorRemessaCnab400Itau(int numeroRegistro)
+        {
+            _numeroRegistro = numeroRegistro;
+        }
+
         public List<string> EscreverArquivo(List<Boleto> boletosEscrever)
         {
             throw new NotImplementedException();
@@ -22,36 +31,40 @@ namespace BoletoBr.Bancos.Itau
 
         public string EscreverHeader(Boleto boleto, int numeroRegistro)
         {
-            string header = string.Empty;
+            string header = new string(' ', 400);
             try
             {
-                header += "0";
-                header += "1";
-                header += "REMESSA";
-                header += "01";
-                header += "COBRANCA".PadRight(15, ' ');
-                header += boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0');
-                header += "00";
-                header += boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(5, '0');
-                header += boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta;
-                header += string.Empty.PadRight(8, ' ');
-                header += boleto.CedenteBoleto.Nome.PadRight(30, ' ');
-                header += "341";
-                header += "BANCO ITAU SA";
-                header += DateTime.Now.ToString().ToDateTimeFromDdMmAa();
-                header += string.Empty.PadRight(294, ' ');
-                header += "000001";
+                header = header.PreencherValorNaLinha(1, 1, "0");
+                header = header.PreencherValorNaLinha(2, 2, "1");
+                header = header.PreencherValorNaLinha(3, 9, "REMESSA".PadRight(7, ' '));
+                header = header.PreencherValorNaLinha(10, 11, "01");
+                header = header.PreencherValorNaLinha(12, 26, "COBRANCA".PadRight(15, ' '));
+                header = header.PreencherValorNaLinha(27, 30,
+                    boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'));
+                header = header.PreencherValorNaLinha(31, 32, "00");
+                header = header.PreencherValorNaLinha(33, 37,
+                    boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(5, '0'));
+                header = header.PreencherValorNaLinha(38, 38, boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta);
+                header = header.PreencherValorNaLinha(39, 46, string.Empty.PadRight(8, ' '));
+                header = header.PreencherValorNaLinha(47, 76, boleto.CedenteBoleto.Nome.PadRight(30, ' '));
+                header = header.PreencherValorNaLinha(77, 79, "341");
+                header = header.PreencherValorNaLinha(80, 94, "BANCO ITAU SA");
+                header = header.PreencherValorNaLinha(95, 100, DateTime.Now.ToString("ddMMyy"));
+                header = header.PreencherValorNaLinha(101, 394, string.Empty.PadRight(294, ' '));
+                header = header.PreencherValorNaLinha(395, 400, _numeroRegistro.ToString().PadLeft(6, '0'));
 
                 return header;
             }
             catch (Exception e)
             {
-                throw new Exception(String.Concat("Falha na geração do HEADER do arquivo de REMESSA.", Environment.NewLine, e));
+                throw new Exception(String.Concat("Falha na geração do HEADER do arquivo de REMESSA.",
+                    Environment.NewLine, e));
             }
         }
 
         public string EscreverDetalhe(Boleto boleto, int numeroRegistro)
         {
+            #region Variáveis
             string carteiraCob = boleto.CarteiraCobranca.Codigo.PadLeft(3, ' ');
             string instrucao1 = string.Empty;
             string instrucao2 = string.Empty;
@@ -59,47 +72,98 @@ namespace BoletoBr.Bancos.Itau
                                     boleto.SacadoBoleto.EnderecoSacado.Logradouro + " " +
                                     boleto.SacadoBoleto.EnderecoSacado.Numero + " " +
                                     boleto.SacadoBoleto.EnderecoSacado.Complemento.PadRight(40, ' ');
+            #endregion
 
-            string detalhe = string.Empty;
+            string detalhe = new string(' ', 400);
             try
             {
-                detalhe += "1"; // Identificação do Registro Transação
-                detalhe += boleto.CedenteBoleto.CpfCnpj.Length == 11 ? "01" : "02"; // Tipo de Inscrição da Empresa
-                detalhe += boleto.CedenteBoleto.CpfCnpj.Replace(".", "").Replace("/", "").Replace("-", ""); // Nro de Inscrição da Empresa (CPF/CNPJ)
-                detalhe += boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'); // Agência Mantenedora da Conta
-                detalhe += string.Empty.PadRight(2, '0'); // Complemento de Registro
-                detalhe += boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(5, '0'); // Nro da Conta Corrente da Empresa
-                detalhe += boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta; // Dígito de Auto Conferência Ag/Conta Empresa
-                detalhe += string.Empty.PadRight(4, ' '); // Complemento de Registro
-                //detalhe += boleto.InstrucoesDoBoleto; // Cód. Instrução/Alegação a ser cancelada
-                detalhe += boleto.NumeroDocumento.PadLeft(25, ' '); // Identificação do Título na Empresa
-                detalhe += boleto.NossoNumeroFormatado.PadLeft(8, ' '); // Identificação do Título no Banco
-                if (boleto.BancoBoleto.MoedaBanco == "9")
-                    String.Format("{0:0.#####}", boleto.QuantidadeMoeda);
+                detalhe = detalhe.PreencherValorNaLinha(1,1,"1"); // Identificação do Registro Transação
+                detalhe = detalhe.PreencherValorNaLinha(2,3,boleto.CedenteBoleto.CpfCnpj.Length == 11 ? "01" : "02"); // Tipo de Inscrição da Empresa
+                detalhe = detalhe.PreencherValorNaLinha(4,17,boleto.CedenteBoleto.CpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "")); // Nro de Inscrição da Empresa (CPF/CNPJ)
+                detalhe = detalhe.PreencherValorNaLinha(18,21,boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0')); // Agência Mantenedora da Conta
+                detalhe = detalhe.PreencherValorNaLinha(22,23,string.Empty.PadRight(2, '0')); // Complemento de Registro
+                detalhe = detalhe.PreencherValorNaLinha(24,28,boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(5, '0')); // Nro da Conta Corrente da Empresa
+                detalhe = detalhe.PreencherValorNaLinha(29,29,boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta); // Dígito de Auto Conferência Ag/Conta Empresa
+                detalhe = detalhe.PreencherValorNaLinha(30,33,string.Empty.PadRight(4, ' ')); // Complemento de Registro
+                //detalhe = boleto.InstrucoesDoBoleto; // Cód. Instrução/Alegação a ser cancelada
+                detalhe = detalhe.PreencherValorNaLinha(38,62,boleto.NumeroDocumento.PadLeft(25, ' ')); // Identificação do Título na Empresa
+                detalhe = detalhe.PreencherValorNaLinha(63,70,boleto.NossoNumeroFormatado.PadLeft(8, ' ')); // Identificação do Título no Banco
+                // Se Moeda = REAL, preenche com zeros
+                if (boleto.BancoBoleto.MoedaBanco == "0")
+                {
+                    string qtdMoeda = "0";
+                    qtdMoeda.PadLeft(13, '0');
+                }
+                    // Caso contrário, preenche com a quantidade
                 else
-                    boleto.QuantidadeMoeda = 0;
-                detalhe += boleto.QuantidadeMoeda; // Quantidade de Moeda Variável
-                detalhe += boleto.CarteiraCobranca.Codigo.PadLeft(3, ' '); // Número da Carteira no Banco
-                detalhe += string.Empty.PadRight(21, ' '); // Identificação da Operação no Banco
+                    String.Format("{0:0.#####}", boleto.QuantidadeMoeda);
+                detalhe = detalhe.PreencherValorNaLinha(71,83,boleto.QuantidadeMoeda.ToString()); // Quantidade de Moeda Variável
+                detalhe = detalhe.PreencherValorNaLinha(84,86,boleto.CarteiraCobranca.Codigo.PadLeft(3, ' ')); // Número da Carteira no Banco
+                detalhe = detalhe.PreencherValorNaLinha(87,107,string.Empty.PadRight(21, ' ')); // Identificação da Operação no Banco
                 /* Código da Carteira */
                 // Modalidade de Carteira D - Direta
                 if (carteiraCob == "108")
-                    detalhe += "D";
+                    detalhe = detalhe.PreencherValorNaLinha(108,108,"D");
                 // Modalidade de Carteira S - Sem Registro
                 if (carteiraCob == "103" || carteiraCob == "173" || carteiraCob == "196")
-                    detalhe += "S";
+                    detalhe = detalhe.PreencherValorNaLinha(108,108,"S");
                 // Modalidade de Carteira E - Escritural
                 if (carteiraCob == "104" || carteiraCob == "112" || carteiraCob == "138" || carteiraCob == "147")
-                    detalhe += "E";
-                //detalhe += boleto.CodigoOcorrencia; // Identificação da Ocorrência
-                detalhe += boleto.NumeroDocumento.PadLeft(10, ' '); // Nro do Documento de Cobrança
-                detalhe += boleto.DataVencimento.ToString().ToDateTimeFromDdMmAa(); // Data de Vencimento do Título
-                detalhe += String.Format("{0:0.##}", boleto.ValorBoleto).PadLeft(11, '0'); // Valor Nominal do Título
-                detalhe += boleto.BancoBoleto.CodigoBanco.PadLeft(3, '0'); // Nro do Banco na Câmara de Compensação
-                detalhe += string.Empty.PadLeft(5, '0'); // Agência onde o título será cobrado
-                detalhe += boleto.Especie; // Espécie do Título
-                detalhe += boleto.Aceite; // Identificação de Título Aceitou ou Não Aceito
-                detalhe += DateTime.Now.ToString().ToDateTimeFromDdMmAa(); // Data da Emissão do Título
+                    detalhe = detalhe.PreencherValorNaLinha(108,108,"E");
+                //detalhe = boleto.CodigoOcorrencia; // Identificação da Ocorrência
+                detalhe = detalhe.PreencherValorNaLinha(111,120,boleto.NumeroDocumento.PadLeft(10, ' ')); // Nro do Documento de Cobrança
+                detalhe = detalhe.PreencherValorNaLinha(121,126,boleto.DataVencimento.ToString("ddMMyy")); // Data de Vencimento do Título
+                detalhe = String.Format("{0:0.##}", boleto.ValorBoleto).PadLeft(11, '0'); // Valor Nominal do Título
+                detalhe = boleto.BancoBoleto.CodigoBanco.PadLeft(3, '0'); // Nro do Banco na Câmara de Compensação
+                detalhe = string.Empty.PadLeft(5, '0'); // Agência onde o título será cobrado
+                // Espécie do documento padronizado para DM - Duplicata Mercantil
+                detalhe = "01"; // Espécie do Título
+                detalhe = boleto.Aceite; // Identificação de Título Aceitou ou Não Aceito
+                detalhe = detalhe.PreencherValorNaLinha(151,156,DateTime.Now.ToString("ddMMyy")); // Data da Emissão do Título
+
+                #region INSTRUÇÕES REMESSA
+
+                var b = BancoFactory.ObterBanco(boleto.BancoBoleto.CodigoBanco, boleto.BancoBoleto.DigitoBanco);
+
+                if (boleto.InstrucoesDoBoleto.Count > 2)
+                    throw new Exception(
+                        "BoletoBr: Não são aceitas mais que 2 instruções padronizadas para remessa de boletos no banco Itaú.");
+
+                var primeiraInstrucao = boleto.InstrucoesDoBoleto.FirstOrDefault();
+                var segundaInstrucao = boleto.InstrucoesDoBoleto.LastOrDefault();
+
+                if (primeiraInstrucao != null)
+                {
+                    // Insere no layout
+                }
+                if (primeiraInstrucao != null)
+                {
+                    // Insere no layout
+                }
+                foreach (var instrucao in boleto.InstrucoesDoBoleto)
+                {
+                    switch (instrucao.Codigo)
+                    {
+                        case 09:
+                            // PROTESTAR
+                            return "Protestar";
+                        case 10:
+                            // NÃO PROTESTAR
+                            return "Não protestar";
+                        case 30:
+                            // IMPORTÂNCIA DE DESCONTO POR DIA
+                            return "Importância de desconto por dia";
+                        case 34:
+                            // PROTESTAR APÓS XX DIAS CORRIDOS DO VENCIMENTO (SEM AVISO AO SACADO)
+                            return "Protestar após" + instrucao.QtdDias + "dias corridos do vencimento.";
+                        case 39:
+                            // NÃO RECEBER APÓS O VENCIMENTO
+                            return "Não receber após o vencimento";
+                        case 42:
+                            // PROTESTO PARA FINS FALIMENTARES
+                            return "Protesto para fins falimentares";
+                    }
+                }
 
                 switch (boleto.InstrucoesDoBoleto.Count)
                 {
@@ -109,57 +173,59 @@ namespace BoletoBr.Bancos.Itau
                         break;
                     case 2:
                         instrucao1 = boleto.InstrucoesDoBoleto[0].Codigo.ToString();
-                        instrucao2 = boleto.InstrucoesDoBoleto[1].Codigo.ToString();                        
+                        instrucao2 = boleto.InstrucoesDoBoleto[1].Codigo.ToString();
                         break;
                 }
 
-                detalhe += instrucao1; // Instrução de Cobrança 1
-                detalhe += instrucao2; // Instrução de Cobrança 2
-                detalhe += String.Format("{0:0.##}", boleto.JurosMora).PadLeft(11, '0'); // Valor de Mora Por Dia de Atraso
-                detalhe += boleto.DataDesconto.ToString().ToDateTimeFromDdMmAa(); // Data Limite para Concesão de Desconto
-                detalhe += String.Format("{0:0.##}", boleto.ValorDesconto).PadLeft(11, '0'); // Valor do Desconto a ser Concedido
-                detalhe += String.Format("{0:0.##}", boleto.Iof).PadLeft(11, '0'); // Valor do I.O.F. recolhido p/ notas seguro
-                detalhe += String.Format("{0:0.##}", boleto.ValorAbatimento).PadLeft(11, '0'); // Valor do Abatimento a ser concedido
-                detalhe += boleto.SacadoBoleto.CpfCnpj.Length == 11 ? "01" : "02"; // Identificação do tipo de inscrição/sacado
-                detalhe += boleto.SacadoBoleto.CpfCnpj.Replace(".", "").Replace("/", "").Replace("-", ""); // Nro de Inscrição do Sacado (CPF/CNPJ)
-                detalhe += boleto.SacadoBoleto.Nome.PadRight(30, ' '); // Nome do Sacado
-                detalhe += string.Empty.PadRight(10, '0'); // Complemento de Registro
-                detalhe += enderecoSacado; // Rua, Número, e Complemento do Sacado
-                detalhe += boleto.SacadoBoleto.EnderecoSacado.Bairro.PadRight(12, ' '); // Bairro do Sacado
-                detalhe += boleto.SacadoBoleto.EnderecoSacado.Cep.PadLeft(8, ' '); // Cep do Sacado
-                detalhe += boleto.SacadoBoleto.EnderecoSacado.Cidade.PadRight(15, ' '); // Cidado do Sacado
-                detalhe += boleto.SacadoBoleto.EnderecoSacado.SiglaUf.PadRight(2, ' '); // UF do Sacado
-                detalhe += boleto.SacadoBoleto.NomeAvalista.PadRight(30, ' '); // Nome do Sacador ou Avalista
-                detalhe += string.Empty.PadRight(4, '0'); // Complemento do Registro
-                detalhe += boleto.DataJurosMora.ToString().ToDateTimeFromDdMmAa(); // Data de Mora
-                //detalhe += boleto.QtdDias; // Quantidade de Dias
-                detalhe += string.Empty.PadRight(1, '0'); // Complemento do Registro
-                detalhe += numeroRegistro; // Nro Sequencial do Registro no Arquivo
+                #endregion
+
+                detalhe = instrucao1; // Instrução de Cobrança 1
+                detalhe = instrucao2; // Instrução de Cobrança 2
+                detalhe = String.Format("{0:0.##}", boleto.JurosMora).PadLeft(11, '0'); // Valor de Mora Por Dia de Atraso
+                //detalhe = boleto.DataDesconto.ToString().ToDateTimeFromDdMmAa(); // Data Limite para Concesão de Desconto
+                detalhe = String.Format("{0:0.##}", boleto.ValorDesconto).PadLeft(11, '0'); // Valor do Desconto a ser Concedido
+                detalhe = String.Format("{0:0.##}", boleto.Iof).PadLeft(11, '0'); // Valor do I.O.F. recolhido p/ notas seguro
+                detalhe = String.Format("{0:0.##}", boleto.ValorAbatimento).PadLeft(11, '0'); // Valor do Abatimento a ser concedido
+                detalhe = boleto.SacadoBoleto.CpfCnpj.Length == 11 ? "01" : "02"; // Identificação do tipo de inscrição/sacado
+                detalhe = boleto.SacadoBoleto.CpfCnpj.Replace(".", "").Replace("/", "").Replace("-", ""); // Nro de Inscrição do Sacado (CPF/CNPJ)
+                detalhe = boleto.SacadoBoleto.Nome.PadRight(30, ' '); // Nome do Sacado
+                detalhe = string.Empty.PadRight(10, '0'); // Complemento de Registro
+                detalhe = enderecoSacado; // Rua, Número, e Complemento do Sacado
+                detalhe = boleto.SacadoBoleto.EnderecoSacado.Bairro.PadRight(12, ' '); // Bairro do Sacado
+                detalhe = boleto.SacadoBoleto.EnderecoSacado.Cep.PadLeft(8, ' '); // Cep do Sacado
+                detalhe = boleto.SacadoBoleto.EnderecoSacado.Cidade.PadRight(15, ' '); // Cidado do Sacado
+                detalhe = boleto.SacadoBoleto.EnderecoSacado.SiglaUf.PadRight(2, ' '); // UF do Sacado
+                detalhe = boleto.SacadoBoleto.NomeAvalista.PadRight(30, ' '); // Nome do Sacador ou Avalista
+                detalhe = string.Empty.PadRight(4, '0'); // Complemento do Registro
+                //detalhe = boleto.DataJurosMora.ToString().ToDateTimeFromDdMmAa(); // Data de Mora
+                //detalhe = boleto.QtdDias; // Quantidade de Dias
+                detalhe = string.Empty.PadRight(1, '0'); // Complemento do Registro
+                //detalhe = _numeroRegistro + 1; // Nro Sequencial do Registro no Arquivo
 
                 return detalhe;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                
-                throw;
+                throw new Exception(String.Concat("Falha na geração do DETALHE do arquivo de REMESSA.", Environment.NewLine, e));
             }
         }
 
         public string EscreverTrailer(int numeroRegistro)
         {
-            string trailer = string.Empty;
+            string trailer = new string(' ', 400);
             try
             {
-                trailer += "9";
-                trailer += string.Empty.PadRight(393, ' ');
+                trailer = trailer.PreencherValorNaLinha(1, 1, "9");
+                trailer = trailer.PreencherValorNaLinha(2, 394, string.Empty.PadRight(393, ' '));
                 // Contagem total de linhas do arquivo no formato '000000' - 6 dígitos
-                trailer += numeroRegistro;
+                trailer = trailer.PreencherValorNaLinha(395, 400, _numeroRegistro.ToString().PadLeft(6, '0'));
 
                 return trailer;
             }
             catch (Exception e)
             {
-                throw new Exception(String.Concat("Falha na geração do TRAILER do arquivo de REMESSA.", Environment.NewLine, e));
+                throw new Exception(String.Concat("Falha na geração do TRAILER do arquivo de REMESSA.",
+                    Environment.NewLine, e));
             }
         }
     }

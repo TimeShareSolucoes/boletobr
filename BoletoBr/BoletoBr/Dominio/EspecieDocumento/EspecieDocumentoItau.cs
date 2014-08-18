@@ -23,6 +23,7 @@ namespace BoletoBr.Dominio.EspecieDocumento
         NotaDebito = 13,
         DocumentoDivida = 15,
         EncargosCondominais = 16,
+        ContaDePrestacaoDeServicos = 17,
         Diversos = 99,
     }
 

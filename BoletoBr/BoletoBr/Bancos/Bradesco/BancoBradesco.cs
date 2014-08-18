@@ -5,6 +5,8 @@ using System.IO;
 using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.CalculoModulo;
 using BoletoBr.Dominio;
+using BoletoBr.Dominio.Instrucao;
+using BoletoBr.Enums;
 
 namespace BoletoBr.Bancos.Bradesco
 {
@@ -301,6 +303,11 @@ namespace BoletoBr.Bancos.Bradesco
 
             //if (boleto.TipoArquivo == TipoArquivo.Outro)
             //    throw new Exception("Tipo de arquivo incorreto!" + Environment.NewLine + "Tipos aceitos: CNAB240 ou CNAB400");
+        }
+
+        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao)
+        {
+            throw new NotImplementedException();
         }
 
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)

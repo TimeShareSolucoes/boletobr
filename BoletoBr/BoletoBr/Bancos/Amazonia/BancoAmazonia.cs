@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.Bancos.Hsbc;
 using BoletoBr.Dominio;
+using BoletoBr.Dominio.Instrucao;
+using BoletoBr.Enums;
 
 namespace BoletoBr.Bancos.Amazonia
 {
@@ -167,6 +169,11 @@ namespace BoletoBr.Bancos.Amazonia
         public void FormataNumeroDocumento(Boleto boleto)
         {
             boleto.NumeroDocumento = string.Format("{0}", boleto.NumeroDocumento);
+        }
+
+        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao)
+        {
+            throw new NotImplementedException();
         }
 
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)

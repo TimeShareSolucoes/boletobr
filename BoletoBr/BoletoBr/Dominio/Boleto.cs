@@ -7,6 +7,7 @@ using BoletoBr.Bancos;
 using BoletoBr.Dominio;
 using BoletoBr.Dominio.EspecieDocumento;
 using BoletoBr.Dominio.Instrucao;
+using BoletoBr.Enums;
 
 namespace BoletoBr
 {
@@ -91,6 +92,11 @@ namespace BoletoBr
         public TipoArquivo TipoArquivo { get; set; }
         public string CodigoDoProduto { get; set; }
         public List<IInstrucao> InstrucoesDoBoleto { get; set; }
+
+        public void AdicionarInstrucao(EnumTipoInstrucao tipoInstrucao, double valor)
+        {
+            this.InstrucoesDoBoleto.Add(this.BancoBoleto.ObtemInstrucaoPadronizada(tipoInstrucao, valor));
+        }
 
         public string InstrucoesBoletoConcatenadas
         {

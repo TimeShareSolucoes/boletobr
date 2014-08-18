@@ -322,6 +322,33 @@ namespace BoletoBr
             return conteudoLinha.Substring(inicio, ate - inicio);
         }
 
+        /// <summary>
+        /// Utilizado para preencher arquivo de remessa
+        /// </summary>
+        /// <param name="conteudoLinha">Informar uma linha com espaços em branco preenchidos.
+        /// Ex: CNAB240 -> 240 espaços em branco preenchidos</param>
+        /// <param name="de">Posição inicial</param>
+        /// <param name="ate">Posição final</param>
+        /// <param name="valorPreencher">Valor que deve ser inserido na posição</param>
+        public static string PreencherValorNaLinha(this string conteudoLinha, int de, int ate, string valorPreencher)
+        {
+            int inicio = de - 1;
+
+            var tamanhoPreenchimento = ate - inicio;
+            if (valorPreencher.Length != tamanhoPreenchimento)
+            {
+                throw new Exception("BoletoBr: Valor a Preencher: " + valorPreencher +
+                                    " é diferente do tamanho do preenchimento informado. Posição inicial: " + de +
+                                    " até " + ate);
+            }
+            // 1º remove
+            conteudoLinha = conteudoLinha.Remove(inicio, ate - inicio);
+            // 2º insere
+            conteudoLinha = conteudoLinha.Insert(inicio, valorPreencher);
+
+            return conteudoLinha;
+        }
+
         public static DateTime? ToDateTimeFromDdMmAa(this string s)
         {
             DateTime result;

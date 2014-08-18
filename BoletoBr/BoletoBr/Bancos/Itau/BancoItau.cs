@@ -6,12 +6,14 @@ using System.IO;
 using System.Text;
 using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.Dominio;
+using BoletoBr.Dominio.Instrucao;
+using BoletoBr.Enums;
+using BoletoBr.Fabricas;
 
 namespace BoletoBr.Bancos.Itau
 {
     public class BancoItau : IBanco
     {
-
         private int _dacBoleto = 0;
         private int _dacNossoNumero = 0;
 
@@ -433,6 +435,75 @@ namespace BoletoBr.Bancos.Itau
             {
                 throw new Exception("Erro ao formatar n�mero do documento.", ex);
             }
+        }
+
+        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao)
+        {
+            //enum EnumInstrucoesBancoItau
+            //{
+            //    Protestar = 09,
+            //    NaoProtestar = 10,
+            //    ProtestarAposNDiasCorridosDoVencimento = 34,
+            //    ProtestarAposNDiasUteisDoVencimento = 35,
+            //    NaoReceberAposOVencimento = 39,
+            //    ProtestoParaFinsFalimentares = 42,
+            //    ImportanciaPorDiaDeAtrasoAPartirDeDDMMAA = 44,
+            //    CobrarJurosApos15DiasDaEmissao = 79,
+            //    NaoReceberAposNDiasDoVencimento = 91,
+            //    DevolverAposNDiasDoVencimento = 92,
+            //    MultaVencimento = 997,
+            //    JurosdeMora = 998,
+            //    DescontoporDia = 999,
+            //}
+
+            switch (tipoInstrucao)
+            {
+                case EnumTipoInstrucao.Protestar:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 9,
+                        QtdDias = (int) valorInstrucao,
+                        TextoInstrucao = "Protestar após " + valorInstrucao + " dias úteis."
+                    };
+                }
+                case EnumTipoInstrucao.NaoProtestar:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 10,
+                        QtdDias = (int) valorInstrucao,
+                        TextoInstrucao = "Não protestar"
+                    };
+                }
+                case EnumTipoInstrucao.JurosdeMora:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 998,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Cobrar juros após o vencimento."
+                    };
+                }
+                //case EnumInstrucoesBancoItau.DescontoporDia:
+                //    return "Importância de desconto por dia.";
+                //case EnumInstrucoesBancoItau.ProtestarAposNDiasCorridosDoVencimento:
+                //    return "Protestar após " + nroDias + " dias corridos do vencimento.";
+                //case EnumInstrucoesBancoItau.ProtestarAposNDiasUteisDoVencimento:
+                //    return "Protestar após " + nroDias + " dias úteis do vencimento.";
+                //case EnumInstrucoesBancoItau.NaoReceberAposOVencimento:
+                //    return "Não receber após o vencimento";
+                //case EnumInstrucoesBancoItau.NaoReceberAposNDiasDoVencimento:
+                //    return "Não receber após " + nroDias + " dias do vencimento.";
+                //case EnumInstrucoesBancoItau.DevolverAposNDiasDoVencimento:
+                //    return "Devolver após " + nroDias + " dias do vencimento.";
+                //case EnumInstrucoesBancoItau.MultaVencimento:
+                //    return "Cobrar multa após o vencimento.";
+                //case EnumInstrucoesBancoItau.JurosdeMora:
+                //    return "Cobrar juros após o vencimento.";
+            }
+            throw new Exception(String.Format("Não foi possível obter instrução padronizada. Banco: {0} Código Instrução: {1} Qtd Dias/Valor: {2}",
+                CodigoBanco, tipoInstrucao.ToString(), valorInstrucao));
         }
 
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)

@@ -186,6 +186,7 @@
     <Compile Include="Enums\IsencaoCpmf.cs" />
     <Compile Include="Enums\TipoComplementoLancamento.cs" />
     <Compile Include="Enums\TipoInscricao.cs" />
+    <Compile Include="Enums\TipoInstrucao.cs" />
     <Compile Include="Enums\TipoLancamento.cs" />
     <Compile Include="Enums\TipoMovimento.cs" />
     <Compile Include="Enums\TipoOcorrencia.cs" />
@@ -198,7 +199,6 @@
     <Compile Include="CalculoModulo\CalculadoraMod11Generica.cs" />
     <Compile Include="CalculoModulo\ICalculadoraModulo10.cs" />
     <Compile Include="CalculoModulo\ICalculadoraModulo11.cs" />
-    <Compile Include="Fabricas\InstrucaoFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

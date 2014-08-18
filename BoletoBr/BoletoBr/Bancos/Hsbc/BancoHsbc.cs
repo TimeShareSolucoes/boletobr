@@ -7,6 +7,8 @@ using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.CalculoModulo;
 using BoletoBr.Bancos;
 using BoletoBr.Dominio;
+using BoletoBr.Dominio.Instrucao;
+using BoletoBr.Enums;
 
 namespace BoletoBr.Bancos.Hsbc
 {
@@ -128,6 +130,11 @@ namespace BoletoBr.Bancos.Hsbc
             //{
             //    throw new Exception("Erro ao formatar número do documento", e);
             //}
+        }
+
+        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao)
+        {
+            throw new NotImplementedException();
         }
 
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)

@@ -9,9 +9,9 @@ namespace BoletoBr.Dominio.Instrucao
 {
     public interface IInstrucao
     {
-        IBanco Banco { get; set; }
         int Codigo { get; set; }
         int QtdDias { get; set; }
+        double Valor { get; set; }
         string TextoInstrucao { get; }
     }
 }

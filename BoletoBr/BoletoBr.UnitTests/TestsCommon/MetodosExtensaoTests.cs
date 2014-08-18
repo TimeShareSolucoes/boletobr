@@ -53,5 +53,18 @@ namespace BoletoBr.UnitTests
 
             Assert.AreNotEqual(valorObtido.GetValueOrDefault(), valorEsperado);
         }
+
+        [TestMethod]
+        public void TestPreencherValorLinha()
+        {
+            var linhaCnab400 = new string(' ', 400);
+
+            linhaCnab400 = linhaCnab400.PreencherValorNaLinha(1, 1, "0");
+            linhaCnab400 = linhaCnab400.PreencherValorNaLinha(2, 2, "1");
+            linhaCnab400 = linhaCnab400.PreencherValorNaLinha(3, 9, "REMESSA");
+            linhaCnab400 = linhaCnab400.PreencherValorNaLinha(10, 11, "01");
+
+            Assert.IsNotNull(linhaCnab400);
+        }
     }
 }

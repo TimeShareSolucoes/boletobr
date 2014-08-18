@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using BoletoBr.Arquivo.Generico;
 using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.CalculoModulo;
 using BoletoBr.Dominio;
+using BoletoBr.Dominio.Instrucao;
+using BoletoBr.Enums;
 
 namespace BoletoBr.Bancos
 {
@@ -15,14 +18,6 @@ namespace BoletoBr.Bancos
         string NomeBanco { get; set; }
         Image LogotipoBancoParaExibicao { get; set; }
         string LocalDePagamento { get; }
-        /// <summary>
-        /// O código da moeda é especifico em cada banco.
-        ///                MOEDA
-        /// COD - BANCO |REAL|VARIÁVEL
-        /// 104 - CAIXA |  9 |   ?
-        /// 341 - ITAÚ  |  0 |   1          
-        /// 399 - HSBC  |  9 |   0            
-        /// </summary>
         string MoedaBanco { get; }
         List<CarteiraCobranca> GetCarteirasCobranca();
         CarteiraCobranca GetCarteiraCobrancaPorCodigo(string codigoCarteira);
@@ -63,6 +58,13 @@ namespace BoletoBr.Bancos
         /// </summary>
         /// <param name="boleto"></param>
         void FormataNumeroDocumento(Boleto boleto);
+
+        /// <summary>
+        /// Retorna a instrução a ser usada na geração do arquivo de remessa.
+        /// </summary>
+        /// <param name="tipoInstrucao">Tipo de instrução padronizada no componente</param>
+        /// <param name="valorInstrucao">Pode ser: número de dias, ou valor monetário. Será ajustado de acordo com a instrução.</param>
+        IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao);
 
         /// <summary>
         /// Faz a leitura do arquivo de retorno.
