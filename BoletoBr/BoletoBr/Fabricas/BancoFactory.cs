@@ -9,7 +9,7 @@ namespace BoletoBr.Fabricas
 {
     public static class BancoFactory
     {
-        public static IBanco ObterBanco(string codigoBanco, string digitoBanco)
+        public static IBanco ObterBanco(string codigoBanco, string digitoBanco = "")
         {
             try
             {
@@ -43,7 +43,7 @@ namespace BoletoBr.Fabricas
                         break;
 
                     default:
-                        throw new NotImplementedException("Banco " + codigoBanco + "-" + digitoBanco +
+                        throw new NotImplementedException("Banco " + codigoBanco  +
                                               " ainda não foi implementado.");
                 }
             }

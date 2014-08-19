@@ -61,5 +61,17 @@ namespace BoletoBr.Arquivo.Generico.Retorno
         public decimal ValorAbatimentoNaoAproveitadoPeloSacado { get; set; }
         public decimal ValorLancamento { get; set; }
         #endregion
+
+        #region Propriedades de uso livre
+        /// <summary>
+        /// Pode ser usado livremente.
+        /// Foi pensado para armazenar informações do tipo:
+        /// -> REGISTRO VÁLIDO
+        /// -> NÃO ENCONTRADO
+        /// -> PRONTO PARA PROCESSAR
+        /// -> etc.
+        /// </summary>
+        public string StatusProcessamentoRegistro { get; set; }
+        #endregion
     }
 }
