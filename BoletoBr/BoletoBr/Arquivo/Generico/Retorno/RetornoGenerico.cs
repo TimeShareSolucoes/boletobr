@@ -45,7 +45,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     //detalheGenericoAdd.TipoLiquidacao = detalheTipoT.TipoLiquidacao;
 
                     // Segmento U
-                    detalheGenericoAdd.DataPagamento = Convert.ToDateTime(d.RegistrosDetalheSegmentoU.DataPagamento.ToString("d"));
+                    detalheGenericoAdd.DataPagamento = Convert.ToDateTime(d.RegistrosDetalheSegmentoU.DataPagamento.ToString());
                     detalheGenericoAdd.ValorAcrescimos = d.RegistrosDetalheSegmentoU.JurosMultaEncargos / 100;
                     detalheGenericoAdd.ValorDesconto = d.RegistrosDetalheSegmentoU.ValorDescontoConcedido / 100;
                     detalheGenericoAdd.ValorAbatimento = d.RegistrosDetalheSegmentoU.ValorAbatimentoConcedido / 100;
@@ -54,12 +54,12 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     detalheGenericoAdd.ValorLiquido = d.RegistrosDetalheSegmentoU.ValorLiquidoASerCreditado / 100;
                     detalheGenericoAdd.ValorOutrasDespesas = d.RegistrosDetalheSegmentoU.ValorOutrasDespesas / 100;
                     detalheGenericoAdd.ValorOutrosCreditos = d.RegistrosDetalheSegmentoU.ValorOutrosCreditos / 100;
-                    detalheGenericoAdd.DataLiquidacao = Convert.ToDateTime(d.RegistrosDetalheSegmentoU.DataLiquidacao.ToString().ToDateTimeFromDdMmAaaa());
-                    detalheGenericoAdd.DataCredito = Convert.ToDateTime(d.RegistrosDetalheSegmentoU.DataCredito.ToString().ToDateTimeFromDdMmAaaa());
+                    detalheGenericoAdd.DataLiquidacao = Convert.ToDateTime(d.RegistrosDetalheSegmentoU.DataLiquidacao.ToString());
+                    detalheGenericoAdd.DataCredito = Convert.ToDateTime(d.RegistrosDetalheSegmentoU.DataCredito.ToString());
                     detalheGenericoAdd.CodigoOcorrencia = d.RegistrosDetalheSegmentoU.CodigoOcorrenciaPagador;
                     detalheGenericoAdd.DataOcorrencia = d.RegistrosDetalheSegmentoU.DataOcorrenciaPagador;
                     detalheGenericoAdd.ValorOcorrencia = d.RegistrosDetalheSegmentoU.ValorOcorrenciaPagador / 100;
-                    //detalheGenericoAdd.DataDebitoTarifaCustas = d.RegistrosDetalheSegmentoU.DataDebitoTarifa;
+                    detalheGenericoAdd.DataDebitoTarifaCustas = Convert.ToDateTime(d.RegistrosDetalheSegmentoU.DataDebitoTarifa.ToString());
                     this.RegistrosDetalhe.Add(detalheGenericoAdd);
                 }
             }
