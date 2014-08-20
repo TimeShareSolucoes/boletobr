@@ -209,7 +209,8 @@ namespace BoletoBr.Bancos.Bradesco
             objRetornar.NossoNumero = linha.ExtrairValorDaLinha(38, 57);
             objRetornar.CodigoCarteira = linha.ExtrairValorDaLinha(58, 58).BoletoBrToInt();
             objRetornar.NumeroDocumento = linha.ExtrairValorDaLinha(59, 73);
-            objRetornar.DataVencimento = linha.ExtrairValorDaLinha(74, 81).BoletoBrToInt();
+            int dtVencimento = Convert.ToInt32(linha.ExtrairValorDaLinha(74, 81));
+            objRetornar.DataVencimento = Convert.ToDateTime(dtVencimento.ToString("##-##-##"));
             objRetornar.ValorTitulo = linha.ExtrairValorDaLinha(82, 96).BoletoBrToDecimal()/100;
             objRetornar.BancoCobradorRecebedor = linha.ExtrairValorDaLinha(97, 99).BoletoBrToInt();
             objRetornar.AgenciaCobradoraRecebedora = linha.ExtrairValorDaLinha(100, 104).BoletoBrToInt();

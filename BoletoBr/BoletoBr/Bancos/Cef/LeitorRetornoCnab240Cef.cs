@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -211,7 +212,7 @@ namespace BoletoBr.Bancos.Cef
             objRetornar.NossoNumero = linha.ExtrairValorDaLinha(42, 56);
             objRetornar.CodigoCarteira = linha.ExtrairValorDaLinha(58, 58).BoletoBrToInt();
             objRetornar.NumeroDocumento = linha.ExtrairValorDaLinha(59, 69);
-            objRetornar.DataVencimento = linha.ExtrairValorDaLinha(74, 81).BoletoBrToInt();
+            objRetornar.DataVencimento = (DateTime)linha.ExtrairValorDaLinha(74, 81).ToString().ToDateTimeFromDdMmAaaa();
             objRetornar.ValorTitulo = linha.ExtrairValorDaLinha(82, 96).BoletoBrToDecimal() / 100;
             objRetornar.BancoCobradorRecebedor = linha.ExtrairValorDaLinha(97, 99).BoletoBrToInt();
             objRetornar.AgenciaCobradoraRecebedora = linha.ExtrairValorDaLinha(100, 104).BoletoBrToInt();
@@ -247,8 +248,8 @@ namespace BoletoBr.Bancos.Cef
             objRetornar.ValorLiquidoASerCreditado = linha.ExtrairValorDaLinha(93, 107).BoletoBrToDecimal() / 100;
             objRetornar.ValorOutrasDespesas = linha.ExtrairValorDaLinha(108, 122).BoletoBrToDecimal() / 100;
             objRetornar.ValorOutrosCreditos = linha.ExtrairValorDaLinha(123, 137).BoletoBrToDecimal() / 100;
-            objRetornar.DataOcorrencia = Convert.ToDateTime(linha.ExtrairValorDaLinha(138, 145));
-            objRetornar.DataCredito = Convert.ToDateTime(linha.ExtrairValorDaLinha(146, 153));
+            objRetornar.DataOcorrencia = (DateTime) linha.ExtrairValorDaLinha(138, 145).ToString().ToDateTimeFromDdMmAaaa();
+            objRetornar.DataCredito = (DateTime)linha.ExtrairValorDaLinha(146, 153).ToString().ToDateTimeFromDdMmAaaa();
             
             if (objRetornar.CodigoMovimento == 35 || objRetornar.CodigoMovimento == 36 ||
                 objRetornar.CodigoMovimento == 37)
@@ -265,7 +266,7 @@ namespace BoletoBr.Bancos.Cef
             }
             else
             {
-                objRetornar.DataDebitoTarifa = Convert.ToDateTime(linha.ExtrairValorDaLinha(158, 165));
+                objRetornar.DataDebitoTarifa = (DateTime) linha.ExtrairValorDaLinha(158, 165).ToString().ToDateTimeFromDdMmAaaa();
                 objRetornar.CodigoSacadoNoBanco = linha.ExtrairValorDaLinha(166, 180);
                 objRetornar.CodigoBancoCompensacao = linha.ExtrairValorDaLinha(211, 213).BoletoBrToInt();
                 objRetornar.NossoNumeroBancoCompensacao = linha.ExtrairValorDaLinha(214, 233);
