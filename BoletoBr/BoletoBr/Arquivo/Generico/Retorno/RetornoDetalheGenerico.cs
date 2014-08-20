@@ -16,7 +16,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
         public string CodigoMovimento { get; set; }
         public string CodigoOcorrencia { get; set; }
         public string TipoLiquidacao { get; set; }
-        public decimal ValorTitulo { get; set; }
+        public decimal ValorDocumento { get; set; }
         public decimal ValorTarifaCustas { get; set; }
         public DateTime DataVencimento { get; set; }
 
@@ -35,7 +35,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
         public decimal ValorOutrasDespesas { get; set; }
         public decimal ValorOutrosCreditos { get; set; }
         public DateTime DataLiquidacao { get; set; }
-        public DateTime DataCredito { get; set; }
+        public DateTime? DataCredito { get; set; }
         public DateTime DataOcorrencia { get; set; }
         public decimal ValorOcorrencia { get; set; }
         public DateTime DataDebitoTarifaCustas { get; set; }

@@ -17,49 +17,43 @@ namespace BoletoBr.Arquivo.Generico.Retorno
             Inicializa();
             this.RetornoCnab240Especifico = retornoCnab240;
             /* Transformar de CNAB240 para formato genérico */
-            this.Header.CodigoDoBanco = retornoCnab240.Header.CodigoBanco.ToString();
-            this.Header.Convenio = retornoCnab240.Header.Convenio.ToString();
-            this.Header.CodigoAgencia = retornoCnab240.Header.CodigoAgencia.ToString();
-            this.Header.DvAgencia = retornoCnab240.Header.DvAgenciaConta.ToString();
-            this.Header.NumeroConta = retornoCnab240.Header.ContaCorrente.ToString();
-            this.Header.DvConta = retornoCnab240.Header.DvContaCorrente.ToString();
-            this.Header.NomeEmpresa = retornoCnab240.Header.NomeDoBeneficiario.ToString();
-            this.Header.NomeDoBanco = retornoCnab240.Header.NomeDoBanco.ToString();
                 
             foreach (var loteAtual in retornoCnab240.Lotes)
             {
                 foreach (var d in loteAtual.RegistrosDetalheSegmentos)
                 {
                     var detalheGenericoAdd = new RetornoDetalheGenerico();
+
                     // Segmento T
-                    detalheGenericoAdd.NossoNumero = d.RegistrosDetalheSegmentoT.NossoNumero;
-                    detalheGenericoAdd.Carteira = d.RegistrosDetalheSegmentoT.CodigoCarteira.ToString();
-                    detalheGenericoAdd.NumeroDocumento = d.RegistrosDetalheSegmentoT.NumeroDocumento.ToString();
-                    detalheGenericoAdd.ValorTitulo = d.RegistrosDetalheSegmentoT.ValorTitulo / 100;
-                    detalheGenericoAdd.ValorTarifaCustas = d.RegistrosDetalheSegmentoT.ValorTarifas / 100;
-                    detalheGenericoAdd.DataVencimento = Convert.ToDateTime(d.RegistrosDetalheSegmentoT.DataVencimento.ToString());
-                    detalheGenericoAdd.InscricaoSacado = d.RegistrosDetalheSegmentoT.NumeroInscricaoSacado.ToString();
-                    detalheGenericoAdd.NomeSacado = d.RegistrosDetalheSegmentoT.NomeSacado;
-                    detalheGenericoAdd.CodigoMovimento = d.RegistrosDetalheSegmentoT.CodigoMovimento.ToString();
-                    detalheGenericoAdd.CodigoOcorrencia = d.RegistrosDetalheSegmentoT.MotivoOcorrencia.ToString();
-                    //detalheGenericoAdd.TipoLiquidacao = detalheTipoT.TipoLiquidacao;
+                    detalheGenericoAdd.NossoNumero = d.SegmentoT.NossoNumero;
+                    detalheGenericoAdd.Carteira = d.SegmentoT.CodigoCarteira.ToString();
+                    detalheGenericoAdd.NumeroDocumento = d.SegmentoT.NumeroDocumento.ToString();
+                    detalheGenericoAdd.ValorDocumento = Math.Round(d.SegmentoT.ValorTitulo, 2);
+                    //detalheGenericoAdd.ValorTarifaCustas = d.SegmentoT.ValorTarifas / 100;
+                    //detalheGenericoAdd.CodigoMovimento = d.SegmentoT.CodigoMovimento.ToString();
+                    //detalheGenericoAdd.CodigoOcorrencia = d.SegmentoT.MotivoOcorrencia.ToString();
 
                     // Segmento U
-                    detalheGenericoAdd.DataPagamento = Convert.ToDateTime(d.RegistrosDetalheSegmentoU.DataPagamento.ToString());
-                    detalheGenericoAdd.ValorAcrescimos = d.RegistrosDetalheSegmentoU.JurosMultaEncargos / 100;
-                    detalheGenericoAdd.ValorDesconto = d.RegistrosDetalheSegmentoU.ValorDescontoConcedido / 100;
-                    detalheGenericoAdd.ValorAbatimento = d.RegistrosDetalheSegmentoU.ValorAbatimentoConcedido / 100;
-                    detalheGenericoAdd.ValorIof = d.RegistrosDetalheSegmentoU.ValorIofRecolhido / 100;
-                    detalheGenericoAdd.ValorPago = d.RegistrosDetalheSegmentoU.ValorPagoPeloSacado / 100;
-                    detalheGenericoAdd.ValorLiquido = d.RegistrosDetalheSegmentoU.ValorLiquidoASerCreditado / 100;
-                    detalheGenericoAdd.ValorOutrasDespesas = d.RegistrosDetalheSegmentoU.ValorOutrasDespesas / 100;
-                    detalheGenericoAdd.ValorOutrosCreditos = d.RegistrosDetalheSegmentoU.ValorOutrosCreditos / 100;
-                    detalheGenericoAdd.DataLiquidacao = Convert.ToDateTime(d.RegistrosDetalheSegmentoU.DataLiquidacao.ToString());
-                    detalheGenericoAdd.DataCredito = Convert.ToDateTime(d.RegistrosDetalheSegmentoU.DataCredito.ToString());
-                    detalheGenericoAdd.CodigoOcorrencia = d.RegistrosDetalheSegmentoU.CodigoOcorrenciaPagador;
-                    detalheGenericoAdd.DataOcorrencia = d.RegistrosDetalheSegmentoU.DataOcorrenciaPagador;
-                    detalheGenericoAdd.ValorOcorrencia = d.RegistrosDetalheSegmentoU.ValorOcorrenciaPagador / 100;
-                    detalheGenericoAdd.DataDebitoTarifaCustas = Convert.ToDateTime(d.RegistrosDetalheSegmentoU.DataDebitoTarifa.ToString());
+                    detalheGenericoAdd.DataCredito = d.SegmentoU.DataCredito;
+                    //detalheGenericoAdd.DataLiquidacao = Convert.ToDateTime(d.SegmentoU.DataLiquidacao.ToString());
+                    //detalheGenericoAdd.DataCredito = Convert.ToDateTime(d.SegmentoU.DataCredito.ToString());
+
+                    #region Valores no detalhe
+
+                    detalheGenericoAdd.ValorAcrescimos = Math.Round(d.SegmentoU.JurosMultaEncargos, 2);
+                    detalheGenericoAdd.ValorDesconto = Math.Round(d.SegmentoU.ValorDescontoConcedido + d.SegmentoU.ValorAbatimentoConcedido, 2);
+                    detalheGenericoAdd.ValorPago = Math.Round(d.SegmentoU.ValorPagoPeloSacado, 2);
+                    detalheGenericoAdd.ValorLiquido = Math.Round(d.SegmentoU.ValorLiquidoASerCreditado, 2);
+
+                    #endregion
+                    
+                    //detalheGenericoAdd.ValorIof = d.SegmentoU.ValorIofRecolhido / 100;
+                    //detalheGenericoAdd.ValorOutrasDespesas = d.SegmentoU.ValorOutrasDespesas / 100;
+                    //detalheGenericoAdd.ValorOutrosCreditos = d.SegmentoU.ValorOutrosCreditos / 100;
+                    //detalheGenericoAdd.CodigoOcorrencia = d.SegmentoU.CodigoOcorrenciaPagador;
+                    //detalheGenericoAdd.DataOcorrencia = d.SegmentoU.DataOcorrenciaPagador;
+                    //detalheGenericoAdd.ValorOcorrencia = d.SegmentoU.ValorOcorrenciaPagador / 100;
+                    //detalheGenericoAdd.DataDebitoTarifaCustas = Convert.ToDateTime(d.SegmentoU.DataDebitoTarifa.ToString());
                     this.RegistrosDetalhe.Add(detalheGenericoAdd);
                 }
             }
@@ -91,7 +85,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                 detalheGenericoAdd.Especie = registroAtual.Especie;
                 detalheGenericoAdd.DataCredito = Convert.ToDateTime(registroAtual.DataDeCredito.ToString("d"));
                 detalheGenericoAdd.NumeroDocumento = registroAtual.NumeroDocumento.ToString();
-                detalheGenericoAdd.ValorTitulo = registroAtual.ValorDoTituloParcela/100;
+                detalheGenericoAdd.ValorDocumento = registroAtual.ValorDoTituloParcela/100;
                 detalheGenericoAdd.ValorTarifaCustas = registroAtual.ValorTarifa/100;
                 detalheGenericoAdd.ValorOutrasDespesas = registroAtual.ValorOutrasDespesas/100;
                 detalheGenericoAdd.ValorJurosDesconto = registroAtual.ValorJurosDesconto/100;
@@ -113,7 +107,6 @@ namespace BoletoBr.Arquivo.Generico.Retorno
 
                 this.RegistrosDetalhe.Add(detalheGenericoAdd);
             }
-            this.Trailer.QtdRegistrosArquivo = retornoCnab400.Trailer.QtdRegistrosBaixados.ToString();
         }
         public RetornoHeaderGenerico Header { get; set; }
         public List<RetornoDetalheGenerico> RegistrosDetalhe { get; set; } 

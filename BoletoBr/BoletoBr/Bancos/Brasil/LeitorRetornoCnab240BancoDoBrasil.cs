@@ -29,7 +29,7 @@ namespace BoletoBr.Bancos.Brasil
             var objRetornar = new RetornoCnab240();
 
             LoteRetornoCnab240 ultimoLoteIdentificado = null;
-            DetalheSegmentoRetornoCnab240 ultimoRegistroIdentificado = null;
+            DetalheRetornoCnab240 ultimoRegistroDetalheIdentificado = null;
 
             foreach (var linhaAtual in _linhasArquivo)
             {
@@ -41,7 +41,7 @@ namespace BoletoBr.Bancos.Brasil
                 if (linhaAtual.ExtrairValorDaLinha(8, 8) == "1")
                 {
                     ultimoLoteIdentificado = new LoteRetornoCnab240();
-                    ultimoRegistroIdentificado = new DetalheSegmentoRetornoCnab240();
+                    ultimoRegistroDetalheIdentificado = new DetalheRetornoCnab240();
                     objRetornar.Lotes.Add(ultimoLoteIdentificado);
 
                     ultimoLoteIdentificado.HeaderLote = ObterHeaderLote(linhaAtual);
@@ -55,7 +55,7 @@ namespace BoletoBr.Bancos.Brasil
                             throw new Exception("Não foi encontrado header de lote para o segmento atual.");
 
                         //ultimoLoteIdentificado.RegistrosDetalheSegmentoT.Add(objDetalhe);
-                        ultimoRegistroIdentificado.RegistrosDetalheSegmentoT = ObterRegistrosDetalheT(linhaAtual);
+                        ultimoRegistroDetalheIdentificado.SegmentoT = ObterRegistrosDetalheT(linhaAtual);
                     }
                     if (linhaAtual.ExtrairValorDaLinha(14, 14) == "U")
                     {
@@ -64,7 +64,7 @@ namespace BoletoBr.Bancos.Brasil
                             throw new Exception("Não foi encontrado header de lote para o segmento atual.");
 
                         //ultimoLoteIdentificado.RegistrosDetalheSegmentoU.Add(objDetalhe);
-                        ultimoRegistroIdentificado.RegistrosDetalheSegmentoU = ObterRegistrosDetalheU(linhaAtual);
+                        ultimoRegistroDetalheIdentificado.SegmentoU = ObterRegistrosDetalheU(linhaAtual);
                     }
                 }
                 /* Trailer de Lote */
@@ -142,17 +142,17 @@ namespace BoletoBr.Bancos.Brasil
             objRetornar.LoteServico = linha.ExtrairValorDaLinha(4, 7);
             objRetornar.CodigoRegistro = linha.ExtrairValorDaLinha(8, 8).BoletoBrToInt();
             objRetornar.TipoInscricaoEmpresa = linha.ExtrairValorDaLinha(18, 18).BoletoBrToInt();
-            objRetornar.NumeroInscricaoEmpresa = linha.ExtrairValorDaLinha(19, 32).BoletoBrToLong();
+            objRetornar.NumeroInscricaoEmpresa = linha.ExtrairValorDaLinha(19, 32);
             objRetornar.Convenio = linha.ExtrairValorDaLinha(33, 52);
             // Dados convênio (33 - 52)
-            objRetornar.ConvenioNumeroCobranca = linha.ExtrairValorDaLinha(33, 41).BoletoBrToLong();
+            objRetornar.ConvenioNumeroCobranca = linha.ExtrairValorDaLinha(33, 41);
             objRetornar.CedenteCobranca = linha.ExtrairValorDaLinha(42, 45).BoletoBrToInt();
             objRetornar.CarteiraCobranca = linha.ExtrairValorDaLinha(46, 47).BoletoBrToInt();
             objRetornar.VariacaoCarteiraCobranca = linha.ExtrairValorDaLinha(48, 50).BoletoBrToInt();
             // ...
             objRetornar.CodigoAgencia = linha.ExtrairValorDaLinha(53, 57).BoletoBrToInt();
             objRetornar.DvAgenciaConta = linha.ExtrairValorDaLinha(58, 58);
-            objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(59, 70).BoletoBrToInt();
+            objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(59, 70);
             objRetornar.DvContaCorrente = linha.ExtrairValorDaLinha(71, 71);
             objRetornar.DvAgenciaConta = linha.ExtrairValorDaLinha(72, 72);
             objRetornar.NomeDoBeneficiario = linha.ExtrairValorDaLinha(73, 102);

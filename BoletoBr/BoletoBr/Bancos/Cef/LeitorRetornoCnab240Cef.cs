@@ -29,6 +29,7 @@ namespace BoletoBr.Bancos.Cef
             var objRetornar = new RetornoCnab240();
 
             LoteRetornoCnab240 ultimoLoteIdentificado = null;
+            DetalheRetornoCnab240 ultimoRegistroDetalheIdentificado = null;
 
             foreach (var linhaAtual in _linhasArquivo)
             {
@@ -49,19 +50,25 @@ namespace BoletoBr.Bancos.Cef
                 {
                     if (linhaAtual.ExtrairValorDaLinha(14, 14) == "T")
                     {
-                        var objDetalhe = ObterRegistrosDetalheT(linhaAtual);
                         if (ultimoLoteIdentificado == null)
                             throw new Exception("Não foi encontrado header de lote para o segmento atual.");
 
-                        //ultimoLoteIdentificado.RegistrosDetalheSegmentoU.Add(objDetalhe);
+                        ultimoRegistroDetalheIdentificado = new DetalheRetornoCnab240();
+                        ultimoLoteIdentificado.RegistrosDetalheSegmentos.Add(ultimoRegistroDetalheIdentificado);
+
+                        var objSegmentoT = ObterRegistrosDetalheT(linhaAtual);
+                        ultimoRegistroDetalheIdentificado.SegmentoT = objSegmentoT;
+
                     }
                     if (linhaAtual.ExtrairValorDaLinha(14, 14) == "U")
                     {
-                        var objDetalhe = ObterRegistrosDetalheU(linhaAtual);
+                        var objSegmentoU = ObterRegistrosDetalheU(linhaAtual);
                         if (ultimoLoteIdentificado == null)
                             throw new Exception("Não foi encontrado header de lote para o segmento atual.");
+                        if (ultimoRegistroDetalheIdentificado == null)
+                            throw new Exception("Não deveria ser nulo o último detalhe. Deveria ter sido criado no segmento T, anterior a este.");
 
-                        //ultimoLoteIdentificado.RegistrosDetalheSegmentoU.Add(objDetalhe);
+                        ultimoRegistroDetalheIdentificado.SegmentoU = objSegmentoU;
                     }
                 }
                 /* Trailer de Lote */
@@ -141,7 +148,7 @@ namespace BoletoBr.Bancos.Cef
             objRetornar.LoteServico = linha.ExtrairValorDaLinha(4, 7);
             objRetornar.CodigoRegistro = linha.ExtrairValorDaLinha(8, 8).BoletoBrToInt();
             objRetornar.TipoInscricaoEmpresa = linha.ExtrairValorDaLinha(18, 18).BoletoBrToInt();
-            objRetornar.NumeroInscricaoEmpresa = linha.ExtrairValorDaLinha(19, 32).BoletoBrToLong();
+            objRetornar.NumeroInscricaoEmpresa = linha.ExtrairValorDaLinha(19, 32);
             objRetornar.CodigoAgencia = linha.ExtrairValorDaLinha(53, 57).BoletoBrToInt();
             objRetornar.DvCodigoAgencia = linha.ExtrairValorDaLinha(58, 58);
             // Uso Exclusivo CAIXA (37 - 46)
