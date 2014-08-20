@@ -21,11 +21,11 @@ namespace BoletoBr
         public string CodigoDoDocumentoEmpresa { get; set; }
         public int CodigoDePostagem { get; set; }
         public string CodigoDoDocumentoBanco { get; set; }
-        public int DataDeCredito { get; set; }
+        public DateTime DataDeCredito { get; set; }
         public int Moeda { get; set; }
         public int NumeroCarteira { get; set; }
         public int CodigoDeOcorrencia { get; set; }
-        public int DataDaOcorrencia { get; set; }
+        public DateTime DataDaOcorrencia { get; set; }
         /// <summary>
         /// Número da parcela e total de parcelas, sendo 3 dítidos para cada campo.
         /// PPP/TTT
@@ -33,7 +33,7 @@ namespace BoletoBr
         public int SeuNumero { get; set; }
         public string NossoNumero { get; set; }
         public int MotivoDaOcorrencia { get; set; }
-        public int DataDeVencimento { get; set; }
+        public DateTime DataDeVencimento { get; set; }
         public decimal ValorDoTituloParcela { get; set; }
         public int BancoCobrador { get; set; }
         public int AgenciaCobradora { get; set; }
@@ -124,7 +124,7 @@ namespace BoletoBr
         public int TaxaDesconto { get; set; }
         public int TaxaIof { get; set; }
         public int Comando { get; set; }
-        public int DataLiquidacao { get; set; }
+        public DateTime DataLiquidacao { get; set; }
         /// <summary>
         /// Número do título dado pelo cedente
         /// </summary>
@@ -271,7 +271,7 @@ namespace BoletoBr
         /// <summary>
         /// Data da operação BBVendor (DDMMAAAA)
         /// </summary>
-        public int DataOperacaoBBVendor { get; set; }
+        public DateTime DataOperacaoBBVendor { get; set; }
         public int TaxaJurosVendedor { get; set; }
         public int TaxaJurosComprador { get; set; }
         /// <summary>
@@ -379,7 +379,7 @@ namespace BoletoBr
         /// <summary>
         /// Data do débito da tarifa
         /// </summary>
-        public int DataDebitoTarifa { get; set; }
+        public DateTime DataDebitoTarifa { get; set; }
 
         #endregion
 

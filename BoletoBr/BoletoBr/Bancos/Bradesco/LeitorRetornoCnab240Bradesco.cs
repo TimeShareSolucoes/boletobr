@@ -152,7 +152,7 @@ namespace BoletoBr.Bancos.Bradesco
             objRetornar.NomeDoBeneficiario = linha.ExtrairValorDaLinha(73, 102);
             objRetornar.NomeDoBanco = linha.ExtrairValorDaLinha(103, 132);
             objRetornar.CodigoRemessaRetorno = linha.ExtrairValorDaLinha(143, 143).BoletoBrToInt();
-            objRetornar.DataGeracaoGravacao = linha.ExtrairValorDaLinha(144, 151).BoletoBrToInt();
+            //objRetornar.DataGeracaoGravacao = (DateTime) linha.ExtrairValorDaLinha(144, 151).ToString().ToDateTimeFromDdMmAa();
             objRetornar.HoraGeracaoGravacao = linha.ExtrairValorDaLinha(152, 157).BoletoBrToInt();
             objRetornar.NumeroSequencial = linha.ExtrairValorDaLinha(158, 163).BoletoBrToInt();
             objRetornar.VersaoLayout = linha.ExtrairValorDaLinha(164, 166);
@@ -185,8 +185,8 @@ namespace BoletoBr.Bancos.Bradesco
             objRetornar.Mensagem1 = linha.ExtrairValorDaLinha(104, 143);
             objRetornar.Mensagem2 = linha.ExtrairValorDaLinha(144, 183);
             objRetornar.NumeroRemessaRetorno = linha.ExtrairValorDaLinha(184, 191).BoletoBrToInt();
-            objRetornar.DataGeracaoGravacao = linha.ExtrairValorDaLinha(192, 199).BoletoBrToInt();
-            objRetornar.DataDeCredito = linha.ExtrairValorDaLinha(200, 207).BoletoBrToInt();
+            //objRetornar.DataGeracaoGravacao = (DateTime) linha.ExtrairValorDaLinha(192, 199).ToString().ToDateTimeFromDdMmAa();
+            //objRetornar.DataDeCredito = (DateTime) linha.ExtrairValorDaLinha(200, 207).ToString().ToDateTimeFromDdMmAa();
 
             return objRetornar;
         }
@@ -209,7 +209,7 @@ namespace BoletoBr.Bancos.Bradesco
             objRetornar.NossoNumero = linha.ExtrairValorDaLinha(38, 57);
             objRetornar.CodigoCarteira = linha.ExtrairValorDaLinha(58, 58).BoletoBrToInt();
             objRetornar.NumeroDocumento = linha.ExtrairValorDaLinha(59, 73);
-            objRetornar.DataVencimento = linha.ExtrairValorDaLinha(74, 81).BoletoBrToInt();
+            //objRetornar.DataVencimento = (DateTime) linha.ExtrairValorDaLinha(74, 81).ToString().ToDateTimeFromDdMmAa();
             objRetornar.ValorTitulo = linha.ExtrairValorDaLinha(82, 96).BoletoBrToDecimal()/100;
             objRetornar.BancoCobradorRecebedor = linha.ExtrairValorDaLinha(97, 99).BoletoBrToInt();
             objRetornar.AgenciaCobradoraRecebedora = linha.ExtrairValorDaLinha(100, 104).BoletoBrToInt();
@@ -244,10 +244,10 @@ namespace BoletoBr.Bancos.Bradesco
             objRetornar.ValorLiquidoASerCreditado = linha.ExtrairValorDaLinha(93, 107).BoletoBrToDecimal()/100;
             objRetornar.ValorOutrasDespesas = linha.ExtrairValorDaLinha(108, 122).BoletoBrToDecimal()/100;
             objRetornar.ValorOutrosCreditos = linha.ExtrairValorDaLinha(123, 137).BoletoBrToDecimal()/100;
-            objRetornar.DataOcorrencia = Convert.ToDateTime(linha.ExtrairValorDaLinha(138, 145));
-            objRetornar.DataCredito = Convert.ToDateTime(linha.ExtrairValorDaLinha(146, 153));
+            //objRetornar.DataOcorrencia = Convert.ToDateTime(linha.ExtrairValorDaLinha(138, 145).ToString().ToDateTimeFromDdMmAa());
+            //objRetornar.DataCredito = Convert.ToDateTime(linha.ExtrairValorDaLinha(146, 153).ToString().ToDateTimeFromDdMmAa());
             objRetornar.CodigoOcorrenciaPagador = linha.ExtrairValorDaLinha(154, 157);
-            objRetornar.DataOcorrenciaPagador = Convert.ToDateTime(linha.ExtrairValorDaLinha(158, 165));
+            objRetornar.DataOcorrenciaPagador = Convert.ToDateTime(linha.ExtrairValorDaLinha(158, 165).ToString().ToDateTimeFromDdMmAa());
             objRetornar.ValorOcorrenciaPagador = linha.ExtrairValorDaLinha(166, 180).BoletoBrToDecimal()/100;
             objRetornar.ComplementoOcorrenciaPagador = linha.ExtrairValorDaLinha(181, 210);
             objRetornar.CodigoBancoCompensacao = linha.ExtrairValorDaLinha(211, 213).BoletoBrToInt();

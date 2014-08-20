@@ -26,7 +26,8 @@ namespace BoletoBr
         public string NomeDoBeneficiario { get; set; }
         public string NomeDoBanco { get; set; }
         public int CodigoRemessaRetorno { get; set; }
-        public int DataGeracaoGravacao { get; set; }
+        public DateTime? DataGeracaoGravacao { get; set; }
+
         public int HoraGeracaoGravacao { get; set; }
         public int NumeroSequencial { get; set; }
         public string VersaoLayout { get; set; }

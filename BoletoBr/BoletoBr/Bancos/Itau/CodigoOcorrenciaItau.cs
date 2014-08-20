@@ -30,7 +30,11 @@ namespace BoletoBr.Bancos.Itau
 
     public enum CodigoOcorrenciaRetornoItau
     {
-        
+        EntradaConfirmada = 02,
+        EntradaRejeitada = 03,
+        AlteracaoNovaEntradaOuAlteracaoExclusao = 04,
+        // ...
+        // NOTA 17, pág. 20 do Layout Técnico do Itaú CNAB 400
     }
     public class CodigoOcorrenciaItau
     {

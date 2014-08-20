@@ -27,7 +27,7 @@ namespace BoletoBr.Arquivo.CNAB400.Retorno
         public string NomePrimeiroBeneficiario { get; set; }
         public string ParcelaPrimeiroBeneficiario { get; set; }
         public int FloatingPrimeiroBeneficiario { get; set; }
-        public int DataCreditoPrimeiroBeneficiario { get; set; }
+        public DateTime DataCreditoPrimeiroBeneficiario { get; set; }
         public int MotivoOcorrenciaPrimeiroBeneficiario { get; set; }
         public int CodigoBancoSegundoBeneficiario { get; set; }
         public int CodigoAgenciaSegundoBeneficiario { get; set; }
@@ -38,7 +38,7 @@ namespace BoletoBr.Arquivo.CNAB400.Retorno
         public string NomeSegundoBeneficiario { get; set; }
         public string ParcelaSegundoBeneficiario { get; set; }
         public int FloatingSegundoBeneficiario { get; set; }
-        public int DataCreditoSegundoBeneficiario { get; set; }
+        public DateTime DataCreditoSegundoBeneficiario { get; set; }
         public int MotivoOcorrenciaSegundoBeneficiario { get; set; }
         public int CodigoBancoTerceiroBeneficiario { get; set; }
         public int CodigoAgenciaTerceiroBeneficiario { get; set; }
@@ -49,7 +49,7 @@ namespace BoletoBr.Arquivo.CNAB400.Retorno
         public string NomeTerceiroBeneficiario { get; set; }
         public string ParcelaTerceiroBeneficiario { get; set; }
         public int FloatingTerceiroBeneficiario { get; set; }
-        public int DataCreditoTerceiroBeneficiario { get; set; }
+        public DateTime DataCreditoTerceiroBeneficiario { get; set; }
         public int MotivoOcorrenciaTerceiroBeneficiario { get; set; }
         public int NumeroSequencial { get; set; }
     }

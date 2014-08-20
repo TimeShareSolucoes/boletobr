@@ -107,7 +107,7 @@ namespace BoletoBr.Bancos
             objRetornar.NomeDoBeneficiario = linha.ExtrairValorDaLinha(47, 76);
             objRetornar.CodigoDoBanco = linha.ExtrairValorDaLinha(77, 79);
             objRetornar.NomeDoBanco = linha.ExtrairValorDaLinha(80, 94);
-            objRetornar.DataGeracaoGravacao = linha.ExtrairValorDaLinha(95, 100).BoletoBrToInt();
+            objRetornar.DataGeracaoGravacao = (DateTime) linha.ExtrairValorDaLinha(95, 100).ToString().ToDateTimeFromDdMmAa();
             objRetornar.Densidade = linha.ExtrairValorDaLinha(101, 105);
             objRetornar.LiteralDensidade = linha.ExtrairValorDaLinha(106, 108);
             objRetornar.CodigoDoBeneficiario = linha.ExtrairValorDaLinha(109, 118).BoletoBrToInt();
@@ -139,16 +139,16 @@ namespace BoletoBr.Bancos
             // Posição 56-62 brancos
             objRetornar.CodigoDoDocumentoBanco = linha.ExtrairValorDaLinha(63, 78);
             // Posição 79-82 brancos
-            objRetornar.DataDeCredito = linha.ExtrairValorDaLinha(83, 88).BoletoBrToInt();
+            objRetornar.DataDeCredito = (DateTime) linha.ExtrairValorDaLinha(83, 88).ToString().ToDateTimeFromDdMmAa();
             objRetornar.Moeda = linha.ExtrairValorDaLinha(89, 89).BoletoBrToInt();
             // Posição 90-107 brancos
             objRetornar.CodigoCarteira = linha.ExtrairValorDaLinha(108, 108);
             objRetornar.CodigoDeOcorrencia = linha.ExtrairValorDaLinha(109, 110).BoletoBrToInt();
-            objRetornar.DataDaOcorrencia = linha.ExtrairValorDaLinha(111, 116).BoletoBrToInt();
+            objRetornar.DataDaOcorrencia = (DateTime) linha.ExtrairValorDaLinha(111, 116).ToString().ToDateTimeFromDdMmAa();
             objRetornar.SeuNumero = linha.ExtrairValorDaLinha(117, 122).BoletoBrToInt();
             objRetornar.MotivoDaOcorrencia = linha.ExtrairValorDaLinha(123, 131).BoletoBrToInt();
             // Posição 132-146 brancos
-            objRetornar.DataDeVencimento = linha.ExtrairValorDaLinha(147, 152).BoletoBrToInt();
+            objRetornar.DataDeVencimento = (DateTime) linha.ExtrairValorDaLinha(147, 152).ToString().ToDateTimeFromDdMmAa();
             objRetornar.ValorDoTituloParcela = linha.ExtrairValorDaLinha(153, 165).BoletoBrToDecimal() / 100;
             objRetornar.BancoCobrador = linha.ExtrairValorDaLinha(166, 168).BoletoBrToInt();
             objRetornar.AgenciaCobradora = linha.ExtrairValorDaLinha(169, 173).BoletoBrToInt();

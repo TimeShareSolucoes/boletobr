@@ -22,11 +22,11 @@ namespace BoletoBr.Dominio
         public decimal ValorLiquidoASerCreditado { get; set; }
         public decimal ValorOutrasDespesas { get; set; }
         public decimal ValorOutrosCreditos { get; set; }
-        public DateTime DataOcorrencia { get; set; }
+        public DateTime? DataOcorrencia { get; set; }
         public DateTime DataPagamento { get; set; }
         public DateTime DataLiquidacao { get; set; }
-        public DateTime DataCredito { get; set; }
-        public DateTime DataDebitoTarifa { get; set; }
+        public DateTime? DataCredito { get; set; }
+        public DateTime? DataDebitoTarifa { get; set; }
         public string CodigoSacadoNoBanco { get; set; }
         public int CodigoBancoCompensacao { get; set; }
         public string NossoNumeroBancoCompensacao { get; set; }

@@ -30,7 +30,7 @@ namespace BoletoBr.Dominio
         public string NossoNumero { get; set; }
         public int CodigoCarteira { get; set; }
         public string NumeroDocumento { get; set; }
-        public int DataVencimento { get; set; }
+        public DateTime? DataVencimento { get; set; }
         public decimal ValorTitulo { get; set; }
         public int BancoCobradorRecebedor { get; set; }
         public int AgenciaCobradoraRecebedora { get; set; }

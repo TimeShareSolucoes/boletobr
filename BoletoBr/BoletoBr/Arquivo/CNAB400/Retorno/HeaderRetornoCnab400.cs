@@ -22,8 +22,8 @@ namespace BoletoBr
         public string CodigoDoBanco { get; set; }
         public string NomeDoBanco { get; set; }
         public long ContaCorrente { get; set; }
-        public int DataGeracaoGravacao { get; set; }
-        public int DataCredito { get; set; }
+        public DateTime DataGeracaoGravacao { get; set; }
+        public DateTime DataCredito { get; set; }
         public long CodigoDoBeneficiario { get; set; }
         public string NumeroSequencial { get; set; }
 
@@ -104,7 +104,7 @@ namespace BoletoBr
                 NomeDoBeneficiario = MetodosExtensao.ExtrairValorDaLinha(registro, 47, 76);
                 CodigoDoBanco = MetodosExtensao.ExtrairValorDaLinha(registro, 77, 79);
                 NomeDoBanco = MetodosExtensao.ExtrairValorDaLinha(registro, 80, 94);
-                DataGeracaoGravacao = dataGravacao;
+                DataGeracaoGravacao = (DateTime) dataGravacao.ToString().ToDateTimeFromDdMmAa();
                 Densidade = MetodosExtensao.ExtrairValorDaLinha(registro, 101, 105);
                 LiteralDensidade = MetodosExtensao.ExtrairValorDaLinha(registro, 106, 108);
                 CodigoDoBeneficiario = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 109, 118));
