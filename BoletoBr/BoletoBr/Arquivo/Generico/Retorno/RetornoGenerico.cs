@@ -28,7 +28,9 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     detalheGenericoAdd.NossoNumero = d.SegmentoT.NossoNumero;
                     detalheGenericoAdd.Carteira = d.SegmentoT.CodigoCarteira.ToString();
                     detalheGenericoAdd.NumeroDocumento = d.SegmentoT.NumeroDocumento.ToString();
-                    detalheGenericoAdd.ValorDocumento = Math.Round(d.SegmentoT.ValorTitulo, 2);
+                    var valorDoc = d.SegmentoT.ValorTitulo;
+                    detalheGenericoAdd.ValorDocumento = Convert.ToDecimal(valorDoc % 1 == 0 ? valorDoc.ToString("#,0") : valorDoc.ToString("#,0.00"));
+                    //detalheGenericoAdd.ValorDocumento = Math.Round(d.SegmentoT.ValorTitulo, 2);
                     //detalheGenericoAdd.ValorTarifaCustas = d.SegmentoT.ValorTarifas / 100;
                     //detalheGenericoAdd.CodigoMovimento = d.SegmentoT.CodigoMovimento.ToString();
                     //detalheGenericoAdd.CodigoOcorrencia = d.SegmentoT.MotivoOcorrencia.ToString();
@@ -40,10 +42,14 @@ namespace BoletoBr.Arquivo.Generico.Retorno
 
                     #region Valores no detalhe
 
-                    detalheGenericoAdd.ValorAcrescimos = Math.Round(d.SegmentoU.JurosMultaEncargos, 2);
-                    detalheGenericoAdd.ValorDesconto = Math.Round(d.SegmentoU.ValorDescontoConcedido + d.SegmentoU.ValorAbatimentoConcedido, 2);
-                    detalheGenericoAdd.ValorPago = Math.Round(d.SegmentoU.ValorPagoPeloSacado, 2);
-                    detalheGenericoAdd.ValorLiquido = Math.Round(d.SegmentoU.ValorLiquidoASerCreditado, 2);
+                    var valorAcres = d.SegmentoU.JurosMultaEncargos;
+                    var valorDesc = d.SegmentoU.ValorDescontoConcedido + d.SegmentoU.ValorAbatimentoConcedido;
+                    var valorPago = d.SegmentoU.ValorPagoPeloSacado;
+
+                    detalheGenericoAdd.ValorAcrescimos = Convert.ToDecimal(valorAcres % 1 == 0 ? valorAcres.ToString("#,0") : valorAcres.ToString("#,0.00"));
+                    detalheGenericoAdd.ValorDesconto = Convert.ToDecimal(valorDesc % 1 == 0 ? valorDesc.ToString("#,0") : valorDesc.ToString("#,0.00"));
+                    detalheGenericoAdd.ValorPago = Convert.ToDecimal(valorPago % 1 == 0 ? valorPago.ToString("#,0") : valorPago.ToString("#,0.00"));
+                    //detalheGenericoAdd.ValorLiquido = Math.Round(d.SegmentoU.ValorLiquidoASerCreditado, 2);
 
                     #endregion
                     
