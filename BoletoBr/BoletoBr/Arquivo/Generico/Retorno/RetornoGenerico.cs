@@ -29,7 +29,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     detalheGenericoAdd.Carteira = d.SegmentoT.CodigoCarteira.ToString();
                     detalheGenericoAdd.NumeroDocumento = d.SegmentoT.NumeroDocumento.ToString();
                     var valorDoc = d.SegmentoT.ValorTitulo;
-                    detalheGenericoAdd.ValorDocumento = Convert.ToDecimal(valorDoc % 1 == 0 ? valorDoc.ToString("#,0") : valorDoc.ToString("#,0.00"));
+                    detalheGenericoAdd.ValorDocumento = valorDoc;
                     //detalheGenericoAdd.ValorDocumento = Math.Round(d.SegmentoT.ValorTitulo, 2);
                     //detalheGenericoAdd.ValorTarifaCustas = d.SegmentoT.ValorTarifas / 100;
                     //detalheGenericoAdd.CodigoMovimento = d.SegmentoT.CodigoMovimento.ToString();
@@ -46,9 +46,9 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     var valorDesc = d.SegmentoU.ValorDescontoConcedido + d.SegmentoU.ValorAbatimentoConcedido;
                     var valorPago = d.SegmentoU.ValorPagoPeloSacado;
 
-                    detalheGenericoAdd.ValorAcrescimos = Convert.ToDecimal(valorAcres % 1 == 0 ? valorAcres.ToString("#,0") : valorAcres.ToString("#,0.00"));
-                    detalheGenericoAdd.ValorDesconto = Convert.ToDecimal(valorDesc % 1 == 0 ? valorDesc.ToString("#,0") : valorDesc.ToString("#,0.00"));
-                    detalheGenericoAdd.ValorPago = Convert.ToDecimal(valorPago % 1 == 0 ? valorPago.ToString("#,0") : valorPago.ToString("#,0.00"));
+                    detalheGenericoAdd.ValorAcrescimos = valorAcres;
+                    detalheGenericoAdd.ValorDesconto = valorDesc;
+                    detalheGenericoAdd.ValorPago = valorPago;
                     //detalheGenericoAdd.ValorLiquido = Math.Round(d.SegmentoU.ValorLiquidoASerCreditado, 2);
 
                     #endregion
