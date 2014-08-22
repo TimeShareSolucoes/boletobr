@@ -31,7 +31,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
         public decimal ValorAbatimento { get; set; }
         public decimal ValorIof { get; set; }
         public decimal ValorPago { get; set; }
-        public decimal ValorLiquido { get; set; }
+        //public decimal ValorLiquido { get; set; }
         public decimal ValorOutrasDespesas { get; set; }
         public decimal ValorOutrosCreditos { get; set; }
         public DateTime DataLiquidacao { get; set; }
@@ -73,5 +73,16 @@ namespace BoletoBr.Arquivo.Generico.Retorno
         /// </summary>
         public string StatusProcessamentoRegistro { get; set; }
         #endregion
+
+        public bool Pago
+        {
+            get
+            {
+                if (ValorRecebido > 0 && DataCredito.HasValue)
+                    return true;
+
+                return false;
+            }
+        }
     }
 }

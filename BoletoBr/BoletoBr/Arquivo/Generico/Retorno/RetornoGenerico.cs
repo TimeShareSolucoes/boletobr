@@ -44,12 +44,13 @@ namespace BoletoBr.Arquivo.Generico.Retorno
 
                     var valorAcres = d.SegmentoU.JurosMultaEncargos;
                     var valorDesc = d.SegmentoU.ValorDescontoConcedido + d.SegmentoU.ValorAbatimentoConcedido;
-                    var valorPago = d.SegmentoU.ValorPagoPeloSacado;
+                    //var valorPago = d.SegmentoU.ValorPagoPeloSacado;
+                    var valorRecebido = d.SegmentoU.ValorLiquidoASerCreditado;
 
                     detalheGenericoAdd.ValorAcrescimos = valorAcres;
                     detalheGenericoAdd.ValorDesconto = valorDesc;
-                    detalheGenericoAdd.ValorPago = valorPago;
-                    //detalheGenericoAdd.ValorLiquido = Math.Round(d.SegmentoU.ValorLiquidoASerCreditado, 2);
+                    //detalheGenericoAdd.ValorPago = valorPago;
+                    detalheGenericoAdd.ValorRecebido = valorRecebido;
 
                     #endregion
                     
@@ -97,13 +98,11 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                 detalheGenericoAdd.ValorJurosDesconto = registroAtual.ValorJurosDesconto/100;
                 detalheGenericoAdd.ValorIofDesconto = registroAtual.ValorIofDesconto/100;
                 detalheGenericoAdd.ValorAbatimento = registroAtual.ValorAbatimento/100;
-                detalheGenericoAdd.ValorDesconto = (registroAtual.ValorDoTituloParcela/100) -
-                                                   (registroAtual.ValorLiquidoRecebido);
-                detalheGenericoAdd.ValorRecebido = registroAtual.ValorLiquidoRecebido;
+                detalheGenericoAdd.ValorDesconto = registroAtual.ValorDesconto/100;
+                detalheGenericoAdd.ValorRecebido = registroAtual.ValorLiquidoRecebido/100;
                 detalheGenericoAdd.ValorAcrescimos = registroAtual.ValorJurosDeMora/100;
                 detalheGenericoAdd.ValorOutrosRecebimentos = registroAtual.ValorOutrosRecebimentos/100;
-                detalheGenericoAdd.ValorAbatimentoNaoAproveitadoPeloSacado =
-                    registroAtual.ValorAbatimentosNaoAproveitado/100;
+                detalheGenericoAdd.ValorAbatimentoNaoAproveitadoPeloSacado = registroAtual.ValorAbatimentosNaoAproveitado/100;
                 detalheGenericoAdd.ValorLancamento = registroAtual.ValorLancamento/100;
                 detalheGenericoAdd.DataLiquidacao = Convert.ToDateTime(registroAtual.DataLiquidacao.ToString("d"));
                 detalheGenericoAdd.InscricaoSacado = registroAtual.NumeroInscricaoSacado.ToString();
