@@ -70,7 +70,7 @@ namespace BoletoBr.Bancos.Itau
             try
             {
                 //Carteiras v�lidas
-                string[] cv = new string[] { "107", "109", "121", "122", "126", "131", "142", "143", "146", "150", "169", "175", "176", "178", "196", "198" };
+                string[] cv = new string[] { "107", "109", "121", "122", "126", "131", "142", "143", "145", "146", "150", "168", "169", "175", "176", "178", "196", "198" };
                 bool valida = false;
 
                 foreach (string c in cv)
@@ -86,27 +86,30 @@ namespace BoletoBr.Bancos.Itau
                     {
                         carteirasImplementadas.AppendFormat(" {0}", c);
                     }
-                    throw new NotImplementedException("Carteira n�o implementada: " + boleto.CarteiraCobranca.Codigo +
+                    throw new NotImplementedException("Carteira não implementada: " + boleto.CarteiraCobranca.Codigo +
                                                       carteirasImplementadas);
                 }
+
+                string nroDoc = boleto.NumeroDocumento.Replace("-", "");
+
                 //Verifica se o tamanho para o NossoNumero s�o 8 d�gitos
-                if (Convert.ToInt32(boleto.NossoNumeroFormatado).ToString().Length > 8)
-                    throw new NotImplementedException("A quantidade de d�gitos do nosso n�mero para a carteira " +
-                                                      boleto.CarteiraCobranca.Codigo + ", s�o 8 n�meros.");
-                else if (Convert.ToInt32(boleto.NossoNumeroFormatado).ToString().Length < 8)
-                    boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero.PadLeft(8, '0'));
+                //if (boleto.NossoNumeroFormatado.ToString().Length > 8)
+                //    throw new NotImplementedException("A quantidade de dígitos do nosso número para a carteira " +
+                //                                      boleto.CarteiraCobranca.Codigo + ", s�o 8 n�meros.");
+                //else if (boleto.NossoNumeroFormatado.ToString().Length < 8)
+                //    boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero.PadLeft(8, '0'));
 
                 //� obrigat�rio o preenchimento do n�mero do documento
                 if (boleto.CarteiraCobranca.Codigo == "106" || boleto.CarteiraCobranca.Codigo == "107" || boleto.CarteiraCobranca.Codigo == "122" ||
                     boleto.CarteiraCobranca.Codigo == "142" || boleto.CarteiraCobranca.Codigo == "143" || boleto.CarteiraCobranca.Codigo == "195" ||
                     boleto.CarteiraCobranca.Codigo == "196" || boleto.CarteiraCobranca.Codigo == "198")
                 {
-                    if (Convert.ToInt32(boleto.NumeroDocumento) == 0)
-                        throw new NotImplementedException("O n�mero do documento n�o pode ser igual a zero.");
+                    if (Convert.ToInt32(nroDoc) == 0)
+                        throw new NotImplementedException("O número do documento não pode ser igual a zero.");
                 }
 
                 //Formato o n�mero do documento 
-                if (Convert.ToInt32(boleto.NumeroDocumento) > 0)
+                if (Convert.ToInt32(nroDoc) > 0)
                     boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(7, '0');
 
                 // Calcula o DAC do Nosso N�mero a maioria das carteiras
@@ -129,8 +132,8 @@ namespace BoletoBr.Bancos.Itau
                     Common.Mod10(boleto.CedenteBoleto.ContaBancariaCedente.Agencia + boleto.CedenteBoleto.ContaBancariaCedente.Conta).ToString();
 
                 //Verifica se o nosso n�mero � v�lido
-                if (Convert.ToInt64(boleto.NossoNumeroFormatado) == 0)
-                    throw new NotImplementedException("Nosso n�mero inv�lido");
+                if (Convert.ToInt64(boleto.NossoNumeroFormatado.Replace("/", "").Replace("-", "")) == 0)
+                    throw new NotImplementedException("Nosso número inválido");
 
                 //Verifica se data do processamento � valida
                 //if (boleto.DataProcessamento.ToString("dd/MM/yyyy") == "01/01/0001")
@@ -142,38 +145,49 @@ namespace BoletoBr.Bancos.Itau
                 if (boleto.DataDocumento == DateTime.MinValue) // diegomodolo (diego.ribeiro@nectarnet.com.br)
                     boleto.DataDocumento = DateTime.Now;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw new Exception("Erro ao validar boletos.", e);
+                throw new Exception("Falha ao validar boleto (s).", ex);
             }
         }
 
         public void GerarDacNossoNumero(Boleto boleto)
         {
+            string nossoNum = boleto.NossoNumeroFormatado.Replace("/", "").Replace("-", "");
+
             // Calcula o DAC do Nosso N�mero a maioria das carteiras
             // agencia/conta/carteira/nosso numero
             if (boleto.CarteiraCobranca.Codigo != "126" && boleto.CarteiraCobranca.Codigo != "131"
                 && boleto.CarteiraCobranca.Codigo != "145" && boleto.CarteiraCobranca.Codigo != "150"
                 && boleto.CarteiraCobranca.Codigo != "168")
                 _dacNossoNumero = Common.Mod10(boleto.CedenteBoleto.ContaBancariaCedente.Agencia + boleto.CedenteBoleto.ContaBancariaCedente.Conta +
-                          boleto.CarteiraCobranca.Codigo + boleto.NossoNumeroFormatado);
+                          boleto.CarteiraCobranca.Codigo + nossoNum);
             else
                 // Excess�o 126 - 131 - 146 - 150 - 168
                 // carteira/nosso numero
-                _dacNossoNumero = Common.Mod10(boleto.CarteiraCobranca + boleto.NossoNumeroFormatado);
+                _dacNossoNumero = Common.Mod10(boleto.CarteiraCobranca + nossoNum);
         }
 
         public void FormataMoeda(Boleto boleto)
         {
-            boleto.Moeda = this.MoedaBanco;
+            try
+            {
+                boleto.Moeda = this.MoedaBanco;
 
-            if (string.IsNullOrEmpty(boleto.Moeda))
-                throw new Exception("Espécie/Moeda para o boleto não foi informada.");
+                if (string.IsNullOrEmpty(boleto.Moeda))
+                    throw new Exception("Espécie/Moeda para o boleto não foi informada.");
 
-            if ((boleto.Moeda == "0") || (boleto.Moeda == "REAL") || (boleto.Moeda == "R$"))
-                boleto.Moeda = "R$";
-            else
-                boleto.Moeda = "1";
+                if ((boleto.Moeda == "0") || (boleto.Moeda == "REAL") || (boleto.Moeda == "R$"))
+                    boleto.Moeda = "R$";
+                else
+                    boleto.Moeda = "1";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(string.Format("<BoletoBr>" + 
+                    "{0}Mensagem: Falha ao formatar moeda para o Banco: " + 
+                    CodigoBanco + " - " + NomeBanco, Environment.NewLine), ex);
+            }
         }
 
         public void FormatarBoleto(Boleto boleto)
@@ -183,13 +197,14 @@ namespace BoletoBr.Bancos.Itau
 
             boleto.ValidaDadosEssenciaisDoBoleto();
 
-            FormataNumeroDocumento(boleto);
             FormataNossoNumero(boleto);
             FormataCodigoBarra(boleto);
             FormataLinhaDigitavel(boleto);
             FormataMoeda(boleto);
 
             ValidaBoletoComNormasBanco(boleto);
+
+            FormataNumeroDocumento(boleto);
         }
 
         public void FormataCodigoBarra(Boleto boleto)
@@ -206,7 +221,6 @@ namespace BoletoBr.Bancos.Itau
                 string numeroDocumento = boleto.NumeroDocumento.PadLeft(7, '0');
                 string codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(5, '0');
                 
-                /* Carteira 110 incluída somente para testes */
                 if ((boleto.CarteiraCobranca.Codigo == "109") || (boleto.CarteiraCobranca.Codigo == "198") ||
                     (boleto.CarteiraCobranca.Codigo == "121") || (boleto.CarteiraCobranca.Codigo == "175") ||
                     (boleto.CarteiraCobranca.Codigo == "176") || (boleto.CarteiraCobranca.Codigo == "178"))
@@ -234,7 +248,8 @@ namespace BoletoBr.Bancos.Itau
             }
             catch (Exception ex)
             {
-                throw new Exception("Erro ao formatar c�digo de barras.", ex);
+                throw new Exception(string.Format("<BoletoBr>" +
+                    "{0}Mensagem: Falha ao formatar código de barras.", Environment.NewLine), ex);
             }
         }
 
@@ -242,7 +257,7 @@ namespace BoletoBr.Bancos.Itau
         {
             try
             {
-                string numeroDocumento = boleto.NumeroDocumento.PadLeft(7, '0');
+                string numeroDocumento = boleto.NumeroDocumento.Replace("-", "").PadLeft(7, '0');
                 string codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(5, '0');
 
                 string AAA = CodigoBanco;
@@ -400,14 +415,17 @@ namespace BoletoBr.Bancos.Itau
                 else if (boleto.CarteiraCobranca.Codigo == "126" || boleto.CarteiraCobranca.Codigo == "131" || boleto.CarteiraCobranca.Codigo == "146" ||
                          boleto.CarteiraCobranca.Codigo == "150" || boleto.CarteiraCobranca.Codigo == "168")
                 {
-                    throw new NotImplementedException("Fun��o n�o implementada.");
+                    throw new NotImplementedException("Função não implementada.");
                 }
 
                 boleto.LinhaDigitavelBoleto = C1 + C2 + C3 + K + C5;
             }
             catch (Exception ex)
             {
-                throw new Exception("Erro ao formatar linha digit�vel.", ex);
+                throw new Exception(string.Format("<BoletoBr>" +
+                                                  "{0}Mensagem: Falha ao formatar linha digitável." +
+                                                  "{0}Carteira: " + boleto.CarteiraCobranca.Codigo +
+                                                  "{0}Documento: " + boleto.NumeroDocumento, Environment.NewLine), ex);
             }
         }
 
@@ -421,7 +439,11 @@ namespace BoletoBr.Bancos.Itau
             }
             catch (Exception ex)
             {
-                throw new Exception("Erro ao formatar nosso n�mero", ex);
+                throw new Exception(string.Format("<BoletoBr>" +
+                                                "{0}Mensagem: Falha ao formatar nosso número."  +
+                                                "{0}Carteira: " + boleto.CarteiraCobranca.Codigo +
+                                                "{0}Numeração Sequencial: " + boleto.NossoNumeroFormatado + " - " + 
+                                                "DAC: " + _dacNossoNumero, Environment.NewLine), ex);
             }
         }
 
@@ -433,7 +455,8 @@ namespace BoletoBr.Bancos.Itau
             }
             catch (Exception ex)
             {
-                throw new Exception("Erro ao formatar n�mero do documento.", ex);
+                throw new Exception(string.Format("<BoletoBr>" +
+                                                "{0}Mensagem: Falha ao formatar número do documento.", Environment.NewLine), ex);
             }
         }
 

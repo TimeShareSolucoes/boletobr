@@ -143,7 +143,7 @@ namespace BoletoBr.Bancos.Itau
                 #region INSTRUÇÕES REMESSA
 
                 if (boleto.InstrucoesDoBoleto.Count > 2)
-                    throw new Exception(String.Concat("<BoletoBr>" + Environment.NewLine + "Mensagem: Não são aceitas mais que 2 instruções padronizadas para remessa de boletos no banco Itaú."));
+                    throw new Exception(string.Format("<BoletoBr>{0}Mensagem: Não são aceitas mais que 2 instruções padronizadas para remessa de boletos no banco Itaú.", Environment.NewLine));
 
                 var primeiraInstrucao = boleto.InstrucoesDoBoleto.FirstOrDefault();
                 var segundaInstrucao = boleto.InstrucoesDoBoleto.LastOrDefault();
