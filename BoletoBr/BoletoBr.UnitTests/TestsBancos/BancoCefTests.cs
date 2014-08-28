@@ -230,9 +230,9 @@ namespace BoletoBr.UnitTests.Tests.Bancos.CEF
              */
             var banco = Fabricas.BancoFactory.ObterBanco("104", "0");
 
-            var contaBancariaCedente = new ContaBancaria("007", "8", "", "");
+            var contaBancariaCedente = new ContaBancaria("1839", "", "", "");
 
-            var cedente = new Cedente("8351202", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
+            var cedente = new Cedente("256803", "", 9, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
 
             var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
             {
@@ -247,18 +247,21 @@ namespace BoletoBr.UnitTests.Tests.Bancos.CEF
             });
 
             var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("SR"));
-            boleto.NumeroDocumento = "123";
-            boleto.ValorBoleto = Convert.ToDecimal(15.56);
-            boleto.SequencialNossoNumero = "123";
-            boleto.DataVencimento = new DateTime(2008, 06, 27);
+            boleto.NumeroDocumento = "090972714";
+            boleto.ValorBoleto = Convert.ToDecimal(119.90);
+            boleto.SequencialNossoNumero = "46286";
+            boleto.DataVencimento = new DateTime(2014, 09, 15);
 
             banco.FormataNossoNumero(boleto);
             banco.FormataCodigoBarra(boleto);
             banco.FormataLinhaDigitavel(boleto);
 
-            const string valorEsperado = "00398391600000015560078000100000000000001238";
-            Assert.AreEqual(valorEsperado.Length, boleto.CodigoBarraBoleto.Length);
-            Assert.AreEqual(valorEsperado, boleto.CodigoBarraBoleto);
+            const string valorEsperadoCodBar = "10493618700000119902568039000200040000462868"; // Código de Barras
+            const string valorEsperadoLinhaDig = "10492.56801 39000.200046 00004.628681 3 61870000011990"; // Linha Digitável
+            Assert.AreEqual(valorEsperadoCodBar.Length, boleto.CodigoBarraBoleto.Length);
+            Assert.AreEqual(valorEsperadoCodBar, boleto.CodigoBarraBoleto);
+            Assert.AreEqual(valorEsperadoLinhaDig.Length, boleto.LinhaDigitavelBoleto.Length);
+            Assert.AreEqual(valorEsperadoLinhaDig, boleto.LinhaDigitavelBoleto);
         }
 
         #endregion Carteira SR - SEM REGISTRO

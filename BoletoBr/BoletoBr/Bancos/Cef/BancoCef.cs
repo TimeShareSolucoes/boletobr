@@ -45,7 +45,7 @@ namespace BoletoBr.Bancos.Cef
             this.DigitoBanco = "0";
             this.NomeBanco = "Caixa Econômica Federal";
             this.LocalDePagamento = "Pagável preferencialmente nas agências da Caixa ou Lotéricas.";
-            this.MoedaBanco = "1";
+            this.MoedaBanco = "9";
 
             /* Adiciona carteiras de cobrança */
             _carteirasCobrancaCef = new List<CarteiraCobranca>();
@@ -201,27 +201,27 @@ namespace BoletoBr.Bancos.Cef
             {
                 if (boleto.CarteiraCobranca.Codigo.Equals("SR") || boleto.CarteiraCobranca.Codigo.Equals("RG"))
                 {
-                    //14 POSI�OES
-                    if (boleto.NossoNumeroFormatado.Length == 14)
-                    {
-                        //Posi��o 20 - 24
-                        string contaCedente = boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(5, '0');
+                    ////14 POSI�OES
+                    //if (boleto.NossoNumeroFormatado.Length == 14)
+                    //{
+                    //    //Posi��o 20 - 24
+                    //    string contaCedente = boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(5, '0');
 
-                        // Posi��o 25 - 28
-                        string agenciaCedente = boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0');
+                    //    // Posi��o 25 - 28
+                    //    string agenciaCedente = boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0');
 
-                        //Posi��o 29
-                        const string codigoCarteira = "8";
+                    //    //Posi��o 29
+                    //    const string codigoCarteira = "8";
 
-                        //Posi��o 30
-                        const string constante = "7";
+                    //    //Posi��o 30
+                    //    const string constante = "7";
 
-                        //Posi��o 31 - 44
-                        string nossoNumero = boleto.NossoNumeroFormatado;
+                    //    //Posi��o 31 - 44
+                    //    string nossoNumero = boleto.NossoNumeroFormatado;
 
-                        campoLivre = string.Format("{0}{1}{2}{3}{4}", contaCedente, agenciaCedente, codigoCarteira,
-                            constante, nossoNumero);
-                    }
+                    //    campoLivre = string.Format("{0}{1}{2}{3}{4}", contaCedente, agenciaCedente, codigoCarteira,
+                    //        constante, nossoNumero);
+                    //}
                     //17 POSI��ES
                     if (boleto.NossoNumeroFormatado.Length == 17)
                     {
@@ -442,7 +442,15 @@ namespace BoletoBr.Bancos.Cef
 
         public void FormataNossoNumero(Boleto boleto)
         {
-            boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero);
+            if (String.IsNullOrEmpty(boleto.SequencialNossoNumero))
+                throw new Exception("Sequencial nosso número não pode estar em branco.");
+
+            if (boleto.SequencialNossoNumero.Length > 15)
+                throw new Exception("Sequencial nosso número não pode exceder 15 dígitos.");
+
+            string dvNossoNumero;
+
+            boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero.PadLeft(15, '0'));
 
             //Atribui ao Nosso Número o Identificador de Cobrança + Identificador do Emissor
             if (boleto.CarteiraCobranca.Codigo.Equals("RG"))
@@ -450,14 +458,24 @@ namespace BoletoBr.Bancos.Cef
                 boleto.SetNossoNumeroFormatado(
                     IdentificadorTipoCobrancaCarteiraSicgbRg +
                     IdentificadorEmissaoCedente +
-                    boleto.NossoNumeroFormatado.PadLeft(15, '0'));
+                    boleto.NossoNumeroFormatado);
+
+                // Permite 0 (zero) no DV do Nosso Número
+                dvNossoNumero = Common.Mod11(boleto.NossoNumeroFormatado).ToString();
+
+                boleto.SetNossoNumeroFormatado(string.Format("{0}-{1}", boleto.NossoNumeroFormatado, dvNossoNumero));
             }
             else if (boleto.CarteiraCobranca.Codigo.Equals("SR"))
             {
                 boleto.SetNossoNumeroFormatado(
                     IdentificadorTipoCobrancaCarteiraSicgbSr +
                     IdentificadorEmissaoCedente +
-                    boleto.NossoNumeroFormatado.PadLeft(12, '0'));
+                    boleto.NossoNumeroFormatado);
+
+                // Permite 0 (zero) no DV do Nosso Número
+                dvNossoNumero = Common.Mod11(boleto.NossoNumeroFormatado).ToString();
+
+                boleto.SetNossoNumeroFormatado(string.Format("{0}-{1}", boleto.NossoNumeroFormatado, dvNossoNumero));
             }
             else
             {
