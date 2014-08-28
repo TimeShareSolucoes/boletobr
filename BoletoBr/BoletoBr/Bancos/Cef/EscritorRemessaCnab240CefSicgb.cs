@@ -123,17 +123,17 @@ namespace BoletoBr.Bancos.Cef
                 detalhe = detalhe.PreencherValorNaLinha(24, 29, boleto.BancoBoleto.CodigoBanco);// Código do Convênio no Banco        // Verificar depois         
                 detalhe = detalhe.PreencherValorNaLinha(30, 37, "0");// Uso Exclusivo CAIXA
                 detalhe = detalhe.PreencherValorNaLinha(38, 40, "0");// Uso Exclusivo CAIXA
-                 detalhe = detalhe.PreencherValorNaLinha(41, 42, "");// Modalidade da Carteira
+                detalhe = detalhe.PreencherValorNaLinha(41, 42, boleto.TipoModalidade);// Modalidade da Carteira
                 detalhe = detalhe.PreencherValorNaLinha(43, 57, boleto.NossoNumeroFormatado.PadLeft(15, ' '));// Identificaçao do Título no Banco
                             /*Código da Carteira*/
                 // Modalidade de Carteira D - Direta
-                if (carteiraCob == "108")           // Verificar depois
+                if (carteiraCob == "58")           // Verificar depois
                     detalhe = detalhe.PreencherValorNaLinha(58, 58, "D");
                 // Modalidade de Carteira S - Sem Registro
-                if (carteiraCob == "103" || carteiraCob == "173" || carteiraCob == "196")         // Verificar depois
+                if (carteiraCob == "" || carteiraCob == "" || carteiraCob == "")         // Verificar depois
                     detalhe = detalhe.PreencherValorNaLinha(58, 58, "S");
                 // Modalidade de Carteira E - Escritural 
-                if (carteiraCob == "104" || carteiraCob == "112" || carteiraCob == "138" || carteiraCob == "147")        // Verificar depois
+                if (carteiraCob == "" || carteiraCob == "" || carteiraCob == "" || carteiraCob == "")        // Verificar depois
                     detalhe = detalhe.PreencherValorNaLinha(58, 58, "E"); 
                              
                  detalhe = detalhe.PreencherValorNaLinha(59, 59, "");// Forma de Cadastr. do Título no Banco
@@ -146,24 +146,24 @@ namespace BoletoBr.Bancos.Cef
                 detalhe = detalhe.PreencherValorNaLinha(86, 100, "");// Valor Nominal do Título
                 detalhe = detalhe.PreencherValorNaLinha(101, 105, "0");// Agência Encarregada da Cobrança
                 detalhe = detalhe.PreencherValorNaLinha(106, 106, "0");// Dígito Verificador da Agência
-                detalhe = detalhe.PreencherValorNaLinha(107, 108, "");// Espécia do Título
+                detalhe = detalhe.PreencherValorNaLinha(107, 108, boleto.Especie.Especie.PadLeft(2, ' '));// Espécia do Título       // Verificar depois
                 detalhe = detalhe.PreencherValorNaLinha(109, 109, boleto.Aceite);// Identific. de Título Aceito/Não Aceito
                 detalhe = detalhe.PreencherValorNaLinha(110, 117, DateTime.Now.ToString("d").Replace("/", ""));// Data da Emissão de Título
                 detalhe = detalhe.PreencherValorNaLinha(118, 118, "");// Código do Juros de Mora
-                detalhe = detalhe.PreencherValorNaLinha(119, 126, "");// Data do Juros de Mora
-                detalhe = detalhe.PreencherValorNaLinha(127, 141, string.Format("{0:0.##}", boleto.JurosMora).PadLeft(13,'0'));// Juros de Mora por Dia/Taxa
+                detalhe = detalhe.PreencherValorNaLinha(119, 126, boleto.DataJurosMora.ToString("d").Replace("/", ""));// Data do Juros de Mora        // Verificar depois
+                detalhe = detalhe.PreencherValorNaLinha(127, 141, string.Format("{0:0.##}", boleto.JurosMora).PadLeft(13,'0'));// Juros de Mora por Dia/Taxa       // Verificar depois
                 detalhe = detalhe.PreencherValorNaLinha(142, 142, "");// Código do Desconto 1
-                detalhe = detalhe.PreencherValorNaLinha(143, 150, "");// Data do Desconto 1
-                detalhe = detalhe.PreencherValorNaLinha(151, 165, "");// Valor/Percentual a ser Concedido
-                detalhe = detalhe.PreencherValorNaLinha(166, 180, "");// Valor do IOF a ser Recolhido
-                detalhe = detalhe.PreencherValorNaLinha(181, 195, "");// Valor do Abatimento
-                detalhe = detalhe.PreencherValorNaLinha(196, 220, "");// Identificação do Título na Empresa
-                detalhe = detalhe.PreencherValorNaLinha(221, 221, "");// Código para Protesto
-                detalhe = detalhe.PreencherValorNaLinha(222, 223, "");// Número de Dias para Protesto
-                detalhe = detalhe.PreencherValorNaLinha(224, 224, "");// Código para Baixa/Devolução
-                detalhe = detalhe.PreencherValorNaLinha(225, 227, "");// Número de Dias para Baixa/Devolução 
-                detalhe = detalhe.PreencherValorNaLinha(228, 229, "0");// Código da Moeda
-                detalhe = detalhe.PreencherValorNaLinha(230, 239, "");// Uso Exclusivo CAIXA
+                detalhe = detalhe.PreencherValorNaLinha(143, 150, boleto.DataDesconto.ToString("d").Replace("/", ""));// Data do Desconto 1          // Verificar depois
+                detalhe = detalhe.PreencherValorNaLinha(151, 165, string.Format("{0:0.##}", boleto.ValorDesconto).PadLeft(13,'0'));// Valor/Percentual a ser Concedido      // Verificar depois
+                detalhe = detalhe.PreencherValorNaLinha(166, 180, string.Format("{0:0.##}", boleto.Iof).PadLeft(13, '0'));// Valor do IOF a ser Recolhido 
+                detalhe = detalhe.PreencherValorNaLinha(181, 195, string.Format("{0:0.##}", boleto.ValorAbatimento).PadLeft(13, '0'));// Valor do Abatimento
+                detalhe = detalhe.PreencherValorNaLinha(196, 220, boleto.NumeroDocumento.PadLeft(25, ' '));// Identificação do Título na Empresa
+                 detalhe = detalhe.PreencherValorNaLinha(221, 221, "");// Código para Protesto
+                 detalhe = detalhe.PreencherValorNaLinha(222, 223, "");// Número de Dias para Protesto
+                 detalhe = detalhe.PreencherValorNaLinha(224, 224, "");// Código para Baixa/Devolução
+                 detalhe = detalhe.PreencherValorNaLinha(225, 227, "");// Número de Dias para Baixa/Devolução 
+                 detalhe = detalhe.PreencherValorNaLinha(228, 229, "");// Código da Moeda
+                detalhe = detalhe.PreencherValorNaLinha(230, 239, "0");// Uso Exclusivo CAIXA
                 detalhe = detalhe.PreencherValorNaLinha(240, 240, "");// Uso Exclusivo FREBRABAN/CNAB
 
                 return detalhe;
@@ -176,6 +176,19 @@ namespace BoletoBr.Bancos.Cef
         
             }
 
+        }
+
+        public string EscreverDetalheSegQ(Boleto boleto, int numeroRegistro)
+        {
+            string detalheQ = new string(' ', 240);
+            try
+      {         detalheQ = detalheQ.PreencherValorNaLinha(1, 3, "104");
+                detalheQ = detalheQ.PreencherValorNaLinha(4, 7, "");
+                detalheQ = detalheQ.PreencherValorNaLinha(8, 8, "3");
+                detalheQ = detalheQ.PreencherValorNaLinha(9, 13, "");
+                detalheQ = detalheQ.PreencherValorNaLinha(14, 14, "Q");
+                detalheQ = detalheQ.PreencherValorNaLinha(15, 15, "");
+                
         }
      
         
