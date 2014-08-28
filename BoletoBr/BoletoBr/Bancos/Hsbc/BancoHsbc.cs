@@ -411,6 +411,7 @@ namespace BoletoBr.Bancos.Hsbc
             _digitoAutoConferenciaNossoNumero = Common.Mod11(boleto.NossoNumeroFormatado, 7).ToString();
             FormataCodigoBarra(boleto);
             FormataLinhaDigitavel(boleto);
+            FormataMoeda(boleto);
 
             ValidaBoletoComNormasBanco(boleto);
         }

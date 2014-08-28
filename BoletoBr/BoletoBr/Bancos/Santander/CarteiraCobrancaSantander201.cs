@@ -12,7 +12,7 @@ namespace BoletoBr.Bancos.Santander
         {
             this.Codigo = "201";
             this.Tipo = "";
-            this.Descricao = "";
+            this.Descricao = "Penhor Rápida com Registro";
         }
     }
 }

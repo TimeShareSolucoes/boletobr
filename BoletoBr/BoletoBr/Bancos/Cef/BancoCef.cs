@@ -104,7 +104,7 @@ namespace BoletoBr.Bancos.Cef
             if (string.IsNullOrEmpty(boleto.Moeda))
                 throw new Exception("Espécie/Moeda para o boleto não foi informada.");
 
-            if ((boleto.Moeda == "1") || (boleto.Moeda == "REAL") || (boleto.Moeda == "R$"))
+            if ((boleto.Moeda == "9") || (boleto.Moeda == "REAL") || (boleto.Moeda == "R$"))
                 boleto.Moeda = "R$";
             else
                 boleto.Moeda = "0";

@@ -12,7 +12,7 @@ namespace BoletoBr.Bancos.Santander
         {
             this.Codigo = "102";
             this.Tipo = "";
-            this.Descricao = "";
+            this.Descricao = "Cobrança Simples SEM Registro";
         }
     }
 }
