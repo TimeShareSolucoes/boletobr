@@ -75,76 +75,26 @@ namespace BoletoBr.Bancos.Cef
 
         public void ValidaBoletoComNormasBanco(Boleto boleto)
         {
-            if (boleto.CarteiraCobranca.Codigo.Equals("SR"))
+            if (boleto.CarteiraCobranca == null)
             {
-                if ((boleto.NossoNumeroFormatado.Length != 10) && (boleto.NossoNumeroFormatado.Length != 14) &&
-                    (boleto.NossoNumeroFormatado.Length != 17))
-                {
-                    throw new Exception(
-                        "Nosso N�mero inv�lido, Para Caixa Econ�mica - Carteira SR o Nosso N�mero deve conter 10, 14 ou 17 posi��es.");
-                }
-            }
-            else if (boleto.CarteiraCobranca.Codigo.Equals("RG"))
-            {
-                if (boleto.NossoNumeroFormatado.Length != 17)
-                    throw new Exception(
-                        "Nosso n�mero inv�lido. Para Caixa Econ�mica - SIGCB carteira r�pida, o nosso n�mero deve conter 17 caracteres.");
-            }
-            else if (boleto.CarteiraCobranca.Codigo.Equals("CS"))
-            {
-                foreach (char ch in boleto.NossoNumeroFormatado)
-                {
-                    if (!ch.Equals('0'))
-                        throw new Exception(
-                            "Nosso N�mero inv�lido, Para Caixa Econ�mica - SIGCB carteira simples, o Nosso N�mero deve estar zerado.");
-                }
-            }
-            else
-            {
-                if (boleto.NossoNumeroFormatado.Length != 10)
-                {
-                    throw new Exception(
-                        "Nosso N�mero inv�lido, Para Caixa Econ�mica carteira indefinida, o Nosso N�mero deve conter 10 caracteres.");
-                }
+                throw new Exception("Carteira de cobrança não especificada");
             }
 
-            if (!boleto.CedenteBoleto.CodigoCedente.Equals(0))
+            if (!(boleto.CarteiraCobranca.Codigo.Equals("SR") || boleto.CarteiraCobranca.Codigo.Equals("RG")))
             {
-                if (boleto.CedenteBoleto.CodigoCedente.Length > 6)
-                    throw new Exception("O c�digo do cedente deve conter apenas 6 d�gitos");
-
-                string codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(6, '0');
-                string dvCodigoCedente = Common.Mod11Base9(codigoCedente).ToString(); //Base9 
-
-                if (boleto.CedenteBoleto.DigitoCedente.Equals(-1))
-                    boleto.CedenteBoleto.DigitoCedente = Convert.ToInt32(dvCodigoCedente);
-
-                boleto.CedenteBoleto.CodigoCedente = String.Format("{0}/{1}-{2}",
-                    boleto.CedenteBoleto.ContaBancariaCedente.Agencia, codigoCedente, dvCodigoCedente);
-            }
-            else
-            {
-                throw new Exception("Informe o c�digo do cedente.");
+                throw new Exception("Carteira cobrança com código: " + boleto.CarteiraCobranca.Codigo + " não é suportada.");
             }
 
-            //if (boleto.CedenteBoleto.DigitoCedente == -1)
-            //    boleto.CedenteBoleto.DigitoCedente = Common.Mod11Base9(boleto.CedenteBoleto.CodigoCedente);
+            if (boleto.NossoNumeroFormatado.Length != 19)
+            {
+                throw new Exception("Nosso Número Formatado não pode ter tamanho diferente de 19 dígitos.");
+            }
 
-            //if (boleto.DataDocumento == DateTime.MinValue)
-            //    boleto.DataDocumento = DateTime.Now;
+            if (String.IsNullOrEmpty(boleto.CedenteBoleto.CodigoCedente))
+                throw new Exception("Código do cedente não foi informado.");
 
-            /* 
-             * Na Carteira Simples n�o � necess�rio gerar a impress�o do boleto,
-             * logo n�o � necess�rio formatar linha digit�vel nem c�d de barras
-             * J�ferson (jefhtavares) em 10/03/14
-             */
-
-            //if (!boleto.CarteiraCobranca.Codigo.Equals("CS"))
-            //{
-            //    FormataCodigoBarra(boleto);
-            //    FormataLinhaDigitavel(boleto);
-            //    FormataNossoNumero(boleto);
-            //}
+            if (boleto.CedenteBoleto.CodigoCedente.Length > 6)
+                throw new Exception("O código do cedente deve no máximo 6 dígitos");
         }
 
         public void FormataMoeda(Boleto boleto)
@@ -174,10 +124,37 @@ namespace BoletoBr.Bancos.Cef
             FormataMoeda(boleto);
 
             ValidaBoletoComNormasBanco(boleto);
+
+            /* Formata o código do cedente
+             * Inserindo o dígito verificador
+             */
+            string codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(6, '0');
+            string dvCodigoCedente = Common.Mod11Base9(codigoCedente).ToString(); //Base9 
+
+            if (boleto.CedenteBoleto.DigitoCedente.Equals(-1))
+                boleto.CedenteBoleto.DigitoCedente = Convert.ToInt32(dvCodigoCedente);
+
+            boleto.CedenteBoleto.CodigoCedente = String.Format("{0}/{1}-{2}",
+                boleto.CedenteBoleto.ContaBancariaCedente.Agencia, codigoCedente, dvCodigoCedente);
         }
 
         public void FormataCodigoBarra(Boleto boleto)
         {
+            if (boleto.CarteiraCobranca == null)
+            {
+                throw new Exception("Carteira de cobrança não especificada");
+            }
+            
+            if (!(boleto.CarteiraCobranca.Codigo.Equals("SR") || boleto.CarteiraCobranca.Codigo.Equals("RG")))
+            {
+                throw new Exception("Carteira cobrança com código: " + boleto.CarteiraCobranca.Codigo + " não é suportada.");
+            }
+
+            if (boleto.NossoNumeroFormatado.Length != 19)
+            {
+                throw new Exception("Nosso Número Formatado não pode ter tamanho diferente de 19 dígitos.");
+            }
+
             // Posi��o 01-03
             string banco = CodigoBanco;
 
@@ -196,108 +173,82 @@ namespace BoletoBr.Bancos.Cef
             // Inicio Campo livre
             string campoLivre = string.Empty;
 
-            //ESSA IMPLEMENTA��O FOI FEITA PARA CARTEIAS SIGCB "SR" COM NOSSO NUMERO DE 14 e 17 POSI��ES
-            if (boleto.CarteiraCobranca != null)
+            /* Presumimos que o nosso número formatado tem:
+             * 19 dígitos no total se incluir o dígito verificador.
+             * Para o cálculo do código de barras, precisamos do nosso número, sem o dígito verificador.
+             * Para obter esse valor, vamos remover os 2 últimos dígitos.
+             */
+            string nossoNumeroFormatadoSemDigito =
+                boleto.NossoNumeroFormatado.Substring(0, 17);
+
+            //104 - Caixa Econ�mica Federal S.A. 
+            //Carteira SR - 24 (cobran�a sem registro) || Carteira RG - 14 (cobran�a com registro)
+            //Cobran�a sem registro, nosso n�mero com 17 d�gitos. 
+
+            //Posi��o 20 - 25
+            string codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(6, '0');
+
+            // Posi��o 26
+            string dvCodigoCedente = Common.Mod11Base9(codigoCedente).ToString();
+
+            //Posi��o 27 - 29
+            //De acordo com documenta��o, posi��o 3 a 5 do nosso numero
+            string primeiraParteNossoNumeroSemDigito = nossoNumeroFormatadoSemDigito.Substring(2, 3);
+
+            //Posi��o 30
+            string primeiraConstante;
+            switch (boleto.CarteiraCobranca.Codigo)
             {
-                if (boleto.CarteiraCobranca.Codigo.Equals("SR") || boleto.CarteiraCobranca.Codigo.Equals("RG"))
-                {
-                    ////14 POSI�OES
-                    //if (boleto.NossoNumeroFormatado.Length == 14)
-                    //{
-                    //    //Posi��o 20 - 24
-                    //    string contaCedente = boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(5, '0');
-
-                    //    // Posi��o 25 - 28
-                    //    string agenciaCedente = boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0');
-
-                    //    //Posi��o 29
-                    //    const string codigoCarteira = "8";
-
-                    //    //Posi��o 30
-                    //    const string constante = "7";
-
-                    //    //Posi��o 31 - 44
-                    //    string nossoNumero = boleto.NossoNumeroFormatado;
-
-                    //    campoLivre = string.Format("{0}{1}{2}{3}{4}", contaCedente, agenciaCedente, codigoCarteira,
-                    //        constante, nossoNumero);
-                    //}
-                    //17 POSI��ES
-                    if (boleto.NossoNumeroFormatado.Length == 17)
-                    {
-                        //104 - Caixa Econ�mica Federal S.A. 
-                        //Carteira SR - 24 (cobran�a sem registro) || Carteira RG - 14 (cobran�a com registro)
-                        //Cobran�a sem registro, nosso n�mero com 17 d�gitos. 
-
-                        //Posi��o 20 - 25
-                        string codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(6, '0');
-
-                        // Posi��o 26
-                        string dvCodigoCedente = Common.Mod11Base9(codigoCedente).ToString();
-
-                        //Posi��o 27 - 29
-                        //De acordo com documenta��o, posi��o 3 a 5 do nosso numero
-                        string primeiraParteNossoNumero = boleto.NossoNumeroFormatado.Substring(2, 3);
-
-                        //Posi��o 30
-                        string primeiraConstante;
-                        switch (boleto.CarteiraCobranca.Codigo)
-                        {
-                            case "SR":
-                                primeiraConstante = "2";
-                                break;
-                            case "RG":
-                                primeiraConstante = "1";
-                                break;
-                            default:
-                                primeiraConstante = boleto.CarteiraCobranca.Codigo;
-                                break;
-                        }
-
-                        // Posi��o 31 - 33
-                        //DE acordo com documenta��o, posi��o 6 a 8 do nosso numero
-                        string segundaParteNossoNumero = boleto.NossoNumeroFormatado.Substring(5, 3);
-
-                        // Posi��o 34
-                        const string segundaConstante = "4"; // 4 => emiss�o do boleto pelo cedente
-
-                        //Posi��o 35 - 43
-                        //De acordo com documenta�ao, posi��o 9 a 17 do nosso numero
-                        string terceiraParteNossoNumero = boleto.NossoNumeroFormatado.Substring(8, 9);
-
-                        //Posi��o 44
-                        string ccc = string.Format("{0}{1}{2}{3}{4}{5}{6}",
-                            codigoCedente,
-                            dvCodigoCedente,
-                            primeiraParteNossoNumero,
-                            primeiraConstante,
-                            segundaParteNossoNumero,
-                            segundaConstante,
-                            terceiraParteNossoNumero);
-                        string dvCampoLivre = Common.Mod11Base9(ccc).ToString();
-                        campoLivre = string.Format("{0}{1}", ccc, dvCampoLivre);
-                    }
-                }
-
-                string xxxx = string.Format("{0}{1}{2}{3}{4}", banco, moeda, fatorVencimento, valorDocumento, campoLivre);
-
-                string dvGeral = Common.Mod11(xxxx, 9).ToString();
-                // Posi��o 5
-                _dacBoleto = dvGeral;
-
-                boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}",
-                    banco,
-                    moeda,
-                    dvGeral,
-                    fatorVencimento,
-                    valorDocumento,
-                    campoLivre
-                    );
+                case "SR":
+                    primeiraConstante = "2";
+                    break;
+                case "RG":
+                    primeiraConstante = "1";
+                    break;
+                default:
+                    primeiraConstante = boleto.CarteiraCobranca.Codigo;
+                    break;
             }
-            else
-            {
-                throw new Exception("Carteira de cobrança não especificada");
-            }
+
+            // Posi��o 31 - 33
+            //DE acordo com documenta��o, posi��o 6 a 8 do nosso numero
+            string segundaParteNossoNumeroSemDigito = nossoNumeroFormatadoSemDigito.Substring(5, 3);
+
+            // Posi��o 34
+            const string segundaConstante = "4"; // 4 => emiss�o do boleto pelo cedente
+
+            //Posi��o 35 - 43
+            //De acordo com documenta�ao, posi��o 9 a 17 do nosso numero
+            string terceiraParteNossoNumeroSemDigito = nossoNumeroFormatadoSemDigito.Substring(8, 9);
+
+            //Posi��o 44
+            string ccc = string.Format("{0}{1}{2}{3}{4}{5}{6}",
+                codigoCedente,
+                dvCodigoCedente,
+                primeiraParteNossoNumeroSemDigito,
+                primeiraConstante,
+                segundaParteNossoNumeroSemDigito,
+                segundaConstante,
+                terceiraParteNossoNumeroSemDigito);
+            string dvCampoLivre = Common.Mod11Base9(ccc).ToString();
+            campoLivre = string.Format("{0}{1}", ccc, dvCampoLivre);
+
+            string xxxx = string.Format("{0}{1}{2}{3}{4}", banco, moeda, fatorVencimento, valorDocumento, campoLivre);
+
+            string dvGeral = Common.Mod11(xxxx, 9).ToString();
+            // Posi��o 5
+            _dacBoleto = dvGeral;
+
+            boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}",
+                banco,
+                moeda,
+                dvGeral,
+                fatorVencimento,
+                valorDocumento,
+                campoLivre
+                );
+            
+            
         }
 
         public void FormataLinhaDigitavel(Boleto boleto)
