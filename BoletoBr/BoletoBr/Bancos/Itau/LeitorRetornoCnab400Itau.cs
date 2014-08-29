@@ -96,7 +96,7 @@ namespace BoletoBr.Bancos.Itau
             objRetornar.CodigoDoServico = linha.ExtrairValorDaLinha(10, 11);
             objRetornar.LiteralServico = linha.ExtrairValorDaLinha(12, 26);
             objRetornar.CodigoAgenciaCedente = linha.ExtrairValorDaLinha(27, 30).BoletoBrToInt();
-            objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(33, 37).BoletoBrToInt();
+            objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(33, 37);
             objRetornar.DacAgenciaConta = linha.ExtrairValorDaLinha(38, 38).BoletoBrToInt();
             objRetornar.NomeDoBeneficiario = linha.ExtrairValorDaLinha(47, 76);
             objRetornar.CodigoDoBanco = linha.ExtrairValorDaLinha(77, 79);
@@ -122,7 +122,7 @@ namespace BoletoBr.Bancos.Itau
             objRetornar.NumeroInscricao = linha.ExtrairValorDaLinha(4, 17).BoletoBrToLong();
             objRetornar.CodigoAgenciaCedente = linha.ExtrairValorDaLinha(18, 21).BoletoBrToInt();
             // Zeros
-            objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(24, 28).BoletoBrToInt();
+            objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(24, 28);
             objRetornar.DacAgenciaConta = linha.ExtrairValorDaLinha(29, 29).BoletoBrToInt();
             // Brancos
             objRetornar.CodigoDoDocumentoEmpresa = linha.ExtrairValorDaLinha(38, 62);

@@ -21,10 +21,11 @@ namespace BoletoBr
         public string NomeDoBeneficiario { get; set; }
         public string CodigoDoBanco { get; set; }
         public string NomeDoBanco { get; set; }
-        public long ContaCorrente { get; set; }
+        public string ContaCorrente { get; set; }
+        public string ContaCobranca { get; set; }
         public DateTime DataGeracaoGravacao { get; set; }
         public DateTime DataCredito { get; set; }
-        public long CodigoDoBeneficiario { get; set; }
+        public string CodigoDoBeneficiario { get; set; }
         public string NumeroSequencial { get; set; }
 
         #endregion
@@ -77,6 +78,12 @@ namespace BoletoBr
 
         #endregion
 
+        #region Santander
+
+        public string Versao { get; set; }
+
+        #endregion
+
         #region Método de Leitura HEADER Banco HSBC
 
         /// <summary>
@@ -89,30 +96,30 @@ namespace BoletoBr
         {
             try
             {
-                int dataGravacao = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 95, 100));
+                int dataGravacao = Convert.ToInt32(registro.ExtrairValorDaLinha(95, 100));
 
-                CodigoDoRegistro = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 1, 1));
-                CodigoDeRetorno = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 2, 2));
-                LiteralRetorno = MetodosExtensao.ExtrairValorDaLinha(registro, 3, 9);
-                CodigoDoServico = MetodosExtensao.ExtrairValorDaLinha(registro, 10, 11);
-                LiteralServico = MetodosExtensao.ExtrairValorDaLinha(registro, 12, 26);
-                CodigoAgenciaCedente = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 27, 31));
-                Constante = MetodosExtensao.ExtrairValorDaLinha(registro, 32, 33);
-                ContaCorrente = Convert.ToInt64(MetodosExtensao.ExtrairValorDaLinha(registro, 34, 44));
-                TipoRetorno = MetodosExtensao.ExtrairValorDaLinha(registro, 45, 45);
+                CodigoDoRegistro = Convert.ToInt32(registro.ExtrairValorDaLinha(1, 1));
+                CodigoDeRetorno = Convert.ToInt32(registro.ExtrairValorDaLinha(2, 2));
+                LiteralRetorno = registro.ExtrairValorDaLinha(3, 9);
+                CodigoDoServico = registro.ExtrairValorDaLinha(10, 11);
+                LiteralServico = registro.ExtrairValorDaLinha(12, 26);
+                CodigoAgenciaCedente = Convert.ToInt32(registro.ExtrairValorDaLinha(27, 31));
+                Constante = registro.ExtrairValorDaLinha(32, 33);
+                ContaCorrente = registro.ExtrairValorDaLinha(34, 44);
+                TipoRetorno = registro.ExtrairValorDaLinha(45, 45);
                 // 46 -> 1 branco
-                NomeDoBeneficiario = MetodosExtensao.ExtrairValorDaLinha(registro, 47, 76);
-                CodigoDoBanco = MetodosExtensao.ExtrairValorDaLinha(registro, 77, 79);
-                NomeDoBanco = MetodosExtensao.ExtrairValorDaLinha(registro, 80, 94);
+                NomeDoBeneficiario = registro.ExtrairValorDaLinha(47, 76);
+                CodigoDoBanco = registro.ExtrairValorDaLinha(77, 79);
+                NomeDoBanco = registro.ExtrairValorDaLinha(80, 94);
                 DataGeracaoGravacao = (DateTime) dataGravacao.ToString().ToDateTimeFromDdMmAa();
-                Densidade = MetodosExtensao.ExtrairValorDaLinha(registro, 101, 105);
-                LiteralDensidade = MetodosExtensao.ExtrairValorDaLinha(registro, 106, 108);
-                CodigoDoBeneficiario = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 109, 118));
-                NomeAgencia = MetodosExtensao.ExtrairValorDaLinha(registro, 119, 138);
-                CodigoFormulario = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 139, 142));
+                Densidade = registro.ExtrairValorDaLinha(101, 105);
+                LiteralDensidade = registro.ExtrairValorDaLinha(106, 108);
+                CodigoDoBeneficiario = registro.ExtrairValorDaLinha(109, 118);
+                NomeAgencia = registro.ExtrairValorDaLinha(119, 138);
+                CodigoFormulario = Convert.ToInt32(registro.ExtrairValorDaLinha(139, 142));
                 // 143 - 388 -> 246 brancos
-                Volser = MetodosExtensao.ExtrairValorDaLinha(registro, 389, 394);
-                NumeroSequencial = MetodosExtensao.ExtrairValorDaLinha(registro, 395, 400);
+                Volser = registro.ExtrairValorDaLinha(389, 394);
+                NumeroSequencial = registro.ExtrairValorDaLinha(395, 400);
             }
             catch (Exception)
             {

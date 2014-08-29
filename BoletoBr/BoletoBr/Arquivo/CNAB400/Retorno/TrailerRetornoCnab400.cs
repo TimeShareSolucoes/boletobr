@@ -108,5 +108,11 @@ namespace BoletoBr
         public int QtdRegistrosDetalhe { get; set; }
 
         #endregion
+
+        #region Santander
+
+        public string Versao { get; set; }
+
+        #endregion
     }
 }

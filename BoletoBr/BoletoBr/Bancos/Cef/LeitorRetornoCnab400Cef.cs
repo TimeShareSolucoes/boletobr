@@ -98,7 +98,7 @@ namespace BoletoBr.Bancos.Cef
             objRetornar.CodigoDoServico = linha.ExtrairValorDaLinha(10, 11);
             objRetornar.LiteralServico = linha.ExtrairValorDaLinha(12, 26);
             objRetornar.CodigoAgenciaCedente = linha.ExtrairValorDaLinha(27, 30).BoletoBrToInt();
-            objRetornar.CodigoDoBeneficiario = linha.ExtrairValorDaLinha(31, 36).BoletoBrToInt();
+            objRetornar.CodigoDoBeneficiario = linha.ExtrairValorDaLinha(31, 36);
             // Uso Exclusivo CAIXA (37 - 46)
             objRetornar.NomeDoBeneficiario = linha.ExtrairValorDaLinha(47, 76);
             objRetornar.CodigoDoBanco = linha.ExtrairValorDaLinha(77, 79);

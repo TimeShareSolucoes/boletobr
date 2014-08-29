@@ -23,26 +23,7 @@ namespace BoletoBr.Bancos.Itau
             this.DigitoBanco = "7";
             this.NomeBanco = "Itaú";
             this.LocalDePagamento = "Pagável em qualquer banco até o vencimento.";
-            this.MoedaBanco = "0";
-
-            /* Adiciona carteiras de cobrança */
-            _carteirasCobranca = new List<CarteiraCobranca>();
-            _carteirasCobranca.Add(new CarteiraCobranca107());
-            _carteirasCobranca.Add(new CarteiraCobranca109());
-            _carteirasCobranca.Add(new CarteiraCobranca121());
-            _carteirasCobranca.Add(new CarteiraCobranca122());
-            _carteirasCobranca.Add(new CarteiraCobranca126());
-            _carteirasCobranca.Add(new CarteiraCobranca131());
-            _carteirasCobranca.Add(new CarteiraCobranca142());
-            _carteirasCobranca.Add(new CarteiraCobranca143());
-            _carteirasCobranca.Add(new CarteiraCobranca146());
-            _carteirasCobranca.Add(new CarteiraCobranca150());
-            _carteirasCobranca.Add(new CarteiraCobranca169());
-            _carteirasCobranca.Add(new CarteiraCobranca175());
-            _carteirasCobranca.Add(new CarteiraCobranca176());
-            _carteirasCobranca.Add(new CarteiraCobranca178());
-            _carteirasCobranca.Add(new CarteiraCobranca196());
-            _carteirasCobranca.Add(new CarteiraCobranca198());
+            this.MoedaBanco = "9";
         }
 
         public string CodigoBanco { get; set; }

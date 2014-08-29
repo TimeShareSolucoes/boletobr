@@ -35,12 +35,6 @@ namespace BoletoBr.Bancos.Santander
             this.NomeBanco = "Santander";
             this.LocalDePagamento = "Pagar preferencialmente no banco santander";
             this.MoedaBanco = "9";
-
-            /* Adiciona carteiras de cobrança */
-            _carteirasCobrancaSantander = new List<CarteiraCobranca>();
-            _carteirasCobrancaSantander.Add(new CarteiraCobrancaSantander101());
-            _carteirasCobrancaSantander.Add(new CarteiraCobrancaSantander102());
-            _carteirasCobrancaSantander.Add(new CarteiraCobrancaSantander201());
         }
 
         public List<CarteiraCobranca> GetCarteirasCobranca()
@@ -269,14 +263,27 @@ namespace BoletoBr.Bancos.Santander
 
         public void FormataNossoNumero(Boleto boleto)
         {
+            if (String.IsNullOrEmpty(boleto.SequencialNossoNumero))
+                throw new Exception("Sequencial Nosso Número não foi informado.");
+
+            if (boleto.SequencialNossoNumero.Replace("0", "") == string.Empty)
+                throw new Exception("Sequencial Nosso Número não pode ser 0 (zero).");
+
             boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero);
 
-            boleto.SetNossoNumeroFormatado(string.Format("{0}-{1}", boleto.NossoNumeroFormatado, Mod11Santander(boleto.NossoNumeroFormatado, 9)));
+            boleto.SetNossoNumeroFormatado(string.Format("{0}-{1}", 
+                boleto.NossoNumeroFormatado, Mod11Santander(boleto.NossoNumeroFormatado, 9)));
         }
 
         public void FormataNumeroDocumento(Boleto boleto)
         {
-            throw new NotImplementedException("Função não implementada.");
+            if (String.IsNullOrEmpty(boleto.NumeroDocumento))
+                throw new Exception("Número do Documento não foi informado.");
+
+            if (boleto.NumeroDocumento.Replace("0", "") == string.Empty)
+                throw new Exception("Número do Documento não pode ser 0 (zero).");
+
+            boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(10, '0');
         }
 
         public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao)
@@ -356,9 +363,8 @@ namespace BoletoBr.Bancos.Santander
 
                 sequencia = sequencia.Remove(0, 1);
             }
-
-            nresto = (total*10)%11; //nresto = (((total * 10) / 11) % 10); Jefhtavares em 19/03/14
-
+            
+            nresto = (total * 10) % 11; //nresto = (((total * 10) / 11) % 10); Jefhtavares em 19/03/14
 
             if (nresto == 0 || nresto == 1 || nresto == 10)
                 ndig = 1;

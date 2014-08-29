@@ -17,7 +17,8 @@ namespace BoletoBr
         public int CodigoDoBeneficiario { get; set; }
         public int CodigoAgenciaCedente { get; set; }
         public int SubConta { get; set; }
-        public long ContaCorrente { get; set; }
+        public string ContaCorrente { get; set; }
+        public string ContaCobranca { get; set; }
         public string CodigoDoDocumentoEmpresa { get; set; }
         public int CodigoDePostagem { get; set; }
         public string CodigoDoDocumentoBanco { get; set; }

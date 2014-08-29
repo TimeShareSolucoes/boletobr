@@ -106,7 +106,7 @@ namespace BoletoBr.Bancos.Brasil
             // Brancos
             objRetornar.CodigoAgenciaCedente = linha.ExtrairValorDaLinha(27, 30).BoletoBrToInt();
             objRetornar.DvAgenciaCedente = linha.ExtrairValorDaLinha(31, 31);
-            objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(32, 39).BoletoBrToLong();
+            objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(32, 39);
             objRetornar.DvContaCorrente = linha.ExtrairValorDaLinha(40, 40);
             // Zeros
             objRetornar.NomeDoBeneficiario = linha.ExtrairValorDaLinha(47, 76);
@@ -143,7 +143,7 @@ namespace BoletoBr.Bancos.Brasil
                 // Zeros
                 objRetornar.CodigoAgenciaCedente = linha.ExtrairValorDaLinha(18, 21).BoletoBrToInt();
                 objRetornar.DvAgenciaCedente = linha.ExtrairValorDaLinha(22, 22);
-                objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(23, 30).BoletoBrToLong();
+                objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(23, 30);
                 objRetornar.DvContaCorrente = linha.ExtrairValorDaLinha(31, 31);
                 objRetornar.NumeroConvenio = linha.ExtrairValorDaLinha(32, 38).BoletoBrToInt();
                 objRetornar.NumeroControle = linha.ExtrairValorDaLinha(39, 63);

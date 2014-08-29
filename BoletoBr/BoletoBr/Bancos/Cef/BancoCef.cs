@@ -437,15 +437,6 @@ namespace BoletoBr.Bancos.Cef
         public void FormataNumeroDocumento(Boleto boleto)
         {
             boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(10, '0');
-
-            //if (boleto.TipoArquivo == TipoArquivo.Cnab240)
-            //    boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(11, '0');
-
-            //if (boleto.TipoArquivo == TipoArquivo.Cnab400)
-            //    boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(10, '0');
-
-            //if (boleto.TipoArquivo == TipoArquivo.Outro)
-            //    throw new Exception("Tipo de arquivo incorreto!" + Environment.NewLine + "Tipos aceitos: CNAB240 ou CNAB400");
         }
 
         public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao)

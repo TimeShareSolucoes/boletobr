@@ -97,7 +97,7 @@ namespace BoletoBr.Bancos.Bradesco
             objRetornar.LiteralRetorno = linha.ExtrairValorDaLinha(3, 9);
             objRetornar.CodigoDoServico = linha.ExtrairValorDaLinha(10, 11);
             objRetornar.LiteralServico = linha.ExtrairValorDaLinha(12, 26);
-            objRetornar.CodigoDoBeneficiario = linha.ExtrairValorDaLinha(27, 46).BoletoBrToLong();
+            objRetornar.CodigoDoBeneficiario = linha.ExtrairValorDaLinha(27, 46);
             objRetornar.NomeDoBeneficiario = linha.ExtrairValorDaLinha(47, 76);
             objRetornar.CodigoDoBanco = linha.ExtrairValorDaLinha(77, 79);
             objRetornar.NomeDoBanco = linha.ExtrairValorDaLinha(80, 94);

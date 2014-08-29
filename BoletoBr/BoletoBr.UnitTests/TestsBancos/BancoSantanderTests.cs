@@ -51,7 +51,7 @@ namespace BoletoBr.UnitTests.TestsBancos
         [TestMethod]
         public void BSantanderCalculoLinhaDigitavel()
         {
-            /* 
+           /* 
             * Teste baseado em um boleto apresentado na documentação oficial do Banco Santander
             */
             var banco = Fabricas.BancoFactory.ObterBanco("033", "7");
@@ -75,7 +75,7 @@ namespace BoletoBr.UnitTests.TestsBancos
             var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("102"));
             boleto.NumeroDocumento = "0000006152007";
             boleto.ValorBoleto = Convert.ToDecimal(252.00);
-            boleto.SequencialNossoNumero = "0000006152007";
+            boleto.SequencialNossoNumero = "000000615200";
             boleto.DataVencimento = new DateTime(2014, 07, 07);
 
             banco.FormataNossoNumero(boleto);
@@ -85,6 +85,40 @@ namespace BoletoBr.UnitTests.TestsBancos
             const string valorEsperado = "03399.65451 42400.000065 15200.701025 1 61170000025200";
             Assert.AreEqual(valorEsperado.Length, boleto.LinhaDigitavelBoleto.Length);
             Assert.AreEqual(valorEsperado, boleto.LinhaDigitavelBoleto);
+        }
+
+        [TestMethod]
+        public void BSantanderGeracaoDvNossoNumero()
+        {
+            var banco = Fabricas.BancoFactory.ObterBanco("033", "7");
+
+            var contaBancariaCedente = new ContaBancaria("4165", "", "", "");
+
+            var cedente = new Cedente("6545424", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
+
+            var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
+            {
+                TipoLogradouro = "R",
+                Logradouro = "1",
+                Bairro = "Bairro X",
+                Cidade = "Cidade X",
+                SiglaUf = "XX",
+                Cep = "12345-000",
+                Complemento = "Comp X",
+                Numero = "9"
+            });
+
+            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("102"));
+            boleto.NumeroDocumento = "0000006152007";
+            boleto.ValorBoleto = Convert.ToDecimal(252.00);
+            boleto.SequencialNossoNumero = "566612457800";
+            boleto.DataVencimento = new DateTime(2014, 07, 07);
+
+            banco.FormataNossoNumero(boleto);
+
+            const string valorEsperado = "566612457800-2";
+            Assert.AreEqual(valorEsperado.Length, boleto.NossoNumeroFormatado.Length);
+            Assert.AreEqual(valorEsperado, boleto.NossoNumeroFormatado);
         }
     }
 }
