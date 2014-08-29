@@ -288,12 +288,102 @@ namespace BoletoBr.Bancos.Santander
 
         public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao)
         {
-            throw new NotImplementedException();
+            switch (tipoInstrucao)
+            {
+                case EnumTipoInstrucao.NaoHaInstrucoes:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 00,
+                        QtdDias = (int) valorInstrucao,
+                        TextoInstrucao = ""
+                    };
+                }
+                case EnumTipoInstrucao.BaixarAposQuinzeDiasDoVencto:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 02,
+                        QtdDias = (int) valorInstrucao,
+                        TextoInstrucao = "Baixar após 15 dias do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.BaixarAposTrintaDiasDoVencto:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 03,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Baixar após 30 dias do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.NaoBaixar:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 04,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Não baixar."
+                    };
+                }
+                case EnumTipoInstrucao.Protestar:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 06,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Protestar após " + valorInstrucao + " dias úteis."
+                    };
+                }
+                case EnumTipoInstrucao.NaoProtestar:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 07,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Não protestar."
+                    };
+                }
+                case EnumTipoInstrucao.NaoCobrarJurosDeMora:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 08,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Não cobrar juros de mora."
+                    };
+                }
+            }
+            throw new Exception(
+                String.Format(
+                    "Não foi possível obter instrução padronizada. Banco: {0} Código Instrução: {1} Qtd Dias/Valor: {2}",
+                    CodigoBanco, tipoInstrucao.ToString(), valorInstrucao));
         }
 
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
         {
-            throw new NotImplementedException();
+            if (linhasArquivo == null || linhasArquivo.Any() == false)
+                throw new ApplicationException("Arquivo informado é inválido.");
+
+            /* Identifica o layout: 240 ou 400 */
+            if (linhasArquivo.First().Length == 240)
+            {
+                //var leitor = new LeitorRetornoCnab240Santander(linhasArquivo);
+                //var retornoProcessado = leitor.ProcessarRetorno();
+
+                //var objRetornar = new RetornoGenerico(retornoProcessado);
+                //return objRetornar;
+            }
+            if (linhasArquivo.First().Length == 400)
+            {
+                var leitor = new LeitorRetornoCnab400Santander(linhasArquivo);
+                var retornoProcessado = leitor.ProcessarRetorno();
+
+                var objRetornar = new RetornoGenerico(retornoProcessado);
+                return objRetornar;
+            }
+
+            throw new Exception("Arquivo de RETORNO com " + linhasArquivo.First().Length + " posições, não é suportado.");
         }
 
         public RemessaCnab240 GerarArquivoRemessaCnab240(List<Boleto> boletos)

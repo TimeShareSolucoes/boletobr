@@ -467,7 +467,7 @@ namespace BoletoBr.Bancos.Cef
                 return objRetornar;
             }
 
-            throw new Exception("Arquivo de retorno com " + linhasArquivo.First().Length + " posições, não é suportado.");
+            throw new Exception("Arquivo de RETORNO com " + linhasArquivo.First().Length + " posições, não é suportado.");
         }
 
 

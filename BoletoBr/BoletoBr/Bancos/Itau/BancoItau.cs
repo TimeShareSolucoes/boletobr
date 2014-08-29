@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.Dominio;
@@ -512,7 +513,28 @@ namespace BoletoBr.Bancos.Itau
 
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
         {
-            throw new NotImplementedException();
+            if (linhasArquivo == null || linhasArquivo.Any() == false)
+                throw new ApplicationException("Arquivo informado é inválido.");
+
+            /* Identifica o layout: 240 ou 400 */
+            if (linhasArquivo.First().Length == 240)
+            {
+                //var leitor = new LeitorRetornoCnab240Itau(linhasArquivo);
+                //var retornoProcessado = leitor.ProcessarRetorno();
+
+                //var objRetornar = new RetornoGenerico(retornoProcessado);
+                //return objRetornar;
+            }
+            if (linhasArquivo.First().Length == 400)
+            {
+                var leitor = new LeitorRetornoCnab400Itau(linhasArquivo);
+                var retornoProcessado = leitor.ProcessarRetorno();
+
+                var objRetornar = new RetornoGenerico(retornoProcessado);
+                return objRetornar;
+            }
+
+            throw new Exception("Arquivo de RETORNO com " + linhasArquivo.First().Length + " posições, não é suportado.");
         }
 
         public RemessaCnab240 GerarArquivoRemessaCnab240(List<Boleto> boletos)
