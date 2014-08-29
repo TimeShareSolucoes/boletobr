@@ -134,7 +134,7 @@ namespace BoletoBr
         public decimal ValorOutrosRecebimentos { get; set; }
         public decimal ValorAbatimentosNaoAproveitado { get; set; }
         public decimal ValorLancamento { get; set; }
-        public int IndicativoDebitoCredito { get; set; }
+        public string IndicativoDebitoCredito { get; set; }
         public int IndicadorValor { get; set; }
         public decimal ValorAjuste { get; set; }
         /// <summary>
@@ -414,6 +414,20 @@ namespace BoletoBr
         /// </summary>
         public string MensagemInformativa { get; set; }
 
+        #endregion
+
+        #region Santander
+
+        public string CodigoOriginalRemessa { get; set; }
+        public string CodigoOcorrencia1 { get; set; }
+        public string CodigoOcorrencia2 { get; set; }
+        public string CodigoOcorrencia3 { get; set; }
+        public string IdentificadorComplemento { get; set; }
+        public string UnidadeValorMoedaCorrente { get; set; }
+        public decimal ValorTituloOutraUnidadeValor { get; set; }
+        public decimal ValorIOCOutraUnidadeValor { get; set; }
+        public decimal ValorDoDebitoCredito { get; set; }
+        public int Versao { get; set; }
         #endregion
     }
 }

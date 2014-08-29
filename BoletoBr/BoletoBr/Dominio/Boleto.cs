@@ -43,6 +43,7 @@ namespace BoletoBr
         public DateTime DataDocumento { get; set; }
         public DateTime? DataProcessamento { get; set; }
         public int QtdParcelas { get; set; }
+        public int DiasProtesto { get; set; }
         public int NumeroParcela { get; set; }
 
         public string NumeroParcelaFormatado
@@ -96,10 +97,18 @@ namespace BoletoBr
         /// <summary>
         /// Utilizado no Banco Santander
         /// </summary>
-        public int PercentualIOS { get; set; }
+        /// 
         public TipoArquivo TipoArquivo { get; set; }
         public string CodigoDoProduto { get; set; }
         public List<IInstrucao> InstrucoesDoBoleto { get; set; }
+
+        #region Banco Santander
+
+        public int PercentualIOS { get; set; }
+        public string CodigoDeTransmissao { get; set; }
+        public DateTime DataDesconto2 { get; set; }
+
+        #endregion
 
         public void AdicionarInstrucao(EnumTipoInstrucao tipoInstrucao, double valor)
         {

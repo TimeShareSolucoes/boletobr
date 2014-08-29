@@ -111,7 +111,7 @@ namespace BoletoBr
 
         #region Santander
 
-        public string Versao { get; set; }
+        public int Versao { get; set; }
 
         #endregion
     }

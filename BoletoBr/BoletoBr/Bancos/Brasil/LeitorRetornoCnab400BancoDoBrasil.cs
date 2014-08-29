@@ -182,7 +182,7 @@ namespace BoletoBr.Bancos.Brasil
                 objRetornar.ValorOutrosRecebimentos = linha.ExtrairValorDaLinha(280, 292).BoletoBrToDecimal()/100;
                 objRetornar.ValorAbatimentosNaoAproveitado = linha.ExtrairValorDaLinha(293, 305).BoletoBrToDecimal()/100;
                 objRetornar.ValorLancamento = linha.ExtrairValorDaLinha(306, 318).BoletoBrToDecimal()/100;
-                objRetornar.IndicativoDebitoCredito = linha.ExtrairValorDaLinha(319, 319).BoletoBrToInt();
+                objRetornar.IndicativoDebitoCredito = linha.ExtrairValorDaLinha(319, 319);
                 objRetornar.IndicadorValor = linha.ExtrairValorDaLinha(320, 320).BoletoBrToInt();
                 objRetornar.ValorAjuste = linha.ExtrairValorDaLinha(321, 332).BoletoBrToDecimal()/100;
                 // Brancos e Zeros específicos para cobrança compartilhada
@@ -194,7 +194,6 @@ namespace BoletoBr.Bancos.Brasil
                 objRetornar.ZerosValorSegundoConvenio = linha.ExtrairValorDaLinha(366, 374).BoletoBrToDecimal()/100;
                 objRetornar.ZerosNumeroTerceiroConvenio = linha.ExtrairValorDaLinha(375, 381).BoletoBrToLong();
                 objRetornar.ZerosValorTerceiroConvenio = linha.ExtrairValorDaLinha(382, 390).BoletoBrToDecimal()/100;
-                // ...
                 objRetornar.AutorizacaoLiquidacaoParcial = linha.ExtrairValorDaLinha(391, 391).BoletoBrToInt();
                 // Brancos
                 objRetornar.MeioApresentacaoTituloAoSacado = linha.ExtrairValorDaLinha(393, 394).BoletoBrToInt();

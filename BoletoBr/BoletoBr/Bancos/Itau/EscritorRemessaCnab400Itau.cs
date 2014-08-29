@@ -31,7 +31,7 @@ namespace BoletoBr.Bancos.Itau
 
         public string EscreverHeader(Boleto boleto, int numeroRegistro)
         {
-            string header = new string(' ', 400);
+            var header = new string(' ', 400);
             try
             {
                 header = header.PreencherValorNaLinha(1, 1, "0");
@@ -57,8 +57,8 @@ namespace BoletoBr.Bancos.Itau
             }
             catch (Exception e)
             {
-                throw new Exception(String.Concat("Falha na geração do HEADER do arquivo de REMESSA.",
-                    Environment.NewLine, e));
+                throw new Exception(string.Format("BoletoBr{0}Falha na geração do HEADER do arquivo de REMESSA.",
+                    Environment.NewLine), e);
             }
         }
 
@@ -72,7 +72,7 @@ namespace BoletoBr.Bancos.Itau
                                     boleto.SacadoBoleto.EnderecoSacado.Complemento.PadRight(40, ' ');
             #endregion
 
-            string detalhe = new string(' ', 400);
+            var detalhe = new string(' ', 400);
             try
             {
                 detalhe = detalhe.PreencherValorNaLinha(1, 1, "1"); // Identificação do Registro Transação
@@ -143,7 +143,7 @@ namespace BoletoBr.Bancos.Itau
                 #region INSTRUÇÕES REMESSA
 
                 if (boleto.InstrucoesDoBoleto.Count > 2)
-                    throw new Exception(string.Format("<BoletoBr>{0}Mensagem: Não são aceitas mais que 2 instruções padronizadas para remessa de boletos no banco Itaú.", Environment.NewLine));
+                    throw new Exception(string.Format("<BoletoBr>{0}Não são aceitas mais que 2 instruções padronizadas para remessa de boletos no banco Itaú.", Environment.NewLine));
 
                 var primeiraInstrucao = boleto.InstrucoesDoBoleto.FirstOrDefault();
                 var segundaInstrucao = boleto.InstrucoesDoBoleto.LastOrDefault();
@@ -208,14 +208,14 @@ namespace BoletoBr.Bancos.Itau
             }
             catch (Exception e)
             {
-                throw new Exception(String.Concat("Falha na geração do DETALHE do arquivo de REMESSA.",
-                    Environment.NewLine, e));
+                throw new Exception(string.Format("<BoletoBr>{0}Falha na geração do DETALHE do arquivo de REMESSA.",
+                    Environment.NewLine), e);
             }
         }
 
         public string EscreverTrailer(int numeroRegistro)
         {
-            string trailer = new string(' ', 400);
+            var trailer = new string(' ', 400);
             try
             {
                 trailer = trailer.PreencherValorNaLinha(1, 1, "9");
@@ -227,8 +227,8 @@ namespace BoletoBr.Bancos.Itau
             }
             catch (Exception e)
             {
-                throw new Exception(String.Concat("Falha na geração do TRAILER do arquivo de REMESSA.",
-                    Environment.NewLine, e));
+                throw new Exception(string.Format("<BoletoBr>{0}Falha na geração do TRAILER do arquivo de REMESSA.",
+                    Environment.NewLine), e);
             }
         }
     }
