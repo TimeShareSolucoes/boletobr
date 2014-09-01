@@ -51,7 +51,7 @@ namespace BoletoBr.Bancos.Cef
                 header = header.PreencherValorNaLinha(172, 191, "");// Para uso reservado do Banco
                 header = header.PreencherValorNaLinha(192, 211, "");// Para uso reservado da Empresa
                  header = header.PreencherValorNaLinha(212, 215, "");// Versão Aplicativo CAIXA
-                header = header.PreencherValorNaLinha(216, 240, "");// Uso Exclusivo FEBRABAN / CNAB 
+                header = header.PreencherValorNaLinha(216, 240, "");// Uso Exclusivo FEBRABAN /  CNAB 
                 
                 return header;
             }
