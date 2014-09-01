@@ -127,13 +127,13 @@ namespace BoletoBr.Bancos.Cef
                 detalhe = detalhe.PreencherValorNaLinha(43, 57, boleto.NossoNumeroFormatado.PadLeft(15, ' '));// Identificaçao do Título no Banco
                             /*Código da Carteira*/
                 // Modalidade de Carteira D - Direta
-                if (carteiraCob == "58")           // Verificar depois
+                if (carteiraCob == "58")           // Verificar e corrigir depois
                     detalhe = detalhe.PreencherValorNaLinha(58, 58, "D");
                 // Modalidade de Carteira S - Sem Registro
-                if (carteiraCob == "" || carteiraCob == "" || carteiraCob == "")         // Verificar depois
+                if (carteiraCob == "" || carteiraCob == "" || carteiraCob == "")         // Verificar e corrigir depois
                     detalhe = detalhe.PreencherValorNaLinha(58, 58, "S");
                 // Modalidade de Carteira E - Escritural 
-                if (carteiraCob == "" || carteiraCob == "" || carteiraCob == "" || carteiraCob == "")        // Verificar depois
+                if (carteiraCob == "" || carteiraCob == "" || carteiraCob == "" || carteiraCob == "")        // Verificar e corrigir depois
                     detalhe = detalhe.PreencherValorNaLinha(58, 58, "E"); 
                              
                  detalhe = detalhe.PreencherValorNaLinha(59, 59, "");// Forma de Cadastr. do Título no Banco
