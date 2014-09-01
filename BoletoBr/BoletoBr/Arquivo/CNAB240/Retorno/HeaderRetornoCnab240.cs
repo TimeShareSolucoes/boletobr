@@ -16,11 +16,11 @@ namespace BoletoBr
         public string LoteServico { get; set; }
         public int CodigoRegistro { get; set; }
         public int TipoInscricaoEmpresa { get; set; }
-        public long NumeroInscricaoEmpresa { get; set; }
+        public string NumeroInscricaoEmpresa { get; set; }
         public string Convenio { get; set; }
         public int CodigoAgencia { get; set; }
         public string DvCodigoAgencia { get; set; }
-        public long ContaCorrente { get; set; }
+        public string ContaCorrente { get; set; }
         public string DvContaCorrente { get; set; }
         public int CodigoCedente { get; set; }
         public string NomeDoBeneficiario { get; set; }
@@ -38,7 +38,7 @@ namespace BoletoBr
 
         #region Banco do Brasil
 
-        public long ConvenioNumeroCobranca { get; set; }
+        public string ConvenioNumeroCobranca { get; set; }
         public int CedenteCobranca { get; set; }
         public int CarteiraCobranca { get; set; }
         public int VariacaoCarteiraCobranca { get; set; }

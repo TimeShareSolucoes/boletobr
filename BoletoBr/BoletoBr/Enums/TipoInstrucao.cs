@@ -18,6 +18,15 @@ namespace BoletoBr.Enums
         MultaVencimento,
         JurosdeMora,
         DescontoporDia,
-        InstrucaoXItau,
+
+        #region Santander
+
+        NaoHaInstrucoes,
+        BaixarAposQuinzeDiasDoVencto,
+        BaixarAposTrintaDiasDoVencto,
+        NaoBaixar,
+        NaoCobrarJurosDeMora,
+
+        #endregion
     }
 }

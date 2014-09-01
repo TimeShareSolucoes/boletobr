@@ -16,6 +16,7 @@ namespace BoletoBr
         #region Propriedades
 
         public IBanco BancoBoleto { get; set; }
+
         public string CodigoEDigitoBancoBind
         {
             get
@@ -26,27 +27,30 @@ namespace BoletoBr
                 return "";
             }
         }
+
         public Cedente CedenteBoleto { get; set; }
         public Sacado SacadoBoleto { get; set; }
         public CarteiraCobranca CarteiraCobranca { get; set; }
         public string SequencialNossoNumero { get; set; }
+
         /// <summary>
         /// Deve ser gerado pelo componente
         /// </summary>
         public string NossoNumeroFormatado { get; private set; }
+
         public string DigitoNossoNumero { get; set; }
         public DateTime DataVencimento { get; set; }
         public DateTime DataDocumento { get; set; }
         public DateTime? DataProcessamento { get; set; }
         public int QtdParcelas { get; set; }
+        public int DiasProtesto { get; set; }
         public int NumeroParcela { get; set; }
+
         public string NumeroParcelaFormatado
         {
-            get
-            {
-                return String.Format("{0} / {1}", NumeroParcela, QtdParcelas);
-            } 
+            get { return String.Format("{0} / {1}", NumeroParcela, QtdParcelas); }
         }
+
         public decimal ValorBoleto { get; set; }
         public decimal? ValorCobrado { get; set; }
         public string LocalPagamento { get; set; }
@@ -77,6 +81,7 @@ namespace BoletoBr
         public string TipoModalidade { get; set; }
         public string CodigoBarraBoleto { get; set; }
         public string LinhaDigitavelBoleto { get; set; }
+
         /// <summary> DATA DE VENCIMENTO NO FORMATO JULIANO
         /// A data de vencimento no formato juliano somente deve ser utilizada quando o cliente optar pelo uso do Tipo Identificador “4” no Código do Documento, com retorno dos três dígitos no arquivo magnético e no demonstrativo de liquidação (condição cadastral).  
         /// As três primeiras posições correspondem à data de vencimento informada pelo mês juliano. Exemplos:
@@ -89,9 +94,21 @@ namespace BoletoBr
         /// Nota: Se utilizado o Tipo Identificador “5”, a data de vencimento no formato juliano deverá ser preenchida com quatro zeros = 0000. 
         /// </summary>
         public string DataFormatoJuliano { get; set; }
+        /// <summary>
+        /// Utilizado no Banco Santander
+        /// </summary>
+        /// 
         public TipoArquivo TipoArquivo { get; set; }
         public string CodigoDoProduto { get; set; }
         public List<IInstrucao> InstrucoesDoBoleto { get; set; }
+
+        #region Banco Santander
+
+        public int PercentualIOS { get; set; }
+        public string CodigoDeTransmissao { get; set; }
+        public DateTime DataDesconto2 { get; set; }
+
+        #endregion
 
         public void AdicionarInstrucao(EnumTipoInstrucao tipoInstrucao, double valor)
         {

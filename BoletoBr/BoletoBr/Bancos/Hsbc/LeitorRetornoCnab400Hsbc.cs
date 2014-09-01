@@ -101,7 +101,7 @@ namespace BoletoBr.Bancos
             objRetornar.LiteralServico = linha.ExtrairValorDaLinha(12, 26);
             objRetornar.CodigoAgenciaCedente = linha.ExtrairValorDaLinha(27, 31).BoletoBrToInt();
             objRetornar.Constante = linha.ExtrairValorDaLinha(32, 33);
-            objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(34, 44).BoletoBrToInt();
+            objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(34, 44);
             objRetornar.TipoRetorno = linha.ExtrairValorDaLinha(45, 45);
             // Posição 46 branco
             objRetornar.NomeDoBeneficiario = linha.ExtrairValorDaLinha(47, 76);
@@ -110,7 +110,7 @@ namespace BoletoBr.Bancos
             objRetornar.DataGeracaoGravacao = (DateTime) linha.ExtrairValorDaLinha(95, 100).ToString().ToDateTimeFromDdMmAa();
             objRetornar.Densidade = linha.ExtrairValorDaLinha(101, 105);
             objRetornar.LiteralDensidade = linha.ExtrairValorDaLinha(106, 108);
-            objRetornar.CodigoDoBeneficiario = linha.ExtrairValorDaLinha(109, 118).BoletoBrToInt();
+            objRetornar.CodigoDoBeneficiario = linha.ExtrairValorDaLinha(109, 118);
             objRetornar.NomeAgencia = linha.ExtrairValorDaLinha(119, 138);
             objRetornar.CodigoFormulario = linha.ExtrairValorDaLinha(139, 142).BoletoBrToInt();
             // Posição 143 - 388 brancos
@@ -131,7 +131,7 @@ namespace BoletoBr.Bancos
             objRetornar.CodigoDoBeneficiario = linha.ExtrairValorDaLinha(4, 17).BoletoBrToInt();
             objRetornar.CodigoAgenciaCedente = linha.ExtrairValorDaLinha(18, 22).BoletoBrToInt();
             objRetornar.SubConta = linha.ExtrairValorDaLinha(23, 24).BoletoBrToInt();
-            objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(25, 35).BoletoBrToInt();
+            objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(25, 35);
             // Posição 36-37 brancos
             objRetornar.CodigoDoDocumentoEmpresa = linha.ExtrairValorDaLinha(38, 53);
             // Posição 54 branco

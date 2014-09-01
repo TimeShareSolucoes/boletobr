@@ -190,7 +190,7 @@ namespace BoletoBr.Bancos.Bradesco
             }
             else
             {
-                throw new NotImplementedException("Carteira ainda n�o implementada.");
+                throw new NotImplementedException("Carteira ainda não implementada.");
             }
 
 

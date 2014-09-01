@@ -104,7 +104,7 @@ namespace BoletoBr.Dominio.EspecieDocumento
             try
             {
                 this.Banco = new BancoSantander();
-                EspecieDocumentoSantander ed = new EspecieDocumentoSantander();
+                var ed = new EspecieDocumentoSantander();
                 switch (ed.getEnumEspecieByCodigo(idCodigo))
                 {
                     case EnumEspecieDocumento_Santander.DuplicataMercantil:
@@ -171,8 +171,8 @@ namespace BoletoBr.Dominio.EspecieDocumento
 
         public static EspeciesDocumento CarregaTodas()
         {
-            EspeciesDocumento especiesDocumento = new EspeciesDocumento();
-            EspecieDocumentoSantander ed = new EspecieDocumentoSantander();
+            var especiesDocumento = new EspeciesDocumento();
+            var ed = new EspecieDocumentoSantander();
             foreach (EnumEspecieDocumento_Santander item in Enum.GetValues(typeof(EnumEspecieDocumento_Santander)))
                 especiesDocumento.Add(new EspecieDocumentoSantander(ed.getCodigoEspecieByEnum(item)));
 

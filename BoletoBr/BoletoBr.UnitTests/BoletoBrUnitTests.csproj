@@ -63,6 +63,7 @@
     <Compile Include="TestsBancos\BancoAmazoniaTests.cs" />
     <Compile Include="TestsBancos\BancoBradescoTests.cs" />
     <Compile Include="TestsBancos\BancoCefTests.cs" />
+    <Compile Include="TestsBancos\BancoSantanderTests.cs" />
     <Compile Include="TestsBancos\HsbcCarteiraCnrTipoIdentificador4.cs" />
     <Compile Include="TestsBancos\BancoItauTests.cs" />
     <Compile Include="TestsCommon\CommonTests.cs" />

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoletoBr.Arquivo;
-using BoletoBr.Dominio;
+﻿using BoletoBr.Dominio;
 
-namespace BoletoBr
+namespace BoletoBr.Arquivo.CNAB240.Retorno
 {
     public class DetalheRetornoCnab240
     {
@@ -14,7 +8,6 @@ namespace BoletoBr
 
         public DetalheRetornoCnab240()
         {
-            HeaderArquivo = new HeaderDeArquivoCnab240();
             SegmentoW = new DetalheSegmentoWRetornoCnab240();
             SegmentoU = new DetalheSegmentoURetornoCnab240();
             SegmentoT = new DetalheSegmentoTRetornoCnab240();
@@ -57,8 +50,6 @@ namespace BoletoBr
         public DetalheSegmentoWRetornoCnab240 SegmentoW { get; set; }
 
         public DetalheSegmentoERetornoCnab240 SegmentoE { get; set; }
-
-        public HeaderDeArquivoCnab240 HeaderArquivo { get; set; }
 
         #endregion
     }
