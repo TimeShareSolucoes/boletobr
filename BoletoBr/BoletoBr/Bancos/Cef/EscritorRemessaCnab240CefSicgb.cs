@@ -70,7 +70,7 @@ namespace BoletoBr.Bancos.Cef
                 headerlote = headerlote.PreencherValorNaLinha(1, 3, "104");// Código do Banco na Compensação
                  headerlote = headerlote.PreencherValorNaLinha(4, 7, "");// Lote de Serviço
                 headerlote = headerlote.PreencherValorNaLinha(8, 8, "1");// Tipo de Registro
-                headerlote = headerlote.PreencherValorNaLinha(9, 9, "".PadRight(7, ' '));//  Tipo de Operação            //Verificar depois
+                headerlote = headerlote.PreencherValorNaLinha(9, 9, "".PadRight(7, ' '));//  Tipo de Operação           //Verificar depois
                  headerlote = headerlote.PreencherValorNaLinha(10, 11, "");// Tipo de Serviço
                 headerlote = headerlote.PreencherValorNaLinha(12, 13, "00");// Uso Exclusivo FREBRABAN/CNAB
                 headerlote = headerlote.PreencherValorNaLinha(14, 16, "030");// Nº da versão do Layout do Lote
