@@ -5,9 +5,9 @@ using System.ComponentModel;
 using System.Drawing;
 using BoletoBr.Bancos;
 using BoletoBr.Dominio;
-using BoletoBr.Dominio.EspecieDocumento;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
+using BoletoBr.Interfaces;
 
 namespace BoletoBr
 {
@@ -32,7 +32,6 @@ namespace BoletoBr
         public Sacado SacadoBoleto { get; set; }
         public CarteiraCobranca CarteiraCobranca { get; set; }
         public string SequencialNossoNumero { get; set; }
-
         /// <summary>
         /// Deve ser gerado pelo componente
         /// </summary>
@@ -81,7 +80,6 @@ namespace BoletoBr
         public string TipoModalidade { get; set; }
         public string CodigoBarraBoleto { get; set; }
         public string LinhaDigitavelBoleto { get; set; }
-
         /// <summary> DATA DE VENCIMENTO NO FORMATO JULIANO
         /// A data de vencimento no formato juliano somente deve ser utilizada quando o cliente optar pelo uso do Tipo Identificador “4” no Código do Documento, com retorno dos três dígitos no arquivo magnético e no demonstrativo de liquidação (condição cadastral).  
         /// As três primeiras posições correspondem à data de vencimento informada pelo mês juliano. Exemplos:
@@ -94,13 +92,11 @@ namespace BoletoBr
         /// Nota: Se utilizado o Tipo Identificador “5”, a data de vencimento no formato juliano deverá ser preenchida com quatro zeros = 0000. 
         /// </summary>
         public string DataFormatoJuliano { get; set; }
-        /// <summary>
-        /// Utilizado no Banco Santander
-        /// </summary>
-        /// 
         public TipoArquivo TipoArquivo { get; set; }
         public string CodigoDoProduto { get; set; }
         public List<IInstrucao> InstrucoesDoBoleto { get; set; }
+        public Remessa Remessa { get; set; }
+        public bool ComRegistroSemRegistro { get; set; }
 
         #region Banco Santander
 
@@ -109,6 +105,16 @@ namespace BoletoBr
         public DateTime DataDesconto2 { get; set; }
 
         #endregion
+
+        public void AdicionarSiglaEspecie(EnumEspecieDocumento siglaEspecieDocumento)
+        {
+            this.Especie.Sigla.ToString();
+        }
+
+        public void AdicionarCodigoEspecie(EnumEspecieDocumento codigoEspecieDocumento)
+        {
+            this.Especie.Codigo.ToString();
+        }
 
         public void AdicionarInstrucao(EnumTipoInstrucao tipoInstrucao, double valor)
         {
@@ -132,13 +138,6 @@ namespace BoletoBr
                 return textoConcatenado;
             }
         }
-        /// <summary>
-        /// Propriedade: Instruçõe do Boleto Rodapé
-        /// Objetivo: Criado para atender exigência do Banco BASA. Onde, deve constar:
-        /// ARRECADAÇÃO BASA – CONVÊNIO XXXX – AGÊNCIA ZZZ-Z
-        /// </summary>
-        public string InstrucoesDoBoletoRodape { get; set; }
-        public Remessa Remessa { get; set; }
 
         #endregion
 

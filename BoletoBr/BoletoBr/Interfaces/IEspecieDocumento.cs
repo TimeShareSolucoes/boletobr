@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using BoletoBr.Bancos;
 
-namespace BoletoBr.Dominio.EspecieDocumento
+namespace BoletoBr.Interfaces
 {
     public interface IEspecieDocumento
     {
-        IBanco Banco { get; set; }
-        string Codigo { get; set; }
+        int Codigo { get; set; }
+        string Descricao { get; set; }
         string Sigla { get; set; }
-        string Especie { get; set; }
     }
 }

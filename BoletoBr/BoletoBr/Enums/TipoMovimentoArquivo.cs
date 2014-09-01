@@ -4,7 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoletoBr.Dominio.EspecieDocumento
+namespace BoletoBr.Enums
 {
-    public class EspeciesDocumento : List<IEspecieDocumento> {}
+    internal enum TipoMovimentoArquivo
+    {
+        Remessa,
+        Retorno,
+        Outro,
+    }
 }

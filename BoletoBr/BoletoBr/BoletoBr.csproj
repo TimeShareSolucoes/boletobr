@@ -56,30 +56,18 @@
     <Compile Include="Bancos\Amazonia\BancoAmazonia.cs" />
     <Compile Include="Bancos\Amazonia\CarteiraCobrancaBancoAmazoniaCnr.cs" />
     <Compile Include="Bancos\Amazonia\CarteiraCobrancaBancoAmazoniaCsb.cs" />
-    <Compile Include="Bancos\Bradesco\CarteiraCobrancaBradesco06.cs" />
-    <Compile Include="Bancos\Bradesco\CarteiraCobrancaBradesco02.cs" />
-    <Compile Include="Bancos\Bradesco\CarteiraCobrancaBradesco03.cs" />
-    <Compile Include="Bancos\Bradesco\CarteiraCobrancaBradesco19.cs" />
     <Compile Include="Bancos\Bradesco\LeitorRetornoCnab240Bradesco.cs" />
     <Compile Include="Bancos\Bradesco\LeitorRetornoCnab400Bradesco.cs" />
     <Compile Include="Bancos\Brasil\BancoBrasil.cs" />
-    <Compile Include="Bancos\Brasil\CarteiraCobrancaBancoBrasil17019.cs" />
-    <Compile Include="Bancos\Brasil\CarteiraCobrancaBancoBrasil18019.cs" />
-    <Compile Include="Bancos\Brasil\CarteiraCobrancaBancoBrasil31.cs" />
     <Compile Include="Bancos\Bradesco\BancoBradesco.cs" />
-    <Compile Include="Bancos\Bradesco\CarteiraCobrancaBradesco09.cs" />
     <Compile Include="Bancos\Brasil\LeitorRetornoCnab240BancoDoBrasil.cs" />
     <Compile Include="Bancos\Brasil\LeitorRetornoCnab400BancoDoBrasil.cs" />
     <Compile Include="Bancos\Cef\BancoCef.cs" />
-    <Compile Include="Bancos\Cef\CarteiraCobrancaCefRg.cs" />
-    <Compile Include="Bancos\Cef\CarteiraCobrancaCefSr.cs" />
     <Compile Include="Bancos\Cef\EscritorRemessaCnab240CefSicgb.cs" />
     <Compile Include="Bancos\Cef\LeitorRetornoCnab240Cef.cs" />
     <Compile Include="Bancos\Cef\LeitorRetornoCnab400Cef.cs" />
     <Compile Include="Bancos\EscritorArquivoRemessaGenericoCnab240.cs" />
     <Compile Include="Bancos\Hsbc\BancoHsbc.cs" />
-    <Compile Include="Bancos\Hsbc\CarteiraCobrancaHsbcCnr.cs" />
-    <Compile Include="Bancos\Hsbc\CarteiraCobrancaHsbcCsb.cs" />
     <Compile Include="Bancos\IBanco.cs" />
     <Compile Include="Bancos\IEscritorArquivoRemessa.cs" />
     <Compile Include="Bancos\ILeitorArquivoRetornoCnab240.cs" />
@@ -143,18 +131,10 @@
     <Compile Include="Arquivo\CNAB400\Remessa\RemessaCnab400.cs" />
     <Compile Include="Arquivo\CNAB240\Retorno\RetornoCnab240.cs" />
     <Compile Include="Arquivo\CNAB400\Retorno\RetornoCnab400.cs" />
-    <Compile Include="Dominio\EspecieDocumento\AbstractEspecieDocumento.cs" />
-    <Compile Include="Dominio\EspecieDocumento\EspecieDocumento.cs" />
-    <Compile Include="Dominio\EspecieDocumento\EspecieDocumentoBancoBrasil.cs" />
-    <Compile Include="Dominio\EspecieDocumento\EspecieDocumentoBradesco.cs" />
-    <Compile Include="Dominio\EspecieDocumento\EspecieDocumentoCaixa.cs" />
-    <Compile Include="Dominio\EspecieDocumento\EspecieDocumentoHsbc.cs" />
-    <Compile Include="Dominio\EspecieDocumento\EspecieDocumentoItau.cs" />
-    <Compile Include="Dominio\EspecieDocumento\EspecieDocumentoSantander.cs" />
-    <Compile Include="Dominio\EspecieDocumento\EspeciesDocumento.cs" />
-    <Compile Include="Dominio\EspecieDocumento\IEspecieDocumento.cs" />
     <Compile Include="Arquivo\IArquivoRetorno.cs" />
-    <Compile Include="Dominio\Instrucao\IInstrucao.cs" />
+    <Compile Include="Dominio\EspecieDocumento.cs" />
+    <Compile Include="Interfaces\IEspecieDocumento.cs" />
+    <Compile Include="Interfaces\IInstrucao.cs" />
     <Compile Include="Dominio\Instrucao\InstrucaoPadronizada.cs" />
     <Compile Include="Dominio\Instrucao\InstrucaoCustomizada.cs" />
     <Compile Include="Arquivo\Remessa.cs" />
@@ -167,11 +147,14 @@
     <Compile Include="Enums\CategoriaLancamento.cs" />
     <Compile Include="Enums\IsencaoCpmf.cs" />
     <Compile Include="Enums\TipoComplementoLancamento.cs" />
+    <Compile Include="Enums\EspecieDocumento.cs" />
     <Compile Include="Enums\TipoInscricao.cs" />
     <Compile Include="Enums\TipoInstrucao.cs" />
     <Compile Include="Enums\TipoLancamento.cs" />
     <Compile Include="Enums\TipoMovimento.cs" />
-    <Compile Include="Enums\TipoOcorrencia.cs" />
+    <Compile Include="Enums\TipoMovimentoArquivo.cs" />
+    <Compile Include="Enums\TipoOcorrenciaRemessa.cs" />
+    <Compile Include="Enums\TipoOcorrenciaRetorno.cs" />
     <Compile Include="Enums\TipoPessoa.cs" />
     <Compile Include="Exceptions\ValidacaoBoletoException.cs" />
     <Compile Include="Fabricas\BancoFactory.cs" />
@@ -186,7 +169,6 @@
   <ItemGroup>
     <Folder Include="Arquivo\Generico\Remessa\" />
     <Folder Include="Implementacoes\" />
-    <Folder Include="Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

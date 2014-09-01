@@ -30,11 +30,6 @@ namespace BoletoBr.Bancos.BancoBrasil
             this.NomeBanco = "Banco do Brasil";
             this.LocalDePagamento = "Pagável em qualquer banco até o vencimento.";
             this.MoedaBanco = "9";
-
-            this._carteirasCobranca = new List<CarteiraCobranca>();
-            this._carteirasCobranca.Add(new CarteiraCobrancaBancoBrasil17019());
-            this._carteirasCobranca.Add(new CarteiraCobrancaBancoBrasil18019());
-            this._carteirasCobranca.Add(new CarteiraCobrancaBancoBrasil31());
         }
 
         private readonly List<CarteiraCobranca> _carteirasCobranca;

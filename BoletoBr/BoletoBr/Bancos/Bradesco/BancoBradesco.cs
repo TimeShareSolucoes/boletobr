@@ -24,13 +24,6 @@ namespace BoletoBr.Bancos.Bradesco
             NomeBanco = "Bradesco";
             this.LocalDePagamento = "Pagável preferencialmente nas Agências Bradesco.";
             this.MoedaBanco = "9";
-
-            _carteirasCobranca = new List<CarteiraCobranca>();
-            _carteirasCobranca.Add(new CarteiraCobrancaBradesco02());
-            _carteirasCobranca.Add(new CarteiraCobrancaBradesco03());
-            _carteirasCobranca.Add(new CarteiraCobrancaBradesco06());
-            _carteirasCobranca.Add(new CarteiraCobrancaBradesco09());
-            _carteirasCobranca.Add(new CarteiraCobrancaBradesco19());
         }
 
         public string CalcularDigitoNossoNumero(Boleto boleto)

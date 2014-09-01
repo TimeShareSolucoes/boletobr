@@ -5,9 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BoletoBr.Arquivo.Generico.Retorno;
-using BoletoBr.Dominio.EspecieDocumento;
+using BoletoBr.Dominio;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
+using BoletoBr.Interfaces;
 
 namespace BoletoBr.Bancos.Santander
 {
@@ -80,7 +81,7 @@ namespace BoletoBr.Bancos.Santander
                 throw new NotImplementedException("Código cedente deve ter no máximo 7 posições.");
 
             if (EspecieDocumento.ValidaSigla(boleto.Especie) == "")
-                boleto.Especie = new EspecieDocumentoSantander("2");
+                boleto.Especie = new EspecieDocumento(Convert.ToInt32("02"));
 
             if (boleto.PercentualIOS > 10 & (this.CodigoBanco == "008" || this.CodigoBanco == "033" || this.CodigoBanco == "353"))
                 throw new Exception("O percentual do IOS é limitado a 9% para o Banco Santander");
@@ -286,6 +287,124 @@ namespace BoletoBr.Bancos.Santander
             boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(10, '0');
         }
 
+
+        public IEspecieDocumento ObtemEspecieDocumento(EnumEspecieDocumento especie)
+        {
+            #region Código Espécie
+
+            // 02 - DM - DUPLICATA MERCANTIL                 
+            // 04 - DS - DUPLICATA DE SERVICO                
+            // 07 - LC - LETRA DE C�MBIO (SOMENTE PARA BANCO 353)
+            // 30 - LC - LETRA DE C�MBIO (SOMENTE PARA BANCO 008)
+            // 12 - NP - NOTA PROMISSORIA                    
+            // 13 - NR - NOTA PROMISSORIA RURAL 
+            // 17 - RC - RECIBO                              
+            // 20 - AP - APOLICE DE SEGURO                   
+            // 97 - CH - CHEQUE
+            // 98 - ND - NOTA PROMISSORIA DIRETA
+
+            #endregion
+
+            switch (especie)
+            {
+                case EnumEspecieDocumento.DuplicataMercantil:
+                {
+                    return new EspecieDocumento((int) especie)
+                    {
+                        Codigo = 02,
+                        Descricao = "Duplicata mercantil",
+                        Sigla = "DM"
+                    };
+                }
+                case EnumEspecieDocumento.DuplicataServico:
+                {
+                    return new EspecieDocumento((int) especie)
+                    {
+                        Codigo = 04,
+                        Descricao = "Duplicata de serviço",
+                        Sigla = "DS"
+                    };
+                }
+                    // Somente para banco 353
+                case EnumEspecieDocumento.LetraCambio353:
+                {
+                    return new EspecieDocumento((int) especie)
+                    {
+                        Codigo = 07,
+                        Descricao = "Letra de câmbio",
+                        Sigla = "LC"
+                    };
+                }
+                case EnumEspecieDocumento.NotaPromissoria:
+                {
+                    return new EspecieDocumento((int) especie)
+                    {
+                        Codigo = 12,
+                        Descricao = "Nota promissória",
+                        Sigla = "NP"
+                    };
+                }
+                case EnumEspecieDocumento.NotaPromissoriaRural:
+                {
+                    return new EspecieDocumento((int) especie)
+                    {
+                        Codigo = 13,
+                        Descricao = "Nota promissória rural",
+                        Sigla = "NP"
+                    };
+                }
+                case EnumEspecieDocumento.Recibo:
+                {
+                    return new EspecieDocumento((int) especie)
+                    {
+                        Codigo = 17,
+                        Descricao = "Recibo",
+                        Sigla = "RC"
+                    };
+                }
+                case EnumEspecieDocumento.ApoliceSeguro:
+                {
+                    return new EspecieDocumento((int) especie)
+                    {
+                        Codigo = 20,
+                        Descricao = "Apólice seguro",
+                        Sigla = "AP"
+                    };
+                }
+                    // Somente para banco 008
+                case EnumEspecieDocumento.LetraCambio008:
+                {
+                    return new EspecieDocumento((int) especie)
+                    {
+                        Codigo = 30,
+                        Descricao = "Letra de câmbio",
+                        Sigla = "LC"
+                    };
+                }
+                case EnumEspecieDocumento.Cheque:
+                {
+                    return new EspecieDocumento((int) especie)
+                    {
+                        Codigo = 97,
+                        Descricao = "Cheque",
+                        Sigla = "CH"
+                    };
+                }
+                case EnumEspecieDocumento.NotaPromissoariaDireta:
+                {
+                    return new EspecieDocumento((int) especie)
+                    {
+                        Codigo = 98,
+                        Descricao = "Nota promissória direta",
+                        Sigla = "ND"
+                    };
+                }
+            }
+            throw new Exception(
+                String.Format("Não foi possível obter instrução padronizada. Banco: {0} Código Espécie: {1}",
+                    CodigoBanco, especie.ToString()));
+        }
+
         public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao)
         {
             switch (tipoInstrucao)
@@ -313,7 +432,7 @@ namespace BoletoBr.Bancos.Santander
                     return new InstrucaoPadronizada()
                     {
                         Codigo = 03,
-                        Valor = valorInstrucao,
+                        Valor = (int) valorInstrucao,
                         TextoInstrucao = "Baixar após 30 dias do vencimento."
                     };
                 }

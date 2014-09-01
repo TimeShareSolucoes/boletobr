@@ -40,11 +40,6 @@ namespace BoletoBr.Bancos.Hsbc
             NomeBanco = "HSBC";
             this.LocalDePagamento = "Pagável em qualquer banco até o vencimento.";
             this.MoedaBanco = "9";
-
-            /* Adiciona carteiras de cobrança */
-            _carteirasCobrancaHsbc = new List<CarteiraCobranca>();
-            _carteirasCobrancaHsbc.Add(new CarteiraCobrancaHsbcCnr());
-            _carteirasCobrancaHsbc.Add(new CarteiraCobrancaHsbcCsb());
         }
 
         #endregion
@@ -117,19 +112,6 @@ namespace BoletoBr.Bancos.Hsbc
         public void FormataNumeroDocumento(Boleto boleto)
         {
             boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(13, '0');
-
-            //try
-            //{
-            //    if (boleto.TipoArquivo == TipoArquivo.Cnab240)
-            //        boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(10, '0');
-
-            //    if (boleto.TipoArquivo == TipoArquivo.Cnab400)
-            //        boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(13, '0');
-            //}
-            //catch (Exception e)
-            //{
-            //    throw new Exception("Erro ao formatar número do documento", e);
-            //}
         }
 
         public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao)

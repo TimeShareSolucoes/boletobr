@@ -88,7 +88,7 @@ namespace BoletoBr.Bancos.Itau
 
         public HeaderRetornoCnab400 ObterHeader(string linha)
         {
-            HeaderRetornoCnab400 objRetornar = new HeaderRetornoCnab400();
+            var objRetornar = new HeaderRetornoCnab400();
 
             objRetornar.CodigoDoRegistro = linha.ExtrairValorDaLinha(1, 1).BoletoBrToInt();
             objRetornar.TipoRetorno = linha.ExtrairValorDaLinha(2, 2);
@@ -115,7 +115,7 @@ namespace BoletoBr.Bancos.Itau
 
         public DetalheRetornoCnab400 ObterRegistrosDetalhe(string linha)
         {
-            DetalheRetornoCnab400 objRetornar = new DetalheRetornoCnab400();
+            var objRetornar = new DetalheRetornoCnab400();
 
             objRetornar.CodigoDoRegistro = linha.ExtrairValorDaLinha(1, 1).BoletoBrToInt();
             objRetornar.TipoInscricao = linha.ExtrairValorDaLinha(2, 3).BoletoBrToInt();
@@ -171,7 +171,7 @@ namespace BoletoBr.Bancos.Itau
 
         public TrailerRetornoCnab400 ObterTrailer(string linha)
         {
-            TrailerRetornoCnab400 objRetornar = new TrailerRetornoCnab400();
+            var objRetornar = new TrailerRetornoCnab400();
 
             objRetornar.CodigoDoRegistro = linha.ExtrairValorDaLinha(1,1).BoletoBrToInt();
             objRetornar.CodigoDeRetorno = linha.ExtrairValorDaLinha(2, 2).BoletoBrToInt();

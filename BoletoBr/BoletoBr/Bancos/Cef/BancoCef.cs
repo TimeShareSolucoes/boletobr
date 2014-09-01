@@ -46,11 +46,6 @@ namespace BoletoBr.Bancos.Cef
             this.NomeBanco = "Caixa Econômica Federal";
             this.LocalDePagamento = "Pagável preferencialmente nas agências da Caixa ou Lotéricas.";
             this.MoedaBanco = "9";
-
-            /* Adiciona carteiras de cobrança */
-            _carteirasCobrancaCef = new List<CarteiraCobranca>();
-            _carteirasCobrancaCef.Add(new CarteiraCobrancaCefRg());
-            _carteirasCobrancaCef.Add(new CarteiraCobrancaCefSr());
         }
 
         public string CodigoBanco { get; set; }
@@ -400,6 +395,12 @@ namespace BoletoBr.Bancos.Cef
                 throw new Exception("Sequencial nosso número não pode exceder 15 dígitos.");
 
             string dvNossoNumero;
+
+            /* 
+             * Informação reservada para arquivo de remessa
+             * O tipo de modalidade são os 2 primeiros dígitos do Nosso Número
+             */
+            boleto.TipoModalidade = boleto.SequencialNossoNumero.Substring(0, 2);
 
             boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero.PadLeft(15, '0'));
 
@@ -1221,7 +1222,7 @@ namespace BoletoBr.Bancos.Cef
                 header += "1"; // posi��o 143 at� 143 (1) - C�digo 1 - Remessa / 2 - Retorno
                 header += DateTime.Now.ToString().Replace("/", ""); // posi��o 144 at� 151 (8) - Data de Gera��o do Arquivo
                 header += DateTime.Now.AddHours(23).AddMinutes(59).AddSeconds(59).ToString().Replace(":", ""); // posi��o 152 at� 157 (6) - Hora de Gera��o do Arquivo
-                header += cedente.NumeroSequencial.PadLeft(6, '0'); // posi��o 158 at� 163 (6) - N�mero Seq�encial do Arquivo
+                //header += cedente.NumeroSequencial.PadLeft(6, '0'); // posi��o 158 at� 163 (6) - N�mero Seq�encial do Arquivo
                 header += "050"; // posi��o 164 at� 166 (3) - Nro da Vers�o do Layout do Arquivo
                 header += "0"; // posi��o 167 at� 171 (5) - Densidade de Grava��o do Arquivo
                 header += Common.CompletarCadeiaAEsquerda("", " ", 20); // posi��o 172 at� 191 (20)- Para Uso Reservado do Banco
@@ -1343,7 +1344,7 @@ namespace BoletoBr.Bancos.Cef
                 detalhe += Common.CompletarCadeiaAEsquerda("", " ", 11); // posi��o 30 at� 40   (11)- Uso Exclusivo CAIXA
                 detalhe += boleto.NossoNumeroFormatado; // posi��o 43 at� 57   (15)- Identifica��o do T�tulo no Banco
 
-                #region C�digo da Carteira
+                #region Código da Carteira
 
                 //C�digo adotado pela FEBRABAN, para identificar a caracter�stica dos t�tulos dentro das modalidades de cobran�a existentes no banco.
                 //�1� = Cobran�a Simples; �3� = Cobran�a Caucionada; �4� = Cobran�a Descontada
@@ -1371,8 +1372,8 @@ namespace BoletoBr.Bancos.Cef
                 detalhe += Common.CompletarCadeiaAEsquerda("", "0", 5); // O sistema atribui AEC pelo CEP do sacado  // posi��o 101 at� 105 (5) - AEC = Ag�ncia Encarregada da Cobran�a
                 detalhe += Common.CompletarCadeiaAEsquerda("", "0", 1); // posi��o 106 at� 106 (1) - D�gito Verificador da Ag�ncia
 
-                string EspDoc = boleto.Especie.Sigla.Equals("DM") ? "02" : boleto.Especie.Codigo;
-                detalhe += Common.CompletarCadeiaAEsquerda(EspDoc, "0", 2); // posi��o 107 at� 108 (2) - Esp�cie do T�tulo
+                string espDoc = boleto.Especie.Sigla.Equals("DM") ? "02" : boleto.Especie.Codigo.ToString();
+                detalhe += Common.CompletarCadeiaAEsquerda(espDoc, "0", 2); // posi��o 107 at� 108 (2) - Esp�cie do T�tulo
                 detalhe += Common.CompletarCadeiaAEsquerda(boleto.Aceite, " ", 1); // posi��o 109 at� 109 (1) - Identific. de T�tulo Aceito/N�o Aceito
                 detalhe += Common.CompletarCadeiaAEsquerda(boleto.DataDocumento.ToString().Replace("/", ""), "0", 8); // posi��o 110 at� 117 (8) - Data da Emiss�o do T�tulo
 

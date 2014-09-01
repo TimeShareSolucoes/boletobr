@@ -10,6 +10,7 @@ using BoletoBr.Dominio;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
 using BoletoBr.Fabricas;
+using BoletoBr.Interfaces;
 
 namespace BoletoBr.Bancos.Itau
 {
@@ -440,6 +441,161 @@ namespace BoletoBr.Bancos.Itau
                 throw new Exception(string.Format("<BoletoBr>" +
                                                 "{0}Mensagem: Falha ao formatar número do documento.", Environment.NewLine), ex);
             }
+        }
+
+        public IEspecieDocumento ObtemEspecieDocumento(EnumEspecieDocumento especie)
+        {
+            #region Código Espécie
+
+            // 01 - DM - DUPLICATA MERCANTIL    
+            // 02 - NP - NOTA PROMISSORIA   
+            // 03 - NS - NOTA DE SEGURO
+            // 04 - ME - MENSALIDADE ESCOLAR
+            // 05 - RC - RECIBO
+            // 06 - CT - CONTRATO
+            // 07 - CO - COSSEGUROS
+            // 08 - DS - DUPLICATA DE SERVICO
+            // 09 - LC - LETRA DE CÂMBIO
+            // 13 - ND - NOTA DE DÉBITOS
+            // 15 - DD - DOCUMENTO DE DÍVIDA
+            // 16 - EC - ENCARGOS CONDOMINIAIS
+            // 17 - PS - CONTA DE PRESTAÇÃO DE SERVIÇOS
+            // 99 - DV - DIVERSOS
+
+            #endregion
+
+            switch (especie)
+            {
+                case EnumEspecieDocumento.DuplicataMercantil:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 01,
+                            Descricao = "Duplicata Mercantil",
+                            Sigla = "DM"
+                        };
+                    }
+                case EnumEspecieDocumento.NotaPromissoria:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 02,
+                            Descricao = "Nota Promissória",
+                            Sigla = "NP"
+                        };
+                    }
+                case EnumEspecieDocumento.NotaSeguro:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 03,
+                            Descricao = "Nota de Seguro",
+                            Sigla = "NS"
+                        };
+                    }
+                case EnumEspecieDocumento.MensalidadeEscolar:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 04,
+                            Descricao = "Mensalidade Escolar",
+                            Sigla = "ME"
+                        };
+                    }
+                case EnumEspecieDocumento.Recibo:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 05,
+                            Descricao = "Recibo",
+                            Sigla = "RC"
+                        };
+                    }
+                case EnumEspecieDocumento.Contrato:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 06,
+                            Descricao = "Contrato",
+                            Sigla = "CT"
+                        };
+                    }
+                case EnumEspecieDocumento.Cosseguros:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 07,
+                            Descricao = "Cosseguros",
+                            Sigla = "CO"
+                        };
+                    }
+                case EnumEspecieDocumento.DuplicataServico:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 08,
+                            Descricao = "Duplicata de Serviço",
+                            Sigla = "DS"
+                        };
+                    }
+                case EnumEspecieDocumento.LetraCambio:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 09,
+                            Descricao = "Letra de Câmbio",
+                            Sigla = "LC"
+                        };
+                    }
+                case EnumEspecieDocumento.NotaDebito:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 13,
+                            Descricao = "Nota de Débitos",
+                            Sigla = "ND"
+                        };
+                    }
+                case EnumEspecieDocumento.DocumentoDivida:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 15,
+                            Descricao = "Documento de Dívida",
+                            Sigla = "DD"
+                        };
+                    }
+                case EnumEspecieDocumento.EncargosCondominais:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 16,
+                            Descricao = "Encargos Condominiais",
+                            Sigla = "EC"
+                        };
+                    }
+                case EnumEspecieDocumento.ContaPrestacaoServicos:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 17,
+                            Descricao = "Conta de Prestação de Serviços",
+                            Sigla = "PS"
+                        };
+                    }
+                case EnumEspecieDocumento.Diversos:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 99,
+                            Descricao = "Diversos",
+                            Sigla = "DV"
+                        };
+                    }
+            }
+            throw new Exception(
+                String.Format("Não foi possível obter instrução padronizada. Banco: {0} Código Espécie: {1}",
+                    CodigoBanco, especie.ToString()));
         }
 
         public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao)
