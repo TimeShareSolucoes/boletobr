@@ -73,7 +73,6 @@
     <Compile Include="Bancos\ILeitorArquivoRetornoCnab240.cs" />
     <Compile Include="Bancos\ILeitorArquivoRetornoCnab400.cs" />
     <Compile Include="Bancos\Itau\BancoItau.cs" />
-    <Compile Include="Bancos\Itau\CodigoOcorrenciaItau.cs" />
     <Compile Include="Bancos\Itau\EscritorRemessaCnab400Itau.cs" />
     <Compile Include="Bancos\Itau\LeitorRetornoCnab400Itau.cs" />
     <Compile Include="Bancos\LeitorRetornoCnab400Generico.cs" />
@@ -151,10 +150,9 @@
     <Compile Include="Enums\TipoInscricao.cs" />
     <Compile Include="Enums\TipoInstrucao.cs" />
     <Compile Include="Enums\TipoLancamento.cs" />
-    <Compile Include="Enums\TipoMovimento.cs" />
     <Compile Include="Enums\TipoMovimentoArquivo.cs" />
-    <Compile Include="Enums\TipoOcorrenciaRemessa.cs" />
-    <Compile Include="Enums\TipoOcorrenciaRetorno.cs" />
+    <Compile Include="Enums\CodigoOcorrenciaRemessa.cs" />
+    <Compile Include="Enums\CodigoOcorrenciaRetorno.cs" />
     <Compile Include="Enums\TipoPessoa.cs" />
     <Compile Include="Exceptions\ValidacaoBoletoException.cs" />
     <Compile Include="Fabricas\BancoFactory.cs" />

@@ -12,7 +12,7 @@ namespace BoletoBr.Dominio
     /// </summary>
     public class Remessa
     {
-        public enum TipoAmbiemte
+        public enum EnumTipoAmbiemte
         {
             Homologacao,
             Producao
@@ -23,13 +23,7 @@ namespace BoletoBr.Dominio
         /// <summary>
         /// Variável que define se a Remessa é para Testes ou Produção
         /// </summary>
-        public TipoAmbiemte Ambiente { get; set; }
-
-        /// <summary>
-        /// Tipo Documento Utilizado na geração da remessa. |Identificado no Banrisul by sidneiklein|
-        /// Tipo Cobranca Utilizado na geração da remessa.  |Identificado no Sicredi by sidneiklein|
-        /// </summary>
-        public string TipoDocumento { get; set; }
+        public EnumTipoAmbiemte Ambiente { get; set; }
 
         /// <summary>
         /// Código de Ocorrência Utilizado na geração da Remessa.
@@ -37,6 +31,12 @@ namespace BoletoBr.Dominio
         /// |Identificado no Banco do Brasil como "COMANDO"           by sidneiklein|
         /// </summary>
         public string CodigoOcorrencia { get; set; }
+
+        /// <summary>
+        /// Tipo Documento Utilizado na geração da remessa. |Identificado no Banrisul by sidneiklein|
+        /// Tipo Cobranca Utilizado na geração da remessa.  |Identificado no Sicredi by sidneiklein|
+        /// </summary>
+        public string TipoDocumento { get; set; }
 
         #endregion
     }

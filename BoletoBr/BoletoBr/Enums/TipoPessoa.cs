@@ -8,8 +8,8 @@ namespace BoletoBr.Enums
 {
     internal enum TipoPessoa
     {
-        Fisica,
-        Juridica,
-        Outro,
+        Fisica = 'F',
+        Juridica = 'J',
+        Outro = 'O',
     }
 }
