@@ -97,7 +97,7 @@
     <Compile Include="Dominio\CodigoMovimento\CodigoMovimentoCaixa.cs" />
     <Compile Include="Dominio\CodigoRejeicao\BancoBrasil\CodigoRejeicaoBancoBrasil.cs" />
     <Compile Include="Dominio\CodigoRejeicao\Hsbc\CodigoRejeicaoHsbc.cs" />
-    <Compile Include="Dominio\CodigoMovimento\ICodigoMovimento.cs" />
+    <Compile Include="Interfaces\ICodigoMovimento.cs" />
     <Compile Include="Dominio\CodigoRejeicao\AbstractCodigoRejeicao.cs" />
     <Compile Include="Dominio\CodigoRejeicao\CodigoRejeicao.cs" />
     <Compile Include="Dominio\CodigoRejeicao\ICodigoRejeicao.cs" />
