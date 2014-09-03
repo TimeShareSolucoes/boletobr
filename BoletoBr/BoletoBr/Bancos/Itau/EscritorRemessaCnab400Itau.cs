@@ -14,13 +14,6 @@ namespace BoletoBr.Bancos.Itau
 {
     public class EscritorRemessaCnab400Itau : IEscritorArquivoRemessa
     {
-        private readonly int _numeroRegistro = 1;
-
-        public EscritorRemessaCnab400Itau(int numeroRegistro)
-        {
-            _numeroRegistro = numeroRegistro;
-        }
-
         public List<string> EscreverArquivo(List<Boleto> boletosEscrever)
         {
             throw new NotImplementedException();
@@ -50,7 +43,7 @@ namespace BoletoBr.Bancos.Itau
                 header = header.PreencherValorNaLinha(80, 94, "BANCO ITAU SA");
                 header = header.PreencherValorNaLinha(95, 100, DateTime.Now.ToString("d").Replace("/", ""));
                 header = header.PreencherValorNaLinha(101, 394, string.Empty.PadRight(294, ' '));
-                header = header.PreencherValorNaLinha(395, 400, _numeroRegistro.ToString().PadLeft(6, '0'));
+                header = header.PreencherValorNaLinha(395, 400, numeroRegistro.ToString().PadLeft(6, '0'));
 
                 return header;
             }
@@ -158,7 +151,7 @@ namespace BoletoBr.Bancos.Itau
                 detalhe = detalhe.PreencherValorNaLinha(386, 391, boleto.DataJurosMora.ToString("d").Replace("/", "")); // Data de Mora
                 //detalhe = boleto.QtdDias; // Quantidade de Dias Posição 392 a 393
                 detalhe = detalhe.PreencherValorNaLinha(394, 394, string.Empty.PadRight(1, '0')); // Complemento do Registro
-                detalhe = detalhe.PreencherValorNaLinha(395, 400, _numeroRegistro.ToString().PadLeft(6, ' ')); // Nro Sequencial do Registro no Arquivo
+                detalhe = detalhe.PreencherValorNaLinha(395, 400, numeroRegistro.ToString().PadLeft(6, ' ')); // Nro Sequencial do Registro no Arquivo
 
                 return detalhe;
             }
@@ -177,7 +170,7 @@ namespace BoletoBr.Bancos.Itau
                 trailer = trailer.PreencherValorNaLinha(1, 1, "9");
                 trailer = trailer.PreencherValorNaLinha(2, 394, string.Empty.PadRight(393, ' '));
                 // Contagem total de linhas do arquivo no formato '000000' - 6 dígitos
-                trailer = trailer.PreencherValorNaLinha(395, 400, _numeroRegistro.ToString().PadLeft(6, '0'));
+                trailer = trailer.PreencherValorNaLinha(395, 400, numeroRegistro.ToString().PadLeft(6, '0'));
 
                 return trailer;
             }

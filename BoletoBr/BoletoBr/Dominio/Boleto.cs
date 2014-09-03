@@ -96,7 +96,14 @@ namespace BoletoBr
         public string CodigoDoProduto { get; set; }
         public List<IInstrucao> InstrucoesDoBoleto { get; set; }
         public Remessa Remessa { get; set; }
-        public bool ComRegistroSemRegistro { get; set; }
+        /// <summary>
+        /// Código que identifica a finalizade do boleto no arquivo magnético de REMESSA/RETORNO
+        /// Propriedade conhecida como:
+        /// Comando
+        /// Código de Movimento
+        /// Código de Oocorrência
+        /// </summary>
+        public CodigoOcorrencia CodigoOcorrencia { get; set; }
 
         #region Banco Santander
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BoletoBr.Enums
 {
-    internal enum TipoMovimentoArquivo
+    public enum TipoMovimentoArquivo
     {
         Remessa,
         Retorno,

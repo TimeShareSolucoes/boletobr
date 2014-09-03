@@ -56,6 +56,7 @@
     <Compile Include="Bancos\Amazonia\BancoAmazonia.cs" />
     <Compile Include="Bancos\Amazonia\CarteiraCobrancaBancoAmazoniaCnr.cs" />
     <Compile Include="Bancos\Amazonia\CarteiraCobrancaBancoAmazoniaCsb.cs" />
+    <Compile Include="Bancos\Bradesco\EscritorRemessaCnab400Bradesco.cs" />
     <Compile Include="Bancos\Bradesco\LeitorRetornoCnab240Bradesco.cs" />
     <Compile Include="Bancos\Bradesco\LeitorRetornoCnab400Bradesco.cs" />
     <Compile Include="Bancos\Brasil\BancoBrasil.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Dominio\CodigoMovimento\CodigoMovimento.cs" />
     <Compile Include="Dominio\CodigoMovimento\CodigoMovimentoBancoBrasil.cs" />
     <Compile Include="Dominio\CodigoMovimento\CodigoMovimentoCaixa.cs" />
+    <Compile Include="Dominio\CodigoOcorrencia.cs" />
     <Compile Include="Dominio\CodigoRejeicao\BancoBrasil\CodigoRejeicaoBancoBrasil.cs" />
     <Compile Include="Dominio\CodigoRejeicao\Hsbc\CodigoRejeicaoHsbc.cs" />
     <Compile Include="Interfaces\ICodigoMovimento.cs" />

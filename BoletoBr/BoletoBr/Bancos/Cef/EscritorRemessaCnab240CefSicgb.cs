@@ -59,9 +59,7 @@ namespace BoletoBr.Bancos.Cef
             throw new NotImplementedException();
         }
 
-        public void ValidarArquivoRemessa()
-        {
-        }
+        public void ValidarArquivoRemessa() { }
 
         public string EscreverHeader(Boleto boleto, int numeroRegistro)
         {
