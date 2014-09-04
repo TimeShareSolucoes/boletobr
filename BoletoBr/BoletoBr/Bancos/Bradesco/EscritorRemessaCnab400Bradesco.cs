@@ -96,12 +96,12 @@ namespace BoletoBr.Bancos.Bradesco
                 detalhe = detalhe.PreencherValorNaLinha(105, 105, " ");
                 detalhe = detalhe.PreencherValorNaLinha(106, 106, "2");
                 detalhe = detalhe.PreencherValorNaLinha(107, 108, string.Empty.PadLeft(2, ' '));
-                detalhe = detalhe.PreencherValorNaLinha(109, 110, boleto.CodigoOcorrencia.Codigo.PadLeft(2, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(109, 110, boleto.CodigoOcorrenciaRemessa.Codigo.ToString().PadLeft(2, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(111, 120, boleto.NumeroDocumento.PadLeft(10, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(121, 126, boleto.DataVencimento.ToString("d").Replace("/", ""));
                 detalhe = detalhe.PreencherValorNaLinha(127, 139, boleto.ValorBoleto.ToString().Replace(".", "").Replace(",", "").PadLeft(13, '0'));
 
-                if (boleto.CodigoOcorrencia.Codigo.Equals("01"))
+                if (boleto.CodigoOcorrenciaRemessa.Codigo.Equals("01"))
                 {
                     detalhe = detalhe.PreencherValorNaLinha(140, 142, string.Empty.PadLeft(3, '0'));
                     detalhe = detalhe.PreencherValorNaLinha(143, 147, string.Empty.PadLeft(5, '0'));

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BoletoBr.Enums
 {
-    internal enum CodigoOcorrenciaRetorno
+    public enum CodigoOcorrenciaRetorno
     {
         //Ocorrências para arquivo retorno
         RetRegistroConfirmado,

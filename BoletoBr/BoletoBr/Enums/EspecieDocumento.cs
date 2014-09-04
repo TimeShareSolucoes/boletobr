@@ -40,6 +40,9 @@ namespace BoletoBr.Enums
         Cosseguros,
         EncargosCondominais,
         ContaPrestacaoServicos,
-        Diversos
+        Diversos,
+        CobrancaSeriada,
+        NotaDeSeguro,
+        CedulaProdutoRural
     }
 }

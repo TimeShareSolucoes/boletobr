@@ -7,8 +7,10 @@ using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.CalculoModulo;
 using BoletoBr.Bancos;
 using BoletoBr.Dominio;
+using BoletoBr.Dominio.CodigoMovimento;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
+using BoletoBr.Interfaces;
 
 namespace BoletoBr.Bancos.Hsbc
 {
@@ -114,9 +116,266 @@ namespace BoletoBr.Bancos.Hsbc
             boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(13, '0');
         }
 
-        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao)
+        public IEspecieDocumento ObtemEspecieDocumento(EnumEspecieDocumento especie)
         {
-            throw new NotImplementedException();
+            switch (especie)
+            {
+                case EnumEspecieDocumento.DuplicataMercantil:
+                {
+                    return new EspecieDocumento((int) especie)
+                    {
+                        Codigo = 01,
+                        Descricao = "Duplicata Mercantil",
+                        Sigla = "DP"
+                    };
+                }
+                case EnumEspecieDocumento.NotaPromissoria:
+                {
+                    return new EspecieDocumento((int) especie)
+                    {
+                        Codigo = 02,
+                        Descricao = "Nota Promissória",
+                        Sigla = "NP"
+                    };
+                }
+                case EnumEspecieDocumento.NotaSeguro:
+                {
+                    return new EspecieDocumento((int) especie)
+                    {
+                        Codigo = 03,
+                        Descricao = "Nota de Seguro",
+                        Sigla = "NS"
+                    };
+                }
+                case EnumEspecieDocumento.Recibo:
+                {
+                    return new EspecieDocumento((int) especie)
+                    {
+                        Codigo = 05,
+                        Descricao = "Recibo",
+                        Sigla = "RC"
+                    };
+                }
+                case EnumEspecieDocumento.DuplicataServico:
+                {
+                    return new EspecieDocumento((int) especie)
+                    {
+                        Codigo = 10,
+                        Descricao = "Duplicata de Serviços",
+                        Sigla = "DS"
+                    };
+                }
+            }
+            throw new Exception(
+                String.Format("Não foi possível obter espécie. Banco: {0} Código Espécie: {1}",
+                    CodigoBanco, especie.ToString()));
+        }
+
+        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao)
+        {
+            switch (tipoInstrucao)
+            {
+
+            }
+            throw new Exception(
+                String.Format(
+                    "Não foi possível obter instrução padronizada. Banco: {0} Código Instrução: {1} Qtd Dias/Valor: {2}",
+                    CodigoBanco, tipoInstrucao.ToString(), valorInstrucao));
+        }
+
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(CodigoOcorrenciaRemessa ocorrenciaRemessa, double valorOcorrencia, DateTime dataOcorrencia)
+        {
+            switch (ocorrenciaRemessa)
+            {
+                case CodigoOcorrenciaRemessa.Registro:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 01,
+                        Descricao = "Entrada de títulos"
+                    };
+                }
+                case CodigoOcorrenciaRemessa.Baixa:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 02,
+                        Descricao = "Pedido de baixa"
+                    };
+                }
+                case CodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 04,
+                        Descricao = "Concessão de abatimento"
+                    };
+                }
+                case CodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 05,
+                        Descricao = "Cancelamento de abatimento concedido"
+                    };
+                }
+                case CodigoOcorrenciaRemessa.AlteracaoDeVencimento:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 06,
+                        Descricao = "Alteração de vencimento"
+                    };
+                }
+                case CodigoOcorrenciaRemessa.ConcessaoDeDesconto:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 07,
+                        Descricao = "Conceder desconto"
+                    };
+                }
+                case CodigoOcorrenciaRemessa.AlteracaoDoControleDoParticipante:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 07,
+                        Descricao = "Alteração do controle do participante"
+                    };
+                }
+                case CodigoOcorrenciaRemessa.CancelamentoDeDesconto:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 08,
+                        Descricao = "Cancelamento de desconto"
+                    };
+                }
+                case CodigoOcorrenciaRemessa.AlteracaoSeuNumero:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 08,
+                        Descricao = "Alteração do seu número"
+                    };
+                }
+                case CodigoOcorrenciaRemessa.Protesto:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 09,
+                        Descricao = "Protestar"
+                    };
+                }
+                case CodigoOcorrenciaRemessa.SustarProtesto:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 10,
+                        Descricao = "Sustar protesto"
+                    };
+                }
+                case CodigoOcorrenciaRemessa.NaoCobrarJurosDeMora:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 11,
+                        Descricao = "Não cobrar juros de mora"
+                    };
+                }
+                case CodigoOcorrenciaRemessa.ConcessaoDeDescontoComData:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 13,
+                        Descricao = "Conceder desconto R$ " + string.Format("{0:0.##}", valorOcorrencia) + " p/ pgto até " + dataOcorrencia
+                    };
+                }
+                case CodigoOcorrenciaRemessa.CancelamentoDescontoFixo:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 14,
+                        Descricao = "Cancelamento condição de desconto fixo"
+                    };
+                }
+                case CodigoOcorrenciaRemessa.CancelamentoDescontoDiario:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 15,
+                        Descricao = "Cancelamento de desconto diário"
+                    };
+                }
+                case CodigoOcorrenciaRemessa.AlteracaoDeVencimentoComData:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 48,
+                        Descricao = "Vencimento alterado para " + dataOcorrencia
+                    };
+                }
+                case CodigoOcorrenciaRemessa.AlteracaoDeDiasParaEnvioACartorio:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 49,
+                        Descricao = "Alteração de dias para envio a Cartório de Protesto"
+                    };
+                }
+                case CodigoOcorrenciaRemessa.InclusaoDePagadorNoBoleto:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 50,
+                        Descricao = "Inclusão de pagador no boleto eletrônico"
+                    };
+                }
+                case CodigoOcorrenciaRemessa.ExclusaoDePagadorNoBoleto:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 51,
+                        Descricao = "Exclusão de pagador no boleto eletrônico"
+                    };
+                }
+                case CodigoOcorrenciaRemessa.Reemissao:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 52,
+                        Descricao = "Reemissão"
+                    };
+                }
+                case CodigoOcorrenciaRemessa.EntradaDeTitulosComParcelasFaltantes:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 53,
+                        Descricao = "Entrada de títulos com parcelas faltantes"
+                    };
+                }
+                case CodigoOcorrenciaRemessa.TransferenciaParaDesconto:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 55,
+                        Descricao = "Transferência para desconto"
+                    };
+                }
+                case CodigoOcorrenciaRemessa.ProtestoParaFinsFalimentares:
+                {
+                    return new CodigoOcorrencia()
+                    {
+                        Codigo = 57,
+                        Descricao = "Protesto para fins falimentares"
+                    };
+                }
+            }
+            throw new Exception(
+                String.Format(
+                    "Não foi possível obter Código de Comando/Movimento/Ocorrência. Banco: {0} Código: {1}",
+                    CodigoBanco, ocorrenciaRemessa.ToString()));
         }
 
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)

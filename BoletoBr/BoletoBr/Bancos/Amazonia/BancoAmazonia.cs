@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.Bancos.Hsbc;
 using BoletoBr.Dominio;
+using BoletoBr.Dominio.CodigoMovimento;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
+using BoletoBr.Interfaces;
 
 namespace BoletoBr.Bancos.Amazonia
 {
@@ -171,7 +173,17 @@ namespace BoletoBr.Bancos.Amazonia
             boleto.NumeroDocumento = string.Format("{0}", boleto.NumeroDocumento);
         }
 
-        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao)
+        public IEspecieDocumento ObtemEspecieDocumento(EnumEspecieDocumento especie)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(CodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
         {
             throw new NotImplementedException();
         }

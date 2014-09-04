@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BoletoBr.Bancos;
 using BoletoBr.Dominio;
+using BoletoBr.Interfaces;
 
 namespace BoletoBr.Arquivo
 {

@@ -37,7 +37,7 @@ namespace BoletoBr.Bancos.Santander
                 header = header.PreencherValorNaLinha(101, 116, "0".PadLeft(16, '0'));
                 header = header.PreencherValorNaLinha(117, 391, string.Empty.PadRight(294, ' '));
                 header = header.PreencherValorNaLinha(392, 394, "000");
-                header = header.PreencherValorNaLinha(395, 400, numeroRegistro.ToString().PadLeft(6, '0'));
+                header = header.PreencherValorNaLinha(395, 400, "000001");
 
                 return header;
             }

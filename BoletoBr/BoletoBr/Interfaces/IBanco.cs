@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
-using BoletoBr.Arquivo.Generico;
 using BoletoBr.Arquivo.Generico.Retorno;
-using BoletoBr.CalculoModulo;
-using BoletoBr.Dominio;
+using BoletoBr.Dominio.CodigoMovimento;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
 
-namespace BoletoBr.Bancos
+namespace BoletoBr.Interfaces
 {
     public interface IBanco
     {
@@ -60,11 +57,24 @@ namespace BoletoBr.Bancos
         void FormataNumeroDocumento(Boleto boleto);
 
         /// <summary>
+        /// Retorna o código do comando/movimento/ocorrência a ser usada na geração do arquivo de remessa.
+        /// </summary>
+        /// <param name="ocorrenciaRemessa"></param>
+        /// <returns></returns>
+        ICodigoOcorrencia ObtemCodigoOcorrencia(CodigoOcorrenciaRemessa ocorrenciaRemessa, double valorOcorrencia, DateTime dataOcorrencia);
+
+        /// <summary>
+        /// Retorna a espécie de documento a ser usada na geração do arquivo de remessa.
+        /// </summary>
+        /// <param name="especie"></param>
+        IEspecieDocumento ObtemEspecieDocumento(EnumEspecieDocumento especie);
+
+        /// <summary>
         /// Retorna a instrução a ser usada na geração do arquivo de remessa.
         /// </summary>
         /// <param name="tipoInstrucao">Tipo de instrução padronizada no componente</param>
         /// <param name="valorInstrucao">Pode ser: número de dias, ou valor monetário. Será ajustado de acordo com a instrução.</param>
-        IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao);
+        IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao);
 
         /// <summary>
         /// Faz a leitura do arquivo de retorno.

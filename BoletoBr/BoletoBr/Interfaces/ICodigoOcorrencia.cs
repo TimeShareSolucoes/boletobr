@@ -7,10 +7,11 @@ using BoletoBr.Bancos;
 
 namespace BoletoBr.Dominio.CodigoMovimento
 {
-    public interface ICodigoMovimento
+    public interface ICodigoOcorrencia
     {
-        IBanco Banco { get; }
         int Codigo { get; set; }
+        int QtdDias { get; set; }
+        double Valor { get; set; }
         string Descricao { get; }
     }
 }

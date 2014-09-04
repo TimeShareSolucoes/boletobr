@@ -6,10 +6,37 @@ using System.Threading.Tasks;
 
 namespace BoletoBr.Enums
 {
-    internal enum CodigoOcorrenciaRemessa
+    public enum CodigoOcorrenciaRemessa
     {
+        #region CÓDIGO DE MOVIMENTO REMESSA - COMUNS
 
-        #region CÓDIGO DE MOVIMENTO REMESSA - CAIXA
+        Registro,
+        Baixa,
+        Protesto,
+        NaoProtestar,
+        AlteracaoDeOutrosDados,
+        CancelamentoDoRateioDeCredito,
+        SustarProtesto,
+        ProtestoParaFinsFalimentares,
+        ConcessaoDeDescontoComData,
+
+        #endregion
+
+        #region CÓDIGO DE MOVIMENTO REMESSA - 001|BANCO DO BRASIL
+
+        PedidoDeDebitoEmConta,
+
+
+        #endregion
+
+        #region CÓDIGO DE MOVIMENTO REMESSA - 033|SANTANDER
+
+        AlteracaoDaIdentificacaoDotituloNaEmpresa,
+        AlteracaoSeuNumero,
+
+        #endregion
+
+        #region CÓDIGO DE MOVIMENTO REMESSA - 104|CAIXA
 
         /* Código de Movimento Remessa
         01| Entrada de Título
@@ -38,14 +65,11 @@ namespace BoletoBr.Enums
         40| Serviços
         */ 
         
-        EntradaDeTitulo,
-        PedidoDeBaixa,
         ConcessaoDeAbatimento,
         CancelamentoDeAbatimento,
         AlteracaoDeVencimento,
         ConcessaoDeDesconto,
         CancelamentoDeDesconto,
-        Protestar,
         SustarProtestoEBaixarTitulo,
         SustarProtestoEManterEmCarteira,
         AlteracaoDeJurosDeMora,
@@ -55,15 +79,49 @@ namespace BoletoBr.Enums
         AlteracaoDoValorDeDesconto,
         NaoConcederDesconto,
         AlteracaoDoValorDeAbatimento,
-        AlteracaoDeOutrosDados,
         AlteracaoDosDadosDoRateioDeCredito,
-        PedidoDeCancelamentoDosDAdosDoRateioDeCredito,
         InclusaoNoBancoDeSacados,
         AlteracaoNoBancoDeSacados,
         ExclusaoNoBancoDeSacados,
-        Servicos
+        Servicos,
 
         #endregion
 
+        #region CÓDIGO DE MOVIMENTO REMESSA - 237|BRADESCO
+
+        AlteracaoDoControleDoParticipante,
+        TransferenciaCessaoCredito,
+        TransferenciaEntreCarteiras,
+        DevTransferenciaEntreCarteiras,
+        DesagendamentoDoDebitoAutomatico,
+        AcertoNosDadosDoRateioDeCredito,
+
+        #endregion
+
+        #region CÓDIGO DE MOVIMENTO REMESSA - 341|ITAÚ
+        
+        ExclusaoDeSacadorAvalista,
+        BaixaPorTerSidoPagoDiretamenteAoCedente,
+        CancelamentoDeInstrucao,
+        AlteracaoDoVencimentoESustarProtesto,
+        CedenteNaoConcordaComAlegacaoDoSacado,
+        CedenteSolicitaDispensaDeJuros,
+
+        #endregion
+
+        #region CÓDIGO DE MOVIMENTO REMESSA - 399|HSBC
+
+        AlteracaoDeDiasParaEnvioACartorio,
+        InclusaoDePagadorNoBoleto,
+        ExclusaoDePagadorNoBoleto,
+        Reemissao,
+        EntradaDeTitulosComParcelasFaltantes,
+        TransferenciaParaDesconto,
+        NaoCobrarJurosDeMora,
+        CancelamentoDescontoFixo,
+        CancelamentoDescontoDiario,
+        AlteracaoDeVencimentoComData
+
+        #endregion
     }
 }

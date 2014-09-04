@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Drawing;
 using BoletoBr.Bancos;
 using BoletoBr.Dominio;
+using BoletoBr.Dominio.CodigoMovimento;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
 using BoletoBr.Interfaces;
@@ -104,7 +105,8 @@ namespace BoletoBr
         /// Código de Movimento
         /// Código de Oocorrência
         /// </summary>
-        public CodigoOcorrencia CodigoOcorrencia { get; set; }
+        public ICodigoOcorrencia CodigoOcorrenciaRemessa { get; set; }
+        public ICodigoOcorrencia CodigoOcorrenciaRetorno { get; set; }
 
         #region Banco Santander
 
@@ -114,19 +116,29 @@ namespace BoletoBr
 
         #endregion
 
-        public void AdicionarSiglaEspecie(EnumEspecieDocumento siglaEspecieDocumento)
+        public void AdicionarSiglaEspecie(EspecieDocumento siglaEspecieDocumento)
         {
             this.Especie.Sigla.ToString();
         }
 
-        public void AdicionarCodigoEspecie(EnumEspecieDocumento codigoEspecieDocumento)
+        public void AdicionarCodigoEspecie(EspecieDocumento codigoEspecieDocumento)
         {
             this.Especie.Codigo.ToString();
         }
 
-        public void AdicionarInstrucao(EnumTipoInstrucao tipoInstrucao, double valor)
+        public void AdicionarOcorrenciaRemessa(CodigoOcorrenciaRemessa ocorrencia)
         {
-            this.InstrucoesDoBoleto.Add(this.BancoBoleto.ObtemInstrucaoPadronizada(tipoInstrucao, valor));
+            this.CodigoOcorrenciaRemessa.Codigo.ToString();
+        }
+
+        public void AdicionarOcorrenciaRetorno(CodigoOcorrenciaRetorno ocorrencia)
+        {
+            this.CodigoOcorrenciaRetorno.Codigo.ToString();
+        }
+
+        public void AdicionarInstrucao(EnumTipoInstrucao tipoInstrucao, double valor, DateTime data)
+        {
+            this.InstrucoesDoBoleto.Add(this.BancoBoleto.ObtemInstrucaoPadronizada(tipoInstrucao, valor, data));
         }
 
         public string InstrucoesBoletoConcatenadas

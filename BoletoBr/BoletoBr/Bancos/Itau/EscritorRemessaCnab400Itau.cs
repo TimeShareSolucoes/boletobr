@@ -43,7 +43,7 @@ namespace BoletoBr.Bancos.Itau
                 header = header.PreencherValorNaLinha(80, 94, "BANCO ITAU SA");
                 header = header.PreencherValorNaLinha(95, 100, DateTime.Now.ToString("d").Replace("/", ""));
                 header = header.PreencherValorNaLinha(101, 394, string.Empty.PadRight(294, ' '));
-                header = header.PreencherValorNaLinha(395, 400, numeroRegistro.ToString().PadLeft(6, '0'));
+                header = header.PreencherValorNaLinha(395, 400, "000001");
 
                 return header;
             }
@@ -100,7 +100,7 @@ namespace BoletoBr.Bancos.Itau
                 // Modalidade de Carteira E - Escritural
                 if (carteiraCob == "104" || carteiraCob == "112" || carteiraCob == "138" || carteiraCob == "147")
                     detalhe = detalhe.PreencherValorNaLinha(108, 108, "E");
-                detalhe = detalhe.PreencherValorNaLinha(109, 110, boleto.CodigoOcorrencia.Codigo.PadLeft(2, '0')); // Identificação da Ocorrência
+                detalhe = detalhe.PreencherValorNaLinha(109, 110, boleto.CodigoOcorrenciaRemessa.Codigo.ToString().PadLeft(2, '0')); // Identificação da Ocorrência
                 detalhe = detalhe.PreencherValorNaLinha(111, 120, boleto.NumeroDocumento.PadLeft(10, '0')); // Nro do Documento de Cobrança
                 detalhe = detalhe.PreencherValorNaLinha(121, 126, boleto.DataVencimento.ToString("d").Replace("/", "")); // Data de Vencimento do Título
                 detalhe = detalhe.PreencherValorNaLinha(127, 139, boleto.ValorBoleto.ToString().Replace(".", "").Replace(",", "").PadLeft(11, '0')); // Valor Nominal do Título
