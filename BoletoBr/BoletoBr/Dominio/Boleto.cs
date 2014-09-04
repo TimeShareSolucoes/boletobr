@@ -94,6 +94,7 @@ namespace BoletoBr
         public string DataFormatoJuliano { get; set; }
         public TipoArquivo TipoArquivo { get; set; }
         public string CodigoDoProduto { get; set; }
+        public int QtdDias { get; set; }
         public List<IInstrucao> InstrucoesDoBoleto { get; set; }
         public Remessa Remessa { get; set; }
         /// <summary>

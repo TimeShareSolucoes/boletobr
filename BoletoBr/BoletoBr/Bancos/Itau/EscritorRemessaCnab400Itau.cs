@@ -68,7 +68,7 @@ namespace BoletoBr.Bancos.Itau
             try
             {
                 detalhe = detalhe.PreencherValorNaLinha(1, 1, "1"); // Identificação do Registro Transação
-                detalhe = detalhe.PreencherValorNaLinha(2, 3, boleto.CedenteBoleto.CpfCnpj.Length == 11 ? "01" : "02"); // Tipo de Inscrição da Empresa
+                detalhe = detalhe.PreencherValorNaLinha(2, 3, boleto.CedenteBoleto.CpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "").Length == 11 ? "01" : "02"); // Tipo de Inscrição da Empresa
                 detalhe = detalhe.PreencherValorNaLinha(4, 17, boleto.CedenteBoleto.CpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "")); // Nro de Inscrição da Empresa (CPF/CNPJ)
                 detalhe = detalhe.PreencherValorNaLinha(18, 21, boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0')); // Agência Mantenedora da Conta
                 detalhe = detalhe.PreencherValorNaLinha(22, 23, string.Empty.PadRight(2, '0')); // Complemento de Registro
@@ -76,19 +76,19 @@ namespace BoletoBr.Bancos.Itau
                 detalhe = detalhe.PreencherValorNaLinha(29, 29, boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta); // Dígito de Auto Conferência Ag/Conta Empresa
                 detalhe = detalhe.PreencherValorNaLinha(30, 33, string.Empty.PadRight(4, ' ')); // Complemento de Registro
                 //detalhe = boleto.InstrucoesDoBoleto; // Cód. Instrução/Alegação a ser cancelada
-                detalhe = detalhe.PreencherValorNaLinha(38, 62, boleto.NumeroDocumento.PadLeft(25, ' ')); // Identificação do Título na Empresa
-                detalhe = detalhe.PreencherValorNaLinha(63, 70, boleto.NossoNumeroFormatado.PadLeft(8, ' ')); // Identificação do Título no Banco
+                detalhe = detalhe.PreencherValorNaLinha(38, 62, boleto.NumeroDocumento.PadLeft(25, '0')); // Identificação do Título na Empresa
+                detalhe = detalhe.PreencherValorNaLinha(63, 70, boleto.NossoNumeroFormatado.PadLeft(8, '0')); // Identificação do Título no Banco
                 // Se Moeda = REAL, preenche com zeros
                 if (boleto.BancoBoleto.MoedaBanco == "0")
                 {
-                    string qtdMoeda = "0";
+                    const string qtdMoeda = "0";
                     qtdMoeda.PadLeft(13, '0');
                 }
                     // Caso contrário, preenche com a quantidade
                 else
                     String.Format("{0:0.#####}", boleto.QuantidadeMoeda);
-                detalhe = detalhe.PreencherValorNaLinha(71, 83, boleto.QuantidadeMoeda.ToString()); // Quantidade de Moeda Variável
-                detalhe = detalhe.PreencherValorNaLinha(84, 86, boleto.CarteiraCobranca.Codigo.PadLeft(3, ' ')); // Número da Carteira no Banco
+                detalhe = detalhe.PreencherValorNaLinha(71, 83, boleto.QuantidadeMoeda.ToString().PadLeft(13, '0')); // Quantidade de Moeda Variável
+                detalhe = detalhe.PreencherValorNaLinha(84, 86, boleto.CarteiraCobranca.Codigo.PadLeft(3, '0')); // Número da Carteira no Banco
                 detalhe = detalhe.PreencherValorNaLinha(87, 107, string.Empty.PadRight(21, ' ')); // Identificação da Operação no Banco
                 /* Código da Carteira */
                 // Modalidade de Carteira D - Direta
@@ -100,16 +100,16 @@ namespace BoletoBr.Bancos.Itau
                 // Modalidade de Carteira E - Escritural
                 if (carteiraCob == "104" || carteiraCob == "112" || carteiraCob == "138" || carteiraCob == "147")
                     detalhe = detalhe.PreencherValorNaLinha(108, 108, "E");
-                //detalhe = boleto.CodigoOcorrencia; // Identificação da Ocorrência
-                detalhe = detalhe.PreencherValorNaLinha(111, 120, boleto.NumeroDocumento.PadLeft(10, ' ')); // Nro do Documento de Cobrança
+                detalhe = detalhe.PreencherValorNaLinha(109, 110, boleto.CodigoOcorrencia.Codigo.PadLeft(2, '0')); // Identificação da Ocorrência
+                detalhe = detalhe.PreencherValorNaLinha(111, 120, boleto.NumeroDocumento.PadLeft(10, '0')); // Nro do Documento de Cobrança
                 detalhe = detalhe.PreencherValorNaLinha(121, 126, boleto.DataVencimento.ToString("d").Replace("/", "")); // Data de Vencimento do Título
-                detalhe = detalhe.PreencherValorNaLinha(127, 139, String.Format("{0:0.##}", boleto.ValorBoleto).PadLeft(11, '0')); // Valor Nominal do Título
+                detalhe = detalhe.PreencherValorNaLinha(127, 139, boleto.ValorBoleto.ToString().Replace(".", "").Replace(",", "").PadLeft(11, '0')); // Valor Nominal do Título
                 detalhe = detalhe.PreencherValorNaLinha(140, 142, boleto.BancoBoleto.CodigoBanco.PadLeft(3, '0')); // Nro do Banco na Câmara de Compensação
                 detalhe = detalhe.PreencherValorNaLinha(143, 147, string.Empty.PadLeft(5, '0')); // Agência onde o título será cobrado
                 // Espécie do documento padronizado para DM - Duplicata Mercantil
                 detalhe = detalhe.PreencherValorNaLinha(148, 149, boleto.Especie.Sigla.Equals("DM") ? "01" : boleto.Especie.Codigo.ToString()); // Espécie do Título
-                detalhe = detalhe.PreencherValorNaLinha(150, 150, boleto.Aceite); // Identificação de Título Aceitou ou Não Aceito
-                detalhe = detalhe.PreencherValorNaLinha(151, 156, DateTime.Now.ToString("d").Replace("/", "")); // Data da Emissão do Título
+                detalhe = detalhe.PreencherValorNaLinha(150, 150, boleto.Aceite.Equals("A") ? "A" : "N"); // Identificação de Título Aceitou ou Não Aceito
+                detalhe = detalhe.PreencherValorNaLinha(151, 156, boleto.DataDocumento.ToString("d").Replace("/", "")); // Data da Emissão do Título
 
                 #region INSTRUÇÕES REMESSA
 
@@ -132,12 +132,12 @@ namespace BoletoBr.Bancos.Itau
 
                 #endregion
 
-                detalhe = detalhe.PreencherValorNaLinha(161, 173, String.Format("{0:0.##}", boleto.JurosMora).PadLeft(11, '0')); // Valor de Mora Por Dia de Atraso
+                detalhe = detalhe.PreencherValorNaLinha(161, 173, boleto.JurosMora.ToString().Replace(".", "").Replace(",", "").PadLeft(11, '0')); // Valor de Mora Por Dia de Atraso
                 detalhe = detalhe.PreencherValorNaLinha(174, 179, boleto.DataDesconto.ToString("d").Replace("/", "")); // Data Limite para Concesão de Desconto
-                detalhe = detalhe.PreencherValorNaLinha(180, 192, String.Format("{0:0.##}", boleto.ValorDesconto).PadLeft(11, '0')); // Valor do Desconto a ser Concedido
-                detalhe = detalhe.PreencherValorNaLinha(193, 205, String.Format("{0:0.##}", boleto.Iof).PadLeft(11, '0')); // Valor do I.O.F. recolhido p/ notas seguro
-                detalhe = detalhe.PreencherValorNaLinha(206, 218, String.Format("{0:0.##}", boleto.ValorAbatimento).PadLeft(11, '0')); // Valor do Abatimento a ser concedido
-                detalhe = detalhe.PreencherValorNaLinha(219, 220, boleto.SacadoBoleto.CpfCnpj.Length == 11 ? "01" : "02"); // Identificação do tipo de inscrição/sacado
+                detalhe = detalhe.PreencherValorNaLinha(180, 192, boleto.ValorDesconto.ToString().Replace(".", "").Replace(",", "").PadLeft(11, '0')); // Valor do Desconto a ser Concedido
+                detalhe = detalhe.PreencherValorNaLinha(193, 205, boleto.Iof.ToString().Replace(".", "").Replace(",", "").PadLeft(11, '0')); // Valor do I.O.F. recolhido p/ notas seguro
+                detalhe = detalhe.PreencherValorNaLinha(206, 218, boleto.ValorAbatimento.ToString().Replace(".", "").Replace(",", "").PadLeft(11, '0')); // Valor do Abatimento a ser concedido
+                detalhe = detalhe.PreencherValorNaLinha(219, 220, boleto.SacadoBoleto.CpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "").Length == 11 ? "01" : "02"); // Identificação do tipo de inscrição/sacado
                 detalhe = detalhe.PreencherValorNaLinha(221, 234, boleto.SacadoBoleto.CpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "")); // Nro de Inscrição do Sacado (CPF/CNPJ)
                 detalhe = detalhe.PreencherValorNaLinha(235, 264, boleto.SacadoBoleto.Nome.PadRight(30, ' ')); // Nome do Sacado
                 detalhe = detalhe.PreencherValorNaLinha(265, 274, string.Empty.PadRight(10, '0')); // Complemento de Registro
@@ -149,7 +149,7 @@ namespace BoletoBr.Bancos.Itau
                 detalhe = detalhe.PreencherValorNaLinha(352, 381, boleto.SacadoBoleto.NomeAvalista.PadRight(30, ' ')); // Nome do Sacador ou Avalista
                 detalhe = detalhe.PreencherValorNaLinha(382, 385, string.Empty.PadRight(4, '0')); // Complemento do Registro
                 detalhe = detalhe.PreencherValorNaLinha(386, 391, boleto.DataJurosMora.ToString("d").Replace("/", "")); // Data de Mora
-                //detalhe = boleto.QtdDias; // Quantidade de Dias Posição 392 a 393
+                detalhe = boleto.QtdDias.ToString().PadLeft(2, '0'); // Quantidade de Dias Posição 392 a 393
                 detalhe = detalhe.PreencherValorNaLinha(394, 394, string.Empty.PadRight(1, '0')); // Complemento do Registro
                 detalhe = detalhe.PreencherValorNaLinha(395, 400, numeroRegistro.ToString().PadLeft(6, ' ')); // Nro Sequencial do Registro no Arquivo
 
