@@ -171,11 +171,49 @@ namespace BoletoBr.Bancos.Hsbc
                     CodigoBanco, especie.ToString()));
         }
 
-        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao)
+        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, int diasInstrucao,
+            DateTime dataInstrucao)
         {
             switch (tipoInstrucao)
             {
-
+                case EnumTipoInstrucao.MultaPercentualVencimento:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 15,
+                        QtdDias = (int) valorInstrucao,
+                        TextoInstrucao = "Multa de " + valorInstrucao + " por cento após dia " + dataInstrucao
+                    };
+                }
+                case EnumTipoInstrucao.MultaPorDiaVencimento:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 16,
+                        QtdDias = (int) valorInstrucao,
+                        TextoInstrucao = "Após " + dataInstrucao + " multa dia de " + valorInstrucao + "  máximo " + "???"
+                    };
+                }
+                case EnumTipoInstrucao.MultaPorDiaCorrido:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 19,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Multa de R$ " + valorInstrucao + " após " + diasInstrucao + " dias corridos do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.JurosdeMora:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 20,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Cobrar juros só após 07 dias do vencimento."
+                    };
+                }
             }
             throw new Exception(
                 String.Format(

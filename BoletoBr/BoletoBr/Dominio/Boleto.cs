@@ -116,12 +116,12 @@ namespace BoletoBr
 
         #endregion
 
-        public void AdicionarSiglaEspecie(EspecieDocumento siglaEspecieDocumento)
+        public void AdicionarSiglaEspecie(IEspecieDocumento siglaEspecieDocumento)
         {
             this.Especie.Sigla.ToString();
         }
 
-        public void AdicionarCodigoEspecie(EspecieDocumento codigoEspecieDocumento)
+        public void AdicionarCodigoEspecie(IEspecieDocumento codigoEspecieDocumento)
         {
             this.Especie.Codigo.ToString();
         }

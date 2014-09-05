@@ -433,7 +433,7 @@ namespace BoletoBr.Bancos.Santander
                     return new InstrucaoPadronizada()
                     {
                         Codigo = 03,
-                        Valor = (int) valorInstrucao,
+                        QtdDias = (int)valorInstrucao,
                         TextoInstrucao = "Baixar após 30 dias do vencimento."
                     };
                 }
@@ -442,7 +442,7 @@ namespace BoletoBr.Bancos.Santander
                     return new InstrucaoPadronizada()
                     {
                         Codigo = 04,
-                        Valor = valorInstrucao,
+                        QtdDias = (int)valorInstrucao,
                         TextoInstrucao = "Não baixar."
                     };
                 }
@@ -451,7 +451,7 @@ namespace BoletoBr.Bancos.Santander
                     return new InstrucaoPadronizada()
                     {
                         Codigo = 06,
-                        Valor = valorInstrucao,
+                        QtdDias = (int)valorInstrucao,
                         TextoInstrucao = "Protestar após " + valorInstrucao + " dias úteis."
                     };
                 }
@@ -460,7 +460,7 @@ namespace BoletoBr.Bancos.Santander
                     return new InstrucaoPadronizada()
                     {
                         Codigo = 07,
-                        Valor = valorInstrucao,
+                        QtdDias = (int)valorInstrucao,
                         TextoInstrucao = "Não protestar."
                     };
                 }
@@ -469,7 +469,7 @@ namespace BoletoBr.Bancos.Santander
                     return new InstrucaoPadronizada()
                     {
                         Codigo = 08,
-                        Valor = valorInstrucao,
+                        QtdDias = (int)valorInstrucao,
                         TextoInstrucao = "Não cobrar juros de mora."
                     };
                 }

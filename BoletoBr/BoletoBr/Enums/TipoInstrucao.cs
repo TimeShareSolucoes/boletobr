@@ -17,7 +17,8 @@ namespace BoletoBr.Enums
         DevolverAposNDias,
         MultaVencimento,
         JurosdeMora,
-        DescontoporDia,
+        DescontoPorDia,
+        CobrarJurosApos7DiasVencimento,
 
         #region Santander
 
@@ -26,6 +27,14 @@ namespace BoletoBr.Enums
         BaixarAposTrintaDiasDoVencto,
         NaoBaixar,
         NaoCobrarJurosDeMora,
+
+        #endregion
+
+        #region HSBC
+
+        MultaPercentualVencimento,
+        MultaPorDiaVencimento,
+        MultaPorDiaCorrido,
 
         #endregion
     }
