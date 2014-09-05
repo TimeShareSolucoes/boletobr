@@ -686,9 +686,131 @@ namespace BoletoBr.Bancos.Cef
                     CodigoBanco, especie.ToString()));
         }
 
-        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao)
+        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao,
+            DateTime dataInstrucao, int diasInstrucao)
         {
-            throw new NotImplementedException();
+            /*
+            Protestar = 9,                      // Emite aviso ao sacado ap�s N dias do vencto, e envia ao cart�rio ap�s 5 dias �teis
+            NaoProtestar = 10,                  // Inibe protesto, quando houver instru��o permanente na conta corrente
+            ImportanciaporDiaDesconto = 30,
+            ProtestoFinsFalimentares = 42,
+            ProtestarAposNDiasCorridos = 81,
+            ProtestarAposNDiasUteis = 82,
+            NaoReceberAposNDias = 91,
+            DevolverAposNDias = 92,
+            JurosdeMora = 998,
+            DescontoporDia = 999,
+            Multa = 8
+             */
+
+            switch (tipoInstrucao)
+            {
+                case EnumTipoInstrucao.MultaVencimento:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 9,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Após vencimento cobrar Multa de " + valorInstrucao + "%"
+                    };
+                }
+
+                case EnumTipoInstrucao.Protestar:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 9,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Protestar após " + valorInstrucao + " dias úteis."
+                    };
+                }
+                case EnumTipoInstrucao.NaoProtestar:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 10,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Não protestar."
+                    };
+                }
+                case EnumTipoInstrucao.DescontoPorDia:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 30,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Importância por dia de desconto."
+                    };
+                }
+                case EnumTipoInstrucao.ProtestoFinsFalimentares:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 42,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Protesto para fins falimentares"
+                    };
+                }
+                case EnumTipoInstrucao.ProtestarAposNDiasCorridos:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 81,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Protestar após " + diasInstrucao + " dias corridos do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.ProtestarAposNDiasUteis:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 82,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Protestar após " + diasInstrucao + " dias úteis do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.NaoReceberAposOVencimento:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 91,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Não receber após " + diasInstrucao + " dias do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.DevolverAposNDias:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 92,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Devolver após " + diasInstrucao + " dias do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.JurosdeMora:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 998,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Após vencimento cobrar juros de " + valorInstrucao + "%"
+                    };
+                }
+            }
+            throw new Exception(
+                String.Format(
+                    "Não foi possível obter instrução padronizada. Banco: {0} Código Instrução: {1} Qtd Dias/Valor: {2}",
+                    CodigoBanco, tipoInstrucao.ToString(), valorInstrucao));
         }
 
         public ICodigoOcorrencia ObtemCodigoOcorrencia(CodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)

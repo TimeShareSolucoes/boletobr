@@ -171,8 +171,8 @@ namespace BoletoBr.Bancos.Hsbc
                     CodigoBanco, especie.ToString()));
         }
 
-        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, int diasInstrucao,
-            DateTime dataInstrucao)
+        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao,
+            DateTime dataInstrucao, int diasInstrucao)
         {
             switch (tipoInstrucao)
             {
@@ -191,7 +191,8 @@ namespace BoletoBr.Bancos.Hsbc
                     {
                         Codigo = 16,
                         QtdDias = (int) valorInstrucao,
-                        TextoInstrucao = "Após " + dataInstrucao + " multa dia de " + valorInstrucao + "  máximo " + "???"
+                        TextoInstrucao =
+                            "Após " + dataInstrucao + " multa dia de " + valorInstrucao + "  máximo " + "???"
                     };
                 }
                 case EnumTipoInstrucao.MultaPorDiaCorrido:
@@ -201,10 +202,11 @@ namespace BoletoBr.Bancos.Hsbc
                         Codigo = 19,
                         QtdDias = diasInstrucao,
                         Valor = valorInstrucao,
-                        TextoInstrucao = "Multa de R$ " + valorInstrucao + " após " + diasInstrucao + " dias corridos do vencimento."
+                        TextoInstrucao =
+                            "Multa de R$ " + valorInstrucao + " após " + diasInstrucao + " dias corridos do vencimento."
                     };
                 }
-                case EnumTipoInstrucao.JurosdeMora:
+                case EnumTipoInstrucao.CobrarJurosApos7DiasVencimento:
                 {
                     return new InstrucaoPadronizada()
                     {
@@ -212,6 +214,219 @@ namespace BoletoBr.Bancos.Hsbc
                         QtdDias = diasInstrucao,
                         Valor = valorInstrucao,
                         TextoInstrucao = "Cobrar juros só após 07 dias do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.MultaPorDiaUtil:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 22,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao =
+                            "Multa de R$ " + valorInstrucao + " após " + diasInstrucao + " dias úteis do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.NaoReceberAposOVencimento:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 23,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Não receber após o vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.MultaVencimento:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 24,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Multa de R$ " + valorInstrucao + " após o vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.JurosSoAposData:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 29,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Juros só após " + dataInstrucao + ", cobrar desde o vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.ConcederAbatimento:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 34,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Conceder abatimento conforme proposto pelo pagador."
+                    };
+                }
+                case EnumTipoInstrucao.AposVencimentoMulta10PorCento:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 36,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Após vencimento multa de 10 por cento."
+                    };
+                }
+                case EnumTipoInstrucao.ConcederDescontoPagoAposVencimento:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 40,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Conceder desconto mesmo se pago após o vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.NaoReceberAntesDoVencimento:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 42,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Não receber antes do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.AposVencimentoMulta20PorCentoMaisMora:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 53,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Após vencimento multa de 20% mais mora de 1% a.m."
+                    };
+                }
+                case EnumTipoInstrucao.NaoReceberAntesdoVencimentoOu10DiasApos:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 56,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Não receber antes do vencimento ou 10 dias após."
+                    };
+                }
+                //case EnumTipoInstrucao.AbatimentoDesconto:
+                //{
+                //    return new InstrucaoPadronizada()
+                //    {
+                //        Codigo = 65,
+                //        QtdDias = diasInstrucao,
+                //        Valor = valorInstrucao,
+                //        TextoInstrucao = "Abatimento/Desconto só com instrução do benefiário"
+                //    };
+                //}
+                case EnumTipoInstrucao.TituloSujeitoAProtestoAposVencimento:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 67,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Título sujeito a protesto após o vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.AposVencimentoMulta2PorCento:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 68,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Após o vencimento multa de 2 por cento."
+                    };
+                }
+                case EnumTipoInstrucao.NaoReceberAposNDiasCorridos:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 71,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Não receber após " + diasInstrucao + " dias corridos do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.NaoReceberAposNDiasUteis:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 72,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Não receber após " + diasInstrucao + " dias úteis do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.MultaDeVPorCentoAposNDiasCorridos:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 73,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Multa de " + valorInstrucao + " por cento após " + diasInstrucao + " dias corridos do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.MultaDeVPorCentoAposNDiasUteis:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 74,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Multa de " + valorInstrucao + " por cento após " + diasInstrucao + " dias úteis do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.ProtestarAposNDiasCorridos:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 75,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Protestar " + diasInstrucao + " dias corridos após o vencimento, se não pago."
+                    };
+                }
+                case EnumTipoInstrucao.ProtestarAposNDiasUteis:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 77,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Protestar " + diasInstrucao + " dias úteis após o vencimento, se não pago."
+                    };
+                }
+                /* Instruções que não geram mensagens nos boletos */
+                case EnumTipoInstrucao.ProtestarAposNDiasUteisNGM:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 76,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Protestar " + diasInstrucao + " dias úteis após o vencimento, se não pago."
+                    };
+                }
+                /* Instruções que não geram mensagens nos boletos */
+                case EnumTipoInstrucao.ProtestarAposNDiasCorridosNGM:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 84,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Protestar " + diasInstrucao + " dias corridos após o vencimento, se não pago."
                     };
                 }
             }

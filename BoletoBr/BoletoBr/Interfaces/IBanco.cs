@@ -73,8 +73,10 @@ namespace BoletoBr.Interfaces
         /// Retorna a instrução a ser usada na geração do arquivo de remessa.
         /// </summary>
         /// <param name="tipoInstrucao">Tipo de instrução padronizada no componente</param>
-        /// <param name="valorInstrucao">Pode ser: número de dias, ou valor monetário. Será ajustado de acordo com a instrução.</param>
-        IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao);
+        /// <param name="valorInstrucao">Valor monetário da instrução.</param>
+        /// <param name="dataInstrucao">Usado quando é solicitada data no formato dd/mm/yyyy na instrução</param>
+        /// <param name="diasInstrucao">Quantidade de dias para execução da instrução</param>
+        IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao, int diasInstrucao);
 
         /// <summary>
         /// Faz a leitura do arquivo de retorno.

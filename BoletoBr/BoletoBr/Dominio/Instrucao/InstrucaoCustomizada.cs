@@ -27,6 +27,13 @@ namespace BoletoBr.Dominio.Instrucao
             this.TextoInstrucao = mensagem;
             this.Valor = valor;
         }
+        public InstrucaoCustomizada(int codigo, string mensagem, double valor, int dias)
+        {
+            this.Codigo = codigo;
+            this.TextoInstrucao = mensagem;
+            this.Valor = valor;
+            this.QtdDias = dias;
+        }
         public int Codigo { get; set; }
         public int QtdDias { get; set; }
         public double Valor { get; set; }

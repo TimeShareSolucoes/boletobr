@@ -599,25 +599,8 @@ namespace BoletoBr.Bancos.Itau
                     CodigoBanco, especie.ToString()));
         }
 
-        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao)
+        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao, int diasInstrucao)
         {
-            //enum EnumInstrucoesBancoItau
-            //{
-            //    Protestar = 09,
-            //    NaoProtestar = 10,
-            //    ProtestarAposNDiasCorridosDoVencimento = 34,
-            //    ProtestarAposNDiasUteisDoVencimento = 35,
-            //    NaoReceberAposOVencimento = 39,
-            //    ProtestoParaFinsFalimentares = 42,
-            //    ImportanciaPorDiaDeAtrasoAPartirDeDDMMAA = 44,
-            //    CobrarJurosApos15DiasDaEmissao = 79,
-            //    NaoReceberAposNDiasDoVencimento = 91,
-            //    DevolverAposNDiasDoVencimento = 92,
-            //    MultaVencimento = 997,
-            //    JurosdeMora = 998,
-            //    DescontoporDia = 999,
-            //}
-
             switch (tipoInstrucao)
             {
                 case EnumTipoInstrucao.Protestar:
@@ -625,7 +608,8 @@ namespace BoletoBr.Bancos.Itau
                     return new InstrucaoPadronizada()
                     {
                         Codigo = 9,
-                        QtdDias = (int) valorInstrucao,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
                         TextoInstrucao = "Protestar após " + valorInstrucao + " dias úteis."
                     };
                 }
@@ -634,8 +618,89 @@ namespace BoletoBr.Bancos.Itau
                     return new InstrucaoPadronizada()
                     {
                         Codigo = 10,
-                        QtdDias = (int) valorInstrucao,
-                        TextoInstrucao = "Não protestar"
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Não protestar."
+                    };
+                }
+                case EnumTipoInstrucao.ProtestarAposNDiasCorridos:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 34,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Protestar após " + diasInstrucao + " dias corridos do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.ProtestarAposNDiasUteis:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 35,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Protestar após " + diasInstrucao + " dias úteis do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.NaoReceberAposOVencimento:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 39,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Não receber após o vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.ImportanciaPorDiaDeAtrasoAPartirDeDDMMAA:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 44,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Importância por dia de atraso a partir de " + dataInstrucao.ToString("ddmmyy")
+                    };
+                }
+                case EnumTipoInstrucao.NoVencimentoPagavelEmQualquerAgencia:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 90,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "No vencimento pagável em qualquer agência bancária."
+                    };
+                }
+                case EnumTipoInstrucao.NaoReceberAposNDiasCorridos:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 91,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Não receber após " + diasInstrucao + " dias do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.DevolverAposNDias:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 92,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Devolver após " + diasInstrucao + " dias do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.MultaVencimento:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 997,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Cobrar multa após o vencimento."
                     };
                 }
                 case EnumTipoInstrucao.JurosdeMora:
@@ -643,26 +708,11 @@ namespace BoletoBr.Bancos.Itau
                     return new InstrucaoPadronizada()
                     {
                         Codigo = 998,
+                        QtdDias = diasInstrucao,
                         Valor = valorInstrucao,
                         TextoInstrucao = "Cobrar juros após o vencimento."
                     };
                 }
-                //case EnumInstrucoesBancoItau.DescontoporDia:
-                //    return "Importância de desconto por dia.";
-                //case EnumInstrucoesBancoItau.ProtestarAposNDiasCorridosDoVencimento:
-                //    return "Protestar após " + nroDias + " dias corridos do vencimento.";
-                //case EnumInstrucoesBancoItau.ProtestarAposNDiasUteisDoVencimento:
-                //    return "Protestar após " + nroDias + " dias úteis do vencimento.";
-                //case EnumInstrucoesBancoItau.NaoReceberAposOVencimento:
-                //    return "Não receber após o vencimento";
-                //case EnumInstrucoesBancoItau.NaoReceberAposNDiasDoVencimento:
-                //    return "Não receber após " + nroDias + " dias do vencimento.";
-                //case EnumInstrucoesBancoItau.DevolverAposNDiasDoVencimento:
-                //    return "Devolver após " + nroDias + " dias do vencimento.";
-                //case EnumInstrucoesBancoItau.MultaVencimento:
-                //    return "Cobrar multa após o vencimento.";
-                //case EnumInstrucoesBancoItau.JurosdeMora:
-                //    return "Cobrar juros após o vencimento.";
             }
             throw new Exception(String.Format("Não foi possível obter instrução padronizada. Banco: {0} Código Instrução: {1} Qtd Dias/Valor: {2}",
                 CodigoBanco, tipoInstrucao.ToString(), valorInstrucao));

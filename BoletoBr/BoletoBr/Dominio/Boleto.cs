@@ -136,9 +136,9 @@ namespace BoletoBr
             this.CodigoOcorrenciaRetorno.Codigo.ToString();
         }
 
-        public void AdicionarInstrucao(EnumTipoInstrucao tipoInstrucao, double valor, DateTime data)
+        public void AdicionarInstrucao(EnumTipoInstrucao tipoInstrucao, double valor, DateTime data, int dias)
         {
-            this.InstrucoesDoBoleto.Add(this.BancoBoleto.ObtemInstrucaoPadronizada(tipoInstrucao, valor, data));
+            this.InstrucoesDoBoleto.Add(this.BancoBoleto.ObtemInstrucaoPadronizada(tipoInstrucao, valor, data, dias));
         }
 
         public string InstrucoesBoletoConcatenadas

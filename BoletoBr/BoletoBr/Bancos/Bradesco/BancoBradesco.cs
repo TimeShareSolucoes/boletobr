@@ -383,9 +383,93 @@ namespace BoletoBr.Bancos.Bradesco
                     CodigoBanco, especie.ToString()));
         }
 
-        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao)
+        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao, int diasInstrucao)
         {
-            throw new NotImplementedException();
+            switch (tipoInstrucao)
+            {
+                case EnumTipoInstrucao.NaoCobrarJurosDeMora:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 08,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Não cobrar juros de mora."
+                    };
+                }
+                case EnumTipoInstrucao.NaoReceberAposOVencimento:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 09,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Não receber após o vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.MultaPercentualVencimento:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 10,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Multa de 10 % após o 4º dia do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.NaoReceberAposNDiasCorridos:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 11,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Não receber após o 8º dia do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.CobrarEncargosApos5DiaVencimento:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 12,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Cobrar encargos após o 5º dia do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.CobrarEncargosApos10DiaVencimento:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 13,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Cobrar encargos após o 10º dia do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.CobrarEncargosApos15DiaVencimento:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 14,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Cobrar encargos após o 15º dia do vencimento."
+                    };
+                }
+                case EnumTipoInstrucao.ConcederDescontoPagoAposVencimento:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 15,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Conceder desconto mesmo se pago após o vencimento."
+                    };
+                }
+            }
+            throw new Exception(String.Format("Não foi possível obter instrução padronizada. Banco: {0} Código Instrução: {1} Qtd Dias/Valor: {2}",
+                CodigoBanco, tipoInstrucao.ToString(), valorInstrucao));
         }
 
         public ICodigoOcorrencia ObtemCodigoOcorrencia(CodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)

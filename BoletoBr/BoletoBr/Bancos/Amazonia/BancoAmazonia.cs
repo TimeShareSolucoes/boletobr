@@ -178,7 +178,7 @@ namespace BoletoBr.Bancos.Amazonia
             throw new NotImplementedException();
         }
 
-        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao)
+        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao, int diasInstrucao)
         {
             throw new NotImplementedException();
         }
