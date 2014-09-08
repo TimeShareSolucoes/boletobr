@@ -42,13 +42,13 @@ namespace BoletoBr
         public DateTime DataVencimento { get; set; }
         public DateTime DataDocumento { get; set; }
         public DateTime? DataProcessamento { get; set; }
-        public int QtdParcelas { get; set; }
         public int DiasProtesto { get; set; }
+        public int QtdParcelas { get; set; }
         public int NumeroParcela { get; set; }
 
         public string NumeroParcelaFormatado
         {
-            get { return String.Format("{0} / {1}", NumeroParcela, QtdParcelas); }
+            get { return String.Format("{0} / {1}", NumeroParcela.ToString().PadLeft(3, '0'), QtdParcelas.ToString().PadLeft(3, '0')); }
         }
 
         public decimal ValorBoleto { get; set; }
@@ -126,7 +126,7 @@ namespace BoletoBr
             this.Especie.Codigo.ToString();
         }
 
-        public void AdicionarOcorrenciaRemessa(CodigoOcorrenciaRemessa ocorrencia)
+        public void AdicionarOcorrenciaRemessa(EnumCodigoOcorrenciaRemessa ocorrencia)
         {
             this.CodigoOcorrenciaRemessa.Codigo.ToString();
         }
@@ -174,13 +174,14 @@ namespace BoletoBr
             this.InstrucoesDoBoleto = new List<IInstrucao>();
         }
 
-        public Boleto(Cedente cedente, Sacado sacado, CarteiraCobranca carteiraCobranca)
+        public Boleto(CarteiraCobranca carteiraCobranca, Cedente cedente, Sacado sacado, Remessa remessa)
         {
             Inicializa();
 
+            this.CarteiraCobranca = carteiraCobranca;
             this.CedenteBoleto = cedente;
             this.SacadoBoleto = sacado;
-            this.CarteiraCobranca = carteiraCobranca;
+            this.Remessa = remessa;
         }
 
         /// <summary>

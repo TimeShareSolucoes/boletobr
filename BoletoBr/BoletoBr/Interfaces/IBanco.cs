@@ -61,7 +61,7 @@ namespace BoletoBr.Interfaces
         /// </summary>
         /// <param name="ocorrenciaRemessa"></param>
         /// <returns></returns>
-        ICodigoOcorrencia ObtemCodigoOcorrencia(CodigoOcorrenciaRemessa ocorrenciaRemessa, double valorOcorrencia, DateTime dataOcorrencia);
+        ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrenciaRemessa, double valorOcorrencia, DateTime dataOcorrencia);
 
         /// <summary>
         /// Retorna a espécie de documento a ser usada na geração do arquivo de remessa.

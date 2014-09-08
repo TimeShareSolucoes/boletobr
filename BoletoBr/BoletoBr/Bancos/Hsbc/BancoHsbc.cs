@@ -436,11 +436,11 @@ namespace BoletoBr.Bancos.Hsbc
                     CodigoBanco, tipoInstrucao.ToString(), valorInstrucao));
         }
 
-        public ICodigoOcorrencia ObtemCodigoOcorrencia(CodigoOcorrenciaRemessa ocorrenciaRemessa, double valorOcorrencia, DateTime dataOcorrencia)
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrenciaRemessa, double valorOcorrencia, DateTime dataOcorrencia)
         {
             switch (ocorrenciaRemessa)
             {
-                case CodigoOcorrenciaRemessa.Registro:
+                case EnumCodigoOcorrenciaRemessa.Registro:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -448,7 +448,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Entrada de títulos"
                     };
                 }
-                case CodigoOcorrenciaRemessa.Baixa:
+                case EnumCodigoOcorrenciaRemessa.Baixa:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -456,7 +456,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Pedido de baixa"
                     };
                 }
-                case CodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
+                case EnumCodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -464,7 +464,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Concessão de abatimento"
                     };
                 }
-                case CodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
+                case EnumCodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -472,7 +472,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Cancelamento de abatimento concedido"
                     };
                 }
-                case CodigoOcorrenciaRemessa.AlteracaoDeVencimento:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDeVencimento:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -480,7 +480,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Alteração de vencimento"
                     };
                 }
-                case CodigoOcorrenciaRemessa.ConcessaoDeDesconto:
+                case EnumCodigoOcorrenciaRemessa.ConcessaoDeDesconto:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -488,7 +488,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Conceder desconto"
                     };
                 }
-                case CodigoOcorrenciaRemessa.AlteracaoDoControleDoParticipante:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDoControleDoParticipante:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -496,7 +496,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Alteração do controle do participante"
                     };
                 }
-                case CodigoOcorrenciaRemessa.CancelamentoDeDesconto:
+                case EnumCodigoOcorrenciaRemessa.CancelamentoDeDesconto:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -504,7 +504,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Cancelamento de desconto"
                     };
                 }
-                case CodigoOcorrenciaRemessa.AlteracaoSeuNumero:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoSeuNumero:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -512,7 +512,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Alteração do seu número"
                     };
                 }
-                case CodigoOcorrenciaRemessa.Protesto:
+                case EnumCodigoOcorrenciaRemessa.Protesto:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -520,7 +520,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Protestar"
                     };
                 }
-                case CodigoOcorrenciaRemessa.SustarProtesto:
+                case EnumCodigoOcorrenciaRemessa.SustarProtesto:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -528,7 +528,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Sustar protesto"
                     };
                 }
-                case CodigoOcorrenciaRemessa.NaoCobrarJurosDeMora:
+                case EnumCodigoOcorrenciaRemessa.NaoCobrarJurosDeMora:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -536,7 +536,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Não cobrar juros de mora"
                     };
                 }
-                case CodigoOcorrenciaRemessa.ConcessaoDeDescontoComData:
+                case EnumCodigoOcorrenciaRemessa.ConcessaoDeDescontoComData:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -544,7 +544,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Conceder desconto R$ " + string.Format("{0:0.##}", valorOcorrencia) + " p/ pgto até " + dataOcorrencia
                     };
                 }
-                case CodigoOcorrenciaRemessa.CancelamentoDescontoFixo:
+                case EnumCodigoOcorrenciaRemessa.CancelamentoDescontoFixo:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -552,7 +552,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Cancelamento condição de desconto fixo"
                     };
                 }
-                case CodigoOcorrenciaRemessa.CancelamentoDescontoDiario:
+                case EnumCodigoOcorrenciaRemessa.CancelamentoDescontoDiario:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -560,7 +560,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Cancelamento de desconto diário"
                     };
                 }
-                case CodigoOcorrenciaRemessa.AlteracaoDeVencimentoComData:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDeVencimentoComData:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -568,7 +568,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Vencimento alterado para " + dataOcorrencia
                     };
                 }
-                case CodigoOcorrenciaRemessa.AlteracaoDeDiasParaEnvioACartorio:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDeDiasParaEnvioACartorio:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -576,7 +576,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Alteração de dias para envio a Cartório de Protesto"
                     };
                 }
-                case CodigoOcorrenciaRemessa.InclusaoDePagadorNoBoleto:
+                case EnumCodigoOcorrenciaRemessa.InclusaoDePagadorNoBoleto:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -584,7 +584,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Inclusão de pagador no boleto eletrônico"
                     };
                 }
-                case CodigoOcorrenciaRemessa.ExclusaoDePagadorNoBoleto:
+                case EnumCodigoOcorrenciaRemessa.ExclusaoDePagadorNoBoleto:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -592,7 +592,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Exclusão de pagador no boleto eletrônico"
                     };
                 }
-                case CodigoOcorrenciaRemessa.Reemissao:
+                case EnumCodigoOcorrenciaRemessa.Reemissao:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -600,7 +600,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Reemissão"
                     };
                 }
-                case CodigoOcorrenciaRemessa.EntradaDeTitulosComParcelasFaltantes:
+                case EnumCodigoOcorrenciaRemessa.EntradaDeTitulosComParcelasFaltantes:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -608,7 +608,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Entrada de títulos com parcelas faltantes"
                     };
                 }
-                case CodigoOcorrenciaRemessa.TransferenciaParaDesconto:
+                case EnumCodigoOcorrenciaRemessa.TransferenciaParaDesconto:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -616,7 +616,7 @@ namespace BoletoBr.Bancos.Hsbc
                         Descricao = "Transferência para desconto"
                     };
                 }
-                case CodigoOcorrenciaRemessa.ProtestoParaFinsFalimentares:
+                case EnumCodigoOcorrenciaRemessa.ProtestoParaFinsFalimentares:
                 {
                     return new CodigoOcorrencia()
                     {

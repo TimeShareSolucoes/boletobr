@@ -718,11 +718,11 @@ namespace BoletoBr.Bancos.Itau
                 CodigoBanco, tipoInstrucao.ToString(), valorInstrucao));
         }
 
-        public ICodigoOcorrencia ObtemCodigoOcorrencia(CodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
         {
             switch (ocorrencia)
             {
-                case CodigoOcorrenciaRemessa.Registro:
+                case EnumCodigoOcorrenciaRemessa.Registro:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -730,7 +730,7 @@ namespace BoletoBr.Bancos.Itau
                             Descricao = "Remessa"
                         };
                     }
-                case CodigoOcorrenciaRemessa.Baixa:
+                case EnumCodigoOcorrenciaRemessa.Baixa:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -738,7 +738,7 @@ namespace BoletoBr.Bancos.Itau
                             Descricao = "Pedido de baixa"
                         };
                     }
-                case CodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
+                case EnumCodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -746,7 +746,7 @@ namespace BoletoBr.Bancos.Itau
                             Descricao = "Concessão de abatimento"
                         };
                     }
-                case CodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
+                case EnumCodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -754,7 +754,7 @@ namespace BoletoBr.Bancos.Itau
                             Descricao = "Cancelamento de abatimento"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDeVencimento:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDeVencimento:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -762,7 +762,7 @@ namespace BoletoBr.Bancos.Itau
                             Descricao = "Alteração do vencimento"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDoControleDoParticipante:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDoControleDoParticipante:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -770,7 +770,7 @@ namespace BoletoBr.Bancos.Itau
                             Descricao = "Alteração do uso da empresa"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoSeuNumero:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoSeuNumero:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -778,7 +778,7 @@ namespace BoletoBr.Bancos.Itau
                             Descricao = "Alteração de seu número"
                         };
                     }
-                case CodigoOcorrenciaRemessa.Protesto:
+                case EnumCodigoOcorrenciaRemessa.Protesto:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -786,7 +786,7 @@ namespace BoletoBr.Bancos.Itau
                             Descricao = "Protestar"
                         };
                     }
-                case CodigoOcorrenciaRemessa.NaoProtestar:
+                case EnumCodigoOcorrenciaRemessa.NaoProtestar:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -794,7 +794,7 @@ namespace BoletoBr.Bancos.Itau
                             Descricao = "Não protestar"
                         };
                     }
-                case CodigoOcorrenciaRemessa.ProtestoParaFinsFalimentares:
+                case EnumCodigoOcorrenciaRemessa.ProtestoParaFinsFalimentares:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -802,7 +802,7 @@ namespace BoletoBr.Bancos.Itau
                             Descricao = "Protesto para fins falimentares"
                         };
                     }
-                case CodigoOcorrenciaRemessa.SustarProtesto:
+                case EnumCodigoOcorrenciaRemessa.SustarProtesto:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -810,7 +810,7 @@ namespace BoletoBr.Bancos.Itau
                             Descricao = "Sustar o protesto"
                         };
                     }
-                case CodigoOcorrenciaRemessa.ExclusaoDeSacadorAvalista:
+                case EnumCodigoOcorrenciaRemessa.ExclusaoDeSacadorAvalista:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -818,7 +818,7 @@ namespace BoletoBr.Bancos.Itau
                             Descricao = "Exclusão de sacador avalista"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDeOutrosDados:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDeOutrosDados:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -826,7 +826,7 @@ namespace BoletoBr.Bancos.Itau
                             Descricao = "Alteração de outros dados"
                         };
                     }
-                case CodigoOcorrenciaRemessa.BaixaPorTerSidoPagoDiretamenteAoCedente:
+                case EnumCodigoOcorrenciaRemessa.BaixaPorTerSidoPagoDiretamenteAoCedente:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -834,7 +834,7 @@ namespace BoletoBr.Bancos.Itau
                             Descricao = "Baixa por ter sido pago diretamente ao cedente"
                         };
                     }
-                case CodigoOcorrenciaRemessa.CancelamentoDeInstrucao:
+                case EnumCodigoOcorrenciaRemessa.CancelamentoDeInstrucao:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -842,7 +842,7 @@ namespace BoletoBr.Bancos.Itau
                             Descricao = "Cancelamento de instrução"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDoVencimentoESustarProtesto:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDoVencimentoESustarProtesto:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -850,7 +850,7 @@ namespace BoletoBr.Bancos.Itau
                             Descricao = "Alteração do vencimento e sustar protesto"
                         };
                     }
-                case CodigoOcorrenciaRemessa.CedenteNaoConcordaComAlegacaoDoSacado:
+                case EnumCodigoOcorrenciaRemessa.CedenteNaoConcordaComAlegacaoDoSacado:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -858,7 +858,7 @@ namespace BoletoBr.Bancos.Itau
                             Descricao = "Cedente não concorda com alegação do sacado"
                         };
                     }
-                case CodigoOcorrenciaRemessa.CedenteSolicitaDispensaDeJuros:
+                case EnumCodigoOcorrenciaRemessa.CedenteSolicitaDispensaDeJuros:
                     {
                         return new CodigoOcorrencia()
                         {

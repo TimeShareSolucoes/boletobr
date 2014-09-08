@@ -55,6 +55,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TestsBancosRemessa\TestRemessaCef.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBancoDoBrasil.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBancoItau.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBradesco.cs" />

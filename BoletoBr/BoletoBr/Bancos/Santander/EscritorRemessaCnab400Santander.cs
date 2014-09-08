@@ -13,7 +13,7 @@ namespace BoletoBr.Bancos.Santander
             throw new NotImplementedException();
         }
 
-        public void ValidarArquivoRemessa()
+        public void ValidarArquivoRemessa(Cedente cedente, List<Boleto> boletos, int numeroArquivoRemessa)
         {
             throw new NotImplementedException();
         }

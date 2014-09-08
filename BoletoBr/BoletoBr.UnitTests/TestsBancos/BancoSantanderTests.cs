@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoletoBr.Dominio;
+using BoletoBr.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BoletoBr.UnitTests.TestsBancos
@@ -16,6 +18,8 @@ namespace BoletoBr.UnitTests.TestsBancos
             /* 
             * Teste baseado em um boleto apresentado na documentação oficial do Banco Santander
             */
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+
             var banco = Fabricas.BancoFactory.ObterBanco("033", "7");
 
             var contaBancariaCedente = new ContaBancaria("0319", "", "", "");
@@ -34,7 +38,11 @@ namespace BoletoBr.UnitTests.TestsBancos
                 Numero = "9"
             });
 
-            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("102"));
+            var carteira = new CarteiraCobranca();
+
+            carteira.Codigo = "102";
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "001N002";
             boleto.ValorBoleto = Convert.ToDecimal(80.55);
             boleto.SequencialNossoNumero = "000000000027";
@@ -54,6 +62,8 @@ namespace BoletoBr.UnitTests.TestsBancos
            /* 
             * Teste baseado em um boleto apresentado na documentação oficial do Banco Santander
             */
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+
             var banco = Fabricas.BancoFactory.ObterBanco("033", "7");
 
             var contaBancariaCedente = new ContaBancaria("4165", "", "", "");
@@ -72,7 +82,11 @@ namespace BoletoBr.UnitTests.TestsBancos
                 Numero = "9"
             });
 
-            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("102"));
+            var carteira = new CarteiraCobranca();
+
+            carteira.Codigo = "102";
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "0000006152007";
             boleto.ValorBoleto = Convert.ToDecimal(252.00);
             boleto.SequencialNossoNumero = "000000615200";
@@ -90,6 +104,8 @@ namespace BoletoBr.UnitTests.TestsBancos
         [TestMethod]
         public void BSantanderGeracaoDvNossoNumero()
         {
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+
             var banco = Fabricas.BancoFactory.ObterBanco("033", "7");
 
             var contaBancariaCedente = new ContaBancaria("4165", "", "", "");
@@ -108,7 +124,11 @@ namespace BoletoBr.UnitTests.TestsBancos
                 Numero = "9"
             });
 
-            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("102"));
+            var carteira = new CarteiraCobranca();
+
+            carteira.Codigo = "102";
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "0000006152007";
             boleto.ValorBoleto = Convert.ToDecimal(252.00);
             boleto.SequencialNossoNumero = "566612457800";

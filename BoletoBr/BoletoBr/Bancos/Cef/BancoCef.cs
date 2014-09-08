@@ -813,11 +813,11 @@ namespace BoletoBr.Bancos.Cef
                     CodigoBanco, tipoInstrucao.ToString(), valorInstrucao));
         }
 
-        public ICodigoOcorrencia ObtemCodigoOcorrencia(CodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
         {
             switch (ocorrencia)
             {
-                case CodigoOcorrenciaRemessa.Registro:
+                case EnumCodigoOcorrenciaRemessa.Registro:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -825,7 +825,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Entrada de Título"
                         };
                     }
-                case CodigoOcorrenciaRemessa.Baixa:
+                case EnumCodigoOcorrenciaRemessa.Baixa:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -833,7 +833,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Pedido de Baixa"
                         };
                     }
-                case CodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
+                case EnumCodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -841,7 +841,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Concessão de Abatimento"
                         };
                     }
-                case CodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
+                case EnumCodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -849,7 +849,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Cancelamento de Abatimento"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDeVencimento:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDeVencimento:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -857,7 +857,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Alteração de Vencimento"
                         };
                     }
-                case CodigoOcorrenciaRemessa.ConcessaoDeDesconto:
+                case EnumCodigoOcorrenciaRemessa.ConcessaoDeDesconto:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -865,7 +865,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Concessão de Desconto"
                         };
                     }
-                case CodigoOcorrenciaRemessa.CancelamentoDeDesconto:
+                case EnumCodigoOcorrenciaRemessa.CancelamentoDeDesconto:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -873,7 +873,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Cancelamento de Desconto"
                         };
                     }
-                case CodigoOcorrenciaRemessa.Protesto:
+                case EnumCodigoOcorrenciaRemessa.Protesto:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -881,7 +881,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Protestar"
                         };
                     }
-                case CodigoOcorrenciaRemessa.SustarProtestoEBaixarTitulo:
+                case EnumCodigoOcorrenciaRemessa.SustarProtestoEBaixarTitulo:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -889,7 +889,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Sustar Protesto e Baixar Título"
                         };
                     }
-                case CodigoOcorrenciaRemessa.SustarProtestoEManterEmCarteira:
+                case EnumCodigoOcorrenciaRemessa.SustarProtestoEManterEmCarteira:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -897,7 +897,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Sustar Protesto e Manter em Carteira"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDeJurosDeMora:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDeJurosDeMora:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -905,7 +905,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Alteração de Juros de Mora"
                         };
                     }
-                case CodigoOcorrenciaRemessa.DispensarCobrancaDeJurosDeMora:
+                case EnumCodigoOcorrenciaRemessa.DispensarCobrancaDeJurosDeMora:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -913,7 +913,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Dispensar cobrança de Juros de Mora"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDeValorPercentualDeMulta:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDeValorPercentualDeMulta:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -921,7 +921,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Alteração de Valor/Percentual de Multa"
                         };
                     }
-                case CodigoOcorrenciaRemessa.DispensarCobrancaDeMulta:
+                case EnumCodigoOcorrenciaRemessa.DispensarCobrancaDeMulta:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -929,7 +929,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Dispensar Cobrança de Multa"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDoValorDeDesconto:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDoValorDeDesconto:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -937,7 +937,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Alteração do Valor de Desconto"
                         };
                     }
-                case CodigoOcorrenciaRemessa.NaoConcederDesconto:
+                case EnumCodigoOcorrenciaRemessa.NaoConcederDesconto:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -945,7 +945,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Não Conceder Desconto"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDoValorDeAbatimento:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDoValorDeAbatimento:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -953,7 +953,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Alteração do Valor de Abatimento"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDeOutrosDados:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDeOutrosDados:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -961,7 +961,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Alteração de Outros Dados"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDosDadosDoRateioDeCredito:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDosDadosDoRateioDeCredito:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -969,7 +969,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Alteração dos Dados do Rateio de Crédito"
                         };
                     }
-                case CodigoOcorrenciaRemessa.CancelamentoDoRateioDeCredito:
+                case EnumCodigoOcorrenciaRemessa.CancelamentoDoRateioDeCredito:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -977,7 +977,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Pedido de Cancelamento dos Dados do Rateio de Crédito"
                         };
                     }
-                case CodigoOcorrenciaRemessa.InclusaoNoBancoDeSacados:
+                case EnumCodigoOcorrenciaRemessa.InclusaoNoBancoDeSacados:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -985,7 +985,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Inclusão no Banco de Sacados"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoNoBancoDeSacados:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoNoBancoDeSacados:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -993,7 +993,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Alteração no Banco de Sacados"
                         };
                     }
-                case CodigoOcorrenciaRemessa.ExclusaoNoBancoDeSacados:
+                case EnumCodigoOcorrenciaRemessa.ExclusaoNoBancoDeSacados:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -1001,7 +1001,7 @@ namespace BoletoBr.Bancos.Cef
                             Descricao = "Exclusão no Banco de Sacados"
                         };
                     }
-                case CodigoOcorrenciaRemessa.Servicos:
+                case EnumCodigoOcorrenciaRemessa.Servicos:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -2235,7 +2235,7 @@ namespace BoletoBr.Bancos.Cef
             try
             {
                 //Vari�veis Locais a serem Implementadas em n�vel de Config do Boleto...
-                boleto.Remessa.CodigoOcorrencia = "01"; //remessa p/ CAIXA ECONOMICA FEDERAL
+                boleto.Remessa.CodigoOcorrencia = EnumCodigoOcorrenciaRemessa.Registro; //remessa p/ CAIXA ECONOMICA FEDERAL
                 //
                 //base.GerarDetalheRemessa(boleto, numeroRegistro, tipoArquivo);
                 //

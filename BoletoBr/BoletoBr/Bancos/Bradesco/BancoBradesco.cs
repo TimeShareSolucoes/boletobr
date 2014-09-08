@@ -472,11 +472,11 @@ namespace BoletoBr.Bancos.Bradesco
                 CodigoBanco, tipoInstrucao.ToString(), valorInstrucao));
         }
 
-        public ICodigoOcorrencia ObtemCodigoOcorrencia(CodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
         {
             switch (ocorrencia)
             {
-                case CodigoOcorrenciaRemessa.Registro:
+                case EnumCodigoOcorrenciaRemessa.Registro:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -484,7 +484,7 @@ namespace BoletoBr.Bancos.Bradesco
                         Descricao = "Remessa"
                     };
                 }
-                case CodigoOcorrenciaRemessa.Baixa:
+                case EnumCodigoOcorrenciaRemessa.Baixa:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -492,7 +492,7 @@ namespace BoletoBr.Bancos.Bradesco
                         Descricao = "Pedido de baixa"
                     };
                 }
-                case CodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
+                case EnumCodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -500,7 +500,7 @@ namespace BoletoBr.Bancos.Bradesco
                         Descricao = "Concessão de abatimento"
                     };
                 }
-                case CodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
+                case EnumCodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -508,7 +508,7 @@ namespace BoletoBr.Bancos.Bradesco
                         Descricao = "Cancelamento de abatimento concedido"
                     };
                 }
-                case CodigoOcorrenciaRemessa.AlteracaoDeVencimento:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDeVencimento:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -516,7 +516,7 @@ namespace BoletoBr.Bancos.Bradesco
                         Descricao = "Alteração de vencimento"
                     };
                 }
-                case CodigoOcorrenciaRemessa.AlteracaoDoControleDoParticipante:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDoControleDoParticipante:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -524,7 +524,7 @@ namespace BoletoBr.Bancos.Bradesco
                         Descricao = "Alteração do controle do participante"
                     };
                 }
-                case CodigoOcorrenciaRemessa.AlteracaoSeuNumero:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoSeuNumero:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -532,7 +532,7 @@ namespace BoletoBr.Bancos.Bradesco
                         Descricao = "Alteração de seu número"
                     };
                 }
-                case CodigoOcorrenciaRemessa.Protesto:
+                case EnumCodigoOcorrenciaRemessa.Protesto:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -540,7 +540,7 @@ namespace BoletoBr.Bancos.Bradesco
                         Descricao = "Pedido de Protesto"
                     };
                 }
-                case CodigoOcorrenciaRemessa.SustarProtestoEBaixarTitulo:
+                case EnumCodigoOcorrenciaRemessa.SustarProtestoEBaixarTitulo:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -548,7 +548,7 @@ namespace BoletoBr.Bancos.Bradesco
                         Descricao = "Sustar protesto e baixar título"
                     };
                 }
-                case CodigoOcorrenciaRemessa.SustarProtestoEManterEmCarteira:
+                case EnumCodigoOcorrenciaRemessa.SustarProtestoEManterEmCarteira:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -556,7 +556,7 @@ namespace BoletoBr.Bancos.Bradesco
                         Descricao = "Sustar protesto e manter em carteira"
                     };
                 }
-                case CodigoOcorrenciaRemessa.TransferenciaCessaoCredito:
+                case EnumCodigoOcorrenciaRemessa.TransferenciaCessaoCredito:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -564,7 +564,7 @@ namespace BoletoBr.Bancos.Bradesco
                         Descricao = "Transferência cessão crédito ID. Prod. 10"
                     };
                 }
-                case CodigoOcorrenciaRemessa.TransferenciaEntreCarteiras:
+                case EnumCodigoOcorrenciaRemessa.TransferenciaEntreCarteiras:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -572,7 +572,7 @@ namespace BoletoBr.Bancos.Bradesco
                         Descricao = "Transferência entre carteiras"
                     };
                 }
-                case CodigoOcorrenciaRemessa.DevTransferenciaEntreCarteiras:
+                case EnumCodigoOcorrenciaRemessa.DevTransferenciaEntreCarteiras:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -580,7 +580,7 @@ namespace BoletoBr.Bancos.Bradesco
                         Descricao = "Dev. Transferência entre carteiras"
                     };
                 }
-                case CodigoOcorrenciaRemessa.AlteracaoDeOutrosDados:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDeOutrosDados:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -588,7 +588,7 @@ namespace BoletoBr.Bancos.Bradesco
                         Descricao = "Alteração de outros dados"
                     };
                 }
-                case CodigoOcorrenciaRemessa.DesagendamentoDoDebitoAutomatico:
+                case EnumCodigoOcorrenciaRemessa.DesagendamentoDoDebitoAutomatico:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -596,7 +596,7 @@ namespace BoletoBr.Bancos.Bradesco
                         Descricao = "Desagendamento do débito automático"
                     };
                 }
-                case CodigoOcorrenciaRemessa.AcertoNosDadosDoRateioDeCredito:
+                case EnumCodigoOcorrenciaRemessa.AcertoNosDadosDoRateioDeCredito:
                 {
                     return new CodigoOcorrencia()
                     {
@@ -604,7 +604,7 @@ namespace BoletoBr.Bancos.Bradesco
                         Descricao = "Acerto nos dados do rateio de crédito"
                     };
                 }
-                case CodigoOcorrenciaRemessa.CancelamentoDoRateioDeCredito:
+                case EnumCodigoOcorrenciaRemessa.CancelamentoDoRateioDeCredito:
                 {
                     return new CodigoOcorrencia()
                     {

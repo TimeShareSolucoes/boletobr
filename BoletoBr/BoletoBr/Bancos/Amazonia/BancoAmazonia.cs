@@ -183,7 +183,7 @@ namespace BoletoBr.Bancos.Amazonia
             throw new NotImplementedException();
         }
 
-        public ICodigoOcorrencia ObtemCodigoOcorrencia(CodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
         {
             throw new NotImplementedException();
         }

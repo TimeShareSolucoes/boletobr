@@ -480,11 +480,11 @@ namespace BoletoBr.Bancos.Santander
                     CodigoBanco, tipoInstrucao.ToString(), valorInstrucao));
         }
 
-        public ICodigoOcorrencia ObtemCodigoOcorrencia(CodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
         {
             switch (ocorrencia)
             {
-                case CodigoOcorrenciaRemessa.Registro:
+                case EnumCodigoOcorrenciaRemessa.Registro:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -492,7 +492,7 @@ namespace BoletoBr.Bancos.Santander
                             Descricao = "Entrada de título"
                         };
                     }
-                case CodigoOcorrenciaRemessa.Baixa:
+                case EnumCodigoOcorrenciaRemessa.Baixa:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -500,7 +500,7 @@ namespace BoletoBr.Bancos.Santander
                             Descricao = "Pedido de baixa"
                         };
                     }
-                case CodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
+                case EnumCodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -508,7 +508,7 @@ namespace BoletoBr.Bancos.Santander
                             Descricao = "Concessão de abatimento"
                         };
                     }
-                case CodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
+                case EnumCodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -516,7 +516,7 @@ namespace BoletoBr.Bancos.Santander
                             Descricao = "Cancelamento de abatimento"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDeVencimento:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDeVencimento:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -524,7 +524,7 @@ namespace BoletoBr.Bancos.Santander
                             Descricao = "Alteração de vencimento"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDaIdentificacaoDotituloNaEmpresa:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDaIdentificacaoDotituloNaEmpresa:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -532,7 +532,7 @@ namespace BoletoBr.Bancos.Santander
                             Descricao = "Alteração da identificação do título na empresa"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoSeuNumero:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoSeuNumero:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -540,7 +540,7 @@ namespace BoletoBr.Bancos.Santander
                             Descricao = "Alteração seu número"
                         };
                     }
-                case CodigoOcorrenciaRemessa.Protesto:
+                case EnumCodigoOcorrenciaRemessa.Protesto:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -548,7 +548,7 @@ namespace BoletoBr.Bancos.Santander
                             Descricao = "Pedido de Protesto"
                         };
                     }
-                case CodigoOcorrenciaRemessa.ConcessaoDeDesconto:
+                case EnumCodigoOcorrenciaRemessa.ConcessaoDeDesconto:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -556,7 +556,7 @@ namespace BoletoBr.Bancos.Santander
                             Descricao = "Concessão de Desconto"
                         };
                     }
-                case CodigoOcorrenciaRemessa.CancelamentoDeDesconto:
+                case EnumCodigoOcorrenciaRemessa.CancelamentoDeDesconto:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -564,7 +564,7 @@ namespace BoletoBr.Bancos.Santander
                             Descricao = "Cancelamento de desconto"
                         };
                     }
-                case CodigoOcorrenciaRemessa.SustarProtesto:
+                case EnumCodigoOcorrenciaRemessa.SustarProtesto:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -572,7 +572,7 @@ namespace BoletoBr.Bancos.Santander
                             Descricao = "Pedido de Sustação de Protesto"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDeOutrosDados:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDeOutrosDados:
                     {
                         return new CodigoOcorrencia()
                         {
@@ -580,7 +580,7 @@ namespace BoletoBr.Bancos.Santander
                             Descricao = "Alteração de outros dados"
                         };
                     }
-                case CodigoOcorrenciaRemessa.NaoProtestar:
+                case EnumCodigoOcorrenciaRemessa.NaoProtestar:
                     {
                         return new CodigoOcorrencia()
                         {
