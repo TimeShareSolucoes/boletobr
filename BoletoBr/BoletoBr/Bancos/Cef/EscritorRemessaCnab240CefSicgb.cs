@@ -292,12 +292,12 @@ namespace BoletoBr.Bancos.Cef
 
                 var valorBoleto = string.Empty;
 
-                if (boleto.ValorBoleto.ToString().Contains('.') && boleto.ValorBoleto.ToString().Contains(','))
-                    valorBoleto = boleto.ValorBoleto.ToString().Replace(".", "").Replace(",", "");
-                if (boleto.ValorBoleto.ToString().Contains('.'))
-                    valorBoleto = boleto.ValorBoleto.ToString().Replace(".", "");
-                if (boleto.ValorBoleto.ToString().Contains(','))
-                    valorBoleto = boleto.ValorBoleto.ToString().Replace(",", "");
+                if (boleto.ValorBoleto.ToString("f").Contains('.') && boleto.ValorBoleto.ToString("f").Contains(','))
+                    valorBoleto = boleto.ValorBoleto.ToString("f").Replace(".", "").Replace(",", "");
+                if (boleto.ValorBoleto.ToString("f").Contains('.'))
+                    valorBoleto = boleto.ValorBoleto.ToString("f").Replace(".", "");
+                if (boleto.ValorBoleto.ToString("f").Contains(','))
+                    valorBoleto = boleto.ValorBoleto.ToString("f").Replace(",", "");
 
                 segmentoP = segmentoP.PreencherValorNaLinha(86, 100, valorBoleto.PadLeft(15, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(101, 105, string.Empty.PadLeft(5, '0'));
@@ -455,7 +455,7 @@ namespace BoletoBr.Bancos.Cef
             int qtdTotalCobrancaDescontada, decimal vlTotalCobrancaDescontada, int numeroLote, int numeroRegistro)
         {
             if (numeroLote == 0)
-                throw new Exception("Sequencial do registro no lote não foi informado na geração do HEADER DE LOTE.");
+                throw new Exception("Sequencial do lote não foi informado na geração do HEADER DE LOTE.");
 
             if (numeroRegistro == 0)
                 throw new Exception("Sequencial do registro no lote não foi informado na geração do HEADER DE LOTE.");

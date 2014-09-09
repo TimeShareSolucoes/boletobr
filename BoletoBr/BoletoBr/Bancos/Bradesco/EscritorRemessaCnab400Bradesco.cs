@@ -32,6 +32,15 @@ namespace BoletoBr.Bancos.Bradesco
 
         public string EscreverHeader(Boleto boleto, int numeroRemessa, int numeroRegistro)
         {
+            if (boleto == null)
+                throw new Exception("Não há boleto para geração do HEADER");
+
+            if (numeroRemessa == 0)
+                throw new Exception("Sequencial da remessa não foi informado na geração do HEADER.");
+
+            if (numeroRegistro == 0)
+                throw new Exception("Sequencial do registro não foi informado na geração do HEADER.");
+
             var header = new string(' ', 400);
             try
             {
@@ -62,6 +71,12 @@ namespace BoletoBr.Bancos.Bradesco
 
         public string EscreverDetalhe(Boleto boleto, int numeroRegistro)
         {
+            if (boleto == null)
+                throw new Exception("Não há boleto para geração do DETALHE");
+
+            if (numeroRegistro == 0)
+                throw new Exception("Sequencial do registro não foi informado na geração do DETALHE.");
+
             #region Variáveis
 
             //string codigoCedente = "0" + boleto.CarteiraCobranca.Codigo.PadLeft(2, '0') +
@@ -110,7 +125,7 @@ namespace BoletoBr.Bancos.Bradesco
                 const string doc = "DOC";
                 var seuNumero = doc + boleto.NossoNumeroFormatado.PadRight(25 - doc.Length, ' ');
 
-                detalhe = detalhe.PreencherValorNaLinha(38, 62, seuNumero.PadLeft(25, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(38, 62, seuNumero);
                 detalhe = detalhe.PreencherValorNaLinha(63, 65, "237");
                 detalhe = detalhe.PreencherValorNaLinha(66, 66, "0"); // Sem cobrança de multa
                 detalhe = detalhe.PreencherValorNaLinha(67, 70, "0000"); // Percentual de multa
@@ -155,23 +170,23 @@ namespace BoletoBr.Bancos.Bradesco
 
                 var valorBoleto = string.Empty;
 
-                if (boleto.ValorBoleto.ToString().Contains('.') && boleto.ValorBoleto.ToString().Contains(','))
+                if (boleto.ValorBoleto.ToString("f").Contains('.') && boleto.ValorBoleto.ToString("f").Contains(','))
                 {
-                    valorBoleto = boleto.ValorBoleto.ToString().Replace(".", "").Replace(",", "");
+                    valorBoleto = boleto.ValorBoleto.ToString("f").Replace(".", "").Replace(",", "");
                     detalhe = detalhe.PreencherValorNaLinha(127, 139, valorBoleto.ToString().PadLeft(13, '0'));
                 }
-                if (boleto.ValorBoleto.ToString().Contains('.'))
+                if (boleto.ValorBoleto.ToString("f").Contains('.'))
                 {
-                    valorBoleto = boleto.ValorBoleto.ToString().Replace(".", "");
+                    valorBoleto = boleto.ValorBoleto.ToString("f").Replace(".", "");
                     detalhe = detalhe.PreencherValorNaLinha(127, 139, valorBoleto.ToString().PadLeft(13, '0'));
                 }
-                if (boleto.ValorBoleto.ToString().Contains(','))
+                if (boleto.ValorBoleto.ToString("f").Contains(','))
                 {
-                    valorBoleto = boleto.ValorBoleto.ToString().Replace(",", "");
+                    valorBoleto = boleto.ValorBoleto.ToString("f").Replace(",", "");
                     detalhe = detalhe.PreencherValorNaLinha(127, 139, valorBoleto.ToString().PadLeft(13, '0'));
                 }
 
-                detalhe = detalhe.PreencherValorNaLinha(127, 139, boleto.ValorBoleto.ToString().PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(127, 139, boleto.ValorBoleto.ToString("f").Replace(".", "").Replace(",", "").PadLeft(13, '0'));
 
                 #endregion
 
@@ -187,7 +202,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
 
                 detalhe = detalhe.PreencherValorNaLinha(148, 149, boleto.Especie.Sigla.Equals("DM") ? "01" : boleto.Especie.Codigo.ToString());
-                detalhe = detalhe.PreencherValorNaLinha(150, 150, boleto.Aceite.Equals("N") ? "N" : "A");
+                detalhe = detalhe.PreencherValorNaLinha(150, 150, boleto.Aceite.Equals("A") ? "A" : "N");
                 detalhe = detalhe.PreencherValorNaLinha(151, 156, boleto.DataDocumento.ToString("ddMMyy").Replace("/", ""));
 
                 #region INSTRUÇÕES REMESSA
@@ -311,12 +326,16 @@ namespace BoletoBr.Bancos.Bradesco
                 detalhe = detalhe.PreencherValorNaLinha(221, 234, boleto.SacadoBoleto.CpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(14, '0')); // Nro de Inscrição do Sacado (CPF/CNPJ)
                 detalhe = detalhe.PreencherValorNaLinha(235, 274, boleto.SacadoBoleto.Nome.ToUpper().PadRight(40, ' ')); // Nome do Sacado
                 detalhe = detalhe.PreencherValorNaLinha(275, 314, enderecoSacado.ToUpper().PadRight(40, ' ')); // Rua, Número, e Complemento do Sacado
-                
+
+                #region 1ª Mensagem
+
                 /* POSIÇÃO: 315 a 326 - 1ª Mensagem
                  * Campo livre para uso da empresa.
                  * A mensagem enviada nesse campo será impressa somente no boleto enão será confirmada no arquivo retorno.
                  */
                 detalhe = detalhe.PreencherValorNaLinha(315, 326, string.Empty.PadLeft(12, ' ')); // 1ª Mensagem
+
+                #endregion
 
                 var Cep = boleto.SacadoBoleto.EnderecoSacado.Cep;
 
@@ -347,7 +366,7 @@ namespace BoletoBr.Bancos.Bradesco
                 string str = string.Empty;
 
                 if (String.IsNullOrEmpty(boleto.SacadoBoleto.NomeAvalista))
-                    detalhe = detalhe.PreencherValorNaLinha(335, 394, string.Empty.PadRight(60, ' '));
+                    detalhe = detalhe.PreencherValorNaLinha(335, 394, str.PadLeft(60, ' '));
                 else
                 {
                     if (boleto.SacadoBoleto.CpfCnpjAvalista.Replace(".", "").Replace("/", "").Replace("-", "").Length == 11)
@@ -373,13 +392,13 @@ namespace BoletoBr.Bancos.Bradesco
                                    .Replace("-", "")
                                    .PadLeft(15, '0'));
                     }
+
+                    detalhe = detalhe.PreencherValorNaLinha(335, 394, str.PadLeft(60, ' '));
                 }
 
-                detalhe = detalhe.PreencherValorNaLinha(335, 394, str.PadLeft(60, ' '));
-                   
                 #endregion
 
-                detalhe = detalhe.PreencherValorNaLinha(395, 400, numeroRegistro.ToString().PadLeft(6, ' ')); // Nro Sequencial do Registro no Arquivo
+                detalhe = detalhe.PreencherValorNaLinha(395, 400, numeroRegistro.ToString().PadLeft(6, '0')); // Nro Sequencial do Registro no Arquivo
 
                 return detalhe;
             }
@@ -392,6 +411,9 @@ namespace BoletoBr.Bancos.Bradesco
 
         public string EscreverTrailer(int numeroRegistro)
         {
+            if (numeroRegistro == 0)
+                throw new Exception("Sequencial do registro não foi informado na geração do TRAILER.");
+
             var trailer = new string(' ', 400);
             try
             {

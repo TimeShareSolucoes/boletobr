@@ -57,6 +57,7 @@
     </Compile>
     <Compile Include="TestsBancosRemessa\TestRemessaBradesco.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaCef.cs" />
+    <Compile Include="TestsBancosRemessa\TestRemessaItau.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBancoDoBrasil.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBancoItau.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBradesco.cs" />

@@ -160,7 +160,7 @@ namespace BoletoBr.Bancos.Itau
                 if (string.IsNullOrEmpty(boleto.Moeda))
                     throw new Exception("Espécie/Moeda para o boleto não foi informada.");
 
-                if ((boleto.Moeda == "0") || (boleto.Moeda == "REAL") || (boleto.Moeda == "R$"))
+                if ((boleto.Moeda == "9") || (boleto.Moeda == "REAL") || (boleto.Moeda == "R$"))
                     boleto.Moeda = "R$";
                 else
                     boleto.Moeda = "1";
@@ -218,10 +218,10 @@ namespace BoletoBr.Bancos.Itau
                     (boleto.CarteiraCobranca.Codigo == "142") || (boleto.CarteiraCobranca.Codigo == "143") ||
                     (boleto.CarteiraCobranca.Codigo == "196"))
                 {
-                    boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}0", CodigoBanco, boleto.Moeda,
+                    boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}0", CodigoBanco, MoedaBanco,
                         Common.FatorVencimento(boleto.DataVencimento), boleto.ValorBoleto, boleto.CarteiraCobranca.Codigo,
-                        boleto.NossoNumeroFormatado, numeroDocumento, codigoCedente,
-                        Common.Mod10(boleto.CarteiraCobranca.Codigo + boleto.NossoNumeroFormatado + numeroDocumento + codigoCedente));
+                        boleto.SequencialNossoNumero, numeroDocumento, codigoCedente,
+                        Common.Mod10(boleto.CarteiraCobranca.Codigo + boleto.SequencialNossoNumero + numeroDocumento + codigoCedente));
                 }
 
                 _dacBoleto = Common.Mod11(boleto.CodigoBarraBoleto, 9, 0);

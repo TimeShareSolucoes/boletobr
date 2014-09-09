@@ -75,7 +75,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos.ITAU
 
             var carteira = new CarteiraCobranca();
 
-            carteira.Codigo = "198";
+            carteira.Codigo = "19";
 
             var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "1234567";
