@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using BoletoBr.Arquivo.Generico.Retorno;
-using BoletoBr.Dominio.CodigoMovimento;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
 

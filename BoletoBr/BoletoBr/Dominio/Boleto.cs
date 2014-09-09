@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Drawing;
 using BoletoBr.Bancos;
 using BoletoBr.Dominio;
-using BoletoBr.Dominio.CodigoMovimento;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
 using BoletoBr.Interfaces;
@@ -64,6 +63,7 @@ namespace BoletoBr
         //public decimal? ValorAbatimentoDesconto { get; set; }
         public decimal? ValorAbatimento { get; set; }
         public decimal? ValorDesconto { get; set; }
+        public decimal? ValorDescontoDia { get; set; }
         public bool JurosPermanente { get; set; }
         public decimal? PercentualJurosMora { get; set; }
         public decimal? JurosMora { get; set; }
@@ -116,24 +116,14 @@ namespace BoletoBr
 
         #endregion
 
-        public void AdicionarSiglaEspecie(IEspecieDocumento siglaEspecieDocumento)
-        {
-            this.Especie.Sigla.ToString();
-        }
-
         public void AdicionarCodigoEspecie(IEspecieDocumento codigoEspecieDocumento)
         {
-            this.Especie.Codigo.ToString();
+            return;
         }
 
-        public void AdicionarOcorrenciaRemessa(EnumCodigoOcorrenciaRemessa ocorrencia)
+        public void AdicionarOcorrenciaRemessa(ICodigoOcorrencia ocorrencia)
         {
-            this.CodigoOcorrenciaRemessa.Codigo.ToString();
-        }
-
-        public void AdicionarOcorrenciaRetorno(CodigoOcorrenciaRetorno ocorrencia)
-        {
-            this.CodigoOcorrenciaRetorno.Codigo.ToString();
+            return;
         }
 
         public void AdicionarInstrucao(EnumTipoInstrucao tipoInstrucao, double valor, DateTime data, int dias)

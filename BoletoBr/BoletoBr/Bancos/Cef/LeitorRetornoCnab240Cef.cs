@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using BoletoBr.Arquivo.CNAB240;
 using BoletoBr.Arquivo.CNAB240.Retorno;
 using BoletoBr.Dominio;
-using BoletoBr.Dominio.CodigoMovimento;
 
 namespace BoletoBr.Bancos.Cef
 {

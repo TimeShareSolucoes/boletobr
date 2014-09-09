@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.Dominio;
-using BoletoBr.Dominio.CodigoMovimento;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
 using BoletoBr.Interfaces;
@@ -486,7 +485,7 @@ namespace BoletoBr.Bancos.Santander
             {
                 case EnumCodigoOcorrenciaRemessa.Registro:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 01,
                             Descricao = "Entrada de título"
@@ -494,7 +493,7 @@ namespace BoletoBr.Bancos.Santander
                     }
                 case EnumCodigoOcorrenciaRemessa.Baixa:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 02,
                             Descricao = "Pedido de baixa"
@@ -502,7 +501,7 @@ namespace BoletoBr.Bancos.Santander
                     }
                 case EnumCodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 04,
                             Descricao = "Concessão de abatimento"
@@ -510,7 +509,7 @@ namespace BoletoBr.Bancos.Santander
                     }
                 case EnumCodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 05,
                             Descricao = "Cancelamento de abatimento"
@@ -518,7 +517,7 @@ namespace BoletoBr.Bancos.Santander
                     }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDeVencimento:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 06,
                             Descricao = "Alteração de vencimento"
@@ -526,7 +525,7 @@ namespace BoletoBr.Bancos.Santander
                     }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDaIdentificacaoDotituloNaEmpresa:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 07,
                             Descricao = "Alteração da identificação do título na empresa"
@@ -534,7 +533,7 @@ namespace BoletoBr.Bancos.Santander
                     }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoSeuNumero:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 08,
                             Descricao = "Alteração seu número"
@@ -542,7 +541,7 @@ namespace BoletoBr.Bancos.Santander
                     }
                 case EnumCodigoOcorrenciaRemessa.Protesto:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 09,
                             Descricao = "Pedido de Protesto"
@@ -550,7 +549,7 @@ namespace BoletoBr.Bancos.Santander
                     }
                 case EnumCodigoOcorrenciaRemessa.ConcessaoDeDesconto:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 10,
                             Descricao = "Concessão de Desconto"
@@ -558,7 +557,7 @@ namespace BoletoBr.Bancos.Santander
                     }
                 case EnumCodigoOcorrenciaRemessa.CancelamentoDeDesconto:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 11,
                             Descricao = "Cancelamento de desconto"
@@ -566,7 +565,7 @@ namespace BoletoBr.Bancos.Santander
                     }
                 case EnumCodigoOcorrenciaRemessa.SustarProtesto:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 18,
                             Descricao = "Pedido de Sustação de Protesto"
@@ -574,7 +573,7 @@ namespace BoletoBr.Bancos.Santander
                     }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDeOutrosDados:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 31,
                             Descricao = "Alteração de outros dados"
@@ -582,7 +581,7 @@ namespace BoletoBr.Bancos.Santander
                     }
                 case EnumCodigoOcorrenciaRemessa.NaoProtestar:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 98,
                             Descricao = "Não Protestar"

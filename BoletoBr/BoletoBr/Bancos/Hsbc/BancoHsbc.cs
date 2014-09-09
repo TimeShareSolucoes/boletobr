@@ -7,7 +7,6 @@ using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.CalculoModulo;
 using BoletoBr.Bancos;
 using BoletoBr.Dominio;
-using BoletoBr.Dominio.CodigoMovimento;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
 using BoletoBr.Interfaces;
@@ -442,7 +441,7 @@ namespace BoletoBr.Bancos.Hsbc
             {
                 case EnumCodigoOcorrenciaRemessa.Registro:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int) ocorrenciaRemessa)
                     {
                         Codigo = 01,
                         Descricao = "Entrada de títulos"
@@ -450,7 +449,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.Baixa:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 02,
                         Descricao = "Pedido de baixa"
@@ -458,7 +457,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 04,
                         Descricao = "Concessão de abatimento"
@@ -466,7 +465,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 05,
                         Descricao = "Cancelamento de abatimento concedido"
@@ -474,7 +473,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDeVencimento:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 06,
                         Descricao = "Alteração de vencimento"
@@ -482,7 +481,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.ConcessaoDeDesconto:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 07,
                         Descricao = "Conceder desconto"
@@ -490,7 +489,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDoControleDoParticipante:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 07,
                         Descricao = "Alteração do controle do participante"
@@ -498,7 +497,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.CancelamentoDeDesconto:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 08,
                         Descricao = "Cancelamento de desconto"
@@ -506,7 +505,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoSeuNumero:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 08,
                         Descricao = "Alteração do seu número"
@@ -514,7 +513,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.Protesto:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 09,
                         Descricao = "Protestar"
@@ -522,7 +521,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.SustarProtesto:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 10,
                         Descricao = "Sustar protesto"
@@ -530,7 +529,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.NaoCobrarJurosDeMora:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 11,
                         Descricao = "Não cobrar juros de mora"
@@ -538,7 +537,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.ConcessaoDeDescontoComData:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 13,
                         Descricao = "Conceder desconto R$ " + string.Format("{0:0.##}", valorOcorrencia) + " p/ pgto até " + dataOcorrencia
@@ -546,7 +545,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.CancelamentoDescontoFixo:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 14,
                         Descricao = "Cancelamento condição de desconto fixo"
@@ -554,7 +553,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.CancelamentoDescontoDiario:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 15,
                         Descricao = "Cancelamento de desconto diário"
@@ -562,7 +561,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDeVencimentoComData:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 48,
                         Descricao = "Vencimento alterado para " + dataOcorrencia
@@ -570,7 +569,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDeDiasParaEnvioACartorio:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 49,
                         Descricao = "Alteração de dias para envio a Cartório de Protesto"
@@ -578,7 +577,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.InclusaoDePagadorNoBoleto:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 50,
                         Descricao = "Inclusão de pagador no boleto eletrônico"
@@ -586,7 +585,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.ExclusaoDePagadorNoBoleto:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 51,
                         Descricao = "Exclusão de pagador no boleto eletrônico"
@@ -594,7 +593,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.Reemissao:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 52,
                         Descricao = "Reemissão"
@@ -602,7 +601,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.EntradaDeTitulosComParcelasFaltantes:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 53,
                         Descricao = "Entrada de títulos com parcelas faltantes"
@@ -610,7 +609,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.TransferenciaParaDesconto:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 55,
                         Descricao = "Transferência para desconto"
@@ -618,7 +617,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumCodigoOcorrenciaRemessa.ProtestoParaFinsFalimentares:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrenciaRemessa)
                     {
                         Codigo = 57,
                         Descricao = "Protesto para fins falimentares"

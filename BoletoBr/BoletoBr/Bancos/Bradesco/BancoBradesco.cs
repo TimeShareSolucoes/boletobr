@@ -5,7 +5,6 @@ using System.IO;
 using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.CalculoModulo;
 using BoletoBr.Dominio;
-using BoletoBr.Dominio.CodigoMovimento;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
 using BoletoBr.Interfaces;
@@ -478,7 +477,7 @@ namespace BoletoBr.Bancos.Bradesco
             {
                 case EnumCodigoOcorrenciaRemessa.Registro:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
                         Codigo = 01,
                         Descricao = "Remessa"
@@ -486,7 +485,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumCodigoOcorrenciaRemessa.Baixa:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int)ocorrencia)
                     {
                         Codigo = 02,
                         Descricao = "Pedido de baixa"
@@ -494,7 +493,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumCodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
                         Codigo = 04,
                         Descricao = "Concessão de abatimento"
@@ -502,7 +501,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumCodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
                         Codigo = 05,
                         Descricao = "Cancelamento de abatimento concedido"
@@ -510,7 +509,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDeVencimento:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
                         Codigo = 06,
                         Descricao = "Alteração de vencimento"
@@ -518,7 +517,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDoControleDoParticipante:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
                         Codigo = 07,
                         Descricao = "Alteração do controle do participante"
@@ -526,7 +525,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoSeuNumero:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
                         Codigo = 08,
                         Descricao = "Alteração de seu número"
@@ -534,7 +533,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumCodigoOcorrenciaRemessa.Protesto:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
                         Codigo = 09,
                         Descricao = "Pedido de Protesto"
@@ -542,7 +541,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumCodigoOcorrenciaRemessa.SustarProtestoEBaixarTitulo:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
                         Codigo = 18,
                         Descricao = "Sustar protesto e baixar título"
@@ -550,7 +549,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumCodigoOcorrenciaRemessa.SustarProtestoEManterEmCarteira:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
                         Codigo = 19,
                         Descricao = "Sustar protesto e manter em carteira"
@@ -558,7 +557,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumCodigoOcorrenciaRemessa.TransferenciaCessaoCredito:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
                         Codigo = 22,
                         Descricao = "Transferência cessão crédito ID. Prod. 10"
@@ -566,7 +565,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumCodigoOcorrenciaRemessa.TransferenciaEntreCarteiras:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
                         Codigo = 23,
                         Descricao = "Transferência entre carteiras"
@@ -574,7 +573,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumCodigoOcorrenciaRemessa.DevTransferenciaEntreCarteiras:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
                         Codigo = 24,
                         Descricao = "Dev. Transferência entre carteiras"
@@ -582,7 +581,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDeOutrosDados:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
                         Codigo = 31,
                         Descricao = "Alteração de outros dados"
@@ -590,7 +589,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumCodigoOcorrenciaRemessa.DesagendamentoDoDebitoAutomatico:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
                         Codigo = 35,
                         Descricao = "Desagendamento do débito automático"
@@ -598,7 +597,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumCodigoOcorrenciaRemessa.AcertoNosDadosDoRateioDeCredito:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
                         Codigo = 68,
                         Descricao = "Acerto nos dados do rateio de crédito"
@@ -606,7 +605,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumCodigoOcorrenciaRemessa.CancelamentoDoRateioDeCredito:
                 {
-                    return new CodigoOcorrencia()
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
                         Codigo = 69,
                         Descricao = "Cancelamento do rateio do crédito"

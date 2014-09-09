@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BoletoBr.Bancos.Hsbc;
-using BoletoBr.Dominio.CodigoMovimento;
 
 namespace BoletoBr.Dominio.CodigoRejeicao
 {

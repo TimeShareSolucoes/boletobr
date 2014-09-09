@@ -40,7 +40,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 ValorBoleto = (decimal) 1000.51,
                 SequencialNossoNumero = "19",
                 DataVencimento = new DateTime(2014, 06, 30),
-                Especie = new EspecieDocumento(02, "DUPLICATA MERCANTIL", "DM")
+                Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil)
             };
 
             banco.FormataNossoNumero(boleto);
@@ -96,7 +96,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 ValorBoleto = (decimal) 1000.51,
                 SequencialNossoNumero = "19",
                 DataVencimento = new DateTime(2014, 06, 30),
-                Especie = new EspecieDocumento(02, "DUPLICATA MERCANTIL", "DM")
+                Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil)
             };
 
             banco.FormataNossoNumero(boleto);
@@ -154,7 +154,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 ValorBoleto = (decimal) 1000.51,
                 SequencialNossoNumero = "19",
                 DataVencimento = new DateTime(2014, 06, 30),
-                Especie = new EspecieDocumento(02, "DUPLICATA MERCANTIL", "DM")
+                Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil)
             };
 
             banco.FormataNossoNumero(boleto);
@@ -211,7 +211,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 ValorBoleto = (decimal) 1000.51,
                 SequencialNossoNumero = "19",
                 DataVencimento = new DateTime(2014, 06, 30),
-                Especie = new EspecieDocumento(02, "DUPLICATA MERCANTIL", "DM")
+                Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil)
             };
 
             banco.FormataNossoNumero(boleto);
@@ -268,7 +268,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 ValorBoleto = (decimal) 1000.51,
                 SequencialNossoNumero = "19",
                 DataVencimento = new DateTime(2014, 06, 30),
-                Especie = new EspecieDocumento(02, "DUPLICATA MERCANTIL", "DM")
+                Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil)
             };
 
             banco.FormataNossoNumero(boleto);
@@ -342,7 +342,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 ValorBoleto = (decimal) 1000.51,
                 SequencialNossoNumero = "19",
                 DataVencimento = new DateTime(2014, 06, 30),
-                Especie = new EspecieDocumento(02, "DUPLICATA MERCANTIL", "DM")
+                Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil)
             };
 
             banco.FormataNossoNumero(boleto);

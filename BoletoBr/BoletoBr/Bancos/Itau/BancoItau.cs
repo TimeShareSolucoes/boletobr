@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.Dominio;
-using BoletoBr.Dominio.CodigoMovimento;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
 using BoletoBr.Fabricas;
@@ -724,7 +723,7 @@ namespace BoletoBr.Bancos.Itau
             {
                 case EnumCodigoOcorrenciaRemessa.Registro:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 01,
                             Descricao = "Remessa"
@@ -732,7 +731,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.Baixa:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 02,
                             Descricao = "Pedido de baixa"
@@ -740,7 +739,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 04,
                             Descricao = "Concessão de abatimento"
@@ -748,7 +747,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 05,
                             Descricao = "Cancelamento de abatimento"
@@ -756,7 +755,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDeVencimento:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 06,
                             Descricao = "Alteração do vencimento"
@@ -764,7 +763,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDoControleDoParticipante:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 07,
                             Descricao = "Alteração do uso da empresa"
@@ -772,7 +771,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoSeuNumero:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 08,
                             Descricao = "Alteração de seu número"
@@ -780,7 +779,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.Protesto:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 09,
                             Descricao = "Protestar"
@@ -788,7 +787,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.NaoProtestar:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 10,
                             Descricao = "Não protestar"
@@ -796,7 +795,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.ProtestoParaFinsFalimentares:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 11,
                             Descricao = "Protesto para fins falimentares"
@@ -804,7 +803,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.SustarProtesto:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 18,
                             Descricao = "Sustar o protesto"
@@ -812,7 +811,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.ExclusaoDeSacadorAvalista:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 30,
                             Descricao = "Exclusão de sacador avalista"
@@ -820,7 +819,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDeOutrosDados:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 31,
                             Descricao = "Alteração de outros dados"
@@ -828,7 +827,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.BaixaPorTerSidoPagoDiretamenteAoCedente:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 34,
                             Descricao = "Baixa por ter sido pago diretamente ao cedente"
@@ -836,7 +835,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.CancelamentoDeInstrucao:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 35,
                             Descricao = "Cancelamento de instrução"
@@ -844,7 +843,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDoVencimentoESustarProtesto:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 37,
                             Descricao = "Alteração do vencimento e sustar protesto"
@@ -852,7 +851,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.CedenteNaoConcordaComAlegacaoDoSacado:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 38,
                             Descricao = "Cedente não concorda com alegação do sacado"
@@ -860,7 +859,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.CedenteSolicitaDispensaDeJuros:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 47,
                             Descricao = "Cedente solicita dispensa de juros"
