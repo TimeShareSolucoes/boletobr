@@ -210,11 +210,8 @@ namespace BoletoBr.Bancos.Cef
                 headerLote = headerLote.PreencherValorNaLinha(74, 103, boleto.CedenteBoleto.Nome.PadRight(30, ' '));
                 headerLote = headerLote.PreencherValorNaLinha(104, 143, string.Empty.PadRight(40, ' ')); // Mensagem 1
                 headerLote = headerLote.PreencherValorNaLinha(144, 183, string.Empty.PadRight(40, ' ')); // Mensagem 2
-
-                // TODO: Analisar como vai controlar o número da remessa
                 headerLote = headerLote.PreencherValorNaLinha(184, 191, numeroRemessa.ToString().PadLeft(8, '0')); // Número Remessa/Retorno
-
-                headerLote = headerLote.PreencherValorNaLinha(192, 199, DateTime.Now.ToString("d").Replace("/", ""));
+                headerLote = headerLote.PreencherValorNaLinha(192, 199, DateTime.Now.ToString("ddMMyyyy"));
                 headerLote = headerLote.PreencherValorNaLinha(200, 207, string.Empty.PadLeft(8, '0'));
                 headerLote = headerLote.PreencherValorNaLinha(208, 240, string.Empty.PadRight(33, ' '));
 
@@ -288,7 +285,7 @@ namespace BoletoBr.Bancos.Cef
                 segmentoP = segmentoP.PreencherValorNaLinha(62, 62, "1"); // Identificação da Entrega do Bloqueto
                 segmentoP = segmentoP.PreencherValorNaLinha(63, 73, boleto.NumeroDocumento.PadLeft(11, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(74, 77, string.Empty.PadLeft(4, ' '));
-                segmentoP = segmentoP.PreencherValorNaLinha(78, 85, boleto.DataVencimento.ToString("d").Replace("/", "").PadLeft(8, '0'));
+                segmentoP = segmentoP.PreencherValorNaLinha(78, 85, boleto.DataVencimento.ToString("ddMMyyyy"));
 
                 var valorBoleto = string.Empty;
 
@@ -304,15 +301,19 @@ namespace BoletoBr.Bancos.Cef
                 segmentoP = segmentoP.PreencherValorNaLinha(106, 106, "0"); // Dígito Verificador da Agência
                 segmentoP = segmentoP.PreencherValorNaLinha(107, 108, boleto.Especie.Sigla.Equals("DM") ? "02" : boleto.Especie.Codigo.ToString().PadLeft(2, '0')); // Espécia do Título 
                 segmentoP = segmentoP.PreencherValorNaLinha(109, 109, boleto.Aceite.Equals("A") ? "A" : "N");
-                segmentoP = segmentoP.PreencherValorNaLinha(110, 117, boleto.DataDocumento.ToString("d").Replace("/", "").PadLeft(8, '0'));
+                segmentoP = segmentoP.PreencherValorNaLinha(110, 117, boleto.DataDocumento.ToString("ddMMyyyy"));
                 /* Modalidade de cobrança de juros de mora
                  * 1 - Valor por dia
                  * 2 - Taxa Mensal
                  * 3 - Isento
                  */
-                // TODO: Analisar como proceder com a cobrança de juros de mora
                 segmentoP = segmentoP.PreencherValorNaLinha(118, 118, "3"); // Código do Juros de Mora
-                segmentoP = segmentoP.PreencherValorNaLinha(119, 126, boleto.DataJurosMora.ToString("d").Replace("/", "").PadLeft(8, '0'));
+
+                if (boleto.DataJurosMora == DateTime.MinValue)
+                    segmentoP = segmentoP.PreencherValorNaLinha(119, 126, string.Empty.PadLeft(8, '0'));
+                else
+                    segmentoP = segmentoP.PreencherValorNaLinha(119, 126, boleto.DataJurosMora.ToString("ddMMyyyy"));
+
                 segmentoP = segmentoP.PreencherValorNaLinha(127, 141, boleto.JurosMora.ToString().Replace(".", "").Replace(",", "").PadLeft(15, '0'));
                 /* Código do Desconto
                  * 0 - Sem desconto
@@ -320,16 +321,20 @@ namespace BoletoBr.Bancos.Cef
                  * 2 - Percentual até a data informada
                  * Obs.: Para os códigos '1' e '2' será obrigatório a informação da data.
                  */
-
-                const string doc = "DOC";
-                var seuNumero = doc + boleto.NumeroDocumento.PadLeft(25 - doc.Length, '0');
-
-                // TODO: Analisar como proceder com o desconto e outros abatimentos
                 segmentoP = segmentoP.PreencherValorNaLinha(142, 142, "0"); // Código do Desconto 1
-                segmentoP = segmentoP.PreencherValorNaLinha(143, 150, boleto.DataDesconto.ToString("d").Replace("/", "").PadLeft(8, '0'));
+
+                if (boleto.DataDesconto == DateTime.MinValue)
+                    segmentoP = segmentoP.PreencherValorNaLinha(143, 150, string.Empty.PadLeft(8, '0'));
+                else
+                    segmentoP = segmentoP.PreencherValorNaLinha(143, 150, boleto.DataDesconto.ToString("ddMMyyyy"));
+
                 segmentoP = segmentoP.PreencherValorNaLinha(151, 165, boleto.ValorDesconto.ToString().Replace(".", "").Replace(",", "").PadLeft(15, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(166, 180, boleto.Iof.ToString().Replace(".", "").Replace(",", "").PadLeft(15, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(181, 195, boleto.ValorAbatimento.ToString().Replace(".", "").Replace(",", "").PadLeft(15, '0'));
+
+                const string doc = "DOC";
+                var seuNumero = doc + boleto.NossoNumeroFormatado.PadRight(25 - doc.Length, ' ');
+
                 segmentoP = segmentoP.PreencherValorNaLinha(196, 220, seuNumero.PadRight(25, ' '));
 
                 #region CÓDIGO PROTESTO
@@ -347,7 +352,7 @@ namespace BoletoBr.Bancos.Cef
                 segmentoP = segmentoP.PreencherValorNaLinha(221, 221, "3"); // Código para Protesto
                 segmentoP = segmentoP.PreencherValorNaLinha(222, 223, "00"); // Número de Dias para Protesto
                 segmentoP = segmentoP.PreencherValorNaLinha(224, 224, "2"); // Código para Baixa/Devolução
-                segmentoP = segmentoP.PreencherValorNaLinha(225, 227, "020"); // Número de Dias para Baixa/Devolução
+                segmentoP = segmentoP.PreencherValorNaLinha(225, 227, "030"); // Número de Dias para Baixa/Devolução
                 // Fixo 09 - REAL
                 segmentoP = segmentoP.PreencherValorNaLinha(228, 229, "09"); // Código da Moeda
                 segmentoP = segmentoP.PreencherValorNaLinha(230, 239, string.Empty.PadLeft(10, '0')); // Uso Exclusivo CAIXA

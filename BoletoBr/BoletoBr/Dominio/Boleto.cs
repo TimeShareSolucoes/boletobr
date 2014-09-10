@@ -41,7 +41,6 @@ namespace BoletoBr
         public DateTime DataVencimento { get; set; }
         public DateTime DataDocumento { get; set; }
         public DateTime? DataProcessamento { get; set; }
-        public int DiasProtesto { get; set; }
         public int QtdParcelas { get; set; }
         public int NumeroParcela { get; set; }
 
@@ -59,7 +58,6 @@ namespace BoletoBr
         public string NumeroDocumento { get; set; }
         public IEspecieDocumento Especie { get; set; }
         public string Moeda { get; set; }
-        public string UsoBanco { get; set; }
         //public decimal? ValorAbatimentoDesconto { get; set; }
         public decimal? ValorAbatimento { get; set; }
         public decimal? ValorDesconto { get; set; }
@@ -77,22 +75,9 @@ namespace BoletoBr
         public DateTime DataDesconto { get; set; }
         public DateTime DataOutrosAcrescimos { get; set; }
         public DateTime DataOutrosDescontos { get; set; }
-        public short PercentualIos { get; set; }
         public string TipoModalidade { get; set; }
         public string CodigoBarraBoleto { get; set; }
-        public string LinhaDigitavelBoleto { get; set; }
-        /// <summary> DATA DE VENCIMENTO NO FORMATO JULIANO
-        /// A data de vencimento no formato juliano somente deve ser utilizada quando o cliente optar pelo uso do Tipo Identificador “4” no Código do Documento, com retorno dos três dígitos no arquivo magnético e no demonstrativo de liquidação (condição cadastral).  
-        /// As três primeiras posições correspondem à data de vencimento informada pelo mês juliano. Exemplos:
-        /// 001 = corresponde a 01 de janeiro.
-        /// 042 = corresponde a 11 de fevereiro.   
-        /// A última posição representa o ano. Os algarismos de 0 a 9 correspondem ao algarismo final do ano da data de vencimento.
-        /// Exemplos:  
-        /// 0=2010, 2020;  1=2011, 2021;  2=2012, 2022;  3=2013, 2023;  4=2014, 2024;
-        /// 5=2015, 2025;  6=2006, 2016;  7=2007, 2017;  8=2008, 2018;  9=2009, 2019.  
-        /// Nota: Se utilizado o Tipo Identificador “5”, a data de vencimento no formato juliano deverá ser preenchida com quatro zeros = 0000. 
-        /// </summary>
-        public string DataFormatoJuliano { get; set; }
+        public string LinhaDigitavelBoleto { get; set; }      
         public TipoArquivo TipoArquivo { get; set; }
         public string CodigoDoProduto { get; set; }
         public int QtdDias { get; set; }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BoletoBr.Bancos.Itau;
+using BoletoBr.Bancos.Santander;
 using BoletoBr.Dominio;
 using BoletoBr.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,18 +11,18 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace BoletoBr.UnitTests.TestsBancosRemessa
 {
     [TestClass]
-    public class TestRemessaItau
+    public class TestRemessaSantander
     {
         [TestMethod]
-        public void TestGerarHeaderArquivoRemessaItauCnab400()
+        public void TestGerarHeaderArquivoRemessaSantanderCnab400()
         {
             var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
 
-            var banco = Fabricas.BancoFactory.ObterBanco("341", "7");
+            var banco = Fabricas.BancoFactory.ObterBanco("033", "7");
 
-            var contaBancariaCedente = new ContaBancaria("0057", "", "72192", "");
+            var contaBancariaCedente = new ContaBancaria("0319", "", "", "");
 
-            var cedente = new Cedente("99999", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente, null);
+            var cedente = new Cedente("527654", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
 
             var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
             {
@@ -36,23 +36,23 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca {Codigo = "196"};
+            var carteira = new CarteiraCobranca {Codigo = "101"};
 
             var boleto = new Boleto(carteira, cedente, sacado, remessa)
             {
-                NumeroDocumento = "1234567",
-                ValorBoleto = 12345,
-                SequencialNossoNumero = "1234567",
-                DataVencimento = new DateTime(2014, 09, 09),
+                NumeroDocumento = "001N002",
+                ValorBoleto = Convert.ToDecimal(80.55),
+                SequencialNossoNumero = "000000000027",
+                DataVencimento = new DateTime(2012, 11, 26),
                 Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil),
                 CodigoOcorrenciaRemessa = new CodigoOcorrencia(01),
             };
-            
+
             banco.FormatarBoleto(boleto);
 
             const int numeroRegistro = 1;
 
-            var escritor = new EscritorRemessaCnab400Itau();
+            var escritor = new EscritorRemessaCnab400Santander();
 
             var linhasEscrever = escritor.EscreverHeader(boleto, numeroRegistro);
 
@@ -69,15 +69,15 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
         }
 
         [TestMethod]
-        public void TestGerarDetalheArquivoRemessaItauCnab400()
+        public void TestGerarDetalheArquivoRemessaSantanderCnab400()
         {
             var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
 
-            var banco = Fabricas.BancoFactory.ObterBanco("341", "7");
+            var banco = Fabricas.BancoFactory.ObterBanco("033", "7");
 
-            var contaBancariaCedente = new ContaBancaria("0057", "", "72192", "");
+            var contaBancariaCedente = new ContaBancaria("0020", "0", "13003695", "9");
 
-            var cedente = new Cedente("99999", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente, null);
+            var cedente = new Cedente("527654", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
 
             var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
             {
@@ -91,24 +91,25 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca { Codigo = "196" };
+            var carteira = new CarteiraCobranca { Codigo = "101" };
 
             var boleto = new Boleto(carteira, cedente, sacado, remessa)
             {
-                NumeroDocumento = "1234567",
-                ValorBoleto = 12345,
-                SequencialNossoNumero = "1234567",
-                DataVencimento = new DateTime(2014, 09, 09),
+                NumeroDocumento = "001N002",
+                ValorBoleto = Convert.ToDecimal(80.55),
+                JurosMora = Convert.ToDecimal(15),
+                SequencialNossoNumero = "000000000027",
+                //SequencialNossoNumero = "566612457800",
+                DataVencimento = new DateTime(2012, 11, 26),
                 Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil),
                 CodigoOcorrenciaRemessa = new CodigoOcorrencia(01),
-                Moeda = "09",
             };
 
             banco.FormatarBoleto(boleto);
 
             const int numeroRegistro = 1;
 
-            var escritor = new EscritorRemessaCnab400Itau();
+            var escritor = new EscritorRemessaCnab400Santander();
 
             var linhasEscrever = escritor.EscreverDetalhe(boleto, numeroRegistro);
 
@@ -125,15 +126,15 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
         }
 
         [TestMethod]
-        public void TestGerarTrailerArquivoRemessaItauCnab400()
+        public void TestGerarTrailerArquivoRemessaSantanderCnab400()
         {
             var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
 
-            var banco = Fabricas.BancoFactory.ObterBanco("341", "7");
+            var banco = Fabricas.BancoFactory.ObterBanco("033", "7");
 
-            var contaBancariaCedente = new ContaBancaria("0057", "", "72192", "");
+            var contaBancariaCedente = new ContaBancaria("0020", "0", "13003695", "9");
 
-            var cedente = new Cedente("99999", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente, null);
+            var cedente = new Cedente("527654", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
 
             var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
             {
@@ -147,26 +148,28 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca { Codigo = "196" };
+            var carteira = new CarteiraCobranca { Codigo = "101" };
 
             var boleto = new Boleto(carteira, cedente, sacado, remessa)
             {
-                NumeroDocumento = "1234567",
-                ValorBoleto = 12345,
-                SequencialNossoNumero = "1234567",
-                DataVencimento = new DateTime(2014, 09, 09),
+                NumeroDocumento = "001N002",
+                ValorBoleto = Convert.ToDecimal(80.55),
+                JurosMora = Convert.ToDecimal(15),
+                SequencialNossoNumero = "000000000027",
+                //SequencialNossoNumero = "566612457800",
+                DataVencimento = new DateTime(2012, 11, 26),
                 Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil),
                 CodigoOcorrenciaRemessa = new CodigoOcorrencia(01),
-                Moeda = "09",
             };
 
             banco.FormatarBoleto(boleto);
 
             const int numeroRegistro = 1;
+            const decimal valorTitulos = (decimal) 10853.37;
 
-            var escritor = new EscritorRemessaCnab400Itau();
+            var escritor = new EscritorRemessaCnab400Santander();
 
-            var linhasEscrever = escritor.EscreverTrailer(numeroRegistro);
+            var linhasEscrever = escritor.EscreverTrailer(numeroRegistro, valorTitulos);
 
             var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 

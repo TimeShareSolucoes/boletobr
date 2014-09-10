@@ -164,7 +164,7 @@ namespace BoletoBr.Bancos.Bradesco
                 detalhe = detalhe.PreencherValorNaLinha(107, 108, string.Empty.PadLeft(2, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(109, 110, boleto.CodigoOcorrenciaRemessa.Codigo.ToString().PadLeft(2, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(111, 120, boleto.NumeroDocumento.Replace("0", "").PadLeft(10, '0'));
-                detalhe = detalhe.PreencherValorNaLinha(121, 126, boleto.DataVencimento.ToString("ddMMyy").Replace("/", ""));
+                detalhe = detalhe.PreencherValorNaLinha(121, 126, boleto.DataVencimento.ToString("ddMMyy"));
 
                 #region VALOR BOLETO
 
@@ -203,7 +203,7 @@ namespace BoletoBr.Bancos.Bradesco
 
                 detalhe = detalhe.PreencherValorNaLinha(148, 149, boleto.Especie.Sigla.Equals("DM") ? "01" : boleto.Especie.Codigo.ToString());
                 detalhe = detalhe.PreencherValorNaLinha(150, 150, boleto.Aceite.Equals("A") ? "A" : "N");
-                detalhe = detalhe.PreencherValorNaLinha(151, 156, boleto.DataDocumento.ToString("ddMMyy").Replace("/", ""));
+                detalhe = detalhe.PreencherValorNaLinha(151, 156, boleto.DataDocumento.ToString("ddMMyy"));
 
                 #region INSTRUÇÕES REMESSA
 
@@ -248,7 +248,10 @@ namespace BoletoBr.Bancos.Bradesco
 
                 #endregion
 
-                detalhe = detalhe.PreencherValorNaLinha(174, 179, boleto.DataDesconto.ToString("ddMMyy").Replace("/", "")); // Data Limite para Concesão de Desconto
+                if (boleto.DataDesconto == DateTime.MinValue)
+                    detalhe = detalhe.PreencherValorNaLinha(174, 179, string.Empty.PadLeft(6, '0'));
+                else
+                    detalhe = detalhe.PreencherValorNaLinha(174, 179, boleto.DataDesconto.ToString("ddMMyy")); // Data Limite para Concesão de Desconto
 
                 #region VALOR DESCONTO
 

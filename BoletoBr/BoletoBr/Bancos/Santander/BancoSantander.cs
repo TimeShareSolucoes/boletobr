@@ -57,23 +57,23 @@ namespace BoletoBr.Bancos.Santander
             //Banco 008  - Utilizar somente 09 posições do Nosso Numero (08 posições + DV), zerando os 04 primeiros dígitos
             if (this.CodigoBanco == "008")
             {
-                if (boleto.NossoNumeroFormatado.Length != 8)
-                    throw new NotImplementedException("Nosso Número deve ter 7 posições para o banco 008.");
+                if (boleto.SequencialNossoNumero.Length != 8)
+                    throw new NotImplementedException("Nosso Número deve ter 8 posições para o banco 008.");
             }
 
             if (this.CodigoBanco == "033")
             {
-                if (boleto.NossoNumeroFormatado.Length == 7 && boleto.CarteiraCobranca.Codigo.Equals("101"))
-                    boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado);
+                if (boleto.SequencialNossoNumero.Length == 7 && boleto.CarteiraCobranca.Codigo.Equals("101"))
+                    boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(12, '0'));
 
-                if (boleto.NossoNumeroFormatado.Length != 12)
+                if (boleto.SequencialNossoNumero.Length != 12)
                     throw new NotSupportedException("Nosso Número deve ter 12 posições para o banco 033.");
             }
 
             //Banco 353  - Utilizar somente 08 posições do Nosso Numero (07 posições + DV), zerando os 05 primeiros dígitos
             if (this.CodigoBanco == "353")
             {
-                if (boleto.NossoNumeroFormatado.Length != 7)
+                if (boleto.SequencialNossoNumero.Length != 7)
                     throw new NotImplementedException("Nosso Número deve ter 7 posições para o banco 353.");
             }
 
@@ -273,7 +273,7 @@ namespace BoletoBr.Bancos.Santander
             boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero);
 
             boleto.SetNossoNumeroFormatado(string.Format("{0}-{1}", 
-                boleto.NossoNumeroFormatado, Mod11Santander(boleto.NossoNumeroFormatado, 9)));
+                boleto.NossoNumeroFormatado, Mod11Santander(boleto.NossoNumeroFormatado, 9)).PadLeft(12, '0'));
         }
 
         public void FormataNumeroDocumento(Boleto boleto)
