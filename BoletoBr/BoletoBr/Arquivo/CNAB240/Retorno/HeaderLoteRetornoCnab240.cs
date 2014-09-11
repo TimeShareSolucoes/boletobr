@@ -15,24 +15,24 @@ namespace BoletoBr.Arquivo.CNAB240
         public int TipoServico { get; set; }
         public int VersaoLayoutLote { get; set; }
         public int TipoInscricaoEmpresa { get; set; }
-        public long NumeroInscricaoEmpresa { get; set; }
+        public string NumeroInscricaoEmpresa { get; set; }
         public string Convenio { get; set; }
         public int CodigoAgencia { get; set; }
         public string DvCodigoAgencia { get; set; }
-        public long ContaCorrente { get; set; }
+        public string ContaCorrente { get; set; }
         public string DvContaCorrente { get; set; }
         public int CodigoCedente { get; set; }
         public int CodigoModeloPersonalizado { get; set; }
         public string NomeDoBeneficiario { get; set; }
         public string Mensagem1 { get; set; }
         public string Mensagem2 { get; set; }
-        public long NumeroRemessaRetorno { get; set; }
-        public int DataGeracaoGravacao { get; set; }
-        public int DataDeCredito { get; set; }
+        public string NumeroRemessaRetorno { get; set; }
+        public DateTime DataGeracaoGravacao { get; set; }
+        public DateTime DataDeCredito { get; set; }
 
         #region Banco do Brasil
 
-        public long ConvenioNumeroCobranca { get; set; }
+        public string ConvenioNumeroCobranca { get; set; }
         public int CedenteCobranca { get; set; }
         public int CarteiraCobranca { get; set; }
         public int VariacaoCarteiraCobranca { get; set; }
