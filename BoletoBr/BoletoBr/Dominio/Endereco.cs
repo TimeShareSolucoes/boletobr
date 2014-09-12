@@ -35,12 +35,12 @@ namespace BoletoBr
                 textoRetornar += Logradouro;
                 if (String.IsNullOrEmpty(textoRetornar) == false)
                 {
-                    textoRetornar += ",";
+                    textoRetornar += ", ";
                 }
                 textoRetornar += Numero;
                 if (String.IsNullOrEmpty(textoRetornar) == false)
                 {
-                    textoRetornar += ",";
+                    textoRetornar += ", ";
                 }
                 textoRetornar += Complemento;
 
