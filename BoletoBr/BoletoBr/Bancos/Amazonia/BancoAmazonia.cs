@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.Bancos.Hsbc;
 using BoletoBr.Dominio;
-using BoletoBr.Dominio.CodigoMovimento;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
 using BoletoBr.Interfaces;
@@ -183,7 +182,7 @@ namespace BoletoBr.Bancos.Amazonia
             throw new NotImplementedException();
         }
 
-        public ICodigoOcorrencia ObtemCodigoOcorrencia(CodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
         {
             throw new NotImplementedException();
         }

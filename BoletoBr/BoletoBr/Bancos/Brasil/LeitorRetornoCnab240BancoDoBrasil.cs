@@ -158,7 +158,7 @@ namespace BoletoBr.Bancos.Brasil
             objRetornar.NomeDoBeneficiario = linha.ExtrairValorDaLinha(73, 102);
             objRetornar.NomeDoBanco = linha.ExtrairValorDaLinha(103, 132);
             objRetornar.CodigoRemessaRetorno = linha.ExtrairValorDaLinha(143, 143).BoletoBrToInt();
-            //objRetornar.DataGeracaoGravacao = (DateTime) linha.ExtrairValorDaLinha(144, 151).ToString().ToDateTimeFromDdMmAa();
+            objRetornar.DataGeracaoGravacao = (DateTime) linha.ExtrairValorDaLinha(144, 151).ToString().ToDateTimeFromDdMmAa();
             objRetornar.HoraGeracaoGravacao = linha.ExtrairValorDaLinha(152, 157).BoletoBrToInt();
             objRetornar.NumeroSequencial = linha.ExtrairValorDaLinha(158, 163).BoletoBrToInt();
             objRetornar.VersaoLayout = linha.ExtrairValorDaLinha(164, 166);
@@ -181,19 +181,19 @@ namespace BoletoBr.Bancos.Brasil
             objRetornar.TipoServico = linha.ExtrairValorDaLinha(10, 11).BoletoBrToInt();
             objRetornar.VersaoLayoutLote = linha.ExtrairValorDaLinha(14, 16).BoletoBrToInt();
             objRetornar.TipoInscricaoEmpresa = linha.ExtrairValorDaLinha(18, 18).BoletoBrToInt();
-            objRetornar.NumeroInscricaoEmpresa = linha.ExtrairValorDaLinha(19, 33).BoletoBrToLong();
+            objRetornar.NumeroInscricaoEmpresa = linha.ExtrairValorDaLinha(19, 33);
             objRetornar.Convenio = linha.ExtrairValorDaLinha(34, 53);
             objRetornar.CodigoAgencia = linha.ExtrairValorDaLinha(54, 58).BoletoBrToInt();
             objRetornar.DvCodigoAgencia = linha.ExtrairValorDaLinha(59, 59);
-            objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(60, 71).BoletoBrToLong();
+            objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(60, 71);
             objRetornar.DvContaCorrente = linha.ExtrairValorDaLinha(72, 72);
             objRetornar.DvAgenciaConta = linha.ExtrairValorDaLinha(73, 73);
             objRetornar.NomeDoBeneficiario = linha.ExtrairValorDaLinha(74, 103);
             objRetornar.Mensagem1 = linha.ExtrairValorDaLinha(104, 143);
             objRetornar.Mensagem2 = linha.ExtrairValorDaLinha(144, 183);
-            objRetornar.NumeroRemessaRetorno = linha.ExtrairValorDaLinha(184, 191).BoletoBrToInt();
-            //objRetornar.DataGeracaoGravacao = (DateTime) linha.ExtrairValorDaLinha(192, 199).ToString().ToDateTimeFromDdMmAa();
-            //objRetornar.DataDeCredito = (DateTime) linha.ExtrairValorDaLinha(200, 207).ToString().ToDateTimeFromDdMmAa();
+            objRetornar.NumeroRemessaRetorno = linha.ExtrairValorDaLinha(184, 191);
+            objRetornar.DataGeracaoGravacao = (DateTime) linha.ExtrairValorDaLinha(192, 199).ToString().ToDateTimeFromDdMmAaaa();
+            objRetornar.DataDeCredito = (DateTime) linha.ExtrairValorDaLinha(200, 207).ToString().ToDateTimeFromDdMmAaaa();
 
             return objRetornar;
         }
@@ -251,8 +251,8 @@ namespace BoletoBr.Bancos.Brasil
             objRetornar.ValorLiquidoASerCreditado = linha.ExtrairValorDaLinha(93, 107).BoletoBrToDecimal()/100;
             objRetornar.ValorOutrasDespesas = linha.ExtrairValorDaLinha(108, 122).BoletoBrToDecimal()/100;
             objRetornar.ValorOutrosCreditos = linha.ExtrairValorDaLinha(123, 137).BoletoBrToDecimal()/100;
-            //objRetornar.DataOcorrencia = (DateTime) linha.ExtrairValorDaLinha(138, 145).ToString().ToDateTimeFromDdMmAa();
-            //objRetornar.DataCredito = (DateTime) linha.ExtrairValorDaLinha(146, 153).ToString().ToDateTimeFromDdMmAa();
+            objRetornar.DataOcorrencia = (DateTime) linha.ExtrairValorDaLinha(138, 145).ToString().ToDateTimeFromDdMmAa();
+            objRetornar.DataCredito = (DateTime) linha.ExtrairValorDaLinha(146, 153).ToString().ToDateTimeFromDdMmAa();
             objRetornar.CodigoOcorrenciaPagador = linha.ExtrairValorDaLinha(154, 157);
             objRetornar.DataOcorrenciaPagador = (DateTime) linha.ExtrairValorDaLinha(158, 165).ToString().ToDateTimeFromDdMmAa();
             objRetornar.ValorOcorrenciaPagador = linha.ExtrairValorDaLinha(166, 180).BoletoBrToDecimal()/100;

@@ -1,4 +1,6 @@
 ﻿using System;
+using BoletoBr.Dominio;
+using BoletoBr.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BoletoBr.UnitTests.Tests.Bancos.ITAU
@@ -9,6 +11,8 @@ namespace BoletoBr.UnitTests.Tests.Bancos.ITAU
         [TestMethod]
         public void TesteCalculoNossoNumeroCarteira198BoletoDocumentacaoItau()
         {
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+
             var banco = Fabricas.BancoFactory.ObterBanco("341", "7");
 
             var contaBancariaCedente = new ContaBancaria("0057", "", "72192", "");
@@ -27,7 +31,11 @@ namespace BoletoBr.UnitTests.Tests.Bancos.ITAU
                 Numero = "9"
             });
 
-            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("198"));
+            var carteira = new CarteiraCobranca();
+
+            carteira.Codigo = "198";
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "1234567";
             boleto.ValorBoleto = 12345;
             boleto.SequencialNossoNumero = "1234567";
@@ -45,6 +53,8 @@ namespace BoletoBr.UnitTests.Tests.Bancos.ITAU
             /* 
              * Teste baseado em um boleto apresentado na documentação oficial do Banco Itaú
              */
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+
             var banco = Fabricas.BancoFactory.ObterBanco("341", "7");
 
             var contaBancariaCedente = new ContaBancaria("0057", "", "72192", "");
@@ -63,7 +73,11 @@ namespace BoletoBr.UnitTests.Tests.Bancos.ITAU
                 Numero = "9"
             });
 
-            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("198"));
+            var carteira = new CarteiraCobranca();
+
+            carteira.Codigo = "19";
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "1234567";
             boleto.ValorBoleto = Convert.ToDecimal(123.45);
             boleto.SequencialNossoNumero = "1234567";
@@ -85,6 +99,8 @@ namespace BoletoBr.UnitTests.Tests.Bancos.ITAU
             /* 
              * Teste baseado em um boleto apresentado na documentação oficial do Banco Itaú
              */
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+
             var banco = Fabricas.BancoFactory.ObterBanco("341", "7");
 
             var contaBancariaCedente = new ContaBancaria("4343", "", "29550", "9");
@@ -103,7 +119,11 @@ namespace BoletoBr.UnitTests.Tests.Bancos.ITAU
                 Numero = "9"
             });
 
-            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("175"));
+            var carteira = new CarteiraCobranca();
+
+            carteira.Codigo = "175";
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "71194120";
             boleto.ValorBoleto = Convert.ToDecimal(1419.04);
             boleto.SequencialNossoNumero = "71194120";

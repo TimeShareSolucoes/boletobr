@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BoletoBr.Bancos.Bradesco;
 using BoletoBr.Dominio;
+using BoletoBr.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BoletoBr.UnitTests.Tests.Bancos
@@ -15,10 +16,10 @@ namespace BoletoBr.UnitTests.Tests.Bancos
         [TestMethod]
         public void FormataNumeroDocumentoHsbc()
         {
-            Boleto boleto = new Boleto();
-            BancoBradesco bradesco = new BancoBradesco();
+            var boleto = new Boleto();
+            var bradesco = new BancoBradesco();
 
-            string numeroDocumento = "123";
+            const string numeroDocumento = "123";
 
             const string valorEsperadoCnab240 = "000000000000123";
             const string valorEsperadoCnab400 = "0000000123";
@@ -27,7 +28,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos
             boleto.TipoArquivo = TipoArquivo.Cnab400;
             bradesco.FormataNumeroDocumento(boleto);
 
-            string numeroDocumentoFormatado = boleto.NumeroDocumento;
+            var numeroDocumentoFormatado = boleto.NumeroDocumento;
 
             Assert.AreEqual(valorEsperadoCnab400, numeroDocumentoFormatado);
         }
@@ -35,6 +36,8 @@ namespace BoletoBr.UnitTests.Tests.Bancos
         [TestMethod]
         public void CalculoNossoNumeroCarteira06DocumentacaoBradesco()
         {
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+
             var banco = Fabricas.BancoFactory.ObterBanco("237", "2");
 
             var contaBancariaCedente = new ContaBancaria("2374", "4", "0165199", "4");
@@ -53,11 +56,15 @@ namespace BoletoBr.UnitTests.Tests.Bancos
                 Numero = "9"
             });
 
-            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("06"));
-            boleto.NumeroDocumento = "41636135093";
-            boleto.ValorBoleto = Convert.ToDecimal(221.40);
-            boleto.SequencialNossoNumero = "41636135093";
-            boleto.DataVencimento = new DateTime(2014, 07, 10);
+            var carteira = new CarteiraCobranca {Codigo = "06"};
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "41636135093",
+                ValorBoleto = Convert.ToDecimal(221.40),
+                SequencialNossoNumero = "41636135093",
+                DataVencimento = new DateTime(2014, 07, 10)
+            };
 
             banco.FormataNossoNumero(boleto);
 
@@ -71,6 +78,8 @@ namespace BoletoBr.UnitTests.Tests.Bancos
              * Teste baseado em um boleto apresentado na documentação oficial do Banco da Amazônia versão 1
              * Manual de Cobrança Registrada Simples
              */
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+
             var banco = Fabricas.BancoFactory.ObterBanco("237", "2");
 
             var contaBancariaCedente = new ContaBancaria("1234", "8", "12345", "6");
@@ -89,11 +98,15 @@ namespace BoletoBr.UnitTests.Tests.Bancos
                 Numero = "9"
             });
 
-            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("06"));
-            boleto.NumeroDocumento = "3242";
-            boleto.ValorBoleto = Convert.ToDecimal(275);
-            boleto.SequencialNossoNumero = "3242";
-            boleto.DataVencimento = new DateTime(2014, 08, 04);
+            var carteira = new CarteiraCobranca {Codigo = "06"};
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "3242",
+                ValorBoleto = Convert.ToDecimal(275),
+                SequencialNossoNumero = "3242",
+                DataVencimento = new DateTime(2014, 08, 04)
+            };
 
             banco.FormatarBoleto(boleto);
 
@@ -105,6 +118,8 @@ namespace BoletoBr.UnitTests.Tests.Bancos
         [TestMethod]
         public void CalculoCodigoBarrasCarteira06DocumentacaoBradesco()
         {
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+
             var banco = Fabricas.BancoFactory.ObterBanco("237", "2");
 
             var contaBancariaCedente = new ContaBancaria("2374", "4", "0165199", "4");
@@ -123,12 +138,16 @@ namespace BoletoBr.UnitTests.Tests.Bancos
                 Numero = "9"
             });
 
-            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("06"));
-            boleto.NumeroDocumento = "41636135093";
-            boleto.ValorBoleto = Convert.ToDecimal(221.40);
-            boleto.SequencialNossoNumero = "41636135093";
-            boleto.DataVencimento = new DateTime(2014, 07, 10);
-            boleto.Moeda = "9";
+            var carteira = new CarteiraCobranca {Codigo = "06"};
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "41636135093",
+                ValorBoleto = Convert.ToDecimal(221.40),
+                SequencialNossoNumero = "41636135093",
+                DataVencimento = new DateTime(2014, 07, 10),
+                Moeda = "9"
+            };
 
             banco.FormataNossoNumero(boleto);
             banco.FormataCodigoBarra(boleto);

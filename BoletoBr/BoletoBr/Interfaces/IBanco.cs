@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using BoletoBr.Arquivo.Generico.Retorno;
-using BoletoBr.Dominio.CodigoMovimento;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
 
@@ -61,7 +60,7 @@ namespace BoletoBr.Interfaces
         /// </summary>
         /// <param name="ocorrenciaRemessa"></param>
         /// <returns></returns>
-        ICodigoOcorrencia ObtemCodigoOcorrencia(CodigoOcorrenciaRemessa ocorrenciaRemessa, double valorOcorrencia, DateTime dataOcorrencia);
+        ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrenciaRemessa, double valorOcorrencia, DateTime dataOcorrencia);
 
         /// <summary>
         /// Retorna a espécie de documento a ser usada na geração do arquivo de remessa.

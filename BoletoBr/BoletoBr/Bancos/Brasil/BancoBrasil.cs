@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.Dominio;
-using BoletoBr.Dominio.CodigoMovimento;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
 using BoletoBr.Interfaces;
@@ -1106,17 +1105,19 @@ namespace BoletoBr.Bancos.BancoBrasil
             throw new NotImplementedException();
         }
 
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrenciaRemessa, double valorOcorrencia,
+            DateTime dataOcorrencia)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEspecieDocumento ObtemEspecieDocumento(EnumEspecieDocumento especie)
         {
             throw new NotImplementedException();
         }
 
-        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao, int diasInstrucao)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ICodigoOcorrencia ObtemCodigoOcorrencia(CodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
+        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao,
+            int diasInstrucao)
         {
             throw new NotImplementedException();
         }

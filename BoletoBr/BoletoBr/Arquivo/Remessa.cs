@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoletoBr.Enums;
 
 namespace BoletoBr.Dominio
 {
@@ -30,13 +31,20 @@ namespace BoletoBr.Dominio
         /// |Identificado no Banrisul        como "CODIGO OCORRENCIA" by sidneiklein|
         /// |Identificado no Banco do Brasil como "COMANDO"           by sidneiklein|
         /// </summary>
-        public string CodigoOcorrencia { get; set; }
+        public EnumCodigoOcorrenciaRemessa CodigoOcorrencia { get; set; }
 
         /// <summary>
         /// Tipo Documento Utilizado na geração da remessa. |Identificado no Banrisul by sidneiklein|
         /// Tipo Cobranca Utilizado na geração da remessa.  |Identificado no Sicredi by sidneiklein|
         /// </summary>
         public string TipoDocumento { get; set; }
+
+        public Remessa(EnumTipoAmbiemte tipoAmbiente, EnumCodigoOcorrenciaRemessa codigoOcorrencia, string tipoDocumento)
+        {
+            this.Ambiente = tipoAmbiente;
+            this.CodigoOcorrencia = codigoOcorrencia;
+            this.TipoDocumento = tipoDocumento;
+        }
 
         #endregion
     }

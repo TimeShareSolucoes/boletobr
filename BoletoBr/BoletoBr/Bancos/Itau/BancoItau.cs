@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.Dominio;
-using BoletoBr.Dominio.CodigoMovimento;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
 using BoletoBr.Fabricas;
@@ -161,7 +160,7 @@ namespace BoletoBr.Bancos.Itau
                 if (string.IsNullOrEmpty(boleto.Moeda))
                     throw new Exception("Espécie/Moeda para o boleto não foi informada.");
 
-                if ((boleto.Moeda == "0") || (boleto.Moeda == "REAL") || (boleto.Moeda == "R$"))
+                if ((boleto.Moeda == "9") || (boleto.Moeda == "REAL") || (boleto.Moeda == "R$"))
                     boleto.Moeda = "R$";
                 else
                     boleto.Moeda = "1";
@@ -219,10 +218,10 @@ namespace BoletoBr.Bancos.Itau
                     (boleto.CarteiraCobranca.Codigo == "142") || (boleto.CarteiraCobranca.Codigo == "143") ||
                     (boleto.CarteiraCobranca.Codigo == "196"))
                 {
-                    boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}0", CodigoBanco, boleto.Moeda,
+                    boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}0", CodigoBanco, MoedaBanco,
                         Common.FatorVencimento(boleto.DataVencimento), boleto.ValorBoleto, boleto.CarteiraCobranca.Codigo,
-                        boleto.NossoNumeroFormatado, numeroDocumento, codigoCedente,
-                        Common.Mod10(boleto.CarteiraCobranca.Codigo + boleto.NossoNumeroFormatado + numeroDocumento + codigoCedente));
+                        boleto.SequencialNossoNumero, numeroDocumento, codigoCedente,
+                        Common.Mod10(boleto.CarteiraCobranca.Codigo + boleto.SequencialNossoNumero + numeroDocumento + codigoCedente));
                 }
 
                 _dacBoleto = Common.Mod11(boleto.CodigoBarraBoleto, 9, 0);
@@ -718,149 +717,149 @@ namespace BoletoBr.Bancos.Itau
                 CodigoBanco, tipoInstrucao.ToString(), valorInstrucao));
         }
 
-        public ICodigoOcorrencia ObtemCodigoOcorrencia(CodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
         {
             switch (ocorrencia)
             {
-                case CodigoOcorrenciaRemessa.Registro:
+                case EnumCodigoOcorrenciaRemessa.Registro:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 01,
                             Descricao = "Remessa"
                         };
                     }
-                case CodigoOcorrenciaRemessa.Baixa:
+                case EnumCodigoOcorrenciaRemessa.Baixa:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 02,
                             Descricao = "Pedido de baixa"
                         };
                     }
-                case CodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
+                case EnumCodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 04,
                             Descricao = "Concessão de abatimento"
                         };
                     }
-                case CodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
+                case EnumCodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 05,
                             Descricao = "Cancelamento de abatimento"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDeVencimento:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDeVencimento:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 06,
                             Descricao = "Alteração do vencimento"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDoControleDoParticipante:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDoControleDoParticipante:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 07,
                             Descricao = "Alteração do uso da empresa"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoSeuNumero:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoSeuNumero:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 08,
                             Descricao = "Alteração de seu número"
                         };
                     }
-                case CodigoOcorrenciaRemessa.Protesto:
+                case EnumCodigoOcorrenciaRemessa.Protesto:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 09,
                             Descricao = "Protestar"
                         };
                     }
-                case CodigoOcorrenciaRemessa.NaoProtestar:
+                case EnumCodigoOcorrenciaRemessa.NaoProtestar:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 10,
                             Descricao = "Não protestar"
                         };
                     }
-                case CodigoOcorrenciaRemessa.ProtestoParaFinsFalimentares:
+                case EnumCodigoOcorrenciaRemessa.ProtestoParaFinsFalimentares:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 11,
                             Descricao = "Protesto para fins falimentares"
                         };
                     }
-                case CodigoOcorrenciaRemessa.SustarProtesto:
+                case EnumCodigoOcorrenciaRemessa.SustarProtesto:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 18,
                             Descricao = "Sustar o protesto"
                         };
                     }
-                case CodigoOcorrenciaRemessa.ExclusaoDeSacadorAvalista:
+                case EnumCodigoOcorrenciaRemessa.ExclusaoDeSacadorAvalista:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 30,
                             Descricao = "Exclusão de sacador avalista"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDeOutrosDados:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDeOutrosDados:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 31,
                             Descricao = "Alteração de outros dados"
                         };
                     }
-                case CodigoOcorrenciaRemessa.BaixaPorTerSidoPagoDiretamenteAoCedente:
+                case EnumCodigoOcorrenciaRemessa.BaixaPorTerSidoPagoDiretamenteAoCedente:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 34,
                             Descricao = "Baixa por ter sido pago diretamente ao cedente"
                         };
                     }
-                case CodigoOcorrenciaRemessa.CancelamentoDeInstrucao:
+                case EnumCodigoOcorrenciaRemessa.CancelamentoDeInstrucao:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 35,
                             Descricao = "Cancelamento de instrução"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDoVencimentoESustarProtesto:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDoVencimentoESustarProtesto:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 37,
                             Descricao = "Alteração do vencimento e sustar protesto"
                         };
                     }
-                case CodigoOcorrenciaRemessa.CedenteNaoConcordaComAlegacaoDoSacado:
+                case EnumCodigoOcorrenciaRemessa.CedenteNaoConcordaComAlegacaoDoSacado:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 38,
                             Descricao = "Cedente não concorda com alegação do sacado"
                         };
                     }
-                case CodigoOcorrenciaRemessa.CedenteSolicitaDispensaDeJuros:
+                case EnumCodigoOcorrenciaRemessa.CedenteSolicitaDispensaDeJuros:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 47,
                             Descricao = "Cedente solicita dispensa de juros"

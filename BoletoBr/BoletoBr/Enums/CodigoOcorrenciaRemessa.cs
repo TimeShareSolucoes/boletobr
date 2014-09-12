@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BoletoBr.Enums
 {
-    public enum CodigoOcorrenciaRemessa
+    public enum EnumCodigoOcorrenciaRemessa
     {
         #region CÓDIGO DE MOVIMENTO REMESSA - COMUNS
 

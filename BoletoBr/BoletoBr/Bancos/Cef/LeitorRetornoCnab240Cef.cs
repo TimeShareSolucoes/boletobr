@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using BoletoBr.Arquivo.CNAB240;
 using BoletoBr.Arquivo.CNAB240.Retorno;
 using BoletoBr.Dominio;
-using BoletoBr.Dominio.CodigoMovimento;
 
 namespace BoletoBr.Bancos.Cef
 {
@@ -182,7 +181,7 @@ namespace BoletoBr.Bancos.Cef
             objRetornar.TipoServico = linha.ExtrairValorDaLinha(10, 11).BoletoBrToInt();
             objRetornar.VersaoLayoutLote = linha.ExtrairValorDaLinha(14, 16).BoletoBrToInt();
             objRetornar.TipoInscricaoEmpresa = linha.ExtrairValorDaLinha(18, 18).BoletoBrToInt();
-            objRetornar.NumeroInscricaoEmpresa = linha.ExtrairValorDaLinha(19, 33).BoletoBrToLong();
+            objRetornar.NumeroInscricaoEmpresa = linha.ExtrairValorDaLinha(19, 33);
             objRetornar.Convenio = linha.ExtrairValorDaLinha(34, 39);
             objRetornar.CodigoAgencia = linha.ExtrairValorDaLinha(54, 58).BoletoBrToInt();
             objRetornar.DvCodigoAgencia = linha.ExtrairValorDaLinha(59, 59);
@@ -191,9 +190,9 @@ namespace BoletoBr.Bancos.Cef
             objRetornar.NomeDoBeneficiario = linha.ExtrairValorDaLinha(74, 103);
             objRetornar.Mensagem1 = linha.ExtrairValorDaLinha(104, 143);
             objRetornar.Mensagem2 = linha.ExtrairValorDaLinha(144, 183);
-            objRetornar.NumeroRemessaRetorno = linha.ExtrairValorDaLinha(184, 191).BoletoBrToLong();
-            objRetornar.DataGeracaoGravacao = Convert.ToInt32(linha.ExtrairValorDaLinha(192, 199));
-            objRetornar.DataDeCredito = Convert.ToInt32(linha.ExtrairValorDaLinha(200, 207));
+            objRetornar.NumeroRemessaRetorno = linha.ExtrairValorDaLinha(184, 191);
+            objRetornar.DataGeracaoGravacao = (DateTime) linha.ExtrairValorDaLinha(192, 199).ToString().ToDateTimeFromDdMmAaaa();
+            objRetornar.DataDeCredito = (DateTime) linha.ExtrairValorDaLinha(200, 207).ToString().ToDateTimeFromDdMmAaaa();
 
             return objRetornar;
         }

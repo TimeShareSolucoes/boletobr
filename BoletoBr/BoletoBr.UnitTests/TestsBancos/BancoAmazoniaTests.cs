@@ -1,4 +1,6 @@
 ﻿using System;
+using BoletoBr.Dominio;
+using BoletoBr.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BoletoBr.UnitTests.Tests.Bancos.BASA
@@ -15,6 +17,8 @@ namespace BoletoBr.UnitTests.Tests.Bancos.BASA
         [TestMethod]
         public void TesteCalculoNossoNumeroBoletoDocumentacaoBasa()
         {
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+
             var banco = Fabricas.BancoFactory.ObterBanco("003", "5");
 
             var contaBancariaCedente = new ContaBancaria("007", "8", "", "");
@@ -33,7 +37,11 @@ namespace BoletoBr.UnitTests.Tests.Bancos.BASA
                 Numero = "9"
             });
 
-            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("CNR"));
+            var carteira = new CarteiraCobranca();
+
+            carteira.Codigo = "CNR";
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "123";
             boleto.ValorBoleto = Convert.ToDecimal(15.56);
             boleto.SequencialNossoNumero = "123";
@@ -51,6 +59,8 @@ namespace BoletoBr.UnitTests.Tests.Bancos.BASA
              * Teste baseado em um boleto apresentado na documentação oficial do Banco da Amazônia versão 1
              * Manual de Cobrança Registrada Simples
              */
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+
             var banco = Fabricas.BancoFactory.ObterBanco("003", "5");
 
             var contaBancariaCedente = new ContaBancaria("007", "8", "", "");
@@ -69,7 +79,11 @@ namespace BoletoBr.UnitTests.Tests.Bancos.BASA
                 Numero = "9"
             });
 
-            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("CNR"));
+            var carteira = new CarteiraCobranca();
+
+            carteira.Codigo = "CNR";
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "123";
             boleto.ValorBoleto = Convert.ToDecimal(15.56);
             boleto.SequencialNossoNumero = "123";
@@ -91,6 +105,8 @@ namespace BoletoBr.UnitTests.Tests.Bancos.BASA
              * Teste baseado em um boleto apresentado na documentação oficial do Banco da Amazônia versão 1
              * Manual de Cobrança Registrada Simples
              */
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+
             var banco = Fabricas.BancoFactory.ObterBanco("003", "5");
 
             var contaBancariaCedente = new ContaBancaria("007", "8", "00001", "1");
@@ -109,7 +125,11 @@ namespace BoletoBr.UnitTests.Tests.Bancos.BASA
                 Numero = "9"
             });
 
-            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("CNR"));
+            var carteira = new CarteiraCobranca();
+
+            carteira.Codigo = "CNR";
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "123";
             boleto.ValorBoleto = Convert.ToDecimal(15.56);
             boleto.SequencialNossoNumero = "123";

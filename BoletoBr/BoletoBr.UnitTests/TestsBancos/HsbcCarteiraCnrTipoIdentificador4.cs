@@ -1,4 +1,6 @@
 ﻿using System;
+using BoletoBr.Dominio;
+using BoletoBr.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BoletoBr.UnitTests.Tests.Bancos.HSBC
@@ -9,6 +11,8 @@ namespace BoletoBr.UnitTests.Tests.Bancos.HSBC
         [TestMethod]
         public void TesteCalculoNossoNumeroBoletoReal()
         {
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+
             var banco = Fabricas.BancoFactory.ObterBanco("399", "9");
 
             var contaBancariaCedente = new ContaBancaria("", "", "", "");
@@ -27,7 +31,11 @@ namespace BoletoBr.UnitTests.Tests.Bancos.HSBC
                 Numero = "9"
             });
 
-            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("CNR"));
+            var carteira = new CarteiraCobranca();
+
+            carteira.Codigo = "CNR";
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "40156";
             boleto.ValorBoleto = 200;
             boleto.SequencialNossoNumero = "40156";
@@ -42,6 +50,8 @@ namespace BoletoBr.UnitTests.Tests.Bancos.HSBC
         public void TesteLinhaDigitavelBoletoReal()
         {
             /* Teste baseado em um boleto real, ou seja, boleto válido. */
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+
             var banco = Fabricas.BancoFactory.ObterBanco("399", "9");
 
             var contaBancariaCedente = new ContaBancaria("", "", "", "");
@@ -60,7 +70,11 @@ namespace BoletoBr.UnitTests.Tests.Bancos.HSBC
                 Numero = "9"
             });
 
-            var boleto = new Boleto(cedente, sacado, banco.GetCarteiraCobrancaPorCodigo("CNR"));
+            var carteira = new CarteiraCobranca();
+
+            carteira.Codigo = "CNR";
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "40156";
             boleto.Moeda = "9";
             boleto.ValorBoleto = 200;

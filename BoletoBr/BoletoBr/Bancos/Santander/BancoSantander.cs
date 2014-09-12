@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.Dominio;
-using BoletoBr.Dominio.CodigoMovimento;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
 using BoletoBr.Interfaces;
@@ -58,23 +57,23 @@ namespace BoletoBr.Bancos.Santander
             //Banco 008  - Utilizar somente 09 posições do Nosso Numero (08 posições + DV), zerando os 04 primeiros dígitos
             if (this.CodigoBanco == "008")
             {
-                if (boleto.NossoNumeroFormatado.Length != 8)
-                    throw new NotImplementedException("Nosso Número deve ter 7 posições para o banco 008.");
+                if (boleto.SequencialNossoNumero.Length != 8)
+                    throw new NotImplementedException("Nosso Número deve ter 8 posições para o banco 008.");
             }
 
             if (this.CodigoBanco == "033")
             {
-                if (boleto.NossoNumeroFormatado.Length == 7 && boleto.CarteiraCobranca.Codigo.Equals("101"))
-                    boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado);
+                if (boleto.SequencialNossoNumero.Length == 7 && boleto.CarteiraCobranca.Codigo.Equals("101"))
+                    boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(12, '0'));
 
-                if (boleto.NossoNumeroFormatado.Length != 12)
+                if (boleto.SequencialNossoNumero.Length != 12)
                     throw new NotSupportedException("Nosso Número deve ter 12 posições para o banco 033.");
             }
 
             //Banco 353  - Utilizar somente 08 posições do Nosso Numero (07 posições + DV), zerando os 05 primeiros dígitos
             if (this.CodigoBanco == "353")
             {
-                if (boleto.NossoNumeroFormatado.Length != 7)
+                if (boleto.SequencialNossoNumero.Length != 7)
                     throw new NotImplementedException("Nosso Número deve ter 7 posições para o banco 353.");
             }
 
@@ -274,7 +273,7 @@ namespace BoletoBr.Bancos.Santander
             boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero);
 
             boleto.SetNossoNumeroFormatado(string.Format("{0}-{1}", 
-                boleto.NossoNumeroFormatado, Mod11Santander(boleto.NossoNumeroFormatado, 9)));
+                boleto.NossoNumeroFormatado, Mod11Santander(boleto.NossoNumeroFormatado, 9)).PadLeft(12, '0'));
         }
 
         public void FormataNumeroDocumento(Boleto boleto)
@@ -480,109 +479,109 @@ namespace BoletoBr.Bancos.Santander
                     CodigoBanco, tipoInstrucao.ToString(), valorInstrucao));
         }
 
-        public ICodigoOcorrencia ObtemCodigoOcorrencia(CodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
         {
             switch (ocorrencia)
             {
-                case CodigoOcorrenciaRemessa.Registro:
+                case EnumCodigoOcorrenciaRemessa.Registro:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 01,
                             Descricao = "Entrada de título"
                         };
                     }
-                case CodigoOcorrenciaRemessa.Baixa:
+                case EnumCodigoOcorrenciaRemessa.Baixa:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 02,
                             Descricao = "Pedido de baixa"
                         };
                     }
-                case CodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
+                case EnumCodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 04,
                             Descricao = "Concessão de abatimento"
                         };
                     }
-                case CodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
+                case EnumCodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 05,
                             Descricao = "Cancelamento de abatimento"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDeVencimento:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDeVencimento:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 06,
                             Descricao = "Alteração de vencimento"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDaIdentificacaoDotituloNaEmpresa:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDaIdentificacaoDotituloNaEmpresa:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 07,
                             Descricao = "Alteração da identificação do título na empresa"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoSeuNumero:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoSeuNumero:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 08,
                             Descricao = "Alteração seu número"
                         };
                     }
-                case CodigoOcorrenciaRemessa.Protesto:
+                case EnumCodigoOcorrenciaRemessa.Protesto:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 09,
                             Descricao = "Pedido de Protesto"
                         };
                     }
-                case CodigoOcorrenciaRemessa.ConcessaoDeDesconto:
+                case EnumCodigoOcorrenciaRemessa.ConcessaoDeDesconto:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 10,
                             Descricao = "Concessão de Desconto"
                         };
                     }
-                case CodigoOcorrenciaRemessa.CancelamentoDeDesconto:
+                case EnumCodigoOcorrenciaRemessa.CancelamentoDeDesconto:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 11,
                             Descricao = "Cancelamento de desconto"
                         };
                     }
-                case CodigoOcorrenciaRemessa.SustarProtesto:
+                case EnumCodigoOcorrenciaRemessa.SustarProtesto:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 18,
                             Descricao = "Pedido de Sustação de Protesto"
                         };
                     }
-                case CodigoOcorrenciaRemessa.AlteracaoDeOutrosDados:
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDeOutrosDados:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 31,
                             Descricao = "Alteração de outros dados"
                         };
                     }
-                case CodigoOcorrenciaRemessa.NaoProtestar:
+                case EnumCodigoOcorrenciaRemessa.NaoProtestar:
                     {
-                        return new CodigoOcorrencia()
+                        return new CodigoOcorrencia((int) ocorrencia)
                         {
                             Codigo = 98,
                             Descricao = "Não Protestar"
