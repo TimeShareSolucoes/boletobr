@@ -26,6 +26,27 @@ namespace BoletoBr
         public string Complemento { get; set; }
         public string Bairro { get; set; }
         public string Cidade { get; set; }
+
+        public string LogradouroNumeroComplementoConcatenado
+        {
+            get
+            {
+                var textoRetornar = "";
+                textoRetornar += Logradouro;
+                if (String.IsNullOrEmpty(textoRetornar) == false)
+                {
+                    textoRetornar += ",";
+                }
+                textoRetornar += Numero;
+                if (String.IsNullOrEmpty(textoRetornar) == false)
+                {
+                    textoRetornar += ",";
+                }
+                textoRetornar += Complemento;
+
+                return textoRetornar;
+            }
+        }
         /// <summary>
         /// Sigla do UF
         /// Ex:
