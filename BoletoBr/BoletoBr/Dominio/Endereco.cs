@@ -32,17 +32,29 @@ namespace BoletoBr
             get
             {
                 var textoRetornar = "";
-                textoRetornar += Logradouro;
-                if (String.IsNullOrEmpty(textoRetornar) == false)
+
+                if (!String.IsNullOrEmpty(Logradouro))
                 {
-                    textoRetornar += ", ";
+                    textoRetornar += Logradouro;
                 }
-                textoRetornar += Numero;
-                if (String.IsNullOrEmpty(textoRetornar) == false)
+
+                if (!String.IsNullOrEmpty(Numero))
                 {
-                    textoRetornar += ", ";
+                    if (textoRetornar.Length > 0)
+                    {
+                        textoRetornar += ",";
+                    }
+                    textoRetornar += Numero;
                 }
-                textoRetornar += Complemento;
+
+                if (!String.IsNullOrEmpty(Complemento))
+                {
+                    if (textoRetornar.Length > 0)
+                    {
+                        textoRetornar += ",";
+                    }
+                    textoRetornar += Complemento;
+                }
 
                 return textoRetornar;
             }
