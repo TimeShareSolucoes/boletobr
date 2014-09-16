@@ -1102,24 +1102,500 @@ namespace BoletoBr.Bancos.BancoBrasil
 
         public void FormataNumeroDocumento(Boleto boleto)
         {
-            throw new NotImplementedException();
+            if (String.IsNullOrEmpty(boleto.NumeroDocumento))
+                throw new Exception("Número do Documento não foi informado.");
+
+            if (boleto.NumeroDocumento.Replace("0", "") == string.Empty)
+                throw new Exception("Número do Documento não pode ser 0 (zero).");
+
+            boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(10, '0');
         }
 
-        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrenciaRemessa, double valorOcorrencia,
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa comando, double valorOcorrencia,
             DateTime dataOcorrencia)
         {
-            throw new NotImplementedException();
+            switch (comando)
+            {
+                case EnumCodigoOcorrenciaRemessa.Registro:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 01,
+                            Descricao = "Registro de títulos"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.Baixa:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 02,
+                            Descricao = "Solicitação de baixa"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.PedidoDeDebitoEmConta:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 03,
+                            Descricao = "Pedido de débito em conta"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 04,
+                            Descricao = "Concessão de abatimento"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 05,
+                            Descricao = "Cancelamento de abatimento"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDeVencimento:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 06,
+                            Descricao = "Alteração de vencimento de título"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDoControleDoParticipante:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 07,
+                            Descricao = "Alteração do número de controle do participante"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.AlteracaoSeuNumero:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 08,
+                            Descricao = "Alteração do número do título dado pelo cedente"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.Protesto:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 09,
+                            Descricao = "Protestar"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.SustarProtesto:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 10,
+                            Descricao = "Sustar protesto"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.DispensarCobrancaDeJurosDeMora:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 11,
+                            Descricao = "Dispensar juros"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.AlteracaoNomeEEnderecoSacado:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 12,
+                            Descricao = "Alteração de nome e endereço do sacado"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDeJurosDeMora:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 16,
+                            Descricao = "Alteração de juros de mora"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.ConcessaoDeDesconto:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 31,
+                            Descricao = "Conceder desconto"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.NaoConcederDesconto:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 32,
+                            Descricao = "Não conceder desconto"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDoValorDeDesconto:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 33,
+                            Descricao = "Retificar dados da concessão de desconto"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.AlteracaoDeDataConcessaoDesconto:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 34,
+                            Descricao = "Alterar data para concessão de desconto"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.CobrarMulta:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 35,
+                            Descricao = "Cobrar multa"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.DispensarMulta:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 36,
+                            Descricao = "Dispensar multa"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.DispensarIndexador:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 37,
+                            Descricao = "Dispensar indexador"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.DispensarPrazoLimiteRecebimento:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 38,
+                            Descricao = "Dispensar prazo limite para recebimento"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.AlteracaoPrazoLimiteRecebimento:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 39,
+                            Descricao = "Alterar prazo limite de recebimento"
+                        };
+                    }
+                case EnumCodigoOcorrenciaRemessa.AlteracaoModalidade:
+                    {
+                        return new CodigoOcorrencia((int)comando)
+                        {
+                            Codigo = 40,
+                            Descricao = "Alterar modalidade"
+                        };
+                    }
+            }
+            throw new Exception(
+                String.Format(
+                    "Não foi possível obter Código de Comando/Movimento/Ocorrência. Banco: {0} Código: {1}",
+                    CodigoBanco, comando.ToString()));
         }
 
         public IEspecieDocumento ObtemEspecieDocumento(EnumEspecieDocumento especie)
         {
-            throw new NotImplementedException();
+            #region ESPÉCIE DE TÍTULO
+
+            /*
+             * 01 - Duplicata Mercantil
+             * 02 - Nota Promissória
+             * 03 - Nota de Seguro
+             * 05 - Recibo
+             * 08 - Letra de Câmbio
+             * 09 - Warrant
+             * 10 - Cheque
+             * 12 - Duplicata de Serviço
+             * 13 - Nota de Débito
+             * 15 - Apólice de Seguro
+             * 25 - Dívida Ativa da União
+             * 26 - Dívida Ativa de Estado
+             * 27 - Dívida Ativa de Município
+             */
+
+            /* Observações:
+             * As espécies 25 - DAU, 26 - DAE, 27 - DAM, somente são admissíveis nas Carteiras 11 e 17, como Cobrança Simples.
+             * Na modalidade de Cobrança Descontada somente são permitidas as espécies: 01 - Duplicata Mercantil (DM), 12 - Duplicata de Prestação de Serviço (DS) e 08 - Letra de Câmbio (LC).
+             * Para a modalidade Vendor somente são permitidas as espécies: 01 - Duplicata Mercantil (DM) e 12 - Duplicata de Prestação de Serviço (DS).
+             */
+
+            #endregion
+
+            switch (especie)
+            {
+                case EnumEspecieDocumento.DuplicataMercantil:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 01,
+                            Descricao = "Duplicata Mercantil",
+                            Sigla = "DM"
+                        };
+                    }
+                case EnumEspecieDocumento.NotaPromissoria:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 02,
+                            Descricao = "Nota Promissória",
+                            Sigla = "NP"
+                        };
+                    }
+                case EnumEspecieDocumento.NotaSeguro:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 03,
+                            Descricao = "Nota de Seguro",
+                            Sigla = "NS"
+                        };
+                    }
+                case EnumEspecieDocumento.Recibo:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 05,
+                            Descricao = "Recibo",
+                            Sigla = "RC"
+                        };
+                    }
+                case EnumEspecieDocumento.LetraCambio:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 08,
+                            Descricao = "Letra de Câmbio",
+                            Sigla = "LC"
+                        };
+                    }
+                case EnumEspecieDocumento.Warrant:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 09,
+                            Descricao = "Warrant",
+                            Sigla = "WR"
+                        };
+                    }
+                case EnumEspecieDocumento.Cheque:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 10,
+                            Descricao = "Cheque",
+                            Sigla = "CH"
+                        };
+                    }
+                case EnumEspecieDocumento.DuplicataServico:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 12,
+                            Descricao = "Duplicata de Serviço",
+                            Sigla = "DS"
+                        };
+                    }
+                case EnumEspecieDocumento.NotaDebito:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 13,
+                            Descricao = "Nota de Débitos",
+                            Sigla = "ND"
+                        };
+                    }
+                case EnumEspecieDocumento.ApoliceSeguro:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 15,
+                            Descricao = "Apólice de Seguro",
+                            Sigla = "AS"
+                        };
+                    }
+                case EnumEspecieDocumento.DAU:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 25,
+                            Descricao = "Dívida Ativa da União",
+                            Sigla = "DAU"
+                        };
+                    }
+                case EnumEspecieDocumento.DAE:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 26,
+                            Descricao = "Dívida ativa de Estado",
+                            Sigla = "DAE"
+                        };
+                    }
+                case EnumEspecieDocumento.DAM:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 27,
+                            Descricao = "Dívida Ativa de Município",
+                            Sigla = "DAM"
+                        };
+                    }
+            }
+            throw new Exception(
+                String.Format("Não foi possível obter espécie. Banco: {0} Código Espécie: {1}",
+                    CodigoBanco, especie.ToString()));
         }
 
         public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao,
             int diasInstrucao)
         {
-            throw new NotImplementedException();
+            switch (tipoInstrucao)
+            {
+                #region Instruções para COMANDO 01 - REGISTRO DE TÍTULO
+
+                    // Para Comando 01 - Registro de Título (posição 109-110)
+
+                /* Instrução 00
+                 * Se o COMANDO = 09 - Protestar, o Sistema de Cobrança do Banco assumirá o prazo de protesto de 5 (cinco) dias úteis
+                 */
+                case EnumTipoInstrucao.SemInstrucoes:
+                    {
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 00,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = string.Empty
+                        };
+                    }
+                case EnumTipoInstrucao.JurosdeMora:
+                    {
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 01,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Cobrar juros"
+                        };
+                    }
+                case EnumTipoInstrucao.ProtestarApos3DiasUteis:
+                    {
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 03,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Protestar no 3º dia útil após o vencido."
+                        };
+                    }
+                case EnumTipoInstrucao.ProtestarApos4DiasUteis:
+                    {
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 04,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Protestar no 4º dia útil após o vencido."
+                        };
+                    }
+                case EnumTipoInstrucao.ProtestarApos5DiasUteis:
+                    {
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 05,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Protestar no 5º dia útil após o vencido."
+                        };
+                    }
+                    // Indica protesto com prazo de 6 a 29, 35 ou 40 dias corridos.
+                case EnumTipoInstrucao.ProtestarAposNDiasCorridos:
+                    {
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 06,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Protestar após " + diasInstrucao + " dias."
+                        };
+                    }
+                case EnumTipoInstrucao.NaoProtestar:
+                    {
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 07,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Não protestar"
+                        };
+                    }
+                case EnumTipoInstrucao.ConcederDescontoAte:
+                    {
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 22,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Conceder desconto até " + dataInstrucao.ToString("ddMMyyyy")
+                        };
+                    }
+
+                #endregion
+
+                #region Instruções para COMANDO 02 - SOLICITAÇÃO DE BAIXA
+
+                    // Para Comando 02 - Solicitação de Baixa (posição 109-110)
+
+                case EnumTipoInstrucao.Devolver:
+                    {
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 42,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Devolver"
+                        };
+                    }
+                case EnumTipoInstrucao.Baixar:
+                    {
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 44,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Baixar"
+                        };
+                    }
+                case EnumTipoInstrucao.EntregarAoSacado:
+                    {
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 46,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Entregar ao sacado franco de pagamento."
+                        };
+                    }
+
+                #endregion
+
+            }
+            throw new Exception(String.Format("Não foi possível obter instrução padronizada. Banco: {0} Código Instrução: {1} Qtd Dias/Valor: {2}",
+                CodigoBanco, tipoInstrucao.ToString(), valorInstrucao));
         }
 
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)

@@ -116,10 +116,10 @@ namespace BoletoBr.Bancos.Santander
                 // NossoNumero com DV, pegar os 8 primeiros dígitos, da direita para esquerda
                 detalhe = detalhe.PreencherValorNaLinha(63, 70, boleto.NossoNumeroFormatado.Replace("-", "").Substring(5, 8));
 
-                if (boleto.DataDesconto2 == DateTime.MinValue)
+                if (boleto.DataLimite == DateTime.MinValue)
                     detalhe = detalhe.PreencherValorNaLinha(71, 76, string.Empty.PadLeft(6, '0'));
                 else
-                    detalhe = detalhe.PreencherValorNaLinha(71, 76, boleto.DataDesconto2.ToString("ddMMyy"));
+                    detalhe = detalhe.PreencherValorNaLinha(71, 76, boleto.DataLimite.ToString("ddMMyy"));
 
                 detalhe = detalhe.PreencherValorNaLinha(77, 77, string.Empty.PadLeft(1, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(78, 78, identificadorMulta.ToString());

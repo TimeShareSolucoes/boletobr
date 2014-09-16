@@ -19,13 +19,20 @@ namespace BoletoBr.Enums
         SustarProtesto,
         ProtestoParaFinsFalimentares,
         ConcessaoDeDescontoComData,
+        CobrarMulta,
+        DispensarMulta,
 
         #endregion
 
         #region CÓDIGO DE MOVIMENTO REMESSA - 001|BANCO DO BRASIL
 
         PedidoDeDebitoEmConta,
-
+        AlteracaoDeDataConcessaoDesconto,
+        DispensarIndexador,
+        DispensarPrazoLimiteRecebimento,
+        AlteracaoPrazoLimiteRecebimento,
+        AlteracaoModalidade,
+        AlteracaoNomeEEnderecoSacado,
 
         #endregion
 
@@ -120,8 +127,8 @@ namespace BoletoBr.Enums
         NaoCobrarJurosDeMora,
         CancelamentoDescontoFixo,
         CancelamentoDescontoDiario,
-        AlteracaoDeVencimentoComData
-
+        AlteracaoDeVencimentoComData,
+       
         #endregion
     }
 }

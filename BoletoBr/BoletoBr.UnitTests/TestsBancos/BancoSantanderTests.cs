@@ -38,15 +38,15 @@ namespace BoletoBr.UnitTests.TestsBancos
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca();
+            var carteira = new CarteiraCobranca {Codigo = "102"};
 
-            carteira.Codigo = "102";
-
-            var boleto = new Boleto(carteira, cedente, sacado, remessa);
-            boleto.NumeroDocumento = "001N002";
-            boleto.ValorBoleto = Convert.ToDecimal(80.55);
-            boleto.SequencialNossoNumero = "000000000027";
-            boleto.DataVencimento = new DateTime(2012, 11, 26);
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "001N002",
+                ValorBoleto = Convert.ToDecimal(80.55),
+                SequencialNossoNumero = "000000000027",
+                DataVencimento = new DateTime(2012, 11, 26)
+            };
 
             banco.FormataNossoNumero(boleto);
             banco.FormataCodigoBarra(boleto);
@@ -82,15 +82,15 @@ namespace BoletoBr.UnitTests.TestsBancos
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca();
+            var carteira = new CarteiraCobranca {Codigo = "102"};
 
-            carteira.Codigo = "102";
-
-            var boleto = new Boleto(carteira, cedente, sacado, remessa);
-            boleto.NumeroDocumento = "0000006152007";
-            boleto.ValorBoleto = Convert.ToDecimal(252.00);
-            boleto.SequencialNossoNumero = "000000615200";
-            boleto.DataVencimento = new DateTime(2014, 07, 07);
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "0000006152007",
+                ValorBoleto = Convert.ToDecimal(252.00),
+                SequencialNossoNumero = "000000615200",
+                DataVencimento = new DateTime(2014, 07, 07)
+            };
 
             banco.FormataNossoNumero(boleto);
             banco.FormataCodigoBarra(boleto);
@@ -124,15 +124,15 @@ namespace BoletoBr.UnitTests.TestsBancos
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca();
+            var carteira = new CarteiraCobranca {Codigo = "102"};
 
-            carteira.Codigo = "102";
-
-            var boleto = new Boleto(carteira, cedente, sacado, remessa);
-            boleto.NumeroDocumento = "0000006152007";
-            boleto.ValorBoleto = Convert.ToDecimal(252.00);
-            boleto.SequencialNossoNumero = "566612457800";
-            boleto.DataVencimento = new DateTime(2014, 07, 07);
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "0000006152007",
+                ValorBoleto = Convert.ToDecimal(252.00),
+                SequencialNossoNumero = "566612457800",
+                DataVencimento = new DateTime(2014, 07, 07)
+            };
 
             banco.FormataNossoNumero(boleto);
 

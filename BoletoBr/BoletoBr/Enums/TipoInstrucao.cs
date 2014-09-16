@@ -20,6 +20,7 @@ namespace BoletoBr.Enums
         JurosdeMora,
         DescontoPorDia,
         CobrarJurosApos7DiasVencimento,
+        SemInstrucoes,
 
         #region Itaú
 
@@ -74,6 +75,21 @@ namespace BoletoBr.Enums
         #region CAIXA
 
         ProtestoFinsFalimentares,
+
+        #endregion
+
+        #region Banco do Brasil
+
+        // COMANDO 01
+        ProtestarApos3DiasUteis,
+        ProtestarApos4DiasUteis,
+        ProtestarApos5DiasUteis,
+        ConcederDescontoAte,
+
+        // COMANDO 02
+        Devolver,
+        Baixar,
+        EntregarAoSacado
 
         #endregion
     }

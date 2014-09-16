@@ -43,6 +43,16 @@ namespace BoletoBr.Enums
         Diversos,
         CobrancaSeriada,
         NotaDeSeguro,
-        CedulaProdutoRural
+        CedulaProdutoRural,
+
+        #region Banco do Brasil
+
+        Warrant,
+        DAU, // Dívida Ativa da União
+        DAE, // Dívida Ativa de Estado
+        DAM, // Dívida Ativa de Município
+
+        #endregion
+
     }
 }

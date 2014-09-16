@@ -50,6 +50,7 @@
     <Compile Include="Arquivo\Generico\Retorno\RetornoTrailerGenerico.cs" />
     <Compile Include="Arquivo\Generico\Retorno\RetornoGenerico.cs" />
     <Compile Include="Arquivo\Generico\Retorno\RetornoHeaderGenerico.cs" />
+    <Compile Include="Bancos\Brasil\EscritorRemessaCnab400BancoDoBrasil.cs" />
     <Compile Include="Interfaces\IArquivoRemessa.cs" />
     <Compile Include="Arquivo\TipoLinhaArquivoGerado.cs" />
     <Compile Include="Arquivo\TipoLinhaArquivoLido.cs" />
