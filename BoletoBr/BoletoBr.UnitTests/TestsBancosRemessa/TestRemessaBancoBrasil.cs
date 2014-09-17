@@ -44,7 +44,8 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 ValorBoleto = Convert.ToDecimal(221.40),
                 SequencialNossoNumero = "1",
                 DataVencimento = new DateTime(2014, 07, 10),
-                Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil)
+                Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil),
+                TipoModalidade = "21"
             };
 
             banco.FormatarBoleto(boleto);
@@ -58,7 +59,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
 
             var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            var data = DateTime.Now.ToString("d").Replace("/", "");
+            var data = DateTime.Now.ToString("ddMMyyyy");
 
             var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_HEADER", ".txt");
 
@@ -100,6 +101,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 SequencialNossoNumero = "1",
                 DataVencimento = new DateTime(2014, 07, 10),
                 Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil),
+                TipoModalidade = "21",
                 CodigoOcorrenciaRemessa = new CodigoOcorrencia(01),
             };
 
@@ -113,7 +115,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
 
             var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            var data = DateTime.Now.ToString("d").Replace("/", "");
+            var data = DateTime.Now.ToString("ddMMyyyy");
 
             var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_REGISTRO_DETALHE", ".txt");
 
@@ -155,7 +157,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 SequencialNossoNumero = "1",
                 DataVencimento = new DateTime(2014, 07, 10),
                 Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil),
-                CodigoOcorrenciaRemessa = new CodigoOcorrencia(01),
+                TipoModalidade = "21"
             };
 
             banco.FormatarBoleto(boleto);
@@ -168,7 +170,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
 
             var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            var data = DateTime.Now.ToString("d").Replace("/", "");
+            var data = DateTime.Now.ToString("ddMMyyyy");
 
             var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_TRAILER", ".txt");
 

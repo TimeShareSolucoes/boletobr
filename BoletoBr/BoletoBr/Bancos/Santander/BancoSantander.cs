@@ -50,6 +50,8 @@ namespace BoletoBr.Bancos.Santander
 
         public void ValidaBoletoComNormasBanco(Boleto boleto)
         {
+            boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.Replace("-", ""));
+
             //throw new NotImplementedException("Função não implementada.");
             if (!((boleto.CarteiraCobranca.Codigo == "102") || (boleto.CarteiraCobranca.Codigo == "101") || (boleto.CarteiraCobranca.Codigo == "201")))
                 throw new NotImplementedException("Carteira não implementada.");
@@ -57,23 +59,23 @@ namespace BoletoBr.Bancos.Santander
             //Banco 008  - Utilizar somente 09 posições do Nosso Numero (08 posições + DV), zerando os 04 primeiros dígitos
             if (this.CodigoBanco == "008")
             {
-                if (boleto.SequencialNossoNumero.Length != 8)
+                if (boleto.NossoNumeroFormatado.Length != 8)
                     throw new NotImplementedException("Nosso Número deve ter 8 posições para o banco 008.");
             }
 
             if (this.CodigoBanco == "033")
             {
-                if (boleto.SequencialNossoNumero.Length == 7 && boleto.CarteiraCobranca.Codigo.Equals("101"))
-                    boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(12, '0'));
+                if (boleto.NossoNumeroFormatado.Length == 7 && boleto.CarteiraCobranca.Codigo.Equals("101"))
+                    boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero.PadLeft(13, '0'));
 
-                if (boleto.SequencialNossoNumero.Length != 12)
-                    throw new NotSupportedException("Nosso Número deve ter 12 posições para o banco 033.");
+                if (boleto.NossoNumeroFormatado.Length != 13)
+                    throw new NotSupportedException("Nosso Número deve ter 13 posições para o banco 033.");
             }
 
             //Banco 353  - Utilizar somente 08 posições do Nosso Numero (07 posições + DV), zerando os 05 primeiros dígitos
             if (this.CodigoBanco == "353")
             {
-                if (boleto.SequencialNossoNumero.Length != 7)
+                if (boleto.NossoNumeroFormatado.Length != 7)
                     throw new NotImplementedException("Nosso Número deve ter 7 posições para o banco 353.");
             }
 
@@ -85,6 +87,10 @@ namespace BoletoBr.Bancos.Santander
 
             if (boleto.PercentualIOS > 10 & (this.CodigoBanco == "008" || this.CodigoBanco == "033" || this.CodigoBanco == "353"))
                 throw new Exception("O percentual do IOS é limitado a 9% para o Banco Santander");
+
+            var nossoNumeroFormatadoA = boleto.NossoNumeroFormatado.Substring(0, boleto.NossoNumeroFormatado.Length - 1);
+            var nossoNumeroFormatadoB = boleto.NossoNumeroFormatado.Remove(0, boleto.NossoNumeroFormatado.Length - 1);
+            boleto.SetNossoNumeroFormatado(string.Format("{0}-{1}", nossoNumeroFormatadoA, nossoNumeroFormatadoB));
         }
 
         public void FormataMoeda(Boleto boleto)

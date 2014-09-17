@@ -540,6 +540,9 @@ namespace BoletoBr.Bancos.BancoBrasil
 
         public void FormataCodigoBarra(Boleto boleto)
         {
+            boleto.Moeda = this.MoedaBanco;
+            boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.Replace("-", ""));
+
             string valorBoleto = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "");
             valorBoleto = valorBoleto.PadLeft(10, '0');
 
@@ -1008,6 +1011,8 @@ namespace BoletoBr.Bancos.BancoBrasil
 
         public void FormataLinhaDigitavel(Boleto boleto)
         {
+            boleto.Moeda = this.MoedaBanco;
+
             string cmplivre = string.Empty;
             string campo1 = string.Empty;
             string campo2 = string.Empty;
@@ -1075,29 +1080,42 @@ namespace BoletoBr.Bancos.BancoBrasil
 
         public void FormataNossoNumero(Boleto boleto)
         {
+            if (boleto.CedenteBoleto.Convenio.ToString().Length == 4)
+            {
+                boleto.SetNossoNumeroFormatado(string.Format("{0}{1}-{2}", boleto.CedenteBoleto.Convenio, boleto.SequencialNossoNumero.PadLeft(7, '0'), Mod11BancoBrasil(boleto.SequencialNossoNumero)));
+                return;
+            }
+
             if (boleto.CedenteBoleto.Convenio.ToString().Length == 6) //somente monta o digito verificador no nosso numero se o convenio tiver 6 posições
             {
-                switch (boleto.CarteiraCobranca.Codigo)
-                {
-                    case "18-019":
-                        boleto.SetNossoNumeroFormatado(string.Format("{0}/{1}-{2}", LimparCarteira(boleto.CarteiraCobranca.Codigo), boleto.NossoNumeroFormatado, Mod11BancoBrasil(boleto.NossoNumeroFormatado)));
-                        return;
-                }
+                boleto.SetNossoNumeroFormatado(string.Format("{0}{1}-{2}", boleto.CedenteBoleto.Convenio, boleto.SequencialNossoNumero.PadLeft(7, '0'), Mod11BancoBrasil(boleto.SequencialNossoNumero)));
+                return;
+                //switch (boleto.CarteiraCobranca.Codigo)
+                //{
+                //    case "18-019":
+                //        boleto.SetNossoNumeroFormatado(string.Format("{0}/{1}-{2}", LimparCarteira(boleto.CarteiraCobranca.Codigo), boleto.SequencialNossoNumero, Mod11BancoBrasil(boleto.SequencialNossoNumero)));
+                //        return;
+                //}
+            }
+
+            if (boleto.CedenteBoleto.Convenio.ToString().Length == 7)
+            {
+                boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.SequencialNossoNumero));
+                return;
             }
 
             switch (boleto.CarteiraCobranca.Codigo)
             {
                 case "17-019":
                 case "18-019":
-                    boleto.SetNossoNumeroFormatado(string.Format("{0}/{1}", LimparCarteira(boleto.CarteiraCobranca.Codigo), boleto.NossoNumeroFormatado));
+                    boleto.SetNossoNumeroFormatado(string.Format("{0}/{1}", LimparCarteira(boleto.CarteiraCobranca.Codigo), boleto.SequencialNossoNumero));
                     return;
                 case "31":
-                    boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio.PadLeft(7, '0'), boleto.NossoNumeroFormatado));
+                    boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio.PadLeft(7, '0'), boleto.SequencialNossoNumero));
                     return;
             }
 
-
-            boleto.SetNossoNumeroFormatado(string.Format("{0}", boleto.NossoNumeroFormatado));
+            throw new Exception("Não foi possível formatar o nosso número para o boleto " + boleto.NumeroDocumento);
         }
 
         public void FormataNumeroDocumento(Boleto boleto)
@@ -1612,128 +1630,5 @@ namespace BoletoBr.Bancos.BancoBrasil
         {
             throw new NotImplementedException();
         }
-
-        public void LerArquivoRetorno(IBanco banco, Stream arquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderRemessa(string numeroConvenio, Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderRemessa(string numeroConvenio, Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa,
-            Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderRemessa(Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerRemessa(int numeroRegistro, TipoArquivo tipoArquivo, Cedente cedente, decimal vltitulostotal)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa, TipoArquivo tipoArquivo,
-            Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio, Cedente cedente)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio, Cedente cedente,
-            Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoQRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoQRemessa(Boleto boleto, int numeroRegistro, Sacado sacado)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoRRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerArquivoRemessa(int numeroRegistro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerArquivoRemessa(int numeroRegistro, Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerLoteRemessa(int numeroRegistro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerLoteRemessa(int numeroRegistro, Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheSegmentoTRetornoCnab240 LerDetalheSegmentoTRetornoCnab240(string registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheSegmentoURetornoCnab240 LerDetalheSegmentoURetornoCnab240(string registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheSegmentoWRetornoCnab240 LerDetalheSegmentoWRetornoCnab240(string registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheRetornoGenericoCnab400 LerDetalheRetornoCnab400(string registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Cedente Cedente { get; private set; }
-        public int Codigo { get; set; }
-        public string Nome { get; private set; }
-        public string Digito { get; private set; }
     }
 }

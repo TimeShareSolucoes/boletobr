@@ -53,7 +53,7 @@ namespace BoletoBr.Bancos.Brasil
                 header = header.PreencherValorNaLinha(47, 76, boleto.CedenteBoleto.Nome.ToUpper().PadRight(30, ' '));
                 header = header.PreencherValorNaLinha(77, 94, "001BANCODOBRASIL".PadRight(18, ' '));
                 header = header.PreencherValorNaLinha(95, 100, DateTime.Now.ToString("ddMMyy"));
-                header = header.PreencherValorNaLinha(101, 107, numeroRemessa.ToString().PadRight(7, '0'));
+                header = header.PreencherValorNaLinha(101, 107, numeroRemessa.ToString().PadLeft(7, '0'));
                 header = header.PreencherValorNaLinha(108, 129, string.Empty.PadRight(22, ' '));
                 header = header.PreencherValorNaLinha(130, 136, boleto.CedenteBoleto.Convenio.PadLeft(7, '0'));
                 header = header.PreencherValorNaLinha(137, 394, string.Empty.PadRight(258, ' '));
@@ -128,9 +128,7 @@ namespace BoletoBr.Bancos.Brasil
                         boleto.CedenteBoleto.Convenio.PadLeft(7, '0') +
                         boleto.SequencialNossoNumero.PadLeft(10, '0'));
                 else
-                    detalhe = detalhe.PreencherValorNaLinha(64, 80,
-                        boleto.CedenteBoleto.Convenio.PadLeft(7, '0') +
-                        boleto.SequencialNossoNumero.PadLeft(10, '0'));
+                    detalhe = detalhe.PreencherValorNaLinha(64, 80, boleto.NossoNumeroFormatado);
 
                 detalhe = detalhe.PreencherValorNaLinha(81, 82, "00");
                 detalhe = detalhe.PreencherValorNaLinha(83, 84, "00");
@@ -143,17 +141,24 @@ namespace BoletoBr.Bancos.Brasil
 
                 if (boleto.CarteiraCobranca.Codigo == "11" || boleto.CarteiraCobranca.Codigo == "17")
                 {
-                    if (boleto.CarteiraCobranca.Variacao == "DESCONTADA")
-                    detalhe = detalhe.PreencherValorNaLinha(102, 106, "04DSC");
-
-                    if (boleto.CarteiraCobranca.Variacao == "BBVENDOR")   
-                    detalhe = detalhe.PreencherValorNaLinha(102, 106, "08VDR");
-
-                    if (boleto.CarteiraCobranca.Variacao == "VINCULADA")   
-                    detalhe = detalhe.PreencherValorNaLinha(102, 106, "02VIN");
-
-                    if (boleto.CarteiraCobranca.Variacao == "SIMPLES")   
-                    detalhe = detalhe.PreencherValorNaLinha(102, 106, string.Empty.PadRight(5, ' '));
+                    switch (boleto.CarteiraCobranca.Variacao)
+                    {
+                        case "DESCONTADA":
+                            detalhe = detalhe.PreencherValorNaLinha(102, 106, "04DSC");
+                            break;
+                        case "BBVENDOR":
+                            detalhe = detalhe.PreencherValorNaLinha(102, 106, "08VDR");
+                            break;
+                        case "VINCULADA":
+                            detalhe = detalhe.PreencherValorNaLinha(102, 106, "02VIN");
+                            break;
+                        case "SIMPLES":
+                            detalhe = detalhe.PreencherValorNaLinha(102, 106, string.Empty.PadRight(5, ' '));
+                            break;
+                        default:
+                            detalhe = detalhe.PreencherValorNaLinha(102, 106, string.Empty.PadRight(5, ' '));
+                            break;
+                    }
                 }
 
                 if (boleto.CarteiraCobranca.Codigo == "12" || boleto.CarteiraCobranca.Codigo == "31" ||

@@ -80,22 +80,5 @@ namespace BoletoBr
         {
             get { return Cep.BoletoBrToBind().Replace(".", "").Replace("-", ""); }
         }
-
-        public string EnderecoCompleto
-        {
-            get
-            {
-                var enderecoCompleto = String.Format("{0} {1} nro {2} {3}",
-                    this.TipoLogradouro,
-                    this.Logradouro,
-                    this.Numero,
-                    this.Complemento);
-
-                if (String.IsNullOrEmpty(enderecoCompleto))
-                    return "";
-
-                return enderecoCompleto;
-            }
-        }
     }
 }
