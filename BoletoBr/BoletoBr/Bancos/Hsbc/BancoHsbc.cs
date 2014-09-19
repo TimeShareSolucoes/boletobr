@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
-using System.Security.AccessControl;
+using System.Globalization;
 using BoletoBr.Arquivo.Generico.Retorno;
-using BoletoBr.CalculoModulo;
-using BoletoBr.Bancos;
 using BoletoBr.Dominio;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
@@ -19,7 +16,6 @@ namespace BoletoBr.Bancos.Hsbc
 
         private int _digitoAutoConferenciaCodigoBarras;
         private string _digitoAutoConferenciaNossoNumero;
-        private readonly List<CarteiraCobranca> _carteirasCobrancaHsbc;
 
         #endregion
 
@@ -39,8 +35,8 @@ namespace BoletoBr.Bancos.Hsbc
             CodigoBanco = "399";
             DigitoBanco = "9";
             NomeBanco = "HSBC";
-            this.LocalDePagamento = "Pagável em qualquer banco até o vencimento.";
-            this.MoedaBanco = "9";
+            LocalDePagamento = "Pagável em qualquer banco até o vencimento.";
+            MoedaBanco = "9";
         }
 
         #endregion
@@ -49,16 +45,6 @@ namespace BoletoBr.Bancos.Hsbc
 
         public string LocalDePagamento { get; private set; }
         public string MoedaBanco { get; private set; }
-        
-        public List<CarteiraCobranca> GetCarteirasCobranca()
-        {
-            return _carteirasCobrancaHsbc;
-        }
-
-        public CarteiraCobranca GetCarteiraCobrancaPorCodigo(string codigoCarteira)
-        {
-            return GetCarteirasCobranca().Find(fd => fd.Codigo == codigoCarteira);
-        }
 
         /// <summary>
         /// Valida se o boleto está preenchido com os campos mínimos requeridos.
@@ -81,10 +67,10 @@ namespace BoletoBr.Bancos.Hsbc
 
             //Verifica se o tamanho para o NossoNumero s�o 10 d�gitos (5 range + 5 numero sequencial) - Válido para carteira CSB
             if (boleto.CarteiraCobranca.Codigo.Equals("CSB"))
-            if (Convert.ToInt32(boleto.NossoNumeroFormatado).ToString().Length > 10)
+            if (Convert.ToInt32(boleto.NossoNumeroFormatado).ToString(CultureInfo.InvariantCulture).Length > 10)
                 throw new NotImplementedException("A quantidade de dígitos do nosso número para a carteira " +
                                                   boleto.CarteiraCobranca.Codigo + ", são 10 números.");
-            else if (Convert.ToInt32(boleto.NossoNumeroFormatado).ToString().Length < 10)
+            else if (Convert.ToInt32(boleto.NossoNumeroFormatado).ToString(CultureInfo.InvariantCulture).Length < 10)
                 boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(10, '0'));
 
             //Verifica se data do documento � valida
@@ -95,7 +81,7 @@ namespace BoletoBr.Bancos.Hsbc
 
         public void FormataMoeda(Boleto boleto)
         {
-            boleto.Moeda = this.MoedaBanco;
+            boleto.Moeda = MoedaBanco;
 
             if (string.IsNullOrEmpty(boleto.Moeda))
                 throw new Exception("Espécie/Moeda para o boleto não foi informada.");
@@ -177,7 +163,7 @@ namespace BoletoBr.Bancos.Hsbc
             {
                 case EnumTipoInstrucao.MultaPercentualVencimento:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 15,
                         QtdDias = (int) valorInstrucao,
@@ -186,7 +172,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumTipoInstrucao.MultaPorDiaVencimento:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 16,
                         QtdDias = (int) valorInstrucao,
@@ -196,7 +182,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumTipoInstrucao.MultaPorDiaCorrido:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 19,
                         QtdDias = diasInstrucao,
@@ -207,7 +193,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumTipoInstrucao.CobrarJurosApos7DiasVencimento:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 20,
                         QtdDias = diasInstrucao,
@@ -217,7 +203,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumTipoInstrucao.MultaPorDiaUtil:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 22,
                         QtdDias = diasInstrucao,
@@ -228,7 +214,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumTipoInstrucao.NaoReceberAposOVencimento:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 23,
                         QtdDias = diasInstrucao,
@@ -238,7 +224,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumTipoInstrucao.MultaVencimento:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 24,
                         QtdDias = diasInstrucao,
@@ -248,7 +234,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumTipoInstrucao.JurosSoAposData:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 29,
                         QtdDias = diasInstrucao,
@@ -258,7 +244,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumTipoInstrucao.ConcederAbatimento:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 34,
                         QtdDias = diasInstrucao,
@@ -268,7 +254,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumTipoInstrucao.AposVencimentoMulta10PorCento:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 36,
                         QtdDias = diasInstrucao,
@@ -278,7 +264,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumTipoInstrucao.ConcederDescontoPagoAposVencimento:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 40,
                         QtdDias = diasInstrucao,
@@ -288,7 +274,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumTipoInstrucao.NaoReceberAntesDoVencimento:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 42,
                         QtdDias = diasInstrucao,
@@ -298,7 +284,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumTipoInstrucao.AposVencimentoMulta20PorCentoMaisMora:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 53,
                         QtdDias = diasInstrucao,
@@ -308,7 +294,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumTipoInstrucao.NaoReceberAntesdoVencimentoOu10DiasApos:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 56,
                         QtdDias = diasInstrucao,
@@ -318,7 +304,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 //case EnumTipoInstrucao.AbatimentoDesconto:
                 //{
-                //    return new InstrucaoPadronizada()
+                //    return new InstrucaoPadronizada
                 //    {
                 //        Codigo = 65,
                 //        QtdDias = diasInstrucao,
@@ -328,7 +314,7 @@ namespace BoletoBr.Bancos.Hsbc
                 //}
                 case EnumTipoInstrucao.TituloSujeitoAProtestoAposVencimento:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 67,
                         QtdDias = diasInstrucao,
@@ -338,7 +324,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumTipoInstrucao.AposVencimentoMulta2PorCento:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 68,
                         QtdDias = diasInstrucao,
@@ -348,7 +334,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumTipoInstrucao.NaoReceberAposNDiasCorridos:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 71,
                         QtdDias = diasInstrucao,
@@ -358,7 +344,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumTipoInstrucao.NaoReceberAposNDiasUteis:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 72,
                         QtdDias = diasInstrucao,
@@ -368,7 +354,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumTipoInstrucao.MultaDeVPorCentoAposNDiasCorridos:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 73,
                         QtdDias = diasInstrucao,
@@ -378,7 +364,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumTipoInstrucao.MultaDeVPorCentoAposNDiasUteis:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 74,
                         QtdDias = diasInstrucao,
@@ -388,7 +374,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumTipoInstrucao.ProtestarAposNDiasCorridos:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 75,
                         QtdDias = diasInstrucao,
@@ -398,7 +384,7 @@ namespace BoletoBr.Bancos.Hsbc
                 }
                 case EnumTipoInstrucao.ProtestarAposNDiasUteis:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 77,
                         QtdDias = diasInstrucao,
@@ -409,7 +395,7 @@ namespace BoletoBr.Bancos.Hsbc
                 /* Instruções que não geram mensagens nos boletos */
                 case EnumTipoInstrucao.ProtestarAposNDiasUteisNGM:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 76,
                         QtdDias = diasInstrucao,
@@ -420,7 +406,7 @@ namespace BoletoBr.Bancos.Hsbc
                 /* Instruções que não geram mensagens nos boletos */
                 case EnumTipoInstrucao.ProtestarAposNDiasCorridosNGM:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 84,
                         QtdDias = diasInstrucao,
@@ -627,7 +613,7 @@ namespace BoletoBr.Bancos.Hsbc
             throw new Exception(
                 String.Format(
                     "Não foi possível obter Código de Comando/Movimento/Ocorrência. Banco: {0} Código: {1}",
-                    CodigoBanco, ocorrenciaRemessa.ToString()));
+                    CodigoBanco, ocorrenciaRemessa));
         }
 
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
@@ -656,7 +642,7 @@ namespace BoletoBr.Bancos.Hsbc
                         +
                         boleto.SequencialNossoNumero.PadLeft(5, '0');
 
-                    string digitoAutoConferenciaNossoNumero = Common.Mod11(nossoNumeroComposto, 7).ToString();
+                    string digitoAutoConferenciaNossoNumero = Common.Mod11(nossoNumeroComposto, 7).ToString(CultureInfo.InvariantCulture);
 
                     string nossoNumeroFormatado =
                         nossoNumeroComposto + digitoAutoConferenciaNossoNumero;
@@ -701,41 +687,42 @@ namespace BoletoBr.Bancos.Hsbc
 
         public void FormataLinhaDigitavel(Boleto boleto)
         {
-            boleto.Moeda = this.MoedaBanco;
+            boleto.Moeda = MoedaBanco;
 
-            string nossoNumeroLinhaDigitavel = boleto.NossoNumeroFormatado.PadLeft(13, '0');
-            string codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0');
-            string digitoAutoConferenciaNossoNumero = Common.Mod11(boleto.NossoNumeroFormatado, 7).ToString();
+            var nossoNumeroLinhaDigitavel = boleto.NossoNumeroFormatado.PadLeft(13, '0');
+            var codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0');
+            var digitoAutoConferenciaNossoNumero = Common.Mod11(boleto.NossoNumeroFormatado, 7).ToString(CultureInfo.InvariantCulture);
 
-            string C1 = string.Empty;
-            string C2 = string.Empty;
-            string C3 = string.Empty;
-            string C5 = string.Empty;
+            var C1 = string.Empty;
+            var C2 = string.Empty;
+            var C3 = string.Empty;
+            var C5 = string.Empty;
 
             string AAA;
             string B;
             string CCCCC;
-            string X;
-
-
-            string DDDDDD;
             string DD;
+            string DDDDDD;
             string EEEE;
             string EEEEEEEE;
-            string Y;
-            string FFFFFFF;
             string FFFFF;
+            string FFFFFFF;
             string GGGGG;
+            string HHHH;
+            string IIIIIIIIII;
+            string X;
+            string Y;
             string Z;
+            string W;
 
             if (boleto.CarteiraCobranca.Codigo == "CSB")
             {
                 #region AAABC.CCCCX
 
-                AAA = this.CodigoBanco.PadLeft(3, '0');
-                B = boleto.Moeda.ToString();
+                AAA = CodigoBanco.PadLeft(3, '0');
+                B = boleto.Moeda;
                 CCCCC = boleto.NossoNumeroFormatado.Substring(0, 5);
-                X = Common.Mod10(AAA + B + CCCCC).ToString();
+                X = Common.Mod10(AAA + B + CCCCC).ToString(CultureInfo.InvariantCulture);
 
                 C1 = String.Format("{0}{1}{2}.", AAA, B, CCCCC.Substring(0, 1));
                 C1 += String.Format("{0}{1} ", CCCCC.Substring(1, 4), X);
@@ -744,9 +731,11 @@ namespace BoletoBr.Bancos.Hsbc
 
                 #region DDDDD.DEEEEY
 
+                // ReSharper disable once InconsistentNaming
                 DDDDDD = boleto.NossoNumeroFormatado.Substring(5, 5) + digitoAutoConferenciaNossoNumero;
+                // ReSharper disable once InconsistentNaming
                 EEEE = boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0');
-                Y = Common.Mod10(DDDDDD + EEEE).ToString();
+                Y = Common.Mod10(DDDDDD + EEEE).ToString(CultureInfo.InvariantCulture);
 
                 C2 = String.Format("{0}.", DDDDDD.Substring(0, 5));
                 C2 += string.Format("{0}{1}{2} ", DDDDDD.Substring(5, 1), EEEE, Y);
@@ -755,8 +744,9 @@ namespace BoletoBr.Bancos.Hsbc
 
                 #region FFFFF.FF001Z
 
+                // ReSharper disable once InconsistentNaming
                 FFFFFFF = boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(7, '0');
-                Z = Common.Mod10(FFFFFFF + "001").ToString();
+                Z = Common.Mod10(FFFFFFF + "001").ToString(CultureInfo.InvariantCulture);
 
                 C3 = String.Format("{0}.", FFFFFFF.Substring(0, 5));
                 C3 += String.Format("{0}001{1}", FFFFFFF.Substring(5, 2), Z);
@@ -767,10 +757,10 @@ namespace BoletoBr.Bancos.Hsbc
             {
                 #region AAABC.CCCCX
 
-                AAA = this.CodigoBanco.PadLeft(3, '0');
-                B = boleto.Moeda.ToString();
+                AAA = CodigoBanco.PadLeft(3, '0');
+                B = boleto.Moeda;
                 CCCCC = boleto.CedenteBoleto.CodigoCedente.Substring(0, 5);
-                X = Common.Mod10(AAA + B + CCCCC).ToString();
+                X = Common.Mod10(AAA + B + CCCCC).ToString(CultureInfo.InvariantCulture);
 
                 C1 = string.Format("{0}{1}{2}.", AAA, B, CCCCC.Substring(0, 1));
                 C1 += string.Format("{0}{1} ", CCCCC.Substring(1, 4), X);
@@ -779,9 +769,11 @@ namespace BoletoBr.Bancos.Hsbc
 
                 #region DDEEE.EEEEEY
 
+                // ReSharper disable once InconsistentNaming
                 DD = boleto.CedenteBoleto.CodigoCedente.Substring(5, 2);
+                // ReSharper disable once InconsistentNaming
                 EEEEEEEE = nossoNumeroLinhaDigitavel.Substring(0, 8);
-                Y = Common.Mod10(DD + EEEEEEEE).ToString();
+                Y = Common.Mod10(DD + EEEEEEEE).ToString(CultureInfo.InvariantCulture);
 
                 C2 = string.Format("{0}{1}.", DD, EEEEEEEE.Substring(0, 3));
                 C2 += string.Format("{0}{1} ", EEEEEEEE.Substring(3, 5), Y);
@@ -790,12 +782,13 @@ namespace BoletoBr.Bancos.Hsbc
 
                 #region FFFFF.GGGGGZ
 
+                // ReSharper disable once InconsistentNaming
                 FFFFF = nossoNumeroLinhaDigitavel.Substring(8, 5);
-                GGGGG =
-                    (boleto.DataVencimento.DayOfYear + boleto.DataVencimento.ToString("yy").Substring(1, 1)).PadLeft(4,
-                        '0') + "2";
+                // ReSharper disable once InconsistentNaming
+                GGGGG = (boleto.DataVencimento.DayOfYear + boleto.DataVencimento.ToString("yy").Substring(1, 1)).PadLeft(4,
+                    '0') + "2";
 
-                Z = Common.Mod10(FFFFF + GGGGG).ToString();
+                Z = Common.Mod10(FFFFF + GGGGG).ToString(CultureInfo.InvariantCulture);
 
                 C3 = string.Format("{0}.", FFFFF);
                 C3 += string.Format("{0}{1}", GGGGG, Z);
@@ -803,12 +796,15 @@ namespace BoletoBr.Bancos.Hsbc
                 #endregion FFFFF.GGGGGZ
             }
 
-            string W = String.Format(" {0} ", _digitoAutoConferenciaCodigoBarras);
+            // ReSharper disable once InconsistentNaming
+            W = String.Format(" {0} ", _digitoAutoConferenciaCodigoBarras);
 
             #region HHHHIIIIIIIIII
 
-            string HHHH = Common.FatorVencimento(boleto.DataVencimento).ToString();
-            string IIIIIIIIII = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "");
+            // ReSharper disable once InconsistentNaming
+            HHHH = Common.FatorVencimento(boleto.DataVencimento).ToString(CultureInfo.InvariantCulture);
+            // ReSharper disable once InconsistentNaming
+            IIIIIIIIII = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "");
 
             IIIIIIIIII = IIIIIIIIII.PadLeft(10, '0');
             C5 = HHHH + IIIIIIIIII;
@@ -820,7 +816,7 @@ namespace BoletoBr.Bancos.Hsbc
 
         public void FormataCodigoBarra(Boleto boleto)
         {
-            boleto.Moeda = this.MoedaBanco;
+            boleto.Moeda = MoedaBanco;
 
             try
             {
@@ -833,16 +829,13 @@ namespace BoletoBr.Bancos.Hsbc
                         .Replace(".", "")
                         .PadLeft(10, '0');
 
-                string numeroDocumentoFormatado =
-                    boleto.NumeroDocumento.PadLeft(7, '0');
-
                 string codigoBarraSemDigitoVerificador = null;
 
                 if (boleto.CarteiraCobranca.Codigo == "CSB")
                 {
                     codigoBarraSemDigitoVerificador =
                         String.Format("{0}{1}{2}{3}{4}{5}{6}001",
-                            this.CodigoBanco,
+                            CodigoBanco,
                             boleto.Moeda,
                             //9999 --> 21/02/2025
                             Common.FatorVencimento(boleto.DataVencimento),
@@ -856,7 +849,7 @@ namespace BoletoBr.Bancos.Hsbc
                 {
                     codigoBarraSemDigitoVerificador =
                         String.Format("{0}{1}{2}{3}{4}{5}{6}2",
-                            this.CodigoBanco,
+                            CodigoBanco,
                             boleto.Moeda,
                             //9999 --> 21/02/2025
                             Common.FatorVencimento(boleto.DataVencimento),
@@ -873,14 +866,12 @@ namespace BoletoBr.Bancos.Hsbc
                  * 2. Insere no meio do código de barras
                  * 3. Atribui ao boleto
                  */
-                string codigoBarraComDigitoVerificador = null;
 
                 _digitoAutoConferenciaCodigoBarras = Common.Mod11(codigoBarraSemDigitoVerificador, 9, 0);
 
-                codigoBarraComDigitoVerificador =
-                    Common.Left(codigoBarraSemDigitoVerificador, 4) +
-                    _digitoAutoConferenciaCodigoBarras +
-                    Common.Right(codigoBarraSemDigitoVerificador, 39);
+                var codigoBarraComDigitoVerificador = Common.Left(codigoBarraSemDigitoVerificador, 4) +
+                                                         _digitoAutoConferenciaCodigoBarras +
+                                                         Common.Right(codigoBarraSemDigitoVerificador, 39);
 
                 boleto.CodigoBarraBoleto = codigoBarraComDigitoVerificador;
             }
@@ -893,7 +884,7 @@ namespace BoletoBr.Bancos.Hsbc
         public void FormatarBoleto(Boleto boleto)
         {
             //Atribui local de pagamento
-            boleto.LocalPagamento = this.LocalDePagamento;
+            boleto.LocalPagamento = LocalDePagamento;
 
             boleto.ValidaDadosEssenciaisDoBoleto();
 
@@ -901,7 +892,7 @@ namespace BoletoBr.Bancos.Hsbc
             FormataNossoNumero(boleto);
             // Calcula o DAC do Nosso N�mero
             // Nosso N�mero = Range(5) + Numero Sequencial(5)
-            _digitoAutoConferenciaNossoNumero = Common.Mod11(boleto.NossoNumeroFormatado, 7).ToString();
+            _digitoAutoConferenciaNossoNumero = Common.Mod11(boleto.NossoNumeroFormatado, 7).ToString(CultureInfo.InvariantCulture);
             FormataCodigoBarra(boleto);
             FormataLinhaDigitavel(boleto);
             FormataMoeda(boleto);
@@ -916,7 +907,7 @@ namespace BoletoBr.Bancos.Hsbc
         /// <returns></returns>
         public string CalculaPrimeiroDigitoVerificadorCnrTipo4(string codigoPagador)
         {
-            return Common.Mod11Base9(codigoPagador).ToString();
+            return Common.Mod11Base9(codigoPagador).ToString(CultureInfo.InvariantCulture);
         }
 
         public string CalculaSegundoDigitoVerificadorCnrTipo4(string codigoPagador, string primeiroDigitoVerificador,
@@ -928,134 +919,11 @@ namespace BoletoBr.Bancos.Hsbc
                     long.Parse(codigoBeneficiario) +
                     long.Parse(dataVencimento.ToString("ddMMyy"))
                     )
-                    .ToString()
+                    .ToString(CultureInfo.InvariantCulture)
                 )
-                .ToString();
+                .ToString(CultureInfo.InvariantCulture);
         }
 
         #endregion
-
-        public void LerArquivoRetorno(IBanco banco, Stream arquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderRemessa(string numeroConvenio, Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderRemessa(string numeroConvenio, Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa,
-            Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderRemessa(Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerRemessa(int numeroRegistro, TipoArquivo tipoArquivo, Cedente cedente, decimal vltitulostotal)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa, TipoArquivo tipoArquivo,
-            Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio, Cedente cedente)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio, Cedente cedente,
-            Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoQRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoQRemessa(Boleto boleto, int numeroRegistro, Sacado sacado)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoRRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerArquivoRemessa(int numeroRegistro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerArquivoRemessa(int numeroRegistro, Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerLoteRemessa(int numeroRegistro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerLoteRemessa(int numeroRegistro, Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheSegmentoTRetornoCnab240 LerDetalheSegmentoTRetornoCnab240(string registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheSegmentoURetornoCnab240 LerDetalheSegmentoURetornoCnab240(string registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheSegmentoWRetornoCnab240 LerDetalheSegmentoWRetornoCnab240(string registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheRetornoGenericoCnab400 LerDetalheRetornoCnab400(string registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Cedente Cedente { get; private set; }
-        public int Codigo { get; set; }
-        public string Nome { get; private set; }
-        public string Digito { get; private set; }
     }
 }

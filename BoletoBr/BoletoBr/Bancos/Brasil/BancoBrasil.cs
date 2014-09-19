@@ -608,6 +608,7 @@ namespace BoletoBr.Bancos.BancoBrasil
             #endregion Carteira 16
 
             #region Carteira 17
+
             if (boleto.CarteiraCobranca.Codigo.Equals("17"))
             {
                 if (boleto.CedenteBoleto.Convenio.ToString().Length == 7)

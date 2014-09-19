@@ -21,11 +21,11 @@ namespace BoletoBr.Bancos.Itau
 
         public BancoItau()
         {
-            this.CodigoBanco = "341";
-            this.DigitoBanco = "7";
-            this.NomeBanco = "Itaú";
-            this.LocalDePagamento = "Pagável em qualquer banco até o vencimento.";
-            this.MoedaBanco = "9";
+            CodigoBanco = "341";
+            DigitoBanco = "7";
+            NomeBanco = "Itaú";
+            LocalDePagamento = "Pagável em qualquer banco até o vencimento.";
+            MoedaBanco = "9";
         }
 
         public string CodigoBanco { get; set; }
@@ -33,20 +33,8 @@ namespace BoletoBr.Bancos.Itau
         public string NomeBanco { get; set; }
         public Image LogotipoBancoParaExibicao { get; set; }
 
-        private readonly List<CarteiraCobranca> _carteirasCobranca;
-
         public string LocalDePagamento { get; private set; }
         public string MoedaBanco { get; private set; }
-
-        public List<CarteiraCobranca> GetCarteirasCobranca()
-        {
-            return _carteirasCobranca;
-        }
-
-        public CarteiraCobranca GetCarteiraCobrancaPorCodigo(string codigoCarteira)
-        {
-            return GetCarteirasCobranca().Find(fd => fd.Codigo == codigoCarteira);
-        }
 
         public void ValidaBoletoComNormasBanco(Boleto boleto)
         {
@@ -73,7 +61,7 @@ namespace BoletoBr.Bancos.Itau
                                                       carteirasImplementadas);
                 }
 
-                string nroDoc = boleto.NumeroDocumento.Replace("-", "");
+                var nroDoc = boleto.NumeroDocumento.Replace("-", "");
 
                 //Verifica se o tamanho para o NossoNumero s�o 8 d�gitos
                 //if (boleto.NossoNumeroFormatado.ToString().Length > 8)
@@ -136,7 +124,7 @@ namespace BoletoBr.Bancos.Itau
 
         public void GerarDacNossoNumero(Boleto boleto)
         {
-            string nossoNum = boleto.NossoNumeroFormatado.Replace("/", "").Replace("-", "");
+            var nossoNum = boleto.NossoNumeroFormatado.Replace("/", "").Replace("-", "");
 
             // Calcula o DAC do Nosso N�mero a maioria das carteiras
             // agencia/conta/carteira/nosso numero
@@ -155,7 +143,7 @@ namespace BoletoBr.Bancos.Itau
         {
             try
             {
-                boleto.Moeda = this.MoedaBanco;
+                boleto.Moeda = MoedaBanco;
 
                 if (string.IsNullOrEmpty(boleto.Moeda))
                     throw new Exception("Espécie/Moeda para o boleto não foi informada.");
@@ -176,7 +164,7 @@ namespace BoletoBr.Bancos.Itau
         public void FormatarBoleto(Boleto boleto)
         {
             //Atribui o local de pagamento
-            boleto.LocalPagamento = this.LocalDePagamento;
+            boleto.LocalPagamento = LocalDePagamento;
 
             boleto.ValidaDadosEssenciaisDoBoleto();
 
@@ -240,27 +228,35 @@ namespace BoletoBr.Bancos.Itau
         {
             try
             {
-                string numeroDocumento = boleto.NumeroDocumento.Replace("-", "").PadLeft(7, '0');
-                string codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(5, '0');
+                var numeroDocumento = boleto.NumeroDocumento.Replace("-", "").PadLeft(7, '0');
+                var codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(5, '0');
 
-                string AAA = CodigoBanco;
-                string B = MoedaBanco;
-                string CCC = boleto.CarteiraCobranca.Codigo;
-                string DD = boleto.NossoNumeroFormatado.Replace("/", "").Replace("-", "").Substring(0, 2);
-                string X = Common.Mod10(AAA + B + CCC + DD).ToString();
-                string LD = string.Empty; /* Linha Digit�vel */
+                // ReSharper disable once InconsistentNaming
+                var AAA = CodigoBanco;
+                // ReSharper disable once InconsistentNaming
+                var B = MoedaBanco;
+                // ReSharper disable once InconsistentNaming
+                var CCC = boleto.CarteiraCobranca.Codigo;
+                // ReSharper disable once InconsistentNaming
+                var DD = boleto.NossoNumeroFormatado.Replace("/", "").Replace("-", "").Substring(0, 2);
+                // ReSharper disable once InconsistentNaming
+                var X = Common.Mod10(AAA + B + CCC + DD).ToString();
+                // ReSharper disable once InconsistentNaming
+                var LD = string.Empty; /* Linha Digit�vel */
 
-                string DDDDDD = boleto.NossoNumeroFormatado.Replace("/", "").Replace("-", "").Substring(2, 6);
+                // ReSharper disable once InconsistentNaming
+                var DDDDDD = boleto.NossoNumeroFormatado.Replace("/", "").Replace("-", "").Substring(2, 6);
 
-                string K = string.Format(" {0} ", _dacBoleto);
+                // ReSharper disable once InconsistentNaming
+                var K = string.Format(" {0} ", _dacBoleto);
 
-                string UUUU = Common.FatorVencimento(boleto.DataVencimento).ToString();
-                string VVVVVVVVVV = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "");
+                var UUUU = Common.FatorVencimento(boleto.DataVencimento).ToString();
+                var VVVVVVVVVV = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "");
 
-                string C1 = string.Empty;
-                string C2 = string.Empty;
-                string C3 = string.Empty;
-                string C5 = string.Empty;
+                var C1 = string.Empty;
+                var C2 = string.Empty;
+                var C3 = string.Empty;
+                var C5 = string.Empty;
 
                 #region AAABC.CCDDX
 
@@ -376,8 +372,8 @@ namespace BoletoBr.Bancos.Itau
 
                     #region DDDDD.DEEEEY
 
-                    string EEEE = numeroDocumento.Substring(0, 4);
-                    string Y = Common.Mod10(DDDDDD + EEEE).ToString();
+                    var EEEE = numeroDocumento.Substring(0, 4);
+                    var Y = Common.Mod10(DDDDDD + EEEE).ToString();
 
                     C2 = string.Format("{0}.", DDDDDD.Substring(0, 5));
                     C2 += string.Format("{0}{1}{2} ", DDDDDD.Substring(5, 1), EEEE, Y);
@@ -386,11 +382,11 @@ namespace BoletoBr.Bancos.Itau
 
                     #region EEEFF.FFFGHZ
 
-                    string EEE = numeroDocumento.Substring(4, 3);
-                    string FFFFF = codigoCedente;
-                    string G = Common.Mod10(boleto.CarteiraCobranca.Codigo + boleto.SequencialNossoNumero.PadLeft(8, '0') + numeroDocumento + codigoCedente).ToString();
-                    string H = "0";
-                    string Z = Common.Mod10(EEE + FFFFF + G + H).ToString();
+                    var EEE = numeroDocumento.Substring(4, 3);
+                    var FFFFF = codigoCedente;
+                    var G = Common.Mod10(boleto.CarteiraCobranca.Codigo + boleto.SequencialNossoNumero.PadLeft(8, '0') + numeroDocumento + codigoCedente).ToString();
+                    var H = "0";
+                    var Z = Common.Mod10(EEE + FFFFF + G + H).ToString();
                     C3 = string.Format("{0}{1}.{2}{3}{4}{5}", EEE, FFFFF.Substring(0, 2), FFFFF.Substring(2, 3), G, H, Z);
 
                     #endregion EEEFF.FFFGHZ

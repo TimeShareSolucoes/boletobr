@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
+using System.Globalization;
 using BoletoBr.Arquivo.Generico.Retorno;
-using BoletoBr.CalculoModulo;
 using BoletoBr.Dominio;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
@@ -23,36 +22,28 @@ namespace BoletoBr.Bancos.Bradesco
             CodigoBanco = "237";
             DigitoBanco = "2";
             NomeBanco = "Bradesco";
-            this.LocalDePagamento = "Pagável preferencialmente nas Agências Bradesco.";
-            this.MoedaBanco = "9";
+            LocalDePagamento = "Pagável preferencialmente nas Agências Bradesco.";
+            MoedaBanco = "9";
         }
 
         public string CalcularDigitoNossoNumero(Boleto boleto)
         {
             return Common.Mod11Base7Bradesco(boleto.CarteiraCobranca.Codigo + boleto.NossoNumeroFormatado, 7);
         }
+
         private int _digitoAutoConferenciaBoleto;
         private string _digitoAutoConferenciaNossoNumero;
-
-        private readonly List<CarteiraCobranca> _carteirasCobranca;
 
         public string LocalDePagamento { get; private set; }
         public string MoedaBanco { get; private set; }
 
-        public List<CarteiraCobranca> GetCarteirasCobranca()
-        {
-            return _carteirasCobranca;
-        }
-
-        public CarteiraCobranca GetCarteiraCobrancaPorCodigo(string codigoCarteira)
-        {
-            return GetCarteirasCobranca().Find(fd => fd.Codigo == codigoCarteira);
-        }
-
         public void ValidaBoletoComNormasBanco(Boleto boleto)
         {
-            if (boleto.CarteiraCobranca.Codigo != "02" && boleto.CarteiraCobranca.Codigo != "03" && boleto.CarteiraCobranca.Codigo != "06" && boleto.CarteiraCobranca.Codigo != "09" && boleto.CarteiraCobranca.Codigo != "19")
-                throw new ValidacaoBoletoException("Carteira não implementada. Carteiras implementadas 02, 03, 06, 09, 19.");
+            if (boleto.CarteiraCobranca.Codigo != "02" && boleto.CarteiraCobranca.Codigo != "03" &&
+                boleto.CarteiraCobranca.Codigo != "06" && boleto.CarteiraCobranca.Codigo != "09" &&
+                boleto.CarteiraCobranca.Codigo != "19")
+                throw new ValidacaoBoletoException(
+                    "Carteira não implementada. Carteiras implementadas 02, 03, 06, 09, 19.");
 
             //O valor � obrigat�rio para a carteira 03
             if (boleto.CarteiraCobranca.Codigo == "03")
@@ -75,14 +66,19 @@ namespace BoletoBr.Bancos.Bradesco
 
             //Verifica se a Agencia esta correta
             if (boleto.CedenteBoleto.ContaBancariaCedente.Agencia.Length > 4)
-                throw new ValidacaoBoletoException("A quantidade de dígitos da Agência " + boleto.CedenteBoleto.ContaBancariaCedente.Agencia + ", deve ser de 4 números.");
-            else if (boleto.CedenteBoleto.ContaBancariaCedente.Agencia.Length < 4)
-                boleto.CedenteBoleto.ContaBancariaCedente.Agencia = boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4,'0');
+                throw new ValidacaoBoletoException("A quantidade de dígitos da Agência " +
+                                                   boleto.CedenteBoleto.ContaBancariaCedente.Agencia +
+                                                   ", deve ser de 4 números.");
+            if (boleto.CedenteBoleto.ContaBancariaCedente.Agencia.Length < 4)
+                boleto.CedenteBoleto.ContaBancariaCedente.Agencia =
+                    boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0');
 
             //Verifica se a Conta esta correta
             if (boleto.CedenteBoleto.ContaBancariaCedente.Conta.Length > 7)
-                throw new ValidacaoBoletoException("A quantidade de dígitos da Conta " + boleto.CedenteBoleto.ContaBancariaCedente.Conta + ", deve ser de 07 números.");
-            else if (boleto.CedenteBoleto.ContaBancariaCedente.Conta.Length < 7)
+                throw new ValidacaoBoletoException("A quantidade de dígitos da Conta " +
+                                                   boleto.CedenteBoleto.ContaBancariaCedente.Conta +
+                                                   ", deve ser de 07 números.");
+            if (boleto.CedenteBoleto.ContaBancariaCedente.Conta.Length < 7)
                 boleto.CedenteBoleto.ContaBancariaCedente.Conta =
                     boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(7, '0');
 
@@ -100,7 +96,7 @@ namespace BoletoBr.Bancos.Bradesco
 
         public void FormataMoeda(Boleto boleto)
         {
-            boleto.Moeda = this.MoedaBanco;
+            boleto.Moeda = MoedaBanco;
 
             if (string.IsNullOrEmpty(boleto.Moeda))
                 throw new Exception("Espécie/Moeda para o boleto não foi informada.");
@@ -114,7 +110,7 @@ namespace BoletoBr.Bancos.Bradesco
         public void FormatarBoleto(Boleto boleto)
         {
             //Atribui o local de pagamento
-            boleto.LocalPagamento = this.LocalDePagamento;
+            boleto.LocalPagamento = LocalDePagamento;
 
             boleto.ValidaDadosEssenciaisDoBoleto();
 
@@ -126,11 +122,12 @@ namespace BoletoBr.Bancos.Bradesco
             FormataNossoNumero(boleto);
             FormataCodigoBarra(boleto);
             FormataLinhaDigitavel(boleto);
-            
+
             FormataMoeda(boleto);
 
             ValidaBoletoComNormasBanco(boleto);
         }
+
         /// <summary>
         /// 
         ///   *******
@@ -146,7 +143,7 @@ namespace BoletoBr.Bancos.Bradesco
         ///   *******
         /// 
         /// </summary>
-        
+
         public void FormataNossoNumero(Boleto boleto)
         {
             boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero);
@@ -160,37 +157,37 @@ namespace BoletoBr.Bancos.Bradesco
 
         public void FormataCodigoBarra(Boleto boleto)
         {
-            string valorBoleto = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "");
+            var valorBoleto = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "");
             valorBoleto = valorBoleto.PadLeft(10, '0');
 
-            if (boleto.CarteiraCobranca.Codigo == "02" || boleto.CarteiraCobranca.Codigo == "03" || boleto.CarteiraCobranca.Codigo == "09" || boleto.CarteiraCobranca.Codigo == "19")
+            if (boleto.CarteiraCobranca.Codigo == "02" || boleto.CarteiraCobranca.Codigo == "03" ||
+                boleto.CarteiraCobranca.Codigo == "09" || boleto.CarteiraCobranca.Codigo == "19")
             {
-                boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}", this.CodigoBanco, boleto.Moeda,
-                Common.FatorVencimento(boleto.DataVencimento), valorBoleto, FormataCampoLivre(boleto));
+                boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}", CodigoBanco, boleto.Moeda,
+                    Common.FatorVencimento(boleto.DataVencimento), valorBoleto, FormataCampoLivre(boleto));
             }
             else if (boleto.CarteiraCobranca.Codigo == "06")
             {
                 if (boleto.ValorBoleto == 0)
                 {
-                    boleto.CodigoBarraBoleto = string.Format("{0}{1}0000{2}{3}", this.CodigoBanco, boleto.Moeda,
+                    boleto.CodigoBarraBoleto = string.Format("{0}{1}0000{2}{3}", CodigoBanco, boleto.Moeda,
                         valorBoleto, FormataCampoLivre(boleto));
                 }
                 else
                 {
-                    boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}", this.CodigoBanco, boleto.Moeda,
+                    boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}", CodigoBanco, boleto.Moeda,
                         Common.FatorVencimento(boleto.DataVencimento), valorBoleto, FormataCampoLivre(boleto));
                 }
-
             }
             else
             {
                 throw new NotImplementedException("Carteira ainda não implementada.");
             }
 
-
             _digitoAutoConferenciaBoleto = Common.Mod11(boleto.CodigoBarraBoleto, 9);
 
-            boleto.CodigoBarraBoleto = Common.Left(boleto.CodigoBarraBoleto, 4) + _digitoAutoConferenciaBoleto + Common.Right(boleto.CodigoBarraBoleto, 39);
+            boleto.CodigoBarraBoleto = Common.Left(boleto.CodigoBarraBoleto, 4) + _digitoAutoConferenciaBoleto +
+                                       Common.Right(boleto.CodigoBarraBoleto, 39);
         }
 
         ///<summary>
@@ -204,8 +201,10 @@ namespace BoletoBr.Bancos.Bradesco
         public string FormataCampoLivre(Boleto boleto)
         {
 
-            string formataCampoLivre = string.Format("{0}{1}{2}{3}{4}", boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'), boleto.CarteiraCobranca.Codigo,
-                                            boleto.NossoNumeroFormatado.Replace("/", "").Replace("-", "").ExtrairValorDaLinha(1,11), boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(7, '0'), "0");
+            string formataCampoLivre = string.Format("{0}{1}{2}{3}{4}",
+                boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'), boleto.CarteiraCobranca.Codigo,
+                boleto.NossoNumeroFormatado.Replace("/", "").Replace("-", "").ExtrairValorDaLinha(1, 11),
+                boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(7, '0'), "0");
 
             return formataCampoLivre;
         }
@@ -217,67 +216,57 @@ namespace BoletoBr.Bancos.Bradesco
 
             #region Campo 1
 
-            string Grupo1 = string.Empty;
+            var BBB = boleto.CodigoBarraBoleto.Substring(0, 3);
+            var M = boleto.CodigoBarraBoleto.Substring(3, 1);
+            var CCCCC = boleto.CodigoBarraBoleto.Substring(19, 5);
+            var D1 = Common.Mod10(BBB + M + CCCCC).ToString(CultureInfo.InvariantCulture);
 
-            string BBB = boleto.CodigoBarraBoleto.Substring(0, 3);
-            string M = boleto.CodigoBarraBoleto.Substring(3, 1);
-            string CCCCC = boleto.CodigoBarraBoleto.Substring(19, 5);
-            string D1 = Common.Mod10(BBB + M + CCCCC).ToString();
-
-            Grupo1 = string.Format("{0}{1}{2}.{3}{4} ", BBB, M, CCCCC.Substring(0, 1), CCCCC.Substring(1, 4), D1);
+            var Grupo1 = string.Format("{0}{1}{2}.{3}{4} ", BBB, M, CCCCC.Substring(0, 1), CCCCC.Substring(1, 4), D1);
 
 
             #endregion Campo 1
 
             #region Campo 2
 
-            string Grupo2 = string.Empty;
+            var CCCCCCCCCC2 = boleto.CodigoBarraBoleto.Substring(24, 10);
+            var D2 = Common.Mod10(CCCCCCCCCC2).ToString(CultureInfo.InvariantCulture);
 
-            string CCCCCCCCCC2 = boleto.CodigoBarraBoleto.Substring(24, 10);
-            string D2 = Common.Mod10(CCCCCCCCCC2).ToString();
-
-            Grupo2 = string.Format("{0}.{1}{2} ", CCCCCCCCCC2.Substring(0, 5), CCCCCCCCCC2.Substring(5, 5), D2);
+            var Grupo2 = string.Format("{0}.{1}{2} ", CCCCCCCCCC2.Substring(0, 5), CCCCCCCCCC2.Substring(5, 5), D2);
 
             #endregion Campo 2
 
             #region Campo 3
 
-            string Grupo3 = string.Empty;
+            var CCCCCCCCCC3 = boleto.CodigoBarraBoleto.Substring(34, 10);
+            var D3 = Common.Mod10(CCCCCCCCCC3).ToString(CultureInfo.InvariantCulture);
 
-            string CCCCCCCCCC3 = boleto.CodigoBarraBoleto.Substring(34, 10);
-            string D3 = Common.Mod10(CCCCCCCCCC3).ToString();
-
-            Grupo3 = string.Format("{0}.{1}{2} ", CCCCCCCCCC3.Substring(0, 5), CCCCCCCCCC3.Substring(5, 5), D3);
+            var Grupo3 = string.Format("{0}.{1}{2} ", CCCCCCCCCC3.Substring(0, 5), CCCCCCCCCC3.Substring(5, 5), D3);
 
             #endregion Campo 3
 
             #region Campo 4
 
-            string Grupo4 = string.Empty;
+            var D4 = _digitoAutoConferenciaBoleto.ToString(CultureInfo.InvariantCulture);
 
-            string D4 = _digitoAutoConferenciaBoleto.ToString();
-
-            Grupo4 = string.Format("{0} ", D4);
+            var Grupo4 = string.Format("{0} ", D4);
 
             #endregion Campo 4
 
             #region Campo 5
 
-            string Grupo5 = string.Empty;
-
             //string FFFF = boleto.CodigoBarra.Codigo.Substring(5, 4);//FatorVencimento(boleto).ToString() ;
-            string FFFF = Common.FatorVencimento(boleto.DataVencimento).ToString();
+            var FFFF = Common.FatorVencimento(boleto.DataVencimento).ToString(CultureInfo.InvariantCulture);
 
             //if (boleto.CarteiraCobranca.Codigo == "06" && boleto.DataVencimento == DateTime.MinValue)
             //    FFFF = "0000";
 
-            string VVVVVVVVVV = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "");
+            var VVVVVVVVVV = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "");
             VVVVVVVVVV = VVVVVVVVVV.PadLeft(10, '0');
 
             //if (Convert.ToInt64(VVVVVVVVVV) == 0)
             //    VVVVVVVVVV = "000";
 
-            Grupo5 = string.Format("{0}{1}", FFFF, VVVVVVVVVV);
+            var Grupo5 = string.Format("{0}{1}", FFFF, VVVVVVVVVV);
 
             #endregion Campo 5
 
@@ -382,13 +371,14 @@ namespace BoletoBr.Bancos.Bradesco
                     CodigoBanco, especie.ToString()));
         }
 
-        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao, int diasInstrucao)
+        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao,
+            DateTime dataInstrucao, int diasInstrucao)
         {
             switch (tipoInstrucao)
             {
                 case EnumTipoInstrucao.NaoCobrarJurosDeMora:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 08,
                         QtdDias = diasInstrucao,
@@ -398,7 +388,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumTipoInstrucao.NaoReceberAposOVencimento:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 09,
                         QtdDias = diasInstrucao,
@@ -408,7 +398,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumTipoInstrucao.MultaPercentualVencimento:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 10,
                         QtdDias = diasInstrucao,
@@ -418,7 +408,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumTipoInstrucao.NaoReceberAposNDiasCorridos:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 11,
                         QtdDias = diasInstrucao,
@@ -428,7 +418,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumTipoInstrucao.CobrarEncargosApos5DiaVencimento:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 12,
                         QtdDias = diasInstrucao,
@@ -438,7 +428,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumTipoInstrucao.CobrarEncargosApos10DiaVencimento:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 13,
                         QtdDias = diasInstrucao,
@@ -448,7 +438,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumTipoInstrucao.CobrarEncargosApos15DiaVencimento:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 14,
                         QtdDias = diasInstrucao,
@@ -458,7 +448,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumTipoInstrucao.ConcederDescontoPagoAposVencimento:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 15,
                         QtdDias = diasInstrucao,
@@ -467,11 +457,29 @@ namespace BoletoBr.Bancos.Bradesco
                     };
                 }
             }
-            throw new Exception(String.Format("Não foi possível obter instrução padronizada. Banco: {0} Código Instrução: {1} Qtd Dias/Valor: {2}",
-                CodigoBanco, tipoInstrucao.ToString(), valorInstrucao));
+            throw new Exception(
+                String.Format(
+                    "Não foi possível obter instrução padronizada. Banco: {0} Código Instrução: {1} Qtd Dias/Valor: {2}",
+                    CodigoBanco, tipoInstrucao.ToString(), valorInstrucao));
         }
 
-        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
+        public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RemessaCnab240 GerarArquivoRemessaCnab240(List<Boleto> boletos)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RemessaCnab400 GerarArquivoRemessaCnab400(List<Boleto> boletos)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia,
+            DateTime dataOcorrencia)
         {
             switch (ocorrencia)
             {
@@ -485,7 +493,7 @@ namespace BoletoBr.Bancos.Bradesco
                 }
                 case EnumCodigoOcorrenciaRemessa.Baixa:
                 {
-                    return new CodigoOcorrencia((int)ocorrencia)
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
                         Codigo = 02,
                         Descricao = "Pedido de baixa"
@@ -617,143 +625,5 @@ namespace BoletoBr.Bancos.Bradesco
                     "Não foi possível obter Código de Comando/Movimento/Ocorrência. Banco: {0} Código: {1}",
                     CodigoBanco, ocorrencia.ToString()));
         }
-
-        public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public RemessaCnab240 GerarArquivoRemessaCnab240(List<Boleto> boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public RemessaCnab400 GerarArquivoRemessaCnab400(List<Boleto> boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void LerArquivoRetorno(IBanco banco, Stream arquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderRemessa(string numeroConvenio, Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderRemessa(string numeroConvenio, Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa,
-            Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderRemessa(Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerRemessa(int numeroRegistro, TipoArquivo tipoArquivo, Cedente cedente, decimal vltitulostotal)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa, TipoArquivo tipoArquivo,
-            Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio, Cedente cedente)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio, Cedente cedente,
-            Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoQRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoQRemessa(Boleto boleto, int numeroRegistro, Sacado sacado)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoRRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerArquivoRemessa(int numeroRegistro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerArquivoRemessa(int numeroRegistro, Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerLoteRemessa(int numeroRegistro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerLoteRemessa(int numeroRegistro, Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheSegmentoTRetornoCnab240 LerDetalheSegmentoTRetornoCnab240(string registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheSegmentoURetornoCnab240 LerDetalheSegmentoURetornoCnab240(string registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheSegmentoWRetornoCnab240 LerDetalheSegmentoWRetornoCnab240(string registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheRetornoGenericoCnab400 LerDetalheRetornoCnab400(string registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Cedente Cedente { get; private set; }
-        public int Codigo { get; set; }
-        public string Nome { get; private set; }
-        public string Digito { get; private set; }
     }
 }

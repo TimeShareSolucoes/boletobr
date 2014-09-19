@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,10 +19,9 @@ namespace BoletoBr.Bancos.Santander
      * 353-0 -> Banco Santander Brasil S.A.
      * Atualmente o banco Santander recepciona boletos/remessa sob o código 033-7
      */
+
     public class BancoSantander : IBanco
     {
-        private readonly List<CarteiraCobranca> _carteirasCobrancaSantander;
-
         public string CodigoBanco { get; set; }
         public string DigitoBanco { get; set; }
         public string NomeBanco { get; set; }
@@ -38,22 +38,14 @@ namespace BoletoBr.Bancos.Santander
             this.MoedaBanco = "9";
         }
 
-        public List<CarteiraCobranca> GetCarteirasCobranca()
-        {
-            return _carteirasCobrancaSantander;
-        }
-
-        public CarteiraCobranca GetCarteiraCobrancaPorCodigo(string codigoCarteira)
-        {
-            return GetCarteirasCobranca().Find(fd => fd.Codigo == codigoCarteira);
-        }
-
         public void ValidaBoletoComNormasBanco(Boleto boleto)
         {
             boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.Replace("-", ""));
 
             //throw new NotImplementedException("Função não implementada.");
-            if (!((boleto.CarteiraCobranca.Codigo == "102") || (boleto.CarteiraCobranca.Codigo == "101") || (boleto.CarteiraCobranca.Codigo == "201")))
+            if (
+                !((boleto.CarteiraCobranca.Codigo == "102") || (boleto.CarteiraCobranca.Codigo == "101") ||
+                  (boleto.CarteiraCobranca.Codigo == "201")))
                 throw new NotImplementedException("Carteira não implementada.");
 
             //Banco 008  - Utilizar somente 09 posições do Nosso Numero (08 posições + DV), zerando os 04 primeiros dígitos
@@ -85,7 +77,8 @@ namespace BoletoBr.Bancos.Santander
             if (EspecieDocumento.ValidaSigla(boleto.Especie) == "")
                 boleto.Especie = new EspecieDocumento(Convert.ToInt32("02"));
 
-            if (boleto.PercentualIOS > 10 & (this.CodigoBanco == "008" || this.CodigoBanco == "033" || this.CodigoBanco == "353"))
+            if (boleto.PercentualIOS > 10 &
+                (this.CodigoBanco == "008" || this.CodigoBanco == "033" || this.CodigoBanco == "353"))
                 throw new Exception("O percentual do IOS é limitado a 9% para o Banco Santander");
 
             var nossoNumeroFormatadoA = boleto.NossoNumeroFormatado.Substring(0, boleto.NossoNumeroFormatado.Length - 1);
@@ -143,26 +136,25 @@ namespace BoletoBr.Bancos.Santander
         /// </summary>
         public void FormataCodigoBarra(Boleto boleto)
         {
-            string codigoBanco = this.CodigoBanco.PadLeft(3, '0'); //3
-            string codigoMoeda = this.MoedaBanco; //1
-            string calculoDv = string.Empty;
-            string fatorVencimento = Common.FatorVencimento(boleto.DataVencimento).ToString(); //4
-            string valorNominal = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "").PadLeft(10, '0'); //10
+            var codigoBanco = CodigoBanco.PadLeft(3, '0'); //3
+            var codigoMoeda = MoedaBanco; //1
+            var fatorVencimento = Common.FatorVencimento(boleto.DataVencimento).ToString(CultureInfo.InvariantCulture); //4
+            var valorNominal = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "").PadLeft(10, '0'); //10
             const string fixo = "9"; //1
-            string codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'); //7
-            string nossoNumero = boleto.SequencialNossoNumero + Mod11Santander(boleto.SequencialNossoNumero, 9); //13
-            string IOS = boleto.PercentualIOS.ToString(); //1
-            string tipoCarteira = boleto.CarteiraCobranca.Codigo; //3;
+            var codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'); //7
+            var nossoNumero = boleto.SequencialNossoNumero + Mod11Santander(boleto.SequencialNossoNumero, 9); //13
+            var ios = boleto.PercentualIOS.ToString(CultureInfo.InvariantCulture); //1
+            var tipoCarteira = boleto.CarteiraCobranca.Codigo; //3;
 
             boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}",
-                codigoBanco, codigoMoeda, fatorVencimento, valorNominal, fixo, codigoCedente, nossoNumero, IOS,
+                codigoBanco, codigoMoeda, fatorVencimento, valorNominal, fixo, codigoCedente, nossoNumero, ios,
                 tipoCarteira);
 
-            calculoDv = Mod10Mod11Santander(boleto.CodigoBarraBoleto, 9).ToString();
+            var calculoDv = Mod10Mod11Santander(boleto.CodigoBarraBoleto, 9).ToString(CultureInfo.InvariantCulture);
 
             boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}",
                 codigoBanco, codigoMoeda, calculoDv, fatorVencimento, valorNominal, fixo, codigoCedente, nossoNumero,
-                IOS, tipoCarteira);
+                ios, tipoCarteira);
         }
 
         /// <summary>
@@ -195,70 +187,72 @@ namespace BoletoBr.Bancos.Santander
         /// </summary>
         public void FormataLinhaDigitavel(Boleto boleto)
         {
-            string nossoNumero = boleto.SequencialNossoNumero +
-                                 Mod11Santander(boleto.SequencialNossoNumero, 9); //13
-            string codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0');
-            string fatorVencimento = Common.FatorVencimento(boleto.DataVencimento).ToString();
-            string IOS = boleto.PercentualIOS.ToString(); //1
+            var nossoNumero = boleto.SequencialNossoNumero +
+                              Mod11Santander(boleto.SequencialNossoNumero, 9); //13
+            var codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0');
+            var fatorVencimento = Common.FatorVencimento(boleto.DataVencimento).ToString(CultureInfo.InvariantCulture);
+            var ios = boleto.PercentualIOS.ToString(); //1
 
             #region Grupo1
 
-            string codigoBanco = this.CodigoBanco.PadLeft(3, '0'); //3
-            string codigoModeda = this.MoedaBanco; //1
+            var codigoBanco = CodigoBanco.PadLeft(3, '0'); //3
+            var codigoModeda = MoedaBanco; //1
             const string fixo = "9"; //1
-            string codigoCedente1 = codigoCedente.Substring(0, 4); //4
-            string calculoDv1 =
-                Common.Mod10(string.Format("{0}{1}{2}{3}", codigoBanco, codigoModeda, fixo, codigoCedente1)).ToString(); //1
-            string grupo1 = string.Format("{0}{1}{2}.{3}{4}", codigoBanco, codigoModeda, fixo, codigoCedente1,
+            var codigoCedente1 = codigoCedente.Substring(0, 4); //4
+            var calculoDv1 =
+                Common.Mod10(string.Format("{0}{1}{2}{3}", codigoBanco, codigoModeda, fixo, codigoCedente1)).ToString(CultureInfo.InvariantCulture);
+                //1
+            var grupo1 = string.Format("{0}{1}{2}.{3}{4}", codigoBanco, codigoModeda, fixo, codigoCedente1,
                 calculoDv1);
 
             #endregion
 
             #region Grupo2
 
-            string codigoCedente2 = codigoCedente.Substring(4, 3); //3
-            string nossoNumero1 = nossoNumero.Substring(0, 7); //7
-            string calculoDv2 = Common.Mod10(string.Format("{0}{1}", codigoCedente2, nossoNumero1)).ToString();
-            string grupo2 = string.Format("{0}{1}{2}", codigoCedente2, nossoNumero1, calculoDv2);
+            var codigoCedente2 = codigoCedente.Substring(4, 3); //3
+            var nossoNumero1 = nossoNumero.Substring(0, 7); //7
+            var calculoDv2 = Common.Mod10(string.Format("{0}{1}", codigoCedente2, nossoNumero1)).ToString(CultureInfo.InvariantCulture);
+            var grupo2 = string.Format("{0}{1}{2}", codigoCedente2, nossoNumero1, calculoDv2);
             grupo2 = " " + grupo2.Substring(0, 5) + "." + grupo2.Substring(5, 6);
 
             #endregion
 
             #region Grupo3
 
-            string nossoNumero2 = nossoNumero.Substring(7, 6); //6
+            var nossoNumero2 = nossoNumero.Substring(7, 6); //6
 
-            string tipoCarteira = boleto.CarteiraCobranca.Codigo; //3
-            string calculoDv3 = Common.Mod10(string.Format("{0}{1}{2}", nossoNumero2, IOS, tipoCarteira)).ToString(); //1
-            string grupo3 = string.Format("{0}{1}{2}{3}", nossoNumero2, IOS, tipoCarteira, calculoDv3);
+            var tipoCarteira = boleto.CarteiraCobranca.Codigo; //3
+            var calculoDv3 = Common.Mod10(string.Format("{0}{1}{2}", nossoNumero2, ios, tipoCarteira)).ToString(CultureInfo.InvariantCulture); //1
+            var grupo3 = string.Format("{0}{1}{2}{3}", nossoNumero2, ios, tipoCarteira, calculoDv3);
             grupo3 = " " + grupo3.Substring(0, 5) + "." + grupo3.Substring(5, 6) + " ";
 
             #endregion
 
             #region Grupo4
 
-            string dVcodigoBanco = this.CodigoBanco.PadLeft(3, '0'); //3
-            string dVcodigoMoeda = MoedaBanco; //1
-            string dVvalorNominal = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "").PadLeft(10, '0'); //10
-            const string DVfixo = "9"; //1
-            string dVcodigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'); //7
-            string dVnossoNumero = boleto.SequencialNossoNumero + Mod11Santander(boleto.SequencialNossoNumero, 9);
-            string dVtipoCarteira = boleto.CarteiraCobranca.Codigo; //3;
+            var dVcodigoBanco = CodigoBanco.PadLeft(3, '0'); //3
+            var dVcodigoMoeda = MoedaBanco; //1
+            var dVvalorNominal = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "").PadLeft(10, '0');
+                //10
+            const string dVfixo = "9"; //1
+            var dVcodigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'); //7
+            var dVnossoNumero = boleto.SequencialNossoNumero + Mod11Santander(boleto.SequencialNossoNumero, 9);
+            var dVtipoCarteira = boleto.CarteiraCobranca.Codigo; //3;
 
-            string calculoDVcodigo = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}",
-                dVcodigoBanco, dVcodigoMoeda, fatorVencimento, dVvalorNominal, DVfixo, dVcodigoCedente, dVnossoNumero,
-                IOS, dVtipoCarteira);
+            var calculoDVcodigo = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}",
+                dVcodigoBanco, dVcodigoMoeda, fatorVencimento, dVvalorNominal, dVfixo, dVcodigoCedente, dVnossoNumero,
+                ios, dVtipoCarteira);
 
-            string grupo4 = Mod10Mod11Santander(calculoDVcodigo, 9).ToString() + " ";
+            var grupo4 = Mod10Mod11Santander(calculoDVcodigo, 9) + " ";
 
             #endregion
 
             #region Grupo5
 
             //4
-            string valorNominal = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "").PadLeft(10, '0'); //10
+            var valorNominal = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "").PadLeft(10, '0'); //10
 
-            string grupo5 = string.Format("{0}{1}", fatorVencimento, valorNominal);
+            var grupo5 = string.Format("{0}{1}", fatorVencimento, valorNominal);
 
             #endregion
 
@@ -273,12 +267,12 @@ namespace BoletoBr.Bancos.Santander
             if (String.IsNullOrEmpty(boleto.SequencialNossoNumero))
                 throw new Exception("Sequencial Nosso Número não foi informado.");
 
-            if (boleto.SequencialNossoNumero.Replace("0", "") == string.Empty)
+            if (String.IsNullOrEmpty(boleto.SequencialNossoNumero.TrimStart('0')))
                 throw new Exception("Sequencial Nosso Número não pode ser 0 (zero).");
 
             boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero);
 
-            boleto.SetNossoNumeroFormatado(string.Format("{0}-{1}", 
+            boleto.SetNossoNumeroFormatado(string.Format("{0}-{1}",
                 boleto.NossoNumeroFormatado, Mod11Santander(boleto.NossoNumeroFormatado, 9)).PadLeft(12, '0'));
         }
 
@@ -287,7 +281,7 @@ namespace BoletoBr.Bancos.Santander
             if (String.IsNullOrEmpty(boleto.NumeroDocumento))
                 throw new Exception("Número do Documento não foi informado.");
 
-            if (boleto.NumeroDocumento.Replace("0", "") == string.Empty)
+            if (String.IsNullOrEmpty(boleto.NumeroDocumento.TrimStart('0')))
                 throw new Exception("Número do Documento não pode ser 0 (zero).");
 
             boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(10, '0');
@@ -411,13 +405,14 @@ namespace BoletoBr.Bancos.Santander
                     CodigoBanco, especie.ToString()));
         }
 
-        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao, int diasInstrucao)
+        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao,
+            DateTime dataInstrucao, int diasInstrucao)
         {
             switch (tipoInstrucao)
             {
                 case EnumTipoInstrucao.NaoHaInstrucoes:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 00,
                         QtdDias = (int) valorInstrucao,
@@ -426,7 +421,7 @@ namespace BoletoBr.Bancos.Santander
                 }
                 case EnumTipoInstrucao.BaixarAposQuinzeDiasDoVencto:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 02,
                         QtdDias = (int) valorInstrucao,
@@ -435,46 +430,46 @@ namespace BoletoBr.Bancos.Santander
                 }
                 case EnumTipoInstrucao.BaixarAposTrintaDiasDoVencto:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 03,
-                        QtdDias = (int)valorInstrucao,
+                        QtdDias = (int) valorInstrucao,
                         TextoInstrucao = "Baixar após 30 dias do vencimento."
                     };
                 }
                 case EnumTipoInstrucao.NaoBaixar:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 04,
-                        QtdDias = (int)valorInstrucao,
+                        QtdDias = (int) valorInstrucao,
                         TextoInstrucao = "Não baixar."
                     };
                 }
                 case EnumTipoInstrucao.Protestar:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 06,
-                        QtdDias = (int)valorInstrucao,
+                        QtdDias = (int) valorInstrucao,
                         TextoInstrucao = "Protestar após " + valorInstrucao + " dias úteis."
                     };
                 }
                 case EnumTipoInstrucao.NaoProtestar:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 07,
-                        QtdDias = (int)valorInstrucao,
+                        QtdDias = (int) valorInstrucao,
                         TextoInstrucao = "Não protestar."
                     };
                 }
                 case EnumTipoInstrucao.NaoCobrarJurosDeMora:
                 {
-                    return new InstrucaoPadronizada()
+                    return new InstrucaoPadronizada
                     {
                         Codigo = 08,
-                        QtdDias = (int)valorInstrucao,
+                        QtdDias = (int) valorInstrucao,
                         TextoInstrucao = "Não cobrar juros de mora."
                     };
                 }
@@ -485,114 +480,115 @@ namespace BoletoBr.Bancos.Santander
                     CodigoBanco, tipoInstrucao.ToString(), valorInstrucao));
         }
 
-        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia,
+            DateTime dataOcorrencia)
         {
             switch (ocorrencia)
             {
                 case EnumCodigoOcorrenciaRemessa.Registro:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
-                        {
-                            Codigo = 01,
-                            Descricao = "Entrada de título"
-                        };
-                    }
+                        Codigo = 01,
+                        Descricao = "Entrada de título"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.Baixa:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
-                        {
-                            Codigo = 02,
-                            Descricao = "Pedido de baixa"
-                        };
-                    }
+                        Codigo = 02,
+                        Descricao = "Pedido de baixa"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
-                        {
-                            Codigo = 04,
-                            Descricao = "Concessão de abatimento"
-                        };
-                    }
+                        Codigo = 04,
+                        Descricao = "Concessão de abatimento"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
-                        {
-                            Codigo = 05,
-                            Descricao = "Cancelamento de abatimento"
-                        };
-                    }
+                        Codigo = 05,
+                        Descricao = "Cancelamento de abatimento"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDeVencimento:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
-                        {
-                            Codigo = 06,
-                            Descricao = "Alteração de vencimento"
-                        };
-                    }
+                        Codigo = 06,
+                        Descricao = "Alteração de vencimento"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDaIdentificacaoDotituloNaEmpresa:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
-                        {
-                            Codigo = 07,
-                            Descricao = "Alteração da identificação do título na empresa"
-                        };
-                    }
+                        Codigo = 07,
+                        Descricao = "Alteração da identificação do título na empresa"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoSeuNumero:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
-                        {
-                            Codigo = 08,
-                            Descricao = "Alteração seu número"
-                        };
-                    }
+                        Codigo = 08,
+                        Descricao = "Alteração seu número"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.Protesto:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
-                        {
-                            Codigo = 09,
-                            Descricao = "Pedido de Protesto"
-                        };
-                    }
+                        Codigo = 09,
+                        Descricao = "Pedido de Protesto"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.ConcessaoDeDesconto:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
-                        {
-                            Codigo = 10,
-                            Descricao = "Concessão de Desconto"
-                        };
-                    }
+                        Codigo = 10,
+                        Descricao = "Concessão de Desconto"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.CancelamentoDeDesconto:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
-                        {
-                            Codigo = 11,
-                            Descricao = "Cancelamento de desconto"
-                        };
-                    }
+                        Codigo = 11,
+                        Descricao = "Cancelamento de desconto"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.SustarProtesto:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
-                        {
-                            Codigo = 18,
-                            Descricao = "Pedido de Sustação de Protesto"
-                        };
-                    }
+                        Codigo = 18,
+                        Descricao = "Pedido de Sustação de Protesto"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDeOutrosDados:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
-                        {
-                            Codigo = 31,
-                            Descricao = "Alteração de outros dados"
-                        };
-                    }
+                        Codigo = 31,
+                        Descricao = "Alteração de outros dados"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.NaoProtestar:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
-                        {
-                            Codigo = 98,
-                            Descricao = "Não Protestar"
-                        };
-                    }
+                        Codigo = 98,
+                        Descricao = "Não Protestar"
+                    };
+                }
             }
             throw new Exception(
                 String.Format(
@@ -638,14 +634,14 @@ namespace BoletoBr.Bancos.Santander
 
         private static int Mod11Santander(string seq, int lim)
         {
-            int ndig = 0;
-            int nresto = 0;
-            int total = 0;
-            int multiplicador = 5;
+            var ndig = 0;
+            var nresto = 0;
+            var total = 0;
+            var multiplicador = 5;
 
             while (seq.Length > 0)
             {
-                int valorPosicao = Convert.ToInt32(seq.Substring(0, 1));
+                var valorPosicao = Convert.ToInt32(seq.Substring(0, 1));
                 total += valorPosicao*multiplicador;
                 multiplicador--;
 
@@ -671,14 +667,14 @@ namespace BoletoBr.Bancos.Santander
 
         private static int Mod10Mod11Santander(string seq, int lim)
         {
-            int ndig = 0;
-            int nresto = 0;
-            int total = 0;
-            int multiplicador = 2;
+            var ndig = 0;
+            var nresto = 0;
+            var total = 0;
+            var multiplicador = 2;
 
             char[] posicaoSeq = seq.ToCharArray();
             Array.Reverse(posicaoSeq);
-            string sequencia = new string(posicaoSeq);
+            var sequencia = new string(posicaoSeq);
 
             while (sequencia.Length > 0)
             {
@@ -693,8 +689,8 @@ namespace BoletoBr.Bancos.Santander
 
                 sequencia = sequencia.Remove(0, 1);
             }
-            
-            nresto = (total * 10) % 11; //nresto = (((total * 10) / 11) % 10); Jefhtavares em 19/03/14
+
+            nresto = (total*10)%11; //nresto = (((total * 10) / 11) % 10); Jefhtavares em 19/03/14
 
             if (nresto == 0 || nresto == 1 || nresto == 10)
                 ndig = 1;
@@ -706,12 +702,12 @@ namespace BoletoBr.Bancos.Santander
 
         protected static int Mult10Mod11Santander(string seq, int lim, int flag)
         {
-            int mult = 0;
-            int total = 0;
-            int pos = 1;
-            int ndig = 0;
-            int nresto = 0;
-            string num = string.Empty;
+            var mult = 0;
+            var total = 0;
+            var pos = 1;
+            var ndig = 0;
+            var nresto = 0;
+            var num = string.Empty;
 
             mult = 1 + (seq.Length%(lim - 1));
 
@@ -744,58 +740,6 @@ namespace BoletoBr.Bancos.Santander
                     ndig = (11 - nresto);
 
                 return ndig;
-            }
-        }
-
-        /// <summary>
-        /// Verifica o tipo de ocorrência para o arquivo remessa
-        /// </summary>
-        public string Ocorrencia(string codigo)
-        {
-            switch (codigo)
-            {
-                case "01":
-                    return "01-Título não existe";
-                case "02":
-                    return "02-Entrada Confirmada";
-                case "03":
-                    return "03-Entrada Rejeitada";
-                case "06":
-                    return "06-Liquidação";
-                case "07":
-                    return "07-Liquidação por conta";
-                case "08":
-                    return "08-Liquidação por saldo";
-                case "09":
-                    return "09-Baixa Automatica";
-                case "10":
-                    return "10-Baixa conf. instrução ou protesto";
-                case "11":
-                    return "11-Em Ser";
-                case "12":
-                    return "12-Abatimento Concedido";
-                case "13":
-                    return "13-Abatimento Cancelado";
-                case "14":
-                    return "14-Prorrogação de Vencimento";
-                case "15":
-                    return "15-Enviado para Cartório";
-                case "16":
-                    return "16-Título já baixado/liquidado";
-                case "17":
-                    return "17-Liquidado em cartório";
-                case "21":
-                    return "21-Entrada em cartório";
-                case "22":
-                    return "22-Retirado de cartório";
-                case "24":
-                    return "24-Custas de cartório";
-                case "25":
-                    return "25-Protestar Título";
-                case "26":
-                    return "26-Sustar protesto";
-                default:
-                    return "";
             }
         }
     }

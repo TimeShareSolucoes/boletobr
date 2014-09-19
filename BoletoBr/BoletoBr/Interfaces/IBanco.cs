@@ -15,8 +15,8 @@ namespace BoletoBr.Interfaces
         Image LogotipoBancoParaExibicao { get; set; }
         string LocalDePagamento { get; }
         string MoedaBanco { get; }
-        List<CarteiraCobranca> GetCarteirasCobranca();
-        CarteiraCobranca GetCarteiraCobrancaPorCodigo(string codigoCarteira);
+        //List<CarteiraCobranca> GetCarteirasCobranca();
+        //CarteiraCobranca GetCarteiraCobrancaPorCodigo(string codigoCarteira);
         void ValidaBoletoComNormasBanco(Boleto boleto);
 
         /// <summary>
