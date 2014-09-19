@@ -32,13 +32,13 @@ Tarefas/Implementações:
 	- <b>003-5 | Banco da Amazônia</b>
 		- Implementação / Testes
 			- Carteiras
-				- [ ] CNR - Cobrança Não Registrada
+				- [x] CNR - Cobrança Não Registrada
 	- <b>033-7 | Banco Santander</b>
 		- Implementação / Testes
 			- Carteiras
 				- [x] 101 - Cobrança Simples COM Registro
 				- [x] 102 - Cobrança Simples SEM Registro
-				- [x] 201 - Penhor Rápida COM Registro
+				- [ ] 201 - Penhor Rápida COM Registro
 	- <b>104-0 | Caixa Econômica Federal</b>
 		- Implementação / Testes 
 			- Carteiras
