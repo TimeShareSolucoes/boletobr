@@ -11,12 +11,13 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 - Eliminei dependências de VB.NET (Microsoft.VisualBasic) para utilização da função Strings.Mid no cálculo do módulo 11.
 - Renderização de boletos em projetos separados, eliminando dependências. Ex: Aplicativo Windows Forms utilizando biblioteca System.Web.
 
-Tarefas/Implementações:
+## Tarefas/Implementações:
+
 - Arquitetura
 	- [ ] Classes base
 	- [ ] Common methods
 - Bancos Brasileiros
-	- <b>001-9 | Banco do Brasil</b> 
+	- <b>001-9 | Banco do Brasil</b>
 		- Implementação / Testes
 			- Carteiras
 				- [ ] Carteira 11 
