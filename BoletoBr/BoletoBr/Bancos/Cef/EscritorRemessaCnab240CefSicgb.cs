@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BoletoBr.Dominio;
 using BoletoBr.Enums;
+using BoletoBr.Interfaces;
 
 namespace BoletoBr.Bancos.Cef
 {
@@ -59,7 +60,7 @@ namespace BoletoBr.Bancos.Cef
             //}
 
             //EscreverTrailerDeLote();
-            //EscreverTrailer(qtdLotes, qtdRegistros)
+            //EscreverTrailer(qtdLotes, qtdRegistros);
 
             return null;
         }

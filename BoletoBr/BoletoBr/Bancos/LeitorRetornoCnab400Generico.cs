@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BoletoBr.Arquivo.CNAB400.Retorno;
 using BoletoBr.Dominio;
 
@@ -73,17 +70,17 @@ namespace BoletoBr.Bancos
 
         public HeaderRetornoCnab400 ObterHeader()
         {
-            return null;
+            throw new NotImplementedException();
         }
 
         public List<DetalheRetornoCnab400> ObterRegistrosDetalhe()
         {
-            return null;
+            throw new NotImplementedException();
         }
 
         public TrailerRetornoCnab400 ObterTrailer()
         {
-            return null;
+            throw new NotImplementedException();
         }
     }
 }

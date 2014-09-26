@@ -62,7 +62,7 @@ namespace BoletoBr.Dominio.CodigoTarifas.BancoBrasil
         {
             try
             {
-                this.Banco = new Bancos.BancoBrasil.BancoBrasil();
+                this.Banco = new Bancos.Brasil.BancoBrasil();
 
                 switch ((EnumCodigoTarifasBancoBrasil)codigo)
                 {

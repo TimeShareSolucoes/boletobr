@@ -9,6 +9,7 @@ using BoletoBr.Arquivo.CNAB400.Retorno;
 using BoletoBr.Dominio;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Fabricas;
+using BoletoBr.Interfaces;
 
 namespace BoletoBr.Bancos.Itau
 {

@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.Net.Mime;
 using BoletoBr.Bancos.Bradesco;
 using BoletoBr.Dominio;
 using BoletoBr.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BoletoBr.UnitTests.Tests.Bancos
+namespace BoletoBr.UnitTests.TestsBancos
 {
     [TestClass]
     public class BancoBradescoTests

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BoletoBr.Bancos;
+using BoletoBr.Bancos.Brasil;
 using BoletoBr.Interfaces;
 
 namespace BoletoBr.Fabricas
@@ -18,7 +19,7 @@ namespace BoletoBr.Fabricas
                 {
                     /* 001 - Banco do Brasil */
                     case "001":
-                        return new Bancos.BancoBrasil.BancoBrasil();
+                        return new BancoBrasil();
                         break;
                     /* 003 - Banco da Amazônia */
                     case "003":

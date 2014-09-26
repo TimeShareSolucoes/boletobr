@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using BoletoBr.Interfaces;
 
 namespace BoletoBr.Bancos.Bradesco
 {
@@ -53,7 +54,7 @@ namespace BoletoBr.Bancos.Bradesco
                 header = header.PreencherValorNaLinha(47, 76, boleto.CedenteBoleto.Nome.ToUpper().PadRight(30, ' '));
                 header = header.PreencherValorNaLinha(77, 79, "237");
                 header = header.PreencherValorNaLinha(80, 94, "BRADESCO".PadRight(15, ' '));
-                header = header.PreencherValorNaLinha(95, 100, DateTime.Now.ToString("ddMMyy").Replace("/", ""));
+                header = header.PreencherValorNaLinha(95, 100, DateTime.Now.ToString("ddMMyy"));
                 header = header.PreencherValorNaLinha(101, 108, string.Empty.PadRight(8, ' '));
                 header = header.PreencherValorNaLinha(109, 110, "MX");
                 header = header.PreencherValorNaLinha(111, 117, numeroRemessa.ToString(CultureInfo.InvariantCulture).PadLeft(7, '0'));

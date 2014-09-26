@@ -1,20 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using BoletoBr.Arquivo.Generico;
 using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.Dominio;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
 using BoletoBr.Interfaces;
-using Microsoft.SqlServer.Server;
 
 namespace BoletoBr.Bancos.Cef
 {
@@ -438,6 +430,9 @@ namespace BoletoBr.Bancos.Cef
 
         public void FormataNumeroDocumento(Boleto boleto)
         {
+            if (String.IsNullOrEmpty(boleto.NumeroDocumento) || String.IsNullOrEmpty(boleto.NumeroDocumento.TrimStart('0')))
+                throw new Exception("Número do Documento não foi informado.");
+
             boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(10, '0');
         }
 
@@ -1046,7 +1041,28 @@ namespace BoletoBr.Bancos.Cef
 
         public RemessaCnab240 GerarArquivoRemessaCnab240(List<Boleto> boletos)
         {
-            throw new NotImplementedException();
+            if ((boletos == null) || (boletos.Count == 0))
+                throw new Exception("Não há boletos para gerar a remessa.");
+
+            //foreach (var boleto in boletos)
+            //{
+            //    if (boleto.TipoArquivo == TipoArquivo.Cnab240)
+            //    {
+            //        var escritor = new EscritorRemessaCnab240CefSicgb();
+            //        var remessaProcessada = escritor.EscreverArquivo(boletos);
+
+            //        var objRetornar = new EscritorArquivoRemessaGenericoCnab240();
+            //    }
+
+            //    if (boleto.TipoArquivo == TipoArquivo.Cnab400)
+            //    {
+            //        //var escritor = new EscritorRemessaCnab240CefSicgb();
+            //        //var remessaProcessada = escritor.EscreverArquivo(boletos);
+
+            //        //var objRetornar = new EscritorArquivoRemessaGenericoCnab240();
+            //    }
+            //}
+            return null;
         }
 
         public RemessaCnab400 GerarArquivoRemessaCnab400(List<Boleto> boletos)

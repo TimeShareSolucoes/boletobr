@@ -98,6 +98,9 @@ namespace BoletoBr.Bancos.Hsbc
         /// <param name="boleto"></param>
         public void FormataNumeroDocumento(Boleto boleto)
         {
+            if (String.IsNullOrEmpty(boleto.NumeroDocumento) || String.IsNullOrEmpty(boleto.NumeroDocumento.TrimStart('0')))
+                throw new Exception("Número do Documento não foi informado.");
+
             boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(13, '0');
         }
 
@@ -633,6 +636,9 @@ namespace BoletoBr.Bancos.Hsbc
 
         public void FormataNossoNumero(Boleto boleto)
         {
+            if (String.IsNullOrEmpty(boleto.SequencialNossoNumero) || String.IsNullOrEmpty(boleto.SequencialNossoNumero.TrimStart('0')))
+                throw new Exception("Sequencial Nosso Número não foi informado.");
+
             try
             {
                 if (boleto.CarteiraCobranca.Codigo == "CSB")

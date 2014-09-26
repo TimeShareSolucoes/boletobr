@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Text;
 using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.Dominio;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
-using BoletoBr.Fabricas;
 using BoletoBr.Interfaces;
 
 namespace BoletoBr.Bancos.Itau
@@ -145,7 +143,7 @@ namespace BoletoBr.Bancos.Itau
             {
                 boleto.Moeda = MoedaBanco;
 
-                if (string.IsNullOrEmpty(boleto.Moeda))
+                if (String.IsNullOrEmpty(boleto.Moeda))
                     throw new Exception("Espécie/Moeda para o boleto não foi informada.");
 
                 if ((boleto.Moeda == "9") || (boleto.Moeda == "REAL") || (boleto.Moeda == "R$"))
@@ -410,6 +408,9 @@ namespace BoletoBr.Bancos.Itau
 
         public void FormataNossoNumero(Boleto boleto)
         {
+            if (String.IsNullOrEmpty(boleto.SequencialNossoNumero) || String.IsNullOrEmpty(boleto.SequencialNossoNumero.TrimStart('0')))
+                throw new Exception("Sequencial Nosso Número não foi informado.");
+
             boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero.PadLeft(8, '0'));
 
             try
@@ -428,15 +429,10 @@ namespace BoletoBr.Bancos.Itau
 
         public void FormataNumeroDocumento(Boleto boleto)
         {
-            try
-            {
+            if (String.IsNullOrEmpty(boleto.NumeroDocumento) || String.IsNullOrEmpty(boleto.NumeroDocumento.TrimStart('0')))
+                throw new Exception("Número do Documento não foi informado.");
+
                 boleto.NumeroDocumento = string.Format("{0}-{1}", boleto.NumeroDocumento, Common.Mod10(boleto.NumeroDocumento));
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(string.Format("<BoletoBr>" +
-                                                "{0}Mensagem: Falha ao formatar número do documento.", Environment.NewLine), ex);
-            }
         }
 
         public IEspecieDocumento ObtemEspecieDocumento(EnumEspecieDocumento especie)

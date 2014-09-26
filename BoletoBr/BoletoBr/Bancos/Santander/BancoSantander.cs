@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.Dominio;
 using BoletoBr.Dominio.Instrucao;
@@ -31,11 +29,11 @@ namespace BoletoBr.Bancos.Santander
 
         public BancoSantander()
         {
-            this.CodigoBanco = "033";
-            this.DigitoBanco = "7";
-            this.NomeBanco = "Santander";
-            this.LocalDePagamento = "Pagar preferencialmente no banco santander";
-            this.MoedaBanco = "9";
+            CodigoBanco = "033";
+            DigitoBanco = "7";
+            NomeBanco = "Santander";
+            LocalDePagamento = "Pagar preferencialmente no banco santander";
+            MoedaBanco = "9";
         }
 
         public void ValidaBoletoComNormasBanco(Boleto boleto)
@@ -49,13 +47,13 @@ namespace BoletoBr.Bancos.Santander
                 throw new NotImplementedException("Carteira não implementada.");
 
             //Banco 008  - Utilizar somente 09 posições do Nosso Numero (08 posições + DV), zerando os 04 primeiros dígitos
-            if (this.CodigoBanco == "008")
+            if (CodigoBanco == "008")
             {
                 if (boleto.NossoNumeroFormatado.Length != 8)
                     throw new NotImplementedException("Nosso Número deve ter 8 posições para o banco 008.");
             }
 
-            if (this.CodigoBanco == "033")
+            if (CodigoBanco == "033")
             {
                 if (boleto.NossoNumeroFormatado.Length == 7 && boleto.CarteiraCobranca.Codigo.Equals("101"))
                     boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero.PadLeft(13, '0'));
@@ -65,7 +63,7 @@ namespace BoletoBr.Bancos.Santander
             }
 
             //Banco 353  - Utilizar somente 08 posições do Nosso Numero (07 posições + DV), zerando os 05 primeiros dígitos
-            if (this.CodigoBanco == "353")
+            if (CodigoBanco == "353")
             {
                 if (boleto.NossoNumeroFormatado.Length != 7)
                     throw new NotImplementedException("Nosso Número deve ter 7 posições para o banco 353.");
@@ -78,7 +76,7 @@ namespace BoletoBr.Bancos.Santander
                 boleto.Especie = new EspecieDocumento(Convert.ToInt32("02"));
 
             if (boleto.PercentualIOS > 10 &
-                (this.CodigoBanco == "008" || this.CodigoBanco == "033" || this.CodigoBanco == "353"))
+                (CodigoBanco == "008" || CodigoBanco == "033" || CodigoBanco == "353"))
                 throw new Exception("O percentual do IOS é limitado a 9% para o Banco Santander");
 
             var nossoNumeroFormatadoA = boleto.NossoNumeroFormatado.Substring(0, boleto.NossoNumeroFormatado.Length - 1);
@@ -88,9 +86,9 @@ namespace BoletoBr.Bancos.Santander
 
         public void FormataMoeda(Boleto boleto)
         {
-            boleto.Moeda = this.MoedaBanco;
+            boleto.Moeda = MoedaBanco;
 
-            if (string.IsNullOrEmpty(boleto.Moeda))
+            if (String.IsNullOrEmpty(boleto.Moeda))
                 throw new Exception("Espécie/Moeda para o boleto não foi informada.");
 
             if ((boleto.Moeda == "9") || (boleto.Moeda == "REAL") || (boleto.Moeda == "R$"))
@@ -102,7 +100,7 @@ namespace BoletoBr.Bancos.Santander
         public void FormatarBoleto(Boleto boleto)
         {
             //Atribui local de pagamento
-            boleto.LocalPagamento = this.LocalDePagamento;
+            boleto.LocalPagamento = LocalDePagamento;
 
             boleto.ValidaDadosEssenciaisDoBoleto();
 
@@ -264,11 +262,8 @@ namespace BoletoBr.Bancos.Santander
 
         public void FormataNossoNumero(Boleto boleto)
         {
-            if (String.IsNullOrEmpty(boleto.SequencialNossoNumero))
+            if (String.IsNullOrEmpty(boleto.SequencialNossoNumero) || String.IsNullOrEmpty(boleto.SequencialNossoNumero.TrimStart('0')))
                 throw new Exception("Sequencial Nosso Número não foi informado.");
-
-            if (String.IsNullOrEmpty(boleto.SequencialNossoNumero.TrimStart('0')))
-                throw new Exception("Sequencial Nosso Número não pode ser 0 (zero).");
 
             boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero);
 
@@ -278,11 +273,8 @@ namespace BoletoBr.Bancos.Santander
 
         public void FormataNumeroDocumento(Boleto boleto)
         {
-            if (String.IsNullOrEmpty(boleto.NumeroDocumento))
+            if (String.IsNullOrEmpty(boleto.NumeroDocumento) || String.IsNullOrEmpty(boleto.NumeroDocumento.TrimStart('0')))
                 throw new Exception("Número do Documento não foi informado.");
-
-            if (String.IsNullOrEmpty(boleto.NumeroDocumento.TrimStart('0')))
-                throw new Exception("Número do Documento não pode ser 0 (zero).");
 
             boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(10, '0');
         }

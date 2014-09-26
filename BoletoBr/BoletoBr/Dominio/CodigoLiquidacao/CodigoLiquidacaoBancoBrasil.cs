@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BoletoBr.Bancos.BancoBrasil;
+using BoletoBr.Bancos.Brasil;
 
 namespace BoletoBr.Dominio.CodigoLiquidacao
 {
