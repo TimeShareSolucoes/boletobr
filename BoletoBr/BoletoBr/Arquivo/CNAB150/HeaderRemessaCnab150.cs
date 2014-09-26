@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoletoBr.Bancos;
 
-namespace BoletoBr
+namespace BoletoBr.Arquivo.CNAB150
 {
     public class HeaderRemessaCnab150
     {

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using BoletoBr.Dominio;
+using BoletoBr.Arquivo;
 using BoletoBr.Enums;
 using BoletoBr.Interfaces;
 
@@ -125,9 +126,9 @@ namespace BoletoBr.Bancos.Cef
 
                 // Código Remessa/Retorno padronizado para "1" no envio do arquivo
                 header = header.PreencherValorNaLinha(143, 143, "1");                                                                             
-                header = header.PreencherValorNaLinha(144, 151, DateTime.Now.ToString("d").Replace("/", ""));
-                header = header.PreencherValorNaLinha(152, 157, DateTime.Now.ToString("T").Replace(":", ""));                                
-                header = header.PreencherValorNaLinha(158, 163, numeroRegistro.ToString().PadLeft(6, '0'));
+                header = header.PreencherValorNaLinha(144, 151, DateTime.Now.ToString("ddMMyy"));
+                header = header.PreencherValorNaLinha(152, 157, DateTime.Now.ToString("hhmmss"));
+                header = header.PreencherValorNaLinha(158, 163, numeroRegistro.ToString(CultureInfo.InvariantCulture).PadLeft(6, '0'));
                 header = header.PreencherValorNaLinha(164, 166, "050");
                 header = header.PreencherValorNaLinha(167, 171, string.Empty.PadLeft(5, '0')); 
                 header = header.PreencherValorNaLinha(172, 191, string.Empty.PadRight(20, ' '));

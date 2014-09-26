@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoletoBr.Enums;
+﻿using BoletoBr.Enums;
 
-namespace BoletoBr.Dominio
+namespace BoletoBr.Arquivo
 {
     /// <summary>
     /// Contém informações que são pertinentes a um boleto, mas para geração da Remessa. Não são necessárias para Impressão do Boleto
@@ -41,9 +36,9 @@ namespace BoletoBr.Dominio
 
         public Remessa(EnumTipoAmbiemte tipoAmbiente, EnumCodigoOcorrenciaRemessa codigoOcorrencia, string tipoDocumento)
         {
-            this.Ambiente = tipoAmbiente;
-            this.CodigoOcorrencia = codigoOcorrencia;
-            this.TipoDocumento = tipoDocumento;
+            Ambiente = tipoAmbiente;
+            CodigoOcorrencia = codigoOcorrencia;
+            TipoDocumento = tipoDocumento;
         }
 
         #endregion

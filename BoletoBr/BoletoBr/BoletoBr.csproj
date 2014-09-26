@@ -55,8 +55,6 @@
     <Compile Include="Arquivo\TipoLinhaArquivoGerado.cs" />
     <Compile Include="Arquivo\TipoLinhaArquivoLido.cs" />
     <Compile Include="Bancos\Amazonia\BancoAmazonia.cs" />
-    <Compile Include="Bancos\Amazonia\CarteiraCobrancaBancoAmazoniaCnr.cs" />
-    <Compile Include="Bancos\Amazonia\CarteiraCobrancaBancoAmazoniaCsb.cs" />
     <Compile Include="Bancos\Bradesco\EscritorRemessaCnab400Bradesco.cs" />
     <Compile Include="Bancos\Bradesco\LeitorRetornoCnab240Bradesco.cs" />
     <Compile Include="Bancos\Bradesco\LeitorRetornoCnab400Bradesco.cs" />

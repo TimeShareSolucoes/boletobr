@@ -1,4 +1,5 @@
 ﻿using System;
+using BoletoBr.Arquivo;
 using BoletoBr.Bancos.Cef;
 using BoletoBr.Dominio;
 using BoletoBr.Enums;

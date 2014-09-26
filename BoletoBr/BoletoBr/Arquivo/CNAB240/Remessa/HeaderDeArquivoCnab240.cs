@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BoletoBr.Arquivo
+namespace BoletoBr.Arquivo.CNAB240.Remessa
 {
     public class HeaderDeArquivoCnab240
     {
@@ -13,10 +9,6 @@ namespace BoletoBr.Arquivo
         string _numeroRemessa;
         string _dataRemessa;
         string _horaRemessa;
-
-        public HeaderDeArquivoCnab240()
-        {
-        }
 
         #region Propriedades
 
@@ -46,17 +38,17 @@ namespace BoletoBr.Arquivo
 
         #region Métodos de Instância
 
-        public void LerHeaderDeArquivoCNAB240(string Registro)
+        public void LerHeaderDeArquivoCnab240(string registro)
         {
             try
             {
-                if (Registro.Substring(7, 1) != "0")
+                if (registro.Substring(7, 1) != "0")
                     throw new Exception("Registro inválido. O detalhe não possuí as características de Header de Arquivo.");
 
-                _mensagemRemessa = Registro.Substring(171, 20).Trim();
-                _numeroRemessa = Registro.Substring(157, 6).Trim().PadLeft(6, '0');
-                _dataRemessa = Convert.ToDecimal(Registro.Substring(143, 8)).ToString("00/00/0000");
-                _horaRemessa = Convert.ToDecimal(Registro.Substring(151, 6)).ToString("00:00:00");
+                _mensagemRemessa = registro.Substring(171, 20).Trim();
+                _numeroRemessa = registro.Substring(157, 6).Trim().PadLeft(6, '0');
+                _dataRemessa = Convert.ToDecimal(registro.Substring(143, 8)).ToString("00/00/0000");
+                _horaRemessa = Convert.ToDecimal(registro.Substring(151, 6)).ToString("00:00:00");
 
             }
             catch (Exception ex)

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using BoletoBr.Bancos;
-
+﻿
 namespace BoletoBr.Arquivo.Generico.Retorno
 {
     public class RetornoHeaderGenerico

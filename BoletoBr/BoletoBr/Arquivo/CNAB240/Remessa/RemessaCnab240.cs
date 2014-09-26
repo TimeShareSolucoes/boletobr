@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoletoBr.Bancos;
+﻿using System.Collections.Generic;
 using BoletoBr.Interfaces;
 
-namespace BoletoBr
+namespace BoletoBr.Arquivo.CNAB240.Remessa
 {
     public class RemessaCnab240
     {

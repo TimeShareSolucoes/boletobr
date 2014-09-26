@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BoletoBr.Arquivo.CNAB240.Remessa;
+using BoletoBr.Arquivo.CNAB400.Remessa;
 using BoletoBr.Arquivo.Generico.Retorno;
-using BoletoBr.Bancos.Hsbc;
-using BoletoBr.Dominio;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
 using BoletoBr.Interfaces;
@@ -21,37 +17,20 @@ namespace BoletoBr.Bancos.Amazonia
         public string DigitoBanco { get; set; }
         public string NomeBanco { get; set; }
         public Image LogotipoBancoParaExibicao { get; set; }
+        public string LocalDePagamento { get; private set; }
+        public string MoedaBanco { get; private set; }
 
         public BancoAmazonia()
         {
             CodigoBanco = "003";
             DigitoBanco = "5";
             NomeBanco = "Banco da Amazônia S/A";
-            this.LocalDePagamento = "Pagável em qualquer banco até o vencimento. Após o vencimento pagar apenas nas agências do Banco da Amazônia S/A";
-            this.MoedaBanco = "9";
-
-            /* Adiciona carteiras de cobrança */
-            _carteirasCobrancaBasa = new List<CarteiraCobranca>();
-            _carteirasCobrancaBasa.Add(new CarteiraCobrancaBancoAmazoniaCnr());
-            _carteirasCobrancaBasa.Add(new CarteiraCobrancaBancoAmazoniaCsb());
+            LocalDePagamento = "Pagável em qualquer banco até o vencimento. Após o vencimento pagar apenas nas agências do Banco da Amazônia S/A";
+            MoedaBanco = "9";
         }
 
-        private string _dacNossoNumero = string.Empty;
-        private int _dacBoleto = 0;
-        private readonly List<CarteiraCobranca> _carteirasCobrancaBasa;
-
-        public string LocalDePagamento { get; private set; }
-        public string MoedaBanco { get; private set; }
-
-        public List<CarteiraCobranca> GetCarteirasCobranca()
-        {
-            return _carteirasCobrancaBasa;
-        }
-
-        public CarteiraCobranca GetCarteiraCobrancaPorCodigo(string codigoCarteira)
-        {
-            return GetCarteirasCobranca().Find(fd => fd.Codigo == codigoCarteira);
-        }
+        //private string _dacNossoNumero = string.Empty;
+        private int _dacBoleto;
 
         public void FormataLinhaDigitavel(Boleto boleto)
         {
@@ -59,7 +38,7 @@ namespace BoletoBr.Bancos.Amazonia
 
             # region GRUPO 1
 
-            string banco = this.CodigoBanco.PadLeft(3, '0');
+            string banco = CodigoBanco.PadLeft(3, '0');
             string moeda = boleto.Moeda;
             string agencia = Common.Right(boleto.CedenteBoleto.ContaBancariaCedente.Agencia, 3) +
                 boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia;
@@ -106,7 +85,7 @@ namespace BoletoBr.Bancos.Amazonia
 
             #region GRUPO 5
 
-            string fatorvencimento = Common.FatorVencimento(boleto.DataVencimento).ToString();
+            string fatorvencimento = Common.FatorVencimento(boleto.DataVencimento).ToString(CultureInfo.InvariantCulture);
             string valordocumento = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "").PadLeft(10, '0');
 
             string grupo5 = fatorvencimento + valordocumento;
@@ -131,13 +110,13 @@ namespace BoletoBr.Bancos.Amazonia
             // Código de Barras
             //banco & moeda & fator & valor & carteira & nossonumero & dac_nossonumero & agencia & conta & dac_conta & "000"
 
-            string banco = this.CodigoBanco.PadLeft(3, '0');
+            string banco = CodigoBanco.PadLeft(3, '0');
             string moeda = boleto.Moeda;
             //string digito = "";
             string valorBoleto = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "");
             valorBoleto = valorBoleto.PadLeft(10, '0');
 
-            string fatorvencimento = Common.FatorVencimento(boleto.DataVencimento).ToString();
+            string fatorvencimento = Common.FatorVencimento(boleto.DataVencimento).ToString(CultureInfo.InvariantCulture);
 
             string agencia = Common.Right(boleto.CedenteBoleto.ContaBancariaCedente.Agencia, 3) +
                 boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia;
@@ -172,17 +151,19 @@ namespace BoletoBr.Bancos.Amazonia
             boleto.NumeroDocumento = string.Format("{0}", boleto.NumeroDocumento);
         }
 
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrenciaRemessa, double valorOcorrencia,
+            DateTime dataOcorrencia)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEspecieDocumento ObtemEspecieDocumento(EnumEspecieDocumento especie)
         {
             throw new NotImplementedException();
         }
 
-        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao, int diasInstrucao)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia, DateTime dataOcorrencia)
+        public IInstrucao ObtemInstrucaoPadronizada(EnumTipoInstrucao tipoInstrucao, double valorInstrucao, DateTime dataInstrucao,
+            int diasInstrucao)
         {
             throw new NotImplementedException();
         }
@@ -202,129 +183,6 @@ namespace BoletoBr.Bancos.Amazonia
             throw new NotImplementedException();
         }
 
-        public void LerArquivoRetorno(IBanco banco, Stream arquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderRemessa(string numeroConvenio, Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderRemessa(string numeroConvenio, Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa,
-            Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderRemessa(Cedente cendente, TipoArquivo tipoArquivo, int numeroArquivoRemessa)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerRemessa(int numeroRegistro, TipoArquivo tipoArquivo, Cedente cedente, decimal vltitulostotal)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarHeaderLoteRemessa(string numeroConvenio, Cedente cendente, int numeroArquivoRemessa, TipoArquivo tipoArquivo,
-            Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio, Cedente cedente)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoPRemessa(Boleto boleto, int numeroRegistro, string numeroConvenio, Cedente cedente,
-            Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoQRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoQRemessa(Boleto boleto, int numeroRegistro, Sacado sacado)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarDetalheSegmentoRRemessa(Boleto boleto, int numeroRegistro, TipoArquivo tipoArquivo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerArquivoRemessa(int numeroRegistro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerArquivoRemessa(int numeroRegistro, Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerLoteRemessa(int numeroRegistro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GerarTrailerLoteRemessa(int numeroRegistro, Boleto boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheSegmentoTRetornoCnab240 LerDetalheSegmentoTRetornoCnab240(string registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheSegmentoURetornoCnab240 LerDetalheSegmentoURetornoCnab240(string registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheSegmentoWRetornoCnab240 LerDetalheSegmentoWRetornoCnab240(string registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheRetornoGenericoCnab400 LerDetalheRetornoCnab400(string registro)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Cedente Cedente { get; private set; }
-        public int Codigo { get; set; }
-        public string Nome { get; private set; }
-        public string Digito { get; private set; }
-
         public void FormataNossoNumero(Boleto boleto)
         {
             boleto.SetNossoNumeroFormatado(string.Format("{0}", boleto.SequencialNossoNumero.PadLeft(16, '0')));
@@ -332,7 +190,7 @@ namespace BoletoBr.Bancos.Amazonia
 
         public void FormataMoeda(Boleto boleto)
         {
-            boleto.Moeda = this.MoedaBanco;
+            boleto.Moeda = MoedaBanco;
 
             if (string.IsNullOrEmpty(boleto.Moeda))
                 throw new Exception("Espécie/Moeda para o boleto não foi informada.");
@@ -346,7 +204,7 @@ namespace BoletoBr.Bancos.Amazonia
         public void FormatarBoleto(Boleto boleto)
         {
             //Atribui o local de pagamento
-            boleto.LocalPagamento = this.LocalDePagamento;
+            boleto.LocalPagamento = LocalDePagamento;
 
             boleto.ValidaDadosEssenciaisDoBoleto();
 
@@ -374,23 +232,20 @@ namespace BoletoBr.Bancos.Amazonia
                 throw new NotImplementedException("Nosso número inválido");
 
             //Verifica se o tamanho para o NossoNumero s�o 10 d�gitos (5 range + 5 numero sequencial)
-            if (Convert.ToInt32(boleto.NossoNumeroFormatado).ToString().Length > 10)
+            if (Convert.ToInt32(boleto.NossoNumeroFormatado).ToString(CultureInfo.InvariantCulture).Length > 10)
                 throw new NotImplementedException("A quantidade de dígitos do nosso número para a carteira " + boleto.CarteiraCobranca.Codigo + ", são 10 números.");
-            else if (Convert.ToInt32(boleto.NossoNumeroFormatado).ToString().Length < 10)
+            if (Convert.ToInt32(boleto.NossoNumeroFormatado).ToString(CultureInfo.InvariantCulture).Length < 10)
                 boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(10, '0'));
         }
 
         public void ValidaBoleto(Boleto boleto)
         {
             //Verifica se data do processamento � valida
-            //if (boleto.DataProcessamento.ToString("dd/MM/yyyy") == "01/01/0001")
-            if (boleto.DataProcessamento == DateTime.MinValue) // diegomodolo (diego.ribeiro@nectarnet.com.br)
+            if (boleto.DataProcessamento == DateTime.MinValue)
                 boleto.DataProcessamento = DateTime.Now;
 
-
             //Verifica se data do documento � valida
-            //if (boleto.DataDocumento.ToString("dd/MM/yyyy") == "01/01/0001")
-            if (boleto.DataDocumento == DateTime.MinValue) // diegomodolo (diego.ribeiro@nectarnet.com.br)
+            if (boleto.DataDocumento == DateTime.MinValue)
                 boleto.DataDocumento = DateTime.Now;
 
             FormataNossoNumero(boleto);
@@ -403,54 +258,50 @@ namespace BoletoBr.Bancos.Amazonia
 
         private int Mod11_CodigoBarra(string value, int Base)
         {
-            int Digito, Soma = 0, Peso = 2;
+            int digito, soma = 0, peso = 2;
             for (int i = value.Length; i > 0; i--)
             {
-                Soma = Soma + (Convert.ToInt32(Common.Mid(value, i, 1)) * Peso);
-                if (Peso == Base)
-                    Peso = 2;
+                soma = soma + (Convert.ToInt32(Common.Mid(value, i, 1)) * peso);
+                if (peso == Base)
+                    peso = 2;
                 else
-                    Peso = Peso + 1;
+                    peso = peso + 1;
             }
-            if (((Soma % 11) == 0) || ((Soma % 11) == 10) || ((Soma % 11) == 1))
+            if (((soma % 11) == 0) || ((soma % 11) == 10) || ((soma % 11) == 1))
             {
-                Digito = 1;
+                digito = 1;
             }
             else
             {
-                Digito = 11 - (Soma % 11);
+                digito = 11 - (soma % 11);
             }
-            return Digito;
+            return digito;
         }
 
         private int Mod10_LinhaDigitavel(string seq)
         {
-            int Digito, Soma = 0, Peso = 2, m1;
-            string m2;
+            int soma = 0, peso = 2;
             for (int i = seq.Length; i > 0; i--)
             {
-                m1 = (Convert.ToInt32(Common.Mid(seq, i, 1))*Peso);
-                m2 = m1.ToString();
+                int m1 = (Convert.ToInt32(Common.Mid(seq, i, 1))*peso);
+                string m2 = m1.ToString(CultureInfo.InvariantCulture);
 
                 for (int j = 1; j <= m2.Length; j++)
                 {
-                    Soma += Convert.ToInt32(Common.Mid(m2, j, 1));
+                    soma += Convert.ToInt32(Common.Mid(m2, j, 1));
                 }
 
-                if (Peso == 2)
-                    Peso = 1;
+                if (peso == 2)
+                    peso = 1;
                 else
-                    Peso = Peso + 1;
+                    peso = peso + 1;
             }  
-            Digito = ((10 - (Soma % 10)) % 10);
-            return Digito;
+            int digito = ((10 - (soma % 10)) % 10);
+            return digito;
         }
 
         #endregion
 
-        /// <summary>
-        /// Efetua as Valida��es dentro da classe Boleto, para garantir a geração da remessa
-        /// </summary>
         //public override bool ValidarRemessa(TipoArquivo tipoArquivo, string numeroConvenio, IBanco banco,
         //    Cedente cedente, Boletos boletos, int numeroArquivoRemessa, out string mensagem)
         //{

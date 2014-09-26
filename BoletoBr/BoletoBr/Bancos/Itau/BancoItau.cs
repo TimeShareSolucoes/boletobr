@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using BoletoBr.Arquivo.CNAB240.Remessa;
+using BoletoBr.Arquivo.CNAB400.Remessa;
 using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.Dominio;
 using BoletoBr.Dominio.Instrucao;

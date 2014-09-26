@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using BoletoBr.Arquivo;
 using BoletoBr.Bancos;
 using BoletoBr.Dominio;
 using BoletoBr.Dominio.Instrucao;

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BoletoBr.Enums;
 
-namespace BoletoBr.Dominio
+namespace BoletoBr.Arquivo.CNAB240.Retorno
 {
     public class DetalheSegmentoERetornoCnab240
     {
@@ -256,37 +252,37 @@ namespace BoletoBr.Dominio
         {
             try
             {
-                if (MetodosExtensao.ExtrairValorDaLinha(registro, 14, 14) != "E")
+                if (registro.ExtrairValorDaLinha(14, 14) != "E")
                     throw new Exception("Registro inválido. O detalhe não possui as características do segmento E.");
 
-                CodigoBanco = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 1, 3));
-                LoteServico = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 4, 7));
-                TipoRegistro = MetodosExtensao.ExtrairValorDaLinha(registro, 8, 8);
-                NumeroRegistro = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 9, 13));
-                Segmento = MetodosExtensao.ExtrairValorDaLinha(registro, 14, 14);
-                UsoExclusivoFebrabanCnab = MetodosExtensao.ExtrairValorDaLinha(registro, 15, 17);
-                TipoInscricaoCliente = (TipoInscricao) MetodosExtensao.ExtrairValorDaLinha(registro, 18, 18)[0];
-                NumeroInscricaoCliente = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 19, 32));
-                CodigoConvenioBanco = MetodosExtensao.ExtrairValorDaLinha(registro, 33, 52);
-                AgenciaMantenedoraConta = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 53, 57));
-                DigitoVerificadorAgencia = MetodosExtensao.ExtrairValorDaLinha(registro, 58, 58);
-                NumeroContaCorrente = Convert.ToInt32(MetodosExtensao.ExtrairValorDaLinha(registro, 59, 70));
-                DigitoVerificadorConta = MetodosExtensao.ExtrairValorDaLinha(registro, 71, 71);
-                DigitoVerificadorAgenciaConta = MetodosExtensao.ExtrairValorDaLinha(registro, 72, 72);
-                NomeEmpresa = MetodosExtensao.ExtrairValorDaLinha(registro, 73, 102);
-                UsoExclusivoFebrabanCnab2 = MetodosExtensao.ExtrairValorDaLinha(registro, 103, 108);
-                NaturezaLancamento = MetodosExtensao.ExtrairValorDaLinha(registro, 109, 111);
-                TipoComplementoLancamento = (TipoComplementoLancamento) MetodosExtensao.ExtrairValorDaLinha(registro, 112, 113)[0];
-                ComplementoLancamento = MetodosExtensao.ExtrairValorDaLinha(registro, 114, 133);
-                IdentificacaoIsencaoCpmf = (IsencaoCpmf)MetodosExtensao.ExtrairValorDaLinha(registro, 134, 134)[0];
-                DataContabil = Convert.ToDateTime(MetodosExtensao.ExtrairValorDaLinha(registro, 135, 142));
-                DataLancamento = Convert.ToDateTime(MetodosExtensao.ExtrairValorDaLinha(registro, 143, 150));
-                ValorLancamento = decimal.Parse(MetodosExtensao.ExtrairValorDaLinha(registro, 151, 168)) / 100m;
-                TipoLancamento = (TipoLancamento)MetodosExtensao.ExtrairValorDaLinha(registro, 169, 169)[0];
-                CategoriaLancamento = (CategoriaLancamento)MetodosExtensao.ExtrairValorDaLinha(registro, 170, 172)[0];
-                CodigoHistorico = MetodosExtensao.ExtrairValorDaLinha(registro, 173, 176);
-                HistoricoLancamento = MetodosExtensao.ExtrairValorDaLinha(registro, 177, 201);
-                NumeroDocumentoComplemento = MetodosExtensao.ExtrairValorDaLinha(registro, 202, 240);
+                CodigoBanco = Convert.ToInt32(registro.ExtrairValorDaLinha(1, 3));
+                LoteServico = Convert.ToInt32(registro.ExtrairValorDaLinha(4, 7));
+                TipoRegistro = registro.ExtrairValorDaLinha(8, 8);
+                NumeroRegistro = Convert.ToInt32(registro.ExtrairValorDaLinha(9, 13));
+                Segmento = registro.ExtrairValorDaLinha(14, 14);
+                UsoExclusivoFebrabanCnab = registro.ExtrairValorDaLinha(15, 17);
+                TipoInscricaoCliente = (TipoInscricao) registro.ExtrairValorDaLinha(18, 18)[0];
+                NumeroInscricaoCliente = Convert.ToInt32(registro.ExtrairValorDaLinha(19, 32));
+                CodigoConvenioBanco = registro.ExtrairValorDaLinha(33, 52);
+                AgenciaMantenedoraConta = Convert.ToInt32(registro.ExtrairValorDaLinha(53, 57));
+                DigitoVerificadorAgencia = registro.ExtrairValorDaLinha(58, 58);
+                NumeroContaCorrente = Convert.ToInt32(registro.ExtrairValorDaLinha(59, 70));
+                DigitoVerificadorConta = registro.ExtrairValorDaLinha(71, 71);
+                DigitoVerificadorAgenciaConta = registro.ExtrairValorDaLinha(72, 72);
+                NomeEmpresa = registro.ExtrairValorDaLinha(73, 102);
+                UsoExclusivoFebrabanCnab2 = registro.ExtrairValorDaLinha(103, 108);
+                NaturezaLancamento = registro.ExtrairValorDaLinha(109, 111);
+                TipoComplementoLancamento = (TipoComplementoLancamento) registro.ExtrairValorDaLinha(112, 113)[0];
+                ComplementoLancamento = registro.ExtrairValorDaLinha(114, 133);
+                IdentificacaoIsencaoCpmf = (IsencaoCpmf)registro.ExtrairValorDaLinha(134, 134)[0];
+                DataContabil = Convert.ToDateTime(registro.ExtrairValorDaLinha(135, 142));
+                DataLancamento = Convert.ToDateTime(registro.ExtrairValorDaLinha(143, 150));
+                ValorLancamento = decimal.Parse(registro.ExtrairValorDaLinha(151, 168)) / 100m;
+                TipoLancamento = (TipoLancamento)registro.ExtrairValorDaLinha(169, 169)[0];
+                CategoriaLancamento = (CategoriaLancamento)registro.ExtrairValorDaLinha(170, 172)[0];
+                CodigoHistorico = registro.ExtrairValorDaLinha(173, 176);
+                HistoricoLancamento = registro.ExtrairValorDaLinha(177, 201);
+                NumeroDocumentoComplemento = registro.ExtrairValorDaLinha(202, 240);
             }
             catch (Exception ex)
             {

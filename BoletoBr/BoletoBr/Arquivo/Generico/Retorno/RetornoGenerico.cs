@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Win32;
+using System.Globalization;
+using BoletoBr.Arquivo.CNAB240.Retorno;
 
 namespace BoletoBr.Arquivo.Generico.Retorno
 {
@@ -8,26 +9,28 @@ namespace BoletoBr.Arquivo.Generico.Retorno
     {
         public void Inicializa()
         {
-            this.Header = new RetornoHeaderGenerico();
-            this.RegistrosDetalhe = new List<RetornoDetalheGenerico>();
-            this.Trailer = new RetornoTrailerGenerico();
+            Header = new RetornoHeaderGenerico();
+            RegistrosDetalhe = new List<RetornoDetalheGenerico>();
+            Trailer = new RetornoTrailerGenerico();
         }
         public RetornoGenerico(RetornoCnab240 retornoCnab240)
         {
             Inicializa();
-            this.RetornoCnab240Especifico = retornoCnab240;
+            RetornoCnab240Especifico = retornoCnab240;
             /* Transformar de CNAB240 para formato genérico */
                 
             foreach (var loteAtual in retornoCnab240.Lotes)
             {
                 foreach (var d in loteAtual.RegistrosDetalheSegmentos)
                 {
-                    var detalheGenericoAdd = new RetornoDetalheGenerico();
+                    var detalheGenericoAdd = new RetornoDetalheGenerico
+                    {
+                        NossoNumero = d.SegmentoT.NossoNumero,
+                        Carteira = d.SegmentoT.CodigoCarteira.ToString(CultureInfo.InvariantCulture),
+                        NumeroDocumento = d.SegmentoT.NumeroDocumento
+                    };
 
                     // Segmento T
-                    detalheGenericoAdd.NossoNumero = d.SegmentoT.NossoNumero;
-                    detalheGenericoAdd.Carteira = d.SegmentoT.CodigoCarteira.ToString();
-                    detalheGenericoAdd.NumeroDocumento = d.SegmentoT.NumeroDocumento.ToString();
                     var valorDoc = d.SegmentoT.ValorTitulo;
                     detalheGenericoAdd.ValorDocumento = valorDoc;
                     //detalheGenericoAdd.ValorDocumento = Math.Round(d.SegmentoT.ValorTitulo, 2);
@@ -61,56 +64,58 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     //detalheGenericoAdd.DataOcorrencia = d.SegmentoU.DataOcorrenciaPagador;
                     //detalheGenericoAdd.ValorOcorrencia = d.SegmentoU.ValorOcorrenciaPagador / 100;
                     //detalheGenericoAdd.DataDebitoTarifaCustas = Convert.ToDateTime(d.SegmentoU.DataDebitoTarifa.ToString());
-                    this.RegistrosDetalhe.Add(detalheGenericoAdd);
+                    RegistrosDetalhe.Add(detalheGenericoAdd);
                 }
             }
-            this.Trailer.QtdRegistrosArquivo = retornoCnab240.Trailer.QtdRegistrosArquivo.ToString();
+            Trailer.QtdRegistrosArquivo = retornoCnab240.Trailer.QtdRegistrosArquivo.ToString(CultureInfo.InvariantCulture);
         }
 
         public RetornoGenerico(RetornoCnab400 retornoCnab400)
         {
             Inicializa();
-            this.RetornoCnab400Especifico = retornoCnab400;
+            RetornoCnab400Especifico = retornoCnab400;
             /* Transformar de CNAB400 para formato genérico */
-            this.Header.CodigoDoBanco = retornoCnab400.Header.CodigoDoBanco.ToString();
-            this.Header.Convenio = retornoCnab400.Header.NumeroConvenio.ToString();
-            this.Header.CodigoAgencia = retornoCnab400.Header.CodigoAgenciaCedente.ToString();
-            this.Header.DvAgencia = retornoCnab400.Header.DvAgenciaCedente.ToString();
-            this.Header.NumeroConta = retornoCnab400.Header.ContaCorrente.ToString();
-            this.Header.DvConta = retornoCnab400.Header.DvContaCorrente.ToString();
-            this.Header.NomeEmpresa = retornoCnab400.Header.NomeDoBeneficiario.ToString();
-            this.Header.NomeDoBanco = retornoCnab400.Header.NomeDoBanco.ToString();
+            Header.CodigoDoBanco = retornoCnab400.Header.CodigoDoBanco;
+            Header.Convenio = retornoCnab400.Header.NumeroConvenio.ToString(CultureInfo.InvariantCulture);
+            Header.CodigoAgencia = retornoCnab400.Header.CodigoAgenciaCedente.ToString(CultureInfo.InvariantCulture);
+            Header.DvAgencia = retornoCnab400.Header.DvAgenciaCedente;
+            Header.NumeroConta = retornoCnab400.Header.ContaCorrente;
+            Header.DvConta = retornoCnab400.Header.DvContaCorrente;
+            Header.NomeEmpresa = retornoCnab400.Header.NomeDoBeneficiario;
+            Header.NomeDoBanco = retornoCnab400.Header.NomeDoBanco;
 
             foreach (var registroAtual in retornoCnab400.RegistrosDetalhe)
             {
-                var detalheGenericoAdd = new RetornoDetalheGenerico();
-                detalheGenericoAdd.NossoNumero = registroAtual.NossoNumero;
-                detalheGenericoAdd.TipoCobranca = registroAtual.TipoCobranca.ToString();
-                detalheGenericoAdd.Carteira = registroAtual.CodigoCarteira.ToString();
-                detalheGenericoAdd.PercentualDesconto = registroAtual.TaxaDesconto/100;
-                detalheGenericoAdd.PercentualIof = registroAtual.TaxaIof/100;
-                detalheGenericoAdd.Especie = registroAtual.Especie;
-                detalheGenericoAdd.DataCredito = Convert.ToDateTime(registroAtual.DataDeCredito.ToString("d"));
-                detalheGenericoAdd.NumeroDocumento = registroAtual.NumeroDocumento.ToString();
-                detalheGenericoAdd.ValorDocumento = registroAtual.ValorDoTituloParcela/100;
-                detalheGenericoAdd.ValorTarifaCustas = registroAtual.ValorTarifa/100;
-                detalheGenericoAdd.ValorOutrasDespesas = registroAtual.ValorOutrasDespesas/100;
-                detalheGenericoAdd.ValorJurosDesconto = registroAtual.ValorJurosDesconto/100;
-                detalheGenericoAdd.ValorIofDesconto = registroAtual.ValorIofDesconto/100;
-                detalheGenericoAdd.ValorAbatimento = registroAtual.ValorAbatimento/100;
-                detalheGenericoAdd.ValorDesconto = registroAtual.ValorDesconto/100;
-                detalheGenericoAdd.ValorRecebido = registroAtual.ValorLiquidoRecebido/100;
-                detalheGenericoAdd.ValorAcrescimos = registroAtual.ValorJurosDeMora/100;
-                detalheGenericoAdd.ValorOutrosRecebimentos = registroAtual.ValorOutrosRecebimentos/100;
-                detalheGenericoAdd.ValorAbatimentoNaoAproveitadoPeloSacado = registroAtual.ValorAbatimentosNaoAproveitado/100;
-                detalheGenericoAdd.ValorLancamento = registroAtual.ValorLancamento/100;
-                detalheGenericoAdd.DataLiquidacao = Convert.ToDateTime(registroAtual.DataLiquidacao.ToString("d"));
-                detalheGenericoAdd.InscricaoSacado = registroAtual.NumeroInscricaoSacado.ToString();
-                detalheGenericoAdd.NomeSacado = registroAtual.NomeSacado;
-                detalheGenericoAdd.CodigoMovimento = registroAtual.MotivoCodigoRejeicao.ToString();
-                detalheGenericoAdd.CodigoOcorrencia = registroAtual.MotivoCodigoOcorrencia.ToString();
+                var detalheGenericoAdd = new RetornoDetalheGenerico
+                {
+                    NossoNumero = registroAtual.NossoNumero,
+                    TipoCobranca = registroAtual.TipoCobranca.ToString(CultureInfo.InvariantCulture),
+                    Carteira = registroAtual.CodigoCarteira,
+                    PercentualDesconto = registroAtual.TaxaDesconto/100,
+                    PercentualIof = registroAtual.TaxaIof/100,
+                    Especie = registroAtual.Especie,
+                    DataCredito = Convert.ToDateTime(registroAtual.DataDeCredito.ToString("ddMMyy")),
+                    NumeroDocumento = registroAtual.NumeroDocumento,
+                    ValorDocumento = registroAtual.ValorDoTituloParcela/100,
+                    ValorTarifaCustas = registroAtual.ValorTarifa/100,
+                    ValorOutrasDespesas = registroAtual.ValorOutrasDespesas/100,
+                    ValorJurosDesconto = registroAtual.ValorJurosDesconto/100,
+                    ValorIofDesconto = registroAtual.ValorIofDesconto/100,
+                    ValorAbatimento = registroAtual.ValorAbatimento/100,
+                    ValorDesconto = registroAtual.ValorDesconto/100,
+                    ValorRecebido = registroAtual.ValorLiquidoRecebido/100,
+                    ValorAcrescimos = registroAtual.ValorJurosDeMora/100,
+                    ValorOutrosRecebimentos = registroAtual.ValorOutrosRecebimentos/100,
+                    ValorAbatimentoNaoAproveitadoPeloSacado = registroAtual.ValorAbatimentosNaoAproveitado/100,
+                    ValorLancamento = registroAtual.ValorLancamento/100,
+                    DataLiquidacao = Convert.ToDateTime(registroAtual.DataLiquidacao.ToString("ddMMyy")),
+                    InscricaoSacado = registroAtual.NumeroInscricaoSacado.ToString(CultureInfo.InvariantCulture),
+                    NomeSacado = registroAtual.NomeSacado,
+                    CodigoMovimento = registroAtual.MotivoCodigoRejeicao,
+                    CodigoOcorrencia = registroAtual.MotivoCodigoOcorrencia
+                };
 
-                this.RegistrosDetalhe.Add(detalheGenericoAdd);
+                RegistrosDetalhe.Add(detalheGenericoAdd);
             }
         }
         public RetornoHeaderGenerico Header { get; set; }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net.Mime;
+using BoletoBr.Arquivo;
 using BoletoBr.Bancos.Bradesco;
 using BoletoBr.Dominio;
 using BoletoBr.Enums;

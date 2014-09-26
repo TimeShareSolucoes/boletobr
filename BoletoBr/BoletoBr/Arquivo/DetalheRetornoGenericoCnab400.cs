@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BoletoBr.Dominio
+namespace BoletoBr.Arquivo
 {
     public class DetalheRetornoGenericoCnab400
     {
@@ -171,7 +167,7 @@ namespace BoletoBr.Dominio
         /// <summary>
         /// Nosso Numero Completo Com o D�gito Verificador
         /// </summary>
-        public string NossoNumeroComDV { get; set; }
+        public string NossoNumeroComDv { get; set; }
 
         public string Carteira { get; set; }
 

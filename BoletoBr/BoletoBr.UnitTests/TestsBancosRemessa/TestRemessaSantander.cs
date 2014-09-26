@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoletoBr.Arquivo;
 using BoletoBr.Bancos.Santander;
 using BoletoBr.Dominio;
 using BoletoBr.Enums;

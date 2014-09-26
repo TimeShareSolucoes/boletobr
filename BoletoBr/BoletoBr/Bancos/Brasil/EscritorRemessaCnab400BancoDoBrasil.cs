@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoletoBr.Dominio;
+using BoletoBr.Arquivo;
 using BoletoBr.Interfaces;
 
 namespace BoletoBr.Bancos.Brasil
@@ -36,25 +35,19 @@ namespace BoletoBr.Bancos.Brasil
             {
                 header = header.PreencherValorNaLinha(1, 1, "0");
                 header = header.PreencherValorNaLinha(2, 2, "1");
-
-                if (boleto.Remessa.Ambiente == Remessa.EnumTipoAmbiemte.Producao)
-                    header = header.PreencherValorNaLinha(3, 9, "REMESSA".PadRight(7, ' '));
-                else
-                    header = header.PreencherValorNaLinha(3, 9, "TESTE".PadRight(7, ' '));
+                header = header.PreencherValorNaLinha(3, 9, boleto.Remessa.Ambiente == Remessa.EnumTipoAmbiemte.Producao ? "REMESSA".PadRight(7, ' ') : "TESTE".PadRight(7, ' '));
                 header = header.PreencherValorNaLinha(10, 11, "01");
                 header = header.PreencherValorNaLinha(12, 19, "COBRANCA".PadRight(8, ' '));
                 header = header.PreencherValorNaLinha(20, 26, string.Empty.PadRight(7, ' '));
-                header = header.PreencherValorNaLinha(27, 30,
-                    boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'));
+                header = header.PreencherValorNaLinha(27, 30, boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'));
                 header = header.PreencherValorNaLinha(31, 31, boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia);
-                header = header.PreencherValorNaLinha(32, 39,
-                    boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(8, '0'));
+                header = header.PreencherValorNaLinha(32, 39, boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(8, '0'));
                 header = header.PreencherValorNaLinha(40, 40, boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta);
                 header = header.PreencherValorNaLinha(41, 46, string.Empty.PadRight(6, '0'));
                 header = header.PreencherValorNaLinha(47, 76, boleto.CedenteBoleto.Nome.ToUpper().PadRight(30, ' '));
                 header = header.PreencherValorNaLinha(77, 94, "001BANCODOBRASIL".PadRight(18, ' '));
                 header = header.PreencherValorNaLinha(95, 100, DateTime.Now.ToString("ddMMyy"));
-                header = header.PreencherValorNaLinha(101, 107, numeroRemessa.ToString().PadLeft(7, '0'));
+                header = header.PreencherValorNaLinha(101, 107, numeroRemessa.ToString(CultureInfo.InvariantCulture).PadLeft(7, '0'));
                 header = header.PreencherValorNaLinha(108, 129, string.Empty.PadRight(22, ' '));
                 header = header.PreencherValorNaLinha(130, 136, boleto.CedenteBoleto.Convenio.PadLeft(7, '0'));
                 header = header.PreencherValorNaLinha(137, 394, string.Empty.PadRight(258, ' '));
@@ -169,29 +162,29 @@ namespace BoletoBr.Bancos.Brasil
                 }
 
                 detalhe = detalhe.PreencherValorNaLinha(107, 108, boleto.CarteiraCobranca.Codigo.PadLeft(2, '0'));
-                detalhe = detalhe.PreencherValorNaLinha(109, 110, boleto.CodigoOcorrenciaRemessa.Codigo.ToString());
+                detalhe = detalhe.PreencherValorNaLinha(109, 110, boleto.CodigoOcorrenciaRemessa.Codigo.ToString(CultureInfo.InvariantCulture));
                 detalhe = detalhe.PreencherValorNaLinha(111, 120,
-                    boleto.SequencialNossoNumero.ToString().PadLeft(10, '0'));
+                    boleto.SequencialNossoNumero.PadLeft(10, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(121, 126, boleto.DataVencimento.ToString("ddMMyy"));
 
                 #region VALOR BOLETO
 
-                var valorBoleto = string.Empty;
+                string valorBoleto;
 
                 if (boleto.ValorBoleto.ToString("f").Contains('.') && boleto.ValorBoleto.ToString("f").Contains(','))
                 {
                     valorBoleto = boleto.ValorBoleto.ToString("f").Replace(".", "").Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(127, 139, valorBoleto.ToString().PadLeft(13, '0'));
+                    detalhe = detalhe.PreencherValorNaLinha(127, 139, valorBoleto.PadLeft(13, '0'));
                 }
                 if (boleto.ValorBoleto.ToString("f").Contains('.'))
                 {
                     valorBoleto = boleto.ValorBoleto.ToString("f").Replace(".", "");
-                    detalhe = detalhe.PreencherValorNaLinha(127, 139, valorBoleto.ToString().PadLeft(13, '0'));
+                    detalhe = detalhe.PreencherValorNaLinha(127, 139, valorBoleto.PadLeft(13, '0'));
                 }
                 if (boleto.ValorBoleto.ToString("f").Contains(','))
                 {
                     valorBoleto = boleto.ValorBoleto.ToString("f").Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(127, 139, valorBoleto.ToString().PadLeft(13, '0'));
+                    detalhe = detalhe.PreencherValorNaLinha(127, 139, valorBoleto.PadLeft(13, '0'));
                 }
 
                 detalhe = detalhe.PreencherValorNaLinha(127, 139, boleto.ValorBoleto.ToString("f").Replace(",", "").PadLeft(13, '0'));
@@ -202,7 +195,7 @@ namespace BoletoBr.Bancos.Brasil
                 detalhe = detalhe.PreencherValorNaLinha(143, 146, "0000");
                 detalhe = detalhe.PreencherValorNaLinha(147, 147, " ");
                 detalhe = detalhe.PreencherValorNaLinha(148, 149,
-                    boleto.Especie.Sigla.Equals("DM") ? "01" : boleto.Especie.Codigo.ToString());
+                    boleto.Especie.Sigla.Equals("DM") ? "01" : boleto.Especie.Codigo.ToString(CultureInfo.InvariantCulture));
                 detalhe = detalhe.PreencherValorNaLinha(150, 150, boleto.Aceite.Equals("A") ? "A" : "N");
                 detalhe = detalhe.PreencherValorNaLinha(151, 156, boleto.DataDocumento.ToString("ddMMyy"));
 
@@ -229,22 +222,22 @@ namespace BoletoBr.Bancos.Brasil
 
                 #region JUROS DE MORA POR DIA DE ATRASO
 
-                var jurosPorDia = string.Empty;
+                string jurosPorDia;
 
                 if (boleto.JurosMora.ToString().Contains('.') && boleto.JurosMora.ToString().Contains(','))
                 {
                     jurosPorDia = boleto.JurosMora.ToString().Replace(".", "").Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(161, 173, jurosPorDia.ToString().PadLeft(13, '0'));
+                    detalhe = detalhe.PreencherValorNaLinha(161, 173, jurosPorDia.PadLeft(13, '0'));
                 }
                 if (boleto.JurosMora.ToString().Contains('.'))
                 {
                     jurosPorDia = boleto.JurosMora.ToString().Replace(".", "");
-                    detalhe = detalhe.PreencherValorNaLinha(161, 173, jurosPorDia.ToString().PadLeft(13, '0'));
+                    detalhe = detalhe.PreencherValorNaLinha(161, 173, jurosPorDia.PadLeft(13, '0'));
                 }
                 if (boleto.JurosMora.ToString().Contains(','))
                 {
                     jurosPorDia = boleto.JurosMora.ToString().Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(161, 173, jurosPorDia.ToString().PadLeft(13, '0'));
+                    detalhe = detalhe.PreencherValorNaLinha(161, 173, jurosPorDia.PadLeft(13, '0'));
                 }
 
                 detalhe = detalhe.PreencherValorNaLinha(161, 173, boleto.JurosMora.ToString().PadLeft(13, '0'));
@@ -255,22 +248,22 @@ namespace BoletoBr.Bancos.Brasil
 
                 #region DESCONTO
 
-                var descontoBoleto = string.Empty;
+                string descontoBoleto;
 
                 if (boleto.ValorDesconto.ToString().Contains('.') && boleto.ValorDesconto.ToString().Contains(','))
                 {
                     descontoBoleto = boleto.ValorDesconto.ToString().Replace(".", "").Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(180, 192, descontoBoleto.ToString().PadLeft(13, '0'));
+                    detalhe = detalhe.PreencherValorNaLinha(180, 192, descontoBoleto.PadLeft(13, '0'));
                 }
                 if (boleto.ValorDesconto.ToString().Contains('.'))
                 {
                     descontoBoleto = boleto.ValorDesconto.ToString().Replace(".", "");
-                    detalhe = detalhe.PreencherValorNaLinha(180, 192, descontoBoleto.ToString().PadLeft(13, '0'));
+                    detalhe = detalhe.PreencherValorNaLinha(180, 192, descontoBoleto.PadLeft(13, '0'));
                 }
                 if (boleto.ValorDesconto.ToString().Contains(','))
                 {
                     descontoBoleto = boleto.ValorDesconto.ToString().Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(180, 192, descontoBoleto.ToString().PadLeft(13, '0'));
+                    detalhe = detalhe.PreencherValorNaLinha(180, 192, descontoBoleto.PadLeft(13, '0'));
                 }
 
                 detalhe = detalhe.PreencherValorNaLinha(180, 192, boleto.ValorDesconto.ToString().PadLeft(13, '0'));
@@ -279,22 +272,22 @@ namespace BoletoBr.Bancos.Brasil
 
                 #region IOF
 
-                var iofBoleto = string.Empty;
+                string iofBoleto;
 
                 if (boleto.Iof.ToString("F5").Contains('.') && boleto.Iof.ToString("F5").Contains(','))
                 {
-                    iofBoleto = boleto.Iof.ToString().Replace(".", "").Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(193, 205, iofBoleto.ToString().PadLeft(13, '0'));
+                    iofBoleto = boleto.Iof.ToString("F5").Replace(".", "").Replace(",", "");
+                    detalhe = detalhe.PreencherValorNaLinha(193, 205, iofBoleto.PadLeft(13, '0'));
                 }
                 if (boleto.Iof.ToString("F5").Contains('.'))
                 {
                     iofBoleto = boleto.Iof.ToString("F5").Replace(".", "");
-                    detalhe = detalhe.PreencherValorNaLinha(193, 205, iofBoleto.ToString().PadLeft(13, '0'));
+                    detalhe = detalhe.PreencherValorNaLinha(193, 205, iofBoleto.PadLeft(13, '0'));
                 }
                 if (boleto.Iof.ToString("F5").Contains(','))
                 {
                     iofBoleto = boleto.Iof.ToString("F5").Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(193, 205, iofBoleto.ToString().PadLeft(13, '0'));
+                    detalhe = detalhe.PreencherValorNaLinha(193, 205, iofBoleto.PadLeft(13, '0'));
                 }
 
                 detalhe = detalhe.PreencherValorNaLinha(193, 205, boleto.Iof.ToString("F5").Replace(",", "").PadLeft(13, '0'));
@@ -303,22 +296,22 @@ namespace BoletoBr.Bancos.Brasil
 
                 #region ABATIMENTO
 
-                var abatimentoBoleto = string.Empty;
+                string abatimentoBoleto;
 
                 if (boleto.ValorAbatimento.ToString().Contains('.') && boleto.ValorAbatimento.ToString().Contains(','))
                 {
                     abatimentoBoleto = boleto.ValorAbatimento.ToString().Replace(".", "").Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(193, 205, abatimentoBoleto.ToString().PadLeft(13, '0'));
+                    detalhe = detalhe.PreencherValorNaLinha(193, 205, abatimentoBoleto.PadLeft(13, '0'));
                 }
                 if (boleto.ValorAbatimento.ToString().Contains('.'))
                 {
                     abatimentoBoleto = boleto.ValorAbatimento.ToString().Replace(".", "");
-                    detalhe = detalhe.PreencherValorNaLinha(193, 205, abatimentoBoleto.ToString().PadLeft(13, '0'));
+                    detalhe = detalhe.PreencherValorNaLinha(193, 205, abatimentoBoleto.PadLeft(13, '0'));
                 }
                 if (boleto.ValorAbatimento.ToString().Contains(','))
                 {
                     abatimentoBoleto = boleto.ValorAbatimento.ToString().Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(193, 205, abatimentoBoleto.ToString().PadLeft(13, '0'));
+                    detalhe = detalhe.PreencherValorNaLinha(193, 205, abatimentoBoleto.PadLeft(13, '0'));
                 }
 
                 detalhe = detalhe.PreencherValorNaLinha(193, 205, boleto.ValorAbatimento.ToString().Replace(",", "").PadLeft(13, '0'));
@@ -337,24 +330,24 @@ namespace BoletoBr.Bancos.Brasil
                 detalhe = detalhe.PreencherValorNaLinha(315, 326,
                     boleto.SacadoBoleto.EnderecoSacado.Bairro.PadRight(12, ' '));
 
-                var Cep = boleto.SacadoBoleto.EnderecoSacado.Cep;
+                var cep = boleto.SacadoBoleto.EnderecoSacado.Cep;
 
-                if (Cep.Contains(".") && Cep.Contains("-"))
-                    Cep = Cep.Replace(".", "").Replace("-", "");
-                if (Cep.Contains("."))
-                    Cep = Cep.Replace(".", "");
-                if (Cep.Contains("-"))
-                    Cep = Cep.Replace("-", "");
+                if (cep.Contains(".") && cep.Contains("-"))
+                    cep = cep.Replace(".", "").Replace("-", "");
+                if (cep.Contains("."))
+                    cep = cep.Replace(".", "");
+                if (cep.Contains("-"))
+                    cep = cep.Replace("-", "");
 
-                detalhe = detalhe.PreencherValorNaLinha(327, 334, Cep.PadLeft(8, ' ')); // Cep do Sacado
+                detalhe = detalhe.PreencherValorNaLinha(327, 334, cep.PadLeft(8, ' ')); // Cep do Sacado
                 detalhe = detalhe.PreencherValorNaLinha(335, 349,
                     boleto.SacadoBoleto.EnderecoSacado.Cidade.PadRight(15, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(350, 351,
                     boleto.SacadoBoleto.EnderecoSacado.SiglaUf.PadRight(15, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(352, 391, string.Empty.PadRight(40, ' '));
-                detalhe = detalhe.PreencherValorNaLinha(392, 393, boleto.QtdDias.ToString().PadLeft(2, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(392, 393, boleto.QtdDias.ToString(CultureInfo.InvariantCulture).PadLeft(2, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(394, 394, " ");
-                detalhe = detalhe.PreencherValorNaLinha(395, 400, numeroRegistro.ToString().PadLeft(6, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(395, 400, numeroRegistro.ToString(CultureInfo.InvariantCulture).PadLeft(6, '0'));
 
                 return detalhe;
             }
@@ -376,7 +369,7 @@ namespace BoletoBr.Bancos.Brasil
                 trailer = trailer.PreencherValorNaLinha(1, 1, "9");
                 trailer = trailer.PreencherValorNaLinha(2, 394, string.Empty.PadRight(393, ' '));
                 // Contagem total de linhas do arquivo no formato '000000' - 6 dígitos
-                trailer = trailer.PreencherValorNaLinha(395, 400, numeroRegistro.ToString().PadLeft(6, '0'));
+                trailer = trailer.PreencherValorNaLinha(395, 400, numeroRegistro.ToString(CultureInfo.InvariantCulture).PadLeft(6, '0'));
 
                 return trailer;
             }

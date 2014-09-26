@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoletoBr.Bancos;
+﻿using System.Collections.Generic;
 using BoletoBr.Interfaces;
 
-namespace BoletoBr
+namespace BoletoBr.Arquivo.CNAB400.Remessa
 {
     public class RemessaCnab400
     {
         private readonly IBanco _bancoRemessa;
-        private List<Boleto> _listaBoletos;
+        //private List<Boleto> _listaBoletos;
 
         public RemessaCnab400(IBanco bancoRemessa)
         {

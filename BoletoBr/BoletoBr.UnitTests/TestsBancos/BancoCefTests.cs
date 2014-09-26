@@ -1,4 +1,5 @@
 ﻿using System;
+using BoletoBr.Arquivo;
 using BoletoBr.Dominio;
 using BoletoBr.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

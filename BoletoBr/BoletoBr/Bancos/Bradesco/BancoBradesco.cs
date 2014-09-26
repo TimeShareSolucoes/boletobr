@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using BoletoBr.Arquivo.CNAB240.Remessa;
+using BoletoBr.Arquivo.CNAB400.Remessa;
 using BoletoBr.Arquivo.Generico.Retorno;
 using BoletoBr.Dominio;
 using BoletoBr.Dominio.Instrucao;
@@ -217,7 +219,6 @@ namespace BoletoBr.Bancos.Bradesco
 
             #region Campo 1
 
-            // ReSharper disable once InconsistentNaming
             var BBB = boleto.CodigoBarraBoleto.Substring(0, 3);
             var M = boleto.CodigoBarraBoleto.Substring(3, 1);
             var CCCCC = boleto.CodigoBarraBoleto.Substring(19, 5);
