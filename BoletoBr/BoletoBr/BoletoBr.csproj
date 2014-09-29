@@ -41,11 +41,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arquivo\CNAB240\Remessa\DetalheSegmentoPRemessaCnab240.cs" />
+    <Compile Include="Arquivo\CNAB240\Remessa\DetalheSegmentoQRemessaCnab240.cs" />
+    <Compile Include="Arquivo\CNAB240\Remessa\DetalheSegmentoRRemessaCnab240.cs" />
+    <Compile Include="Arquivo\CNAB240\Remessa\DetalheSegmentoSRemessaCnab240.cs" />
+    <Compile Include="Arquivo\CNAB240\Remessa\DetalheSegmentoY08RemessaCnab240.cs" />
+    <Compile Include="Arquivo\CNAB240\Remessa\DetalheSegmentoYRemessaCnab240.cs" />
     <Compile Include="Arquivo\CNAB240\Remessa\HeaderDeArquivoCnab240.cs" />
+    <Compile Include="Arquivo\CNAB240\Remessa\HeaderLoteRemessaCnab240.cs" />
+    <Compile Include="Arquivo\CNAB240\Remessa\LoteRemessaCnab240.cs" />
+    <Compile Include="Arquivo\CNAB240\Remessa\TrailerLoteRemessaCnab240.cs" />
+    <Compile Include="Arquivo\CNAB240\Retorno\DetalheSegmentoY08RetornoCnab240.cs" />
+    <Compile Include="Arquivo\CNAB240\Retorno\DetalheSegmentoY50RetornoCnab240.cs" />
     <Compile Include="Arquivo\CNAB240\Retorno\HeaderLoteRetornoCnab240.cs" />
     <Compile Include="Arquivo\CNAB240\Retorno\LoteRetornoCnab240.cs" />
     <Compile Include="Arquivo\CNAB240\Retorno\TrailerLoteRetornoCnab240.cs" />
     <Compile Include="Arquivo\CNAB400\Retorno\DetalheRateioRetornoCnab400.cs" />
+    <Compile Include="Arquivo\Generico\Remessa\RemessaDetalheGenerica.cs" />
+    <Compile Include="Arquivo\Generico\Remessa\RemessaGenerica.cs" />
+    <Compile Include="Arquivo\Generico\Remessa\RemessaHeaderGenerica.cs" />
+    <Compile Include="Arquivo\Generico\Remessa\RemessaTrailerGenerica.cs" />
     <Compile Include="Arquivo\Generico\Retorno\RetornoDetalheGenerico.cs" />
     <Compile Include="Arquivo\Generico\Retorno\RetornoTrailerGenerico.cs" />
     <Compile Include="Arquivo\Generico\Retorno\RetornoGenerico.cs" />
@@ -69,7 +84,8 @@
     <Compile Include="Bancos\EscritorArquivoRemessaGenericoCnab240.cs" />
     <Compile Include="Bancos\Hsbc\BancoHsbc.cs" />
     <Compile Include="Interfaces\IBanco.cs" />
-    <Compile Include="Interfaces\IEscritorArquivoRemessa.cs" />
+    <Compile Include="Interfaces\IEscritorArquivoRemessaCnab240.cs" />
+    <Compile Include="Interfaces\IEscritorArquivoRemessaCnab400.cs" />
     <Compile Include="Interfaces\ILeitorArquivoRetornoCnab240.cs" />
     <Compile Include="Interfaces\ILeitorArquivoRetornoCnab400.cs" />
     <Compile Include="Bancos\Itau\BancoItau.cs" />
@@ -107,7 +123,6 @@
     <Compile Include="Arquivo\CNAB400\Remessa\DetalheRemessaCnab400.cs" />
     <Compile Include="Arquivo\CNAB240\Retorno\DetalheRetornoCnab240.cs" />
     <Compile Include="Arquivo\CNAB400\Retorno\DetalheRetornoCnab400.cs" />
-    <Compile Include="Arquivo\DetalheRetornoGenericoCnab400.cs" />
     <Compile Include="Arquivo\CNAB240\Retorno\DetalheSegmentoERetornoCnab240.cs" />
     <Compile Include="Arquivo\CNAB240\Retorno\DetalheSegmentoTRetornoCnab240.cs" />
     <Compile Include="Arquivo\CNAB240\Retorno\DetalheSegmentoURetornoCnab240.cs" />
@@ -162,7 +177,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Arquivo\Generico\Remessa\" />
     <Folder Include="Implementacoes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

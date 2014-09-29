@@ -1,28 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoletoBr.Arquivo;
-using BoletoBr.Bancos;
+﻿using System.Collections.Generic;
+using BoletoBr.Arquivo.Generico.Retorno;
+using BoletoBr.Dominio;
 using BoletoBr.Interfaces;
 
-namespace BoletoBr.Dominio.CNAB400
+namespace BoletoBr.Arquivo.CNAB400.Retorno
 {
-    public class ArquivoRetornoCNAB400 : IArquivoRetorno
+    public class ArquivoRetornoCnab400 : IArquivoRetorno
     {
-        public IBanco Banco { get; private set; }
+        public IBanco Banco { get; set; }
         public TipoArquivo TipoArquivo { get; private set; }
 
-        public List<DetalheRetornoGenericoCnab400> ListaDetalhe { get; set; }
+        public List<RetornoDetalheGenerico> ListaDetalhe { get; set; }
 
         #region Construtores
 
-        public ArquivoRetornoCNAB400()
+        public ArquivoRetornoCnab400()
         {
-            ListaDetalhe = new List<DetalheRetornoGenericoCnab400>();
-            this.TipoArquivo = TipoArquivo.Cnab400;
+            ListaDetalhe = new List<RetornoDetalheGenerico>();
+            TipoArquivo = TipoArquivo.Cnab400;
         }
 
         #endregion

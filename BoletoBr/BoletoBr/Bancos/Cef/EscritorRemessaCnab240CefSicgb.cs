@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using BoletoBr.Arquivo;
+using BoletoBr.Arquivo.CNAB240.Remessa;
 using BoletoBr.Enums;
 using BoletoBr.Interfaces;
 
 namespace BoletoBr.Bancos.Cef
 {
-    public class EscritorRemessaCnab240CefSicgb : IEscritorArquivoRemessa
+    public class EscritorRemessaCnab240CefSicgb : IEscritorArquivoRemessaCnab240
     {
         #region Especificações Remessa CAIXA
 
@@ -51,19 +52,7 @@ namespace BoletoBr.Bancos.Cef
 
         public List<string> EscreverArquivo(List<Boleto> boletosEscrever)
         {
-            //EscreverHeader(boletosEscrever.FirstOrDefault(), numeroRegistro);
-            //EscreverHeaderDeLote(boletosEscrever.FirstOrDefault(), numeroRemessa, numeroLote, numeroRegistro);
-
-            //foreach (var boleto in boletosEscrever)
-            //{
-            //    EscreverDetalheSegmentoP(boleto, numeroLote, numeroSequencialRegistroNoLote);
-            //    EscreverDetalheSegmentoQ(boleto, numeroLote, numeroSequencialRegistroNoLote);
-            //}
-
-            //EscreverTrailerDeLote();
-            //EscreverTrailer(qtdLotes, qtdRegistros);
-
-            return null;
+            throw new NotImplementedException();
         }
 
         public void ValidarArquivoRemessa(Cedente cedente, List<Boleto> boletos, int numeroArquivoRemessa)
@@ -82,6 +71,99 @@ namespace BoletoBr.Bancos.Cef
                 if (boleto.Remessa == null)
                     throw new Exception("Para o boleto " + boleto.NumeroDocumento + ", informe as diretrizes de remessa!");
             }
+        }
+
+        public RemessaCnab240 ProcessarRemessaCnab240()
+        {
+            throw new NotImplementedException();
+        }
+
+        public RemessaCnab240 ProcessarRemessaCnab240(List<Boleto> boletos)
+        {
+            var objRetornar = new RemessaCnab240();
+
+            var lote = new LoteRemessaCnab240();
+            var registroDetalhe = new DetalheRemessaCnab240();
+            objRetornar.Lotes.Add(lote);
+
+            EscreverHeader();
+
+            foreach (var boleto in boletos)
+            {
+                lote.HeaderLote = EscreverHeaderLote(boleto);
+                registroDetalhe.SegmentoP = EscreverDetalheSegmentoP(boleto);
+                registroDetalhe.SegmentoQ = EscreverDetalheSegmentoQ(boleto);
+                lote.TrailerLote = EscreverTrailerLote(boleto);
+            }
+
+            EscreverTrailer();
+            
+            return objRetornar;
+        }
+
+        public void ValidaArquivoRemessa()
+        {
+            throw new NotImplementedException();
+        }
+
+        public HeaderRemessaCnab240 EscreverHeader(string linha)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HeaderLoteRemessaCnab240 EscreverHeaderLote(string linha)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetalheSegmentoPRemessaCnab240 EscreverDetalheSegmentoP(string linha)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetalheSegmentoQRemessaCnab240 EscreverDetalheSegmentoQ(string linha)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TrailerLoteRemessaCnab240 EscreverTrailerLote(string linha)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TrailerRemessaCnab240 EscreverTrailer(string linha)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HeaderRemessaCnab240 EscreverHeader()
+        {
+            throw new NotImplementedException();
+        }
+
+        public HeaderLoteRemessaCnab240 EscreverHeaderLote(Boleto boleto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetalheSegmentoPRemessaCnab240 EscreverDetalheSegmentoP(Boleto boleto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetalheSegmentoQRemessaCnab240 EscreverDetalheSegmentoQ(Boleto boleto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TrailerLoteRemessaCnab240 EscreverTrailerLote(Boleto boleto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TrailerRemessaCnab240 EscreverTrailer()
+        {
+            throw new NotImplementedException();
         }
 
         public string EscreverHeader(Boleto boleto, int numeroRegistro)

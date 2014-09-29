@@ -4,7 +4,6 @@ using System.Drawing;
 using BoletoBr.Arquivo.CNAB240.Remessa;
 using BoletoBr.Arquivo.CNAB400.Remessa;
 using BoletoBr.Arquivo.Generico.Retorno;
-using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
 
 namespace BoletoBr.Interfaces
@@ -61,6 +60,8 @@ namespace BoletoBr.Interfaces
         /// Retorna o código do comando/movimento/ocorrência a ser usada na geração do arquivo de remessa.
         /// </summary>
         /// <param name="ocorrenciaRemessa"></param>
+        /// <param name="valorOcorrencia"></param>
+        /// <param name="dataOcorrencia"></param>
         /// <returns></returns>
         ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrenciaRemessa, double valorOcorrencia, DateTime dataOcorrencia);
 

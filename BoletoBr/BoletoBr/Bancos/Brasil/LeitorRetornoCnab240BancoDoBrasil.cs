@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BoletoBr.Interfaces;
 
 namespace BoletoBr.Bancos.Brasil
 {

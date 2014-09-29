@@ -1024,28 +1024,14 @@ namespace BoletoBr.Bancos.Cef
 
         public RemessaCnab240 GerarArquivoRemessaCnab240(List<Boleto> boletos)
         {
-            if ((boletos == null) || (boletos.Count == 0))
+            if (boletos == null || boletos.Count == 0)
                 throw new Exception("Não há boletos para gerar a remessa.");
 
-            //foreach (var boleto in boletos)
-            //{
-            //    if (boleto.TipoArquivo == TipoArquivo.Cnab240)
-            //    {
-            //        var escritor = new EscritorRemessaCnab240CefSicgb();
-            //        var remessaProcessada = escritor.EscreverArquivo(boletos);
+            var escritor = new EscritorRemessaCnab240CefSicgb();
 
-            //        var objRetornar = new EscritorArquivoRemessaGenericoCnab240();
-            //    }
+            var obj = escritor.ProcessarRemessaCnab240(boletos);
 
-            //    if (boleto.TipoArquivo == TipoArquivo.Cnab400)
-            //    {
-            //        //var escritor = new EscritorRemessaCnab240CefSicgb();
-            //        //var remessaProcessada = escritor.EscreverArquivo(boletos);
-
-            //        //var objRetornar = new EscritorArquivoRemessaGenericoCnab240();
-            //    }
-            //}
-            return null;
+            return obj;
         }
 
         public RemessaCnab400 GerarArquivoRemessaCnab400(List<Boleto> boletos)

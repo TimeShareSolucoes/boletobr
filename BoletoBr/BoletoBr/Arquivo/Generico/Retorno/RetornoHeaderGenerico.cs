@@ -12,6 +12,5 @@ namespace BoletoBr.Arquivo.Generico.Retorno
         public string DvAgencia { get; set; }
         public string NumeroConta { get; set; }
         public string DvConta { get; set; }
-
     }
 }

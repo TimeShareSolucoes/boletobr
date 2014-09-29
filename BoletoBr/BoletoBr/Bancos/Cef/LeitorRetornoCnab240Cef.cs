@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoletoBr.Arquivo.CNAB240;
 using BoletoBr.Arquivo.CNAB240.Retorno;
-using BoletoBr.Dominio;
+using BoletoBr.Interfaces;
 
 namespace BoletoBr.Bancos.Cef
 {
@@ -191,8 +188,8 @@ namespace BoletoBr.Bancos.Cef
             objRetornar.Mensagem1 = linha.ExtrairValorDaLinha(104, 143);
             objRetornar.Mensagem2 = linha.ExtrairValorDaLinha(144, 183);
             objRetornar.NumeroRemessaRetorno = linha.ExtrairValorDaLinha(184, 191);
-            objRetornar.DataGeracaoGravacao = (DateTime) linha.ExtrairValorDaLinha(192, 199).ToString().ToDateTimeFromDdMmAaaa();
-            objRetornar.DataDeCredito = (DateTime) linha.ExtrairValorDaLinha(200, 207).ToString().ToDateTimeFromDdMmAaaa();
+            objRetornar.DataGeracaoGravacao = Convert.ToDateTime(linha.ExtrairValorDaLinha(192, 199).ToDateTimeFromDdMmAaaa());
+            objRetornar.DataDeCredito = Convert.ToDateTime(linha.ExtrairValorDaLinha(200, 207).ToDateTimeFromDdMmAaaa());
 
             return objRetornar;
         }

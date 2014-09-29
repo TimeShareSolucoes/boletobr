@@ -1,30 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using BoletoBr.Arquivo.CNAB400.Retorno;
-using BoletoBr.Dominio;
-using BoletoBr.Dominio.Instrucao;
-using BoletoBr.Fabricas;
+using BoletoBr.Arquivo.CNAB240.Remessa;
+using BoletoBr.Arquivo.CNAB400.Remessa;
 using BoletoBr.Interfaces;
 
 namespace BoletoBr.Bancos.Itau
 {
-    public class EscritorRemessaCnab400Itau : IEscritorArquivoRemessa
+    public class EscritorRemessaCnab400Itau : IEscritorArquivoRemessaCnab400
     {
-        public List<string> EscreverArquivo(List<Boleto> boletosEscrever)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ValidarArquivoRemessa(Cedente cedente, List<Boleto> boletos, int numeroArquivoRemessa)
-        {
-            throw new NotImplementedException();
-        }
-
+       
         public string EscreverHeader(Boleto boleto, int numeroRegistro)
         {
             if (boleto == null)
@@ -228,6 +213,41 @@ namespace BoletoBr.Bancos.Itau
                 throw new Exception(string.Format("<BoletoBr>{0}Falha na geração do TRAILER do arquivo de REMESSA.",
                     Environment.NewLine), e);
             }
+        }
+
+        public List<string> EscreverArquivo(List<Boleto> boletosEscrever)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ValidarArquivoRemessa(Cedente cedente, List<Boleto> boletos, int numeroArquivoRemessa)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RemessaCnab400 ProcessarRemessaCnab400()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ValidaArquivoRemessa()
+        {
+            throw new NotImplementedException();
+        }
+
+        public HeaderRemessaCnab400 EscreverHeader(string linha)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetalheRemessaCnab400 EscreverDetalhe(string linha)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TrailerRemessaCnab400 EscreverTrailer(string linha)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BoletoBr.Arquivo.CNAB400.Retorno;
 using BoletoBr.Dominio;
+using BoletoBr.Interfaces;
 
 namespace BoletoBr.Bancos.Itau
 {

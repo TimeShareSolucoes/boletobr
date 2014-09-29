@@ -2,36 +2,14 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using BoletoBr.Arquivo.CNAB400.Remessa;
 using BoletoBr.Interfaces;
 
 namespace BoletoBr.Bancos.Bradesco
 {
-    public class EscritorRemessaCnab400Bradesco : IEscritorArquivoRemessa
+    public class EscritorRemessaCnab400Bradesco : IEscritorArquivoRemessaCnab400
     {
-        public List<string> EscreverArquivo(List<Boleto> boletosEscrever)
-        {
-            return null;
-        }
-
-        public void ValidarArquivoRemessa(Cedente cedente, List<Boleto> boletos, int numeroArquivoRemessa)
-        {
-            if (cedente == null)
-                throw new Exception("O Cedente/Beneficiário é obrigatório!");
-
-            if (boletos == null || boletos.Count.Equals(0))
-                throw new Exception("Deverá existir ao menos 1 boleto para geração da remessa!");
-
-            if (numeroArquivoRemessa == 0)
-                throw new Exception("O número sequencial da remessa não foi informado!");
-
-            foreach (var boleto in boletos)
-            {
-                if (boleto.Remessa == null)
-                    throw new Exception("Para o boleto " + boleto.NumeroDocumento + ", informe as diretrizes de remessa!");
-            }
-        }
-
-        public string EscreverHeader(Boleto boleto, int numeroRemessa, int numeroRegistro)
+       public string EscreverHeader(Boleto boleto, int numeroRemessa, int numeroRegistro)
         {
             if (boleto == null)
                 throw new Exception("Não há boleto para geração do HEADER");
@@ -433,6 +411,41 @@ namespace BoletoBr.Bancos.Bradesco
                 throw new Exception(string.Format("<BoletoBr>{0}Falha na geração do TRAILER do arquivo de REMESSA.",
                     Environment.NewLine), e);
             }
+        }
+
+        public List<string> EscreverArquivo(List<Boleto> boletosEscrever)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ValidarArquivoRemessa(Cedente cedente, List<Boleto> boletos, int numeroArquivoRemessa)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RemessaCnab400 ProcessarRemessaCnab400()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ValidaArquivoRemessa()
+        {
+            throw new NotImplementedException();
+        }
+
+        public HeaderRemessaCnab400 EscreverHeader(string linha)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DetalheRemessaCnab400 EscreverDetalhe(string linha)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TrailerRemessaCnab400 EscreverTrailer(string linha)
+        {
+            throw new NotImplementedException();
         }
     }
 }

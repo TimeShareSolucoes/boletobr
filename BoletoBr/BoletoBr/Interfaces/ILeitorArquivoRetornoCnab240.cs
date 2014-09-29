@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoletoBr.Arquivo.CNAB240;
-using BoletoBr.Arquivo.CNAB240.Retorno;
-using BoletoBr.Dominio;
+﻿using BoletoBr.Arquivo.CNAB240.Retorno;
 
-namespace BoletoBr.Bancos
+namespace BoletoBr.Interfaces
 {
     interface ILeitorArquivoRetornoCnab240
     {

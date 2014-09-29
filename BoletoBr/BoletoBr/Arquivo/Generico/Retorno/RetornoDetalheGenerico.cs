@@ -4,7 +4,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
 {
     public class RetornoDetalheGenerico
     {
-        #region CNAB 240
+        #region CNAB240
 
         #region Segmento T
 

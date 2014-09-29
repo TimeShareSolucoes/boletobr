@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BoletoBr.Arquivo.CNAB400.Retorno;
 using BoletoBr.Dominio;
+using BoletoBr.Interfaces;
 
 namespace BoletoBr.Bancos.Bradesco
 {

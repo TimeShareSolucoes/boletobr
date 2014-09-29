@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BoletoBr.Arquivo.CNAB400.Retorno;
 using BoletoBr.Dominio;
+using BoletoBr.Interfaces;
 
 namespace BoletoBr.Bancos
 {

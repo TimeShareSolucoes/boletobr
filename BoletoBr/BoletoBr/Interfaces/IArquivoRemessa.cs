@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoletoBr.Bancos;
 using BoletoBr.Dominio;
-using BoletoBr.Interfaces;
 
-namespace BoletoBr.Arquivo
+namespace BoletoBr.Interfaces
 {
     public interface IArquivoRemessa
     {
