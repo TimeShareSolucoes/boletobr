@@ -86,7 +86,7 @@ namespace BoletoBr.Bancos.Cef
             var registroDetalhe = new DetalheRemessaCnab240();
             objRetornar.Lotes.Add(lote);
 
-            EscreverHeader();
+            EscreverHeader(boletos.FirstOrDefault(), 1);
 
             foreach (var boleto in boletos)
             {
@@ -96,7 +96,7 @@ namespace BoletoBr.Bancos.Cef
                 lote.TrailerLote = EscreverTrailerLote(boleto);
             }
 
-            EscreverTrailer();
+            EscreverTrailer(1, 1);
             
             return objRetornar;
         }
