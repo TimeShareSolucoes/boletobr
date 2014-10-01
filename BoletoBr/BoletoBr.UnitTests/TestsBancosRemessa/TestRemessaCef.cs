@@ -48,22 +48,22 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             banco.FormataCodigoBarra(boleto);
             banco.FormataLinhaDigitavel(boleto);
 
-            const int numeroRegistro = 1;
+            //const int numeroRegistro = 1;
 
-            var escritor = new EscritorRemessaCnab240CefSicgb();
+            //var escritor = new EscritorRemessaCnab240CefSicgb();
 
-            var linhasEscrever = escritor.EscreverHeader(boleto, numeroRegistro);
+            //var linhasEscrever = escritor.EscreverHeader(boleto, numeroRegistro);
 
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            var data = DateTime.Now.ToString("d").Replace("/", "");
+            //var data = DateTime.Now.ToString("d").Replace("/", "");
 
-            var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_HEADER", ".txt");
+            //var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_HEADER", ".txt");
             
-            var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
-            arquivo.WriteLine(linhasEscrever);
+            //var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
+            //arquivo.WriteLine(linhasEscrever);
 
-            arquivo.Close();
+            //arquivo.Close();
         }
 
         [TestMethod]
@@ -104,24 +104,24 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             banco.FormataCodigoBarra(boleto);
             banco.FormataLinhaDigitavel(boleto);
 
-            const int numeroLote = 1;
-            const int numeroRegistro = 1;
-            const int numeroRemessa = 1;
+            //const int numeroLote = 1;
+            //const int numeroRegistro = 1;
+            //const int numeroRemessa = 1;
 
-            var escritor = new EscritorRemessaCnab240CefSicgb();
+            //var escritor = new EscritorRemessaCnab240CefSicgb();
 
-            var linhasEscrever = escritor.EscreverHeaderDeLote(boleto, numeroRemessa, numeroLote, numeroRegistro);
+            //var linhasEscrever = escritor.EscreverHeaderDeLote(boleto, numeroRemessa, numeroLote, numeroRegistro);
 
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            var data = DateTime.Now.ToString("d").Replace("/", "");
+            //var data = DateTime.Now.ToString("d").Replace("/", "");
 
-            var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_HEADERdeLOTE", ".txt");
+            //var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_HEADERdeLOTE", ".txt");
 
-            var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
-            arquivo.WriteLine(linhasEscrever);
+            //var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
+            //arquivo.WriteLine(linhasEscrever);
 
-            arquivo.Close();
+            //arquivo.Close();
         }
 
         [TestMethod]
@@ -162,23 +162,23 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             banco.FormataCodigoBarra(boleto);
             banco.FormataLinhaDigitavel(boleto);
 
-            const int numeroLote = 1;
-            const int numeroRegistro = 1;
+            //const int numeroLote = 1;
+            //const int numeroRegistro = 1;
 
-            var escritor = new EscritorRemessaCnab240CefSicgb();
+            //var escritor = new EscritorRemessaCnab240CefSicgb();
 
-            var linhasEscrever = escritor.EscreverDetalheSegmentoP(boleto, numeroLote, numeroRegistro);
+            //var linhasEscrever = escritor.EscreverDetalheSegmentoP(boleto, numeroLote, numeroRegistro);
 
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            var data = DateTime.Now.ToString("d").Replace("/", "") ;
+            //var data = DateTime.Now.ToString("d").Replace("/", "") ;
 
-            var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_DETALHESegmentoP", ".txt");
+            //var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_DETALHESegmentoP", ".txt");
 
-            var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
-            arquivo.WriteLine(linhasEscrever);
+            //var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
+            //arquivo.WriteLine(linhasEscrever);
 
-            arquivo.Close();
+            //arquivo.Close();
         }
 
         [TestMethod]
@@ -222,20 +222,20 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             const int numeroLote = 1;
             const int numeroRegistroNoLote = 1;
 
-            var escritor = new EscritorRemessaCnab240CefSicgb();
+            //var escritor = new EscritorRemessaCnab240CefSicgb();
 
-            var linhasEscrever = escritor.EscreverDetalheSegmentoQ(boleto, numeroLote, numeroRegistroNoLote);
+            //var linhasEscrever = escritor.EscreverDetalheSegmentoQ(boleto, numeroLote, numeroRegistroNoLote);
 
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            var data = DateTime.Now.ToString("d").Replace("/", "");
+            //var data = DateTime.Now.ToString("d").Replace("/", "");
 
-            var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_DETALHESegmentoP", ".txt");
+            //var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_DETALHESegmentoP", ".txt");
 
-            var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
-            arquivo.WriteLine(linhasEscrever);
+            //var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
+            //arquivo.WriteLine(linhasEscrever);
 
-            arquivo.Close();
+            //arquivo.Close();
         }
 
         [TestMethod]
@@ -288,28 +288,28 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             const int qtdTotalCobrancaDescontada = 1;
             const decimal vlTotalCobrancaDescontada = (decimal) 157.37;
 
-            var escritor = new EscritorRemessaCnab240CefSicgb();
+            //var escritor = new EscritorRemessaCnab240CefSicgb();
 
-            var linhasEscrever = escritor.EscreverTrailerDeLote(
-                qtdTotalCobrancaSimples,
-                vlTotalCobrancaSimples,
-                qtdTotalCobrancaCaucionada,
-                vlTotalCobrancaCaucionada,
-                qtdTotalCobrancaDescontada,
-                vlTotalCobrancaDescontada,
-                numeroLote,
-                numeroRegistro);
+            //var linhasEscrever = escritor.EscreverTrailerDeLote(
+            //    qtdTotalCobrancaSimples,
+            //    vlTotalCobrancaSimples,
+            //    qtdTotalCobrancaCaucionada,
+            //    vlTotalCobrancaCaucionada,
+            //    qtdTotalCobrancaDescontada,
+            //    vlTotalCobrancaDescontada,
+            //    numeroLote,
+            //    numeroRegistro);
 
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            var data = DateTime.Now.ToString("d").Replace("/", "");
+            //var data = DateTime.Now.ToString("d").Replace("/", "");
 
-            var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_TRAILERdeLOTE", ".txt");
+            //var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_TRAILERdeLOTE", ".txt");
 
-            var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
-            arquivo.WriteLine(linhasEscrever);
+            //var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
+            //arquivo.WriteLine(linhasEscrever);
 
-            arquivo.Close();
+            //arquivo.Close();
         }
 
         [TestMethod]
@@ -353,20 +353,20 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             const int qtdLotes = 1;
             const int qtdRegistros = 1;
 
-            var escritor = new EscritorRemessaCnab240CefSicgb();
+            //var escritor = new EscritorRemessaCnab240CefSicgb();
 
-            var linhasEscrever = escritor.EscreverTrailer(qtdLotes, qtdRegistros);
+            //var linhasEscrever = escritor.EscreverTrailer(qtdLotes, qtdRegistros);
 
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            var data = DateTime.Now.ToString("d").Replace("/", "");
+            //var data = DateTime.Now.ToString("d").Replace("/", "");
 
-            var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_TRAILER", ".txt");
+            //var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_TRAILER", ".txt");
 
-            var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
-            arquivo.WriteLine(linhasEscrever);
+            //var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
+            //arquivo.WriteLine(linhasEscrever);
 
-            arquivo.Close();
+            //arquivo.Close();
         }
     }
 }

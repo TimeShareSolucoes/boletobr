@@ -66,7 +66,7 @@ namespace BoletoBr
         public bool JurosPermanente { get; set; }
         public decimal? PercentualJurosMora { get; set; }
         public decimal? JurosMora { get; set; }
-        public decimal Iof { get; set; }
+        public decimal? Iof { get; set; }
         public decimal? PercentualMulta { get; set; }
         public decimal? ValorMulta { get; set; }
         public decimal? OutrosAcrescimos { get; set; }

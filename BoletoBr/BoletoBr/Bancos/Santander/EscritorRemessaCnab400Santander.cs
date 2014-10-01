@@ -372,37 +372,13 @@ namespace BoletoBr.Bancos.Santander
                     Environment.NewLine), e);
             }
         }
-        public List<string> EscreverArquivo(List<Boleto> boletosEscrever)
+
+        public List<string> EscreverTexto(RemessaCnab400 remessaEscrever)
         {
             throw new NotImplementedException();
         }
 
-        public void ValidarArquivoRemessa(Cedente cedente, List<Boleto> boletos, int numeroArquivoRemessa)
-        {
-            throw new NotImplementedException();
-        }
-
-        public RemessaCnab400 ProcessarRemessaCnab400()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ValidaArquivoRemessa()
-        {
-            throw new NotImplementedException();
-        }
-
-        public HeaderRemessaCnab400 EscreverHeader(string linha)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DetalheRemessaCnab400 EscreverDetalhe(string linha)
-        {
-            throw new NotImplementedException();
-        }
-
-        public TrailerRemessaCnab400 EscreverTrailer(string linha)
+        public void ValidarRemessa(RemessaCnab400 remessaValidar)
         {
             throw new NotImplementedException();
         }

@@ -66,6 +66,8 @@
     <Compile Include="Arquivo\Generico\Retorno\RetornoGenerico.cs" />
     <Compile Include="Arquivo\Generico\Retorno\RetornoHeaderGenerico.cs" />
     <Compile Include="Bancos\Brasil\EscritorRemessaCnab400BancoDoBrasil.cs" />
+    <Compile Include="Fabricas\EscritorArquivoRemessaFactory.cs" />
+    <Compile Include="Fabricas\RemessaFactory.cs" />
     <Compile Include="Interfaces\IArquivoRemessa.cs" />
     <Compile Include="Arquivo\TipoLinhaArquivoGerado.cs" />
     <Compile Include="Arquivo\TipoLinhaArquivoLido.cs" />
@@ -81,7 +83,6 @@
     <Compile Include="Bancos\Cef\EscritorRemessaCnab240CefSicgb.cs" />
     <Compile Include="Bancos\Cef\LeitorRetornoCnab240Cef.cs" />
     <Compile Include="Bancos\Cef\LeitorRetornoCnab400Cef.cs" />
-    <Compile Include="Bancos\EscritorArquivoRemessaGenericoCnab240.cs" />
     <Compile Include="Bancos\Hsbc\BancoHsbc.cs" />
     <Compile Include="Interfaces\IBanco.cs" />
     <Compile Include="Interfaces\IEscritorArquivoRemessaCnab240.cs" />
@@ -91,7 +92,6 @@
     <Compile Include="Bancos\Itau\BancoItau.cs" />
     <Compile Include="Bancos\Itau\EscritorRemessaCnab400Itau.cs" />
     <Compile Include="Bancos\Itau\LeitorRetornoCnab400Itau.cs" />
-    <Compile Include="Bancos\LeitorRetornoCnab400Generico.cs" />
     <Compile Include="Bancos\Hsbc\LeitorRetornoCnab400Hsbc.cs" />
     <Compile Include="Bancos\Santander\BancoSantander.cs" />
     <Compile Include="Bancos\Santander\EscritorRemessaCnab400Santander.cs" />

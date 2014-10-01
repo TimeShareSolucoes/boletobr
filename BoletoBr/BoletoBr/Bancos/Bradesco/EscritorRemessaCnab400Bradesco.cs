@@ -260,23 +260,23 @@ namespace BoletoBr.Bancos.Bradesco
 
                 string iofBoleto;
 
-                if (boleto.Iof.ToString(CultureInfo.InvariantCulture).Contains('.') && boleto.Iof.ToString(CultureInfo.InvariantCulture).Contains(','))
+                if (boleto.Iof.ToString().Contains('.') && boleto.Iof.ToString().Contains(','))
                 {
-                    iofBoleto = boleto.Iof.ToString(CultureInfo.InvariantCulture).Replace(".", "").Replace(",", "");
+                    iofBoleto = boleto.Iof.ToString().Replace(".", "").Replace(",", "");
                     detalhe = detalhe.PreencherValorNaLinha(193, 205, iofBoleto.PadLeft(13, '0'));
                 }
-                if (boleto.Iof.ToString(CultureInfo.InvariantCulture).Contains('.'))
+                if (boleto.Iof.ToString().Contains('.'))
                 {
-                    iofBoleto = boleto.Iof.ToString(CultureInfo.InvariantCulture).Replace(".", "");
+                    iofBoleto = boleto.Iof.ToString().Replace(".", "");
                     detalhe = detalhe.PreencherValorNaLinha(193, 205, iofBoleto.PadLeft(13, '0'));
                 }
-                if (boleto.Iof.ToString(CultureInfo.InvariantCulture).Contains(','))
+                if (boleto.Iof.ToString().Contains(','))
                 {
-                    iofBoleto = boleto.Iof.ToString(CultureInfo.InvariantCulture).Replace(",", "");
+                    iofBoleto = boleto.Iof.ToString().Replace(",", "");
                     detalhe = detalhe.PreencherValorNaLinha(193, 205, iofBoleto.PadLeft(13, '0'));
                 }
 
-                detalhe = detalhe.PreencherValorNaLinha(193, 205, boleto.Iof.ToString(CultureInfo.InvariantCulture).PadLeft(13, '0')); // Valor do I.O.F. recolhido p/ notas seguro
+                detalhe = detalhe.PreencherValorNaLinha(193, 205, boleto.Iof.ToString().PadLeft(13, '0')); // Valor do I.O.F. recolhido p/ notas seguro
 
                 #endregion
 
@@ -444,6 +444,18 @@ namespace BoletoBr.Bancos.Bradesco
         }
 
         public TrailerRemessaCnab400 EscreverTrailer(string linha)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> EscreverTexto(RemessaCnab400 remessaEscrever)
+        {
+            var listaRetornar = new List<string>();
+
+            return null;
+        }
+
+        public void ValidarRemessa(RemessaCnab400 remessaValidar)
         {
             throw new NotImplementedException();
         }

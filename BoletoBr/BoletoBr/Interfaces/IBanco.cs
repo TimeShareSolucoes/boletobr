@@ -85,7 +85,7 @@ namespace BoletoBr.Interfaces
         /// </summary>
         /// <param name="linhasArquivo">Linhas do arquivo que será processado</param>
         RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo);
-        RemessaCnab240 GerarArquivoRemessaCnab240(List<Boleto> boletos);
-        RemessaCnab400 GerarArquivoRemessaCnab400(List<Boleto> boletos);
+        RemessaCnab240 GerarArquivoRemessaCnab240(RemessaCnab240 remessaCnab240, List<Boleto> boletos);
+        RemessaCnab400 GerarArquivoRemessaCnab400(RemessaCnab400 remessaCnab400, List<Boleto> boletos);
     }
 }

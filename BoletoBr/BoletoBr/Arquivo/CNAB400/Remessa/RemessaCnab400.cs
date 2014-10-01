@@ -5,14 +5,6 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
 {
     public class RemessaCnab400
     {
-        private readonly IBanco _bancoRemessa;
-        //private List<Boleto> _listaBoletos;
-
-        public RemessaCnab400(IBanco bancoRemessa)
-        {
-            _bancoRemessa = bancoRemessa;
-        }
-
         public void AdicionarBoleto(Boleto boletoAdicionar)
         {
             if (boletoAdicionar.BancoBoleto == null)

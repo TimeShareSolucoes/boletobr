@@ -29,7 +29,7 @@ namespace BoletoBr.Arquivo.Generico.Remessa
                     var detalheGenericoAdd = new RemessaDetalheGenerica
                     {
                         NossoNumero = d.SegmentoP.NossoNumero,
-                        Carteira = d.SegmentoP.Carteira,
+                        Carteira = d.SegmentoP.ModalidadeCarteira,
                         NumeroDocumento = d.SegmentoP.NumeroDocumento
                     };
 
@@ -39,12 +39,12 @@ namespace BoletoBr.Arquivo.Generico.Remessa
 
                     #region Valores no detalhe
 
-                    var valorJuros = d.SegmentoP.ValorJuros;
+                    var valorJuros = d.SegmentoP.ValorJurosMora;
                     var valorDesc = d.SegmentoP.ValorDesconto1 + d.SegmentoP.ValorAbatimento;
                     //var valorPago = d.SegmentoU.ValorPagoPeloSacado;
 
-                    detalheGenericoAdd.ValorJuros = valorJuros;
-                    detalheGenericoAdd.ValorDescontos = valorDesc;
+                    detalheGenericoAdd.ValorJuros = (decimal) valorJuros;
+                    detalheGenericoAdd.ValorDescontos = (decimal) valorDesc;
 
                     #endregion
                     
