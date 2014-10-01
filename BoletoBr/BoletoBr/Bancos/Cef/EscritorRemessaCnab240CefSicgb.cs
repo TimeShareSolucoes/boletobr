@@ -47,13 +47,15 @@ namespace BoletoBr.Bancos.Cef
 
         #endregion
 
-        private readonly Remessa _remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao,
-            EnumCodigoOcorrenciaRemessa.Registro, "02");
+        //private readonly Remessa _remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao,
+        //    EnumCodigoOcorrenciaRemessa.Registro, "02");
 
         public List<string> EscreverArquivo(List<Boleto> boletosEscrever)
         {
             throw new NotImplementedException();
         }
+
+        #region #VALIDAÇÕES
 
         public void ValidarArquivoRemessa(Cedente cedente, List<Boleto> boletos, int numeroArquivoRemessa)
         {
@@ -73,32 +75,104 @@ namespace BoletoBr.Bancos.Cef
             }
         }
 
+        public void ValidarHeader(Boleto boleto, int numeroRegistro)
+        {
+            if (boleto == null)
+                throw new Exception("Não há boleto para geração do HEADER");
+
+            if (numeroRegistro == 0)
+                throw new Exception("Sequencial do registro não foi informado.");
+
+            if (String.IsNullOrEmpty(boleto.CedenteBoleto.CpfCnpj))
+                throw new Exception("CPF/CNPJ do Cedente não foi informado.");
+
+            if (String.IsNullOrEmpty(boleto.CedenteBoleto.ContaBancariaCedente.Agencia))
+                throw new Exception("Agência do Cedente não foi informada.");
+
+            if (String.IsNullOrEmpty(boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia))
+                throw new Exception("Dígito da agência do Cedente não foi informada.");
+
+            if (String.IsNullOrEmpty(boleto.CedenteBoleto.CodigoCedente))
+                throw new Exception("Código do Cedente não foi informado.");
+
+            if (String.IsNullOrEmpty(boleto.CedenteBoleto.Nome))
+                throw new Exception("Nome do Cedente não foi informado.");
+        }
+
+        public void ValidarHeaderLote(Boleto boleto, int numeroLote, int numeroRegistro, int numeroRemessa)
+        {
+            if (boleto == null)
+                throw new Exception("Não há boleto para geração do HEADER DE LOTE");
+
+            if (numeroRemessa == 0)
+                throw new Exception("Sequencial da remessa não foi informado na geração do HEADER DE LOTE.");
+
+            if (numeroLote == 0)
+                throw new Exception("Sequencial do lote não foi informado na geração do HEADER DE LOTE.");
+
+            if (numeroRegistro == 0)
+                throw new Exception("Sequencial do registro não foi informado na geração do HEADER DE LOTE.");
+
+            if (String.IsNullOrEmpty(boleto.CarteiraCobranca.Codigo))
+                throw new Exception("Código da Carteira de Cobrança não foi informado.");
+
+            if (String.IsNullOrEmpty(boleto.CedenteBoleto.CpfCnpj))
+                throw new Exception("CPF/CNPJ do Cedente não foi informado.");
+
+            if (String.IsNullOrEmpty(boleto.CedenteBoleto.ContaBancariaCedente.Agencia))
+                throw new Exception("Agência do Cedente não foi informada.");
+
+            if (String.IsNullOrEmpty(boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia))
+                throw new Exception("Dígito da agência do Cedente não foi informada.");
+
+            if (String.IsNullOrEmpty(boleto.CedenteBoleto.CodigoCedente))
+                throw new Exception("Código do Cedente não foi informado.");
+
+            if (String.IsNullOrEmpty(boleto.CedenteBoleto.Nome))
+                throw new Exception("Nome do Cedente não foi informado.");
+        }
+
+        public void ValidarRegistroDetalheSegmentoPLote(Boleto boleto, int numeroLote, int numeroSequencialRegistroNoLote)
+        {
+            if (boleto == null)
+                throw new Exception("Não há boleto para geração do HEADER DE LOTE");
+
+            if (numeroLote == 0)
+                throw new Exception("Sequencial do lote não foi informado na geração do HEADER DE LOTE.");
+
+            if (numeroSequencialRegistroNoLote == 0)
+                throw new Exception("Sequencial do registro no lote não foi informado na geração do HEADER DE LOTE.");
+
+            if (String.IsNullOrEmpty(boleto.CedenteBoleto.ContaBancariaCedente.Agencia))
+                throw new Exception("Agência do Cedente não foi informada.");
+
+            if (String.IsNullOrEmpty(boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia))
+                throw new Exception("Dígito da agência do Cedente não foi informada.");
+
+            if (String.IsNullOrEmpty(boleto.CedenteBoleto.CodigoCedente))
+                throw new Exception("Código do Cedente não foi informado.");
+
+            if (String.IsNullOrEmpty(boleto.NossoNumeroFormatado))
+                throw new Exception("Nosso número não foi informado.");
+
+            if (String.IsNullOrEmpty(boleto.CarteiraCobranca.Codigo))
+                throw new Exception("Código da Carteira de Cobrança não foi informado.");
+
+            if (String.IsNullOrEmpty(boleto.NumeroDocumento))
+                throw new Exception("Número do documento não foi informado.");
+
+            if (String.IsNullOrEmpty(boleto.DataVencimento.ToString()))
+                throw new Exception("Data de Vencimento não foi informada.");
+
+            if (String.IsNullOrEmpty(boleto.ValorBoleto.ToString()))
+                throw new Exception("Valor do Boleto não foi informado.");
+        }
+
+        #endregion #VALIDAÇÕES
+
         public RemessaCnab240 ProcessarRemessaCnab240()
         {
             throw new NotImplementedException();
-        }
-
-        public RemessaCnab240 ProcessarRemessaCnab240(List<Boleto> boletos)
-        {
-            var objRetornar = new RemessaCnab240();
-
-            var lote = new LoteRemessaCnab240();
-            var registroDetalhe = new DetalheRemessaCnab240();
-            objRetornar.Lotes.Add(lote);
-
-            EscreverHeader(boletos.FirstOrDefault(), 1);
-
-            foreach (var boleto in boletos)
-            {
-                lote.HeaderLote = EscreverHeaderLote(boleto);
-                registroDetalhe.SegmentoP = EscreverDetalheSegmentoP(boleto);
-                registroDetalhe.SegmentoQ = EscreverDetalheSegmentoQ(boleto);
-                lote.TrailerLote = EscreverTrailerLote(boleto);
-            }
-
-            EscreverTrailer(1, 1);
-            
-            return objRetornar;
         }
 
         public void ValidaArquivoRemessa()
@@ -136,61 +210,65 @@ namespace BoletoBr.Bancos.Cef
             throw new NotImplementedException();
         }
 
-        public HeaderRemessaCnab240 EscreverHeader()
+        public RemessaCnab240 ProcessarRemessaCnab240(List<Boleto> boletos)
         {
-            throw new NotImplementedException();
-        }
+            var objRetornar = new RemessaCnab240();
 
-        public HeaderLoteRemessaCnab240 EscreverHeaderLote(Boleto boleto)
-        {
-            throw new NotImplementedException();
-        }
+            var lote = new LoteRemessaCnab240();
+            var registroDetalhe = new DetalheRemessaCnab240();
+            objRetornar.Lotes.Add(lote);
 
-        public DetalheSegmentoPRemessaCnab240 EscreverDetalheSegmentoP(Boleto boleto)
-        {
-            throw new NotImplementedException();
-        }
+            EscreverHeader(boletos.FirstOrDefault(), 1);
+            EscreverHeaderDeLote(boletos.FirstOrDefault(), 1, 1, 1);
 
-        public DetalheSegmentoQRemessaCnab240 EscreverDetalheSegmentoQ(Boleto boleto)
-        {
-            throw new NotImplementedException();
-        }
+            foreach (var boleto in boletos)
+            {
+                //lote.HeaderLote = EscreverHeaderDeLote(boleto, 1, 1, 1);
+                //registroDetalhe.SegmentoP = EscreverDetalheSegmentoP(boleto, 1, 1);
+                //registroDetalhe.SegmentoQ = EscreverDetalheSegmentoQ(boleto, 1, 1);
+                //lote.TrailerLote = EscreverTrailerDeLote(1, 1, 1, 1, 1, 1, 1, 1);
+            }
 
-        public TrailerLoteRemessaCnab240 EscreverTrailerLote(Boleto boleto)
-        {
-            throw new NotImplementedException();
-        }
-
-        public TrailerRemessaCnab240 EscreverTrailer()
-        {
-            throw new NotImplementedException();
+            EscreverTrailer(1, 1);
+            
+            return objRetornar;
         }
 
         public string EscreverHeader(Boleto boleto, int numeroRegistro)
         {
-            if (boleto == null)
-                throw new Exception("Não há boleto para geração do HEADER");
+            ValidarHeader(boleto, numeroRegistro);
 
-            if (numeroRegistro == 0)
-                throw new Exception("Sequencial do registro não foi informado.");
+            string nomeCedente = boleto.CedenteBoleto.Nome;
+
+            if (nomeCedente.Length > 30)
+                nomeCedente = boleto.CedenteBoleto.Nome.Substring(0, 30);
+
+            if (boleto.Remessa == null)
+                boleto.Remessa = new Remessa(Remessa.EnumTipoAmbiemte.Producao, EnumCodigoOcorrenciaRemessa.Registro,
+                    "02");
 
             var header = new string(' ', 240);
             try
             {
                 header = header.PreencherValorNaLinha(1, 3, "104");
-                header = header.PreencherValorNaLinha(4, 7, "0000"); 
+                header = header.PreencherValorNaLinha(4, 7, "0000");
                 header = header.PreencherValorNaLinha(8, 8, "0");
                 header = header.PreencherValorNaLinha(9, 17, string.Empty.PadLeft(9, ' '));
-                header = header.PreencherValorNaLinha(18, 18, boleto.CedenteBoleto.CpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "").Length == 11 ? "1" : "2");                          
-                header = header.PreencherValorNaLinha(19, 32, boleto.CedenteBoleto.CpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(14, '0'));
+                header = header.PreencherValorNaLinha(18, 18,
+                    boleto.CedenteBoleto.CpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "").Length == 11
+                        ? "1"
+                        : "2");
+                header = header.PreencherValorNaLinha(19, 32,
+                    boleto.CedenteBoleto.CpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(14, '0'));
                 header = header.PreencherValorNaLinha(33, 52, string.Empty.PadLeft(20, '0'));
-                header = header.PreencherValorNaLinha(53, 57, boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(5, '0')); 
-                header = header.PreencherValorNaLinha(58, 58, boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta);                                      
+                header = header.PreencherValorNaLinha(53, 57,
+                    boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(5, '0'));
+                header = header.PreencherValorNaLinha(58, 58, boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia);
                 header = header.PreencherValorNaLinha(59, 64, boleto.CedenteBoleto.CodigoCedente.PadLeft(6, '0'));
                 header = header.PreencherValorNaLinha(65, 71, string.Empty.PadLeft(7, '0'));
-                header = header.PreencherValorNaLinha(72, 72, "0"); 
-                header = header.PreencherValorNaLinha(73, 102, boleto.CedenteBoleto.Nome.PadRight(30, ' '));
-                header = header.PreencherValorNaLinha(103, 132, "CAIXA ECONOMICA FEDERAL".PadRight(30, ' '));                                                         
+                header = header.PreencherValorNaLinha(72, 72, "0");
+                header = header.PreencherValorNaLinha(73, 102, nomeCedente.PadRight(30, ' '));
+                header = header.PreencherValorNaLinha(103, 132, "CAIXA ECONOMICA FEDERAL".PadRight(30, ' '));
                 header = header.PreencherValorNaLinha(133, 142, string.Empty.PadLeft(10, ' '));
 
                 #region CÓDIGO REMESSA / RETORNO
@@ -207,16 +285,18 @@ namespace BoletoBr.Bancos.Cef
                 #endregion
 
                 // Código Remessa/Retorno padronizado para "1" no envio do arquivo
-                header = header.PreencherValorNaLinha(143, 143, "1");                                                                             
-                header = header.PreencherValorNaLinha(144, 151, DateTime.Now.ToString("ddMMyy"));
+                header = header.PreencherValorNaLinha(143, 143, "1");
+                header = header.PreencherValorNaLinha(144, 151, DateTime.Now.ToString("ddMMyyyy"));
                 header = header.PreencherValorNaLinha(152, 157, DateTime.Now.ToString("hhmmss"));
-                header = header.PreencherValorNaLinha(158, 163, numeroRegistro.ToString(CultureInfo.InvariantCulture).PadLeft(6, '0'));
+                header = header.PreencherValorNaLinha(158, 163,
+                    numeroRegistro.ToString(CultureInfo.InvariantCulture).PadLeft(6, '0'));
                 header = header.PreencherValorNaLinha(164, 166, "050");
-                header = header.PreencherValorNaLinha(167, 171, string.Empty.PadLeft(5, '0')); 
+                header = header.PreencherValorNaLinha(167, 171, string.Empty.PadLeft(5, '0'));
                 header = header.PreencherValorNaLinha(172, 191, string.Empty.PadRight(20, ' '));
-                header = header.PreencherValorNaLinha(192, 211, _remessa.Ambiente.Equals(Remessa.EnumTipoAmbiemte.Producao) ? 
-                    "REMESSA-PRODUCAO".PadRight(20, ' ') :
-                    "REMESSA-TESTE".PadRight(20, ' '));
+                header = header.PreencherValorNaLinha(192, 211,
+                    boleto.Remessa.Ambiente.Equals(Remessa.EnumTipoAmbiemte.Homologacao)
+                        ? "REMESSA-TESTE".PadRight(20, ' ')
+                        : "REMESSA-PRODUCAO".PadRight(20, ' '));
                 header = header.PreencherValorNaLinha(212, 215, string.Empty.PadRight(4, ' '));
                 header = header.PreencherValorNaLinha(216, 240, string.Empty.PadRight(25, ' '));
 
@@ -259,42 +339,47 @@ namespace BoletoBr.Bancos.Cef
 
             #endregion
 
-            if (boleto == null)
-                throw new Exception("Não há boleto para geração do HEADER DE LOTE");
+            ValidarHeaderLote(boleto, numeroLote, numeroRegistro, numeroRemessa);
 
-            if (numeroRemessa == 0)
-                throw new Exception("Sequencial da remessa não foi informado na geração do HEADER DE LOTE.");
+            string nomeCedente = boleto.CedenteBoleto.Nome;
 
-            if (numeroLote == 0)
-                throw new Exception("Sequencial do lote não foi informado na geração do HEADER DE LOTE.");
-
-            if (numeroRegistro == 0)
-                throw new Exception("Sequencial do registro não foi informado na geração do HEADER DE LOTE.");
+            if (nomeCedente.Length > 30)
+                nomeCedente = boleto.CedenteBoleto.Nome.Substring(0, 30);
 
             var headerLote = new string(' ', 240);
             try
             {
                 headerLote = headerLote.PreencherValorNaLinha(1, 3, "104"); // Código do Banco na Compensação
-                headerLote = headerLote.PreencherValorNaLinha(4, 7, numeroLote.ToString().PadLeft(4, '0')); // Lote de Serviço
+                headerLote = headerLote.PreencherValorNaLinha(4, 7, numeroLote.ToString().PadLeft(4, '0'));
+                    // Lote de Serviço
                 headerLote = headerLote.PreencherValorNaLinha(8, 8, "1"); // Tipo de Registro
-                headerLote = headerLote.PreencherValorNaLinha(9, 9, "R");         
-                headerLote = headerLote.PreencherValorNaLinha(10, 11, boleto.CarteiraCobranca.Codigo.Equals("RG") ? "01" : "02"); // Tipo de Serviço
+                headerLote = headerLote.PreencherValorNaLinha(9, 9, "R");
+                headerLote = headerLote.PreencherValorNaLinha(10, 11,
+                    boleto.CarteiraCobranca.Codigo.Equals("RG") ? "01" : "02"); // Tipo de Serviço
                 headerLote = headerLote.PreencherValorNaLinha(12, 13, "00"); // Uso Exclusivo FREBRABAN/CNAB
                 headerLote = headerLote.PreencherValorNaLinha(14, 16, "030"); // Nº da versão do Layout do Lote
                 headerLote = headerLote.PreencherValorNaLinha(17, 17, " "); // Uso Exclusivo FREBRABAN/CNAB
-                headerLote = headerLote.PreencherValorNaLinha(18, 18, boleto.CedenteBoleto.CpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "").Length == 11 ? "1" : "2");
-                headerLote = headerLote.PreencherValorNaLinha(19, 33, boleto.CedenteBoleto.CpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(15, '0'));
+                headerLote = headerLote.PreencherValorNaLinha(18, 18,
+                    boleto.CedenteBoleto.CpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "").Length == 11
+                        ? "1"
+                        : "2");
+                headerLote = headerLote.PreencherValorNaLinha(19, 33,
+                    boleto.CedenteBoleto.CpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(15, '0'));
                 headerLote = headerLote.PreencherValorNaLinha(34, 39, boleto.CedenteBoleto.CodigoCedente.PadLeft(6, '0'));
                 headerLote = headerLote.PreencherValorNaLinha(40, 53, string.Empty.PadLeft(14, '0'));
-                headerLote = headerLote.PreencherValorNaLinha(54, 58, boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(5, '0'));
-                headerLote = headerLote.PreencherValorNaLinha(59, 59, boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta);
+                headerLote = headerLote.PreencherValorNaLinha(54, 58,
+                    boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(5, '0'));
+                headerLote = headerLote.PreencherValorNaLinha(59, 59,
+                    boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia);
                 headerLote = headerLote.PreencherValorNaLinha(60, 65, boleto.CedenteBoleto.CodigoCedente.PadLeft(6, '0'));
-                headerLote = headerLote.PreencherValorNaLinha(66, 72, string.Empty.PadLeft(7, '0')); // Código do Modelo Personalizado
+                headerLote = headerLote.PreencherValorNaLinha(66, 72, string.Empty.PadLeft(7, '0'));
+                    // Código do Modelo Personalizado
                 headerLote = headerLote.PreencherValorNaLinha(73, 73, "0"); // Uso Exclusivo da CAIXA
-                headerLote = headerLote.PreencherValorNaLinha(74, 103, boleto.CedenteBoleto.Nome.PadRight(30, ' '));
+                headerLote = headerLote.PreencherValorNaLinha(74, 103, nomeCedente.PadRight(30, ' '));
                 headerLote = headerLote.PreencherValorNaLinha(104, 143, string.Empty.PadRight(40, ' ')); // Mensagem 1
                 headerLote = headerLote.PreencherValorNaLinha(144, 183, string.Empty.PadRight(40, ' ')); // Mensagem 2
-                headerLote = headerLote.PreencherValorNaLinha(184, 191, numeroRemessa.ToString().PadLeft(8, '0')); // Número Remessa/Retorno
+                headerLote = headerLote.PreencherValorNaLinha(184, 191, numeroRemessa.ToString().PadLeft(8, '0'));
+                    // Número Remessa/Retorno
                 headerLote = headerLote.PreencherValorNaLinha(192, 199, DateTime.Now.ToString("ddMMyyyy"));
                 headerLote = headerLote.PreencherValorNaLinha(200, 207, string.Empty.PadLeft(8, '0'));
                 headerLote = headerLote.PreencherValorNaLinha(208, 240, string.Empty.PadRight(33, ' '));
@@ -324,14 +409,7 @@ namespace BoletoBr.Bancos.Cef
 
             #endregion
 
-            if (boleto == null)
-                throw new Exception("Não há boleto para geração do HEADER DE LOTE");
-
-            if (numeroLote == 0)
-                throw new Exception("Sequencial do lote não foi informado na geração do HEADER DE LOTE.");
-
-            if (numeroSequencialRegistroNoLote == 0)
-                throw new Exception("Sequencial do registro no lote não foi informado na geração do HEADER DE LOTE.");
+            ValidarRegistroDetalheSegmentoPLote(boleto, numeroLote, numeroSequencialRegistroNoLote);
 
             var CCNNNNNNNNNNNNNNN = boleto.NossoNumeroFormatado.Substring(0, 17);
 
@@ -472,7 +550,7 @@ namespace BoletoBr.Bancos.Cef
             enderecoSacado += boleto.SacadoBoleto.EnderecoSacado.Complemento;
 
             if (enderecoSacado.Length > 40)
-                throw new Exception("Endereço do sacado excedeu o limite permitido.");
+                throw new Exception("Endereço do sacado excedeu o limite permitido de 40 espaços.");
 
             var segmentoQ = new string(' ', 240);
 

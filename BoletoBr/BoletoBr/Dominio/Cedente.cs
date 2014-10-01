@@ -6,6 +6,7 @@ namespace BoletoBr
     {
         public ContaBancaria ContaBancariaCedente { get; set; }
         public string CodigoCedente { get; set; }
+        public string CodigoCedenteFormatado { get; set; }
         public string Convenio { get; set; }
         public int DigitoCedente { get; set; }
         public string CpfCnpj { get; set; }
