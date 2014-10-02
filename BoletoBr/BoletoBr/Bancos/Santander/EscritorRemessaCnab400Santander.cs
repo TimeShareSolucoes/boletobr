@@ -9,6 +9,13 @@ namespace BoletoBr.Bancos.Santander
 {
     public class EscritorRemessaCnab400Santander : IEscritorArquivoRemessaCnab400
     {
+        private RemessaCnab400 _remessaEscrever;
+
+        public EscritorRemessaCnab400Santander(RemessaCnab400 remessaEscrever)
+        {
+            _remessaEscrever = remessaEscrever;
+        }
+
         public string EscreverHeader(Boleto boleto, int numeroRegistro)
         {
             var header = new string(' ', 400);

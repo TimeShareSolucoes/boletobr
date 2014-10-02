@@ -18,7 +18,7 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
             loteAdd.HeaderLote = headerLote;
             loteAdd.TrailerLote = trailerLote;
 
-            this.Lotes.Add(loteAdd);
+            Lotes.Add(loteAdd);
             return loteAdd;
         }
 

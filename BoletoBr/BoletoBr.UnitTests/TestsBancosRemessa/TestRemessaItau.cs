@@ -51,22 +51,22 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             
             banco.FormatarBoleto(boleto);
 
-            const int numeroRegistro = 1;
+            //const int numeroRegistro = 1;
 
-            var escritor = new EscritorRemessaCnab400Itau();
+            //var escritor = new EscritorRemessaCnab400Itau();
 
-            var linhasEscrever = escritor.EscreverHeader(boleto, numeroRegistro);
+            //var linhasEscrever = escritor.EscreverHeader(boleto, numeroRegistro);
 
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            var data = DateTime.Now.ToString("d").Replace("/", "");
+            //var data = DateTime.Now.ToString("d").Replace("/", "");
 
-            var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_HEADER", ".txt");
+            //var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_HEADER", ".txt");
 
-            var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
-            arquivo.WriteLine(linhasEscrever);
+            //var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
+            //arquivo.WriteLine(linhasEscrever);
 
-            arquivo.Close();
+            //arquivo.Close();
         }
 
         [TestMethod]
@@ -107,22 +107,22 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
 
             banco.FormatarBoleto(boleto);
 
-            const int numeroRegistro = 1;
+            //const int numeroRegistro = 1;
 
-            var escritor = new EscritorRemessaCnab400Itau();
+            //var escritor = new EscritorRemessaCnab400Itau();
 
-            var linhasEscrever = escritor.EscreverDetalhe(boleto, numeroRegistro);
+            //var linhasEscrever = escritor.EscreverDetalhe(boleto, numeroRegistro);
 
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            var data = DateTime.Now.ToString("d").Replace("/", "");
+            //var data = DateTime.Now.ToString("d").Replace("/", "");
 
-            var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_DETALHE", ".txt");
+            //var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_DETALHE", ".txt");
 
-            var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
-            arquivo.WriteLine(linhasEscrever);
+            //var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
+            //arquivo.WriteLine(linhasEscrever);
 
-            arquivo.Close();
+            //arquivo.Close();
         }
 
         [TestMethod]
@@ -163,22 +163,22 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
 
             banco.FormatarBoleto(boleto);
 
-            const int numeroRegistro = 1;
+            //const int numeroRegistro = 1;
 
-            var escritor = new EscritorRemessaCnab400Itau();
+            //var escritor = new EscritorRemessaCnab400Itau();
 
-            var linhasEscrever = escritor.EscreverTrailer(numeroRegistro);
+            //var linhasEscrever = escritor.EscreverTrailer(numeroRegistro);
 
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            var data = DateTime.Now.ToString("d").Replace("/", "");
+            //var data = DateTime.Now.ToString("d").Replace("/", "");
 
-            var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_TRAILER", ".txt");
+            //var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_TRAILER", ".txt");
 
-            var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
-            arquivo.WriteLine(linhasEscrever);
+            //var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
+            //arquivo.WriteLine(linhasEscrever);
 
-            arquivo.Close();
+            //arquivo.Close();
         }
     }
 }

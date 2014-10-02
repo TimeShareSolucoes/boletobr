@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using BoletoBr.Arquivo;
 using BoletoBr.Arquivo.CNAB240.Remessa;
 using BoletoBr.Enums;
@@ -686,7 +687,7 @@ namespace BoletoBr.Bancos.Cef
             var listaRet = new List<string>();
 
             /* Header */
-            listaRet.Add(EscreverHeaderDeLote(remessaEscrever.Header));
+            listaRet.Add(EscreverHeader(remessaEscrever.Header));
 
             /* Detalhes */
             foreach (var loteEscrever in remessaEscrever.Lotes)
@@ -695,26 +696,24 @@ namespace BoletoBr.Bancos.Cef
             }
 
             /* Trailer */
-            listaRet.Add(EscreverTrailerDeLote(remessaEscrever.Trailer));
+            listaRet.Add(EscreverTrailer(remessaEscrever.Trailer));
 
             return listaRet;
         }
 
-        private string EscreverHeaderDeLote(HeaderRemessaCnab240 headerEscrever)
+        private string EscreverHeader(HeaderRemessaCnab240 headerEscrever)
         {
             throw new NotImplementedException();
         }
 
-        private string EscreverTrailerDeLote(TrailerRemessaCnab240 trailerEscrever)
+        private string EscreverTrailer(TrailerRemessaCnab240 trailerEscrever)
         {
             throw new NotImplementedException();
         }
 
         private List<string> EscreverLote(LoteRemessaCnab240 loteEscrever)
         {
-            var listaRetornar = new List<string>();
-
-            return null;
+            throw new NotImplementedException();
         }
 
         public void ValidarRemessa(RemessaCnab240 remessaValidar)

@@ -10,6 +10,13 @@ namespace BoletoBr.Bancos.Brasil
 {
     public class EscritorRemessaCnab400BancoDoBrasil : IEscritorArquivoRemessaCnab400
     {
+        private RemessaCnab400 _remessaEscrever;
+
+        public EscritorRemessaCnab400BancoDoBrasil(RemessaCnab400 remessaEscrever)
+        {
+            _remessaEscrever = remessaEscrever;
+        }
+
         public string EscreverHeader(Boleto boleto, int numeroRemessa, int numeroRegistro)
         {
             if (boleto == null)

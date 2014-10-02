@@ -51,23 +51,23 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
 
             banco.FormatarBoleto(boleto);
 
-            const int numeroRemessa = 1;
-            const int numeroRegistro = 1;
+            //const int numeroRemessa = 1;
+            //const int numeroRegistro = 1;
 
-            var escritor = new EscritorRemessaCnab400BancoDoBrasil();
+            //var escritor = new EscritorRemessaCnab400BancoDoBrasil();
 
-            var linhasEscrever = escritor.EscreverHeader(boleto, numeroRemessa, numeroRegistro);
+            //var linhasEscrever = escritor.EscreverHeader(boleto, numeroRemessa, numeroRegistro);
 
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            var data = DateTime.Now.ToString("ddMMyyyy");
+            //var data = DateTime.Now.ToString("ddMMyyyy");
 
-            var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_HEADER", ".txt");
+            //var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_HEADER", ".txt");
 
-            var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
-            arquivo.WriteLine(linhasEscrever);
+            //var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
+            //arquivo.WriteLine(linhasEscrever);
 
-            arquivo.Close();
+            //arquivo.Close();
         }
 
         [TestMethod]
@@ -108,22 +108,22 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
 
             banco.FormatarBoleto(boleto);
 
-            const int numeroRegistro = 1;
+            //const int numeroRegistro = 1;
 
-            var escritor = new EscritorRemessaCnab400BancoDoBrasil();
+            //var escritor = new EscritorRemessaCnab400BancoDoBrasil();
 
-            var linhasEscrever = escritor.EscreverDetalhe(boleto, numeroRegistro);
+            //var linhasEscrever = escritor.EscreverDetalhe(boleto, numeroRegistro);
 
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            var data = DateTime.Now.ToString("ddMMyyyy");
+            //var data = DateTime.Now.ToString("ddMMyyyy");
 
-            var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_REGISTRO_DETALHE", ".txt");
+            //var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_REGISTRO_DETALHE", ".txt");
 
-            var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
-            arquivo.WriteLine(linhasEscrever);
+            //var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
+            //arquivo.WriteLine(linhasEscrever);
 
-            arquivo.Close();
+            //arquivo.Close();
         }
 
         [TestMethod]
@@ -163,22 +163,22 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
 
             banco.FormatarBoleto(boleto);
 
-            const int numeroRegistro = 1;
+            //const int numeroRegistro = 1;
 
-            var escritor = new EscritorRemessaCnab400BancoDoBrasil();
+            //var escritor = new EscritorRemessaCnab400BancoDoBrasil();
 
-            var linhasEscrever = escritor.EscreverTrailer(numeroRegistro);
+            //var linhasEscrever = escritor.EscreverTrailer(numeroRegistro);
 
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            var data = DateTime.Now.ToString("ddMMyyyy");
+            //var data = DateTime.Now.ToString("ddMMyyyy");
 
-            var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_TRAILER", ".txt");
+            //var nomeArquivo = string.Format("{0}{1}{2}{3}{4}{5}{6}", banco.CodigoBanco, "-", banco.NomeBanco, "_", data, @"_TRAILER", ".txt");
 
-            var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
-            arquivo.WriteLine(linhasEscrever);
+            //var arquivo = new System.IO.StreamWriter(path + @"\" + nomeArquivo, true);
+            //arquivo.WriteLine(linhasEscrever);
 
-            arquivo.Close();
+            //arquivo.Close();
         }
     }
 }

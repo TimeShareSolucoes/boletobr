@@ -29,7 +29,7 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
 
         public DetalheSegmentoPRemessaCnab240()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public string CodigoBanco { get; set; }
