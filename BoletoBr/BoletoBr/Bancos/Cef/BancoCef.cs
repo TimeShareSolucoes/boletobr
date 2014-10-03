@@ -1022,7 +1022,7 @@ namespace BoletoBr.Bancos.Cef
             throw new Exception("Arquivo de RETORNO com " + linhasArquivo.First().Length + " posições, não é suportado.");
         }
 
-        public RemessaCnab240 GerarArquivoRemessaCnab240(RemessaCnab240 remessa, List<Boleto> boletos)
+        public RemessaCnab240 GerarArquivoRemessaCnab240(List<Boleto> boletos)
         {
             //if (boletos == null || boletos.Count == 0)
             //    throw new Exception("Não há boletos para gerar a remessa.");
@@ -1036,7 +1036,7 @@ namespace BoletoBr.Bancos.Cef
             throw new NotImplementedException();
         }
 
-        public RemessaCnab400 GerarArquivoRemessaCnab400(RemessaCnab400 remessa, List<Boleto> boletos)
+        public RemessaCnab400 GerarArquivoRemessaCnab400(List<Boleto> boletos)
         {
             throw new NotImplementedException();
         }

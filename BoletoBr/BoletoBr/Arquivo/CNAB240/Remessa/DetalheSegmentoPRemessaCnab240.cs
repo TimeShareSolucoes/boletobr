@@ -8,7 +8,7 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
         public DetalheSegmentoPRemessaCnab240(Boleto boleto)
         {
             this.CodigoBanco = boleto.BancoBoleto.CodigoBanco;
-            this.CodigoOcorrencia = boleto.CodigoOcorrenciaRemessa.Codigo;
+            this.CodigoOcorrencia = boleto.CodigoOcorrenciaRemessa;
             this.AgenciaMantenedora = boleto.CedenteBoleto.ContaBancariaCedente.Agencia;
             this.DvAgenciaMantenedora = boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia;
             this.CodigoCedente = boleto.CedenteBoleto.CodigoCedente;
@@ -27,17 +27,12 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
             this.CodigoMoeda = boleto.Moeda;
         }
 
-        public DetalheSegmentoPRemessaCnab240()
-        {
-            throw new NotImplementedException();
-        }
-
         public string CodigoBanco { get; set; }
         public int LoteServico { get; set; }
         public int TipoRegistro { get; set; }
         public int NumeroRegistro { get; set; }
         public string Segmento { get; set; }
-        public int CodigoOcorrencia { get; set; }
+        public ICodigoOcorrencia CodigoOcorrencia { get; set; }
         public string AgenciaMantenedora { get; set; }
         public string DvAgenciaMantenedora { get; set; }
         public string CodigoCedente { get; set; }

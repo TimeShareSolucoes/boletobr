@@ -13,7 +13,7 @@ namespace BoletoBr.Fabricas
     /// </summary>
     public class RemessaFactory
     {
-        public RemessaCnab240 GerarRemessa(HeaderRemessaCnab240 header, List<Boleto> boletos,
+        public RemessaCnab240 GerarRemessa(HeaderRemessaCnab240 header, HeaderLoteRemessaCnab240 headerLote, List<Boleto> boletos, TrailerLoteRemessaCnab240 trailerLote,
             TrailerRemessaCnab240 trailer)
         {
             var objReturn = new RemessaCnab240();
@@ -21,8 +21,6 @@ namespace BoletoBr.Fabricas
             objReturn.Header = header;
             objReturn.Lotes = new List<LoteRemessaCnab240>();
 
-            var headerLote = new HeaderLoteRemessaCnab240();
-            var trailerLote = new TrailerLoteRemessaCnab240();
             var ultimoLoteAdicionado = objReturn.AdicionarLote(headerLote, trailerLote);
 
             foreach (var boletoAddRemessa in boletos)

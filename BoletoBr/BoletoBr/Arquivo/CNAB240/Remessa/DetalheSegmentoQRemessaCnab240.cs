@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoletoBr.Dominio;
-using BoletoBr.Enums;
+﻿using BoletoBr.Enums;
 
 namespace BoletoBr.Arquivo.CNAB240.Remessa
 {
@@ -22,11 +15,6 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
             this.CepSacado = boleto.SacadoBoleto.EnderecoSacado.Cep;
             this.CidadeSacado = boleto.SacadoBoleto.EnderecoSacado.Cidade;
             this.UfSacado = boleto.SacadoBoleto.EnderecoSacado.SiglaUf;
-        }
-
-        public DetalheSegmentoQRemessaCnab240()
-        {
-            throw new NotImplementedException();
         }
 
         public string CodigoBanco { get; set; }

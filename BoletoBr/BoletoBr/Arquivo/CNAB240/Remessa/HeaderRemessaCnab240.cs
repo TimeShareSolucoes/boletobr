@@ -18,7 +18,7 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
         public string CodigoRemessa { get; set; }
         public DateTime DataGeracao { get; set; }
         public DateTime HoraGeracao { get; set; }
-        public string SequenciaNsa { get; set; }
+        public int SequencialNsa { get; set; }
         public string VersaoLayout { get; set; }
         public string Densidade { get; set; }
         public string ReservadoBanco { get; set; }

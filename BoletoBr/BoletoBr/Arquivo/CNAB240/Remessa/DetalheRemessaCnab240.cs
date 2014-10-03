@@ -1,14 +1,16 @@
 ﻿
+using System.Collections.Generic;
+
 namespace BoletoBr.Arquivo.CNAB240.Remessa
 {
     public class DetalheRemessaCnab240
     {
          #region Construtores
 
-        public DetalheRemessaCnab240()
+        public DetalheRemessaCnab240(Boleto boleto)
         {
-            SegmentoP = new DetalheSegmentoPRemessaCnab240();
-            SegmentoQ = new DetalheSegmentoQRemessaCnab240();
+            SegmentoP = new DetalheSegmentoPRemessaCnab240(boleto);
+            SegmentoQ = new DetalheSegmentoQRemessaCnab240(boleto);
             SegmentoR = new DetalheSegmentoRRemessaCnab240();
             SegmentoS = new DetalheSegmentoSRemessaCnab240();
             SegmentoY = new DetalheSegmentoYRemessaCnab240();

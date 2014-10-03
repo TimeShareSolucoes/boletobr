@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Mime;
 using System.Text;
 using BoletoBr.Arquivo;
 using BoletoBr.Arquivo.CNAB400.Remessa;
