@@ -22,11 +22,11 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
             return loteAdd;
         }
 
-        public DetalheRemessaCnab240 AdicionarBoletoAoLote(LoteRemessaCnab240 loteContainer, Boleto boletoAdicionar)
+        public DetalheRemessaCnab240 AdicionarBoletoAoLote(LoteRemessaCnab240 loteContainer, Boleto boletoAdicionar, int numeroRegistroNoLote)
         {
-            var detalheRemessaAdd = new DetalheRemessaCnab240(boletoAdicionar);
-            detalheRemessaAdd.SegmentoP = new DetalheSegmentoPRemessaCnab240(boletoAdicionar);
-            detalheRemessaAdd.SegmentoQ = new DetalheSegmentoQRemessaCnab240(boletoAdicionar);
+            var detalheRemessaAdd = new DetalheRemessaCnab240(boletoAdicionar, numeroRegistroNoLote);
+            detalheRemessaAdd.SegmentoP = new DetalheSegmentoPRemessaCnab240(boletoAdicionar, numeroRegistroNoLote);
+            detalheRemessaAdd.SegmentoQ = new DetalheSegmentoQRemessaCnab240(boletoAdicionar, numeroRegistroNoLote);
 
             loteContainer.RegistrosDetalheSegmentos.Add(detalheRemessaAdd);
 

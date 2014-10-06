@@ -13,7 +13,8 @@ namespace BoletoBr.Fabricas
     /// </summary>
     public class RemessaFactory
     {
-        public RemessaCnab240 GerarRemessa(HeaderRemessaCnab240 header, HeaderLoteRemessaCnab240 headerLote, List<Boleto> boletos, TrailerLoteRemessaCnab240 trailerLote,
+        public RemessaCnab240 GerarRemessa(HeaderRemessaCnab240 header, HeaderLoteRemessaCnab240 headerLote,
+            List<Boleto> boletos, TrailerLoteRemessaCnab240 trailerLote,
             TrailerRemessaCnab240 trailer)
         {
             var objReturn = new RemessaCnab240();
@@ -23,9 +24,13 @@ namespace BoletoBr.Fabricas
 
             var ultimoLoteAdicionado = objReturn.AdicionarLote(headerLote, trailerLote);
 
+            // Usado para identificar com número único e sequencial cada boleto (registro) dentro do lote.
+            var contador = 1;
+
             foreach (var boletoAddRemessa in boletos)
             {
-                objReturn.AdicionarBoletoAoLote(ultimoLoteAdicionado, boletoAddRemessa);
+                objReturn.AdicionarBoletoAoLote(ultimoLoteAdicionado, boletoAddRemessa, contador);
+                contador++;
             }
 
             objReturn.Trailer = trailer;

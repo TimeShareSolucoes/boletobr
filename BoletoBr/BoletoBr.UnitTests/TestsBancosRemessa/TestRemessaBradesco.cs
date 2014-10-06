@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Mime;
 using System.Text;
 using BoletoBr.Arquivo;
 using BoletoBr.Arquivo.CNAB400.Remessa;
@@ -14,6 +15,21 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
     [TestClass]
     public class TestRemessaBradesco
     {
+        [TestMethod]
+        public void TestPathGeracaoArquivo()
+        {
+            var c1 = AppDomain.CurrentDomain.BaseDirectory;
+            var c2 = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            var c3 = AppDomain.CurrentDomain.BaseDirectory;
+            var c4 = System.IO.Directory.GetCurrentDirectory();
+            var c5 = Environment.CurrentDirectory;
+            var c6 = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
+
+            var concat = String.Format("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}", Environment.NewLine, c1, c2, c3, c4, c5,
+                c6);
+        }
+
+
         [TestMethod]
         public void TestGeracaoArquivoRemessa()
         {
@@ -52,12 +68,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
 
             var remessa = new RemessaCnab400();
 
-            remessa.Header = new HeaderRemessaCnab400
-            {
-                CodigoEmpresa = "01234567890123456789",
-                NomeEmpresa = "EMPRESA TESTE",
-                NumeroSequencialRemessa = 1,
-            };
+            remessa.Header = new HeaderRemessaCnab400(boleto, 1, 1);
 
             var detalheIndividual = new DetalheRemessaCnab400
             {
@@ -86,10 +97,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 detalheIndividual
             };
 
-            remessa.Trailer = new TrailerRemessaCnab400
-            {
-                NumeroSequencialRegistro = 1
-            };
+            remessa.Trailer = new TrailerRemessaCnab400(1);
 
             var escritor = new EscritorRemessaCnab400Bradesco(remessa);
 

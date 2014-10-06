@@ -1,16 +1,18 @@
 ﻿using BoletoBr.Enums;
+using BoletoBr.Interfaces;
 
 namespace BoletoBr.Arquivo.CNAB240.Remessa
 {
     public class DetalheSegmentoQRemessaCnab240
     {
-        public DetalheSegmentoQRemessaCnab240(Boleto boleto)
+        public DetalheSegmentoQRemessaCnab240(Boleto boleto, int numeroRegistroNoLote)
         {
             this.CodigoBanco = boleto.BancoBoleto.CodigoBanco;
-            this.CodigoOcorrencia = boleto.Remessa.CodigoOcorrencia;
+            this.NumeroRegistro = numeroRegistroNoLote;
+            this.CodigoOcorrencia = boleto.CodigoOcorrenciaRemessa;
             this.NumeroInscricaoSacado = boleto.SacadoBoleto.CpfCnpj;
             this.NomeSacado = boleto.SacadoBoleto.Nome;
-            //this.EnderecoSacado = boleto.SacadoBoleto.EnderecoSacado.LogradouroNumeroComplementoConcatenado;
+            this.EnderecoSacado = boleto.SacadoBoleto.EnderecoSacado.LogradouroNumeroComplementoConcatenado;
             this.BairroSacado = boleto.SacadoBoleto.EnderecoSacado.Bairro;
             this.CepSacado = boleto.SacadoBoleto.EnderecoSacado.Cep;
             this.CidadeSacado = boleto.SacadoBoleto.EnderecoSacado.Cidade;
@@ -22,7 +24,7 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
         public int TipoRegistro { get; set; }
         public int NumeroRegistro { get; set; }
         public string Segmento { get; set; }
-        public EnumCodigoOcorrenciaRemessa CodigoOcorrencia { get; set; }
+        public ICodigoOcorrencia CodigoOcorrencia { get; set; }
         public string TipoInscricaoSacado { get; set; }
         public string NumeroInscricaoSacado { get; set; }
         public string NomeSacado { get; set; }

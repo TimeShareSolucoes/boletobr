@@ -34,6 +34,18 @@ namespace BoletoBr.Arquivo
         /// </summary>
         public string TipoDocumento { get; set; }
 
+        /// <summary>
+        /// Número Sequencial do Arquivo (NSA) usado pela CAIXA para identificar o arquivo da remessa, é incrementado com 1 a cada header gerado.
+        /// </summary>
+        public int SequencialArquivo { get; set; }
+
+        /// <summary>
+        /// Número adotado e controlado pelo responsável pela geração magnética dos dados contidos no arquivo para
+        /// identificar a seqüência de envio ou devolução do arquivo entre o Cedente e o Banco Cedente.
+        /// Obs.: o número informado deve ser seqüencial crescente (anterior + 1).
+        /// </summary>
+        public int SequencialRemessa { get; set; }
+
         public Remessa(EnumTipoAmbiemte tipoAmbiente, EnumCodigoOcorrenciaRemessa codigoOcorrencia, string tipoDocumento)
         {
             Ambiente = tipoAmbiente;

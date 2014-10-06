@@ -7,10 +7,10 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
     {
          #region Construtores
 
-        public DetalheRemessaCnab240(Boleto boleto)
+        public DetalheRemessaCnab240(Boleto boleto, int numeroRegistroNoLote)
         {
-            SegmentoP = new DetalheSegmentoPRemessaCnab240(boleto);
-            SegmentoQ = new DetalheSegmentoQRemessaCnab240(boleto);
+            SegmentoP = new DetalheSegmentoPRemessaCnab240(boleto, numeroRegistroNoLote);
+            SegmentoQ = new DetalheSegmentoQRemessaCnab240(boleto, numeroRegistroNoLote);
             SegmentoR = new DetalheSegmentoRRemessaCnab240();
             SegmentoS = new DetalheSegmentoSRemessaCnab240();
             SegmentoY = new DetalheSegmentoYRemessaCnab240();

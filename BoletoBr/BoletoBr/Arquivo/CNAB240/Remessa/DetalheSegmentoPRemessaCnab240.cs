@@ -5,9 +5,10 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
 {
     public class DetalheSegmentoPRemessaCnab240
     {
-        public DetalheSegmentoPRemessaCnab240(Boleto boleto)
+        public DetalheSegmentoPRemessaCnab240(Boleto boleto, int numeroRegistroNoLote)
         {
             this.CodigoBanco = boleto.BancoBoleto.CodigoBanco;
+            this.NumeroRegistro = numeroRegistroNoLote;
             this.CodigoOcorrencia = boleto.CodigoOcorrenciaRemessa;
             this.AgenciaMantenedora = boleto.CedenteBoleto.ContaBancariaCedente.Agencia;
             this.DvAgenciaMantenedora = boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia;

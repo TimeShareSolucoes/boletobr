@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using BoletoBr.Arquivo;
 using BoletoBr.Arquivo.CNAB240.Remessa;
@@ -24,7 +25,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
 
             var contaBancariaCedente = new ContaBancaria("007", "8", "1234", "0");
 
-            var cedente = new Cedente("999999", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente, null);
+            var cedente = new Cedente("999999", "123456", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente, null);
 
             var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco
             {
@@ -47,7 +48,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 ValorBoleto = (decimal)1000.51,
                 SequencialNossoNumero = "19",
                 DataVencimento = new DateTime(2014, 06, 30),
-                Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil)
+                Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil),
             };
 
             var listaBoleto = new List<Boleto>();
@@ -60,18 +61,9 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
 
             var remessa = new RemessaCnab240();
 
-            var listaDetalhes = new List<DetalheRemessaCnab240>();
+            //var listaDetalhes = new List<DetalheRemessaCnab240>();
 
-            remessa.Header = new HeaderRemessaCnab240
-            {
-                LoteServico = 1,
-                NumeroInscricao = "00123456789001",
-                AgenciaMantenedora = "1839",
-                DigitoAgenciaMantenedora = "0",
-                CodigoCedente = "123456",
-                NomeEmpresa = "EMPRESA TESTE",
-                SequencialNsa = 1,
-            };
+            remessa.Header = new HeaderRemessaCnab240(listaBoleto.FirstOrDefault(), 1);
 
             //var detalheSegmentoP = new DetalheSegmentoPRemessaCnab240(boleto)
             //{
@@ -88,21 +80,9 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             remessa.Lotes = new List<LoteRemessaCnab240> { };
 
             var loteAdd = new LoteRemessaCnab240();
-            loteAdd.HeaderLote = new HeaderLoteRemessaCnab240()
-            {
-                Convenio = "123456",
-                NomeEmpresa = "EMPRESA TESTE",
-                NumeroInscricaoEmpresa = "01234567890001",
-                CodigoCedente = "123456",
-                Agencia = "1234",
-                DigitoAgencia = "0",
-                NumeroRemessaRetorno = "1"
-            };
+            loteAdd.HeaderLote = new HeaderLoteRemessaCnab240(listaBoleto.FirstOrDefault(), 1);
 
-            loteAdd.TrailerLote = new TrailerLoteRemessaCnab240()
-            {
-                QtdRegistrosLote = 1,
-            };
+            loteAdd.TrailerLote = new TrailerLoteRemessaCnab240(1);
 
             //loteAdd.RegistrosDetalheSegmentos = new List<DetalheRemessaCnab240>();
             //var detalheRemessaAdd = new DetalheRemessaCnab240();
@@ -111,11 +91,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
 
             remessa.Lotes.Add(loteAdd);
 
-            remessa.Trailer = new TrailerRemessaCnab240
-            {
-                QtdLotesArquivo = 1,
-                QtdRegistrosArquivo = 1
-            };
+            remessa.Trailer = new TrailerRemessaCnab240(1, 1);
 
             #endregion GERAÇÃO 1
 
@@ -123,7 +99,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
 
             var remessaPronta = fabricaRemessa.GerarRemessa(remessa.Header, loteAdd.HeaderLote, listaBoleto, loteAdd.TrailerLote, remessa.Trailer);
 
-            var escritor = new EscritorRemessaCnab240CefSicgb(remessaPronta);
+            var escritor = EscritorArquivoRemessaFactory.ObterEscritorRemessa(remessa);
 
             var linhasEscrever = escritor.EscreverTexto(remessaPronta);
 

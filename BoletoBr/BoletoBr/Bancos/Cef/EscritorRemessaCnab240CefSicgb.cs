@@ -103,7 +103,7 @@ namespace BoletoBr.Bancos.Cef
                 // Código Remessa/Retorno padronizado para "1" no envio do arquivo
                 header = header.PreencherValorNaLinha(143, 143, "1");
                 header = header.PreencherValorNaLinha(144, 151, DateTime.Now.ToString("ddMMyyyy"));
-                header = header.PreencherValorNaLinha(152, 157, DateTime.Now.ToString("hhmmss"));
+                header = header.PreencherValorNaLinha(152, 157, DateTime.Now.ToString("HHmmss"));
                 header = header.PreencherValorNaLinha(158, 163, infoHeader.SequencialNsa.ToString().PadLeft(6, '0'));
                 header = header.PreencherValorNaLinha(164, 166, "050");
                 header = header.PreencherValorNaLinha(167, 171, string.Empty.PadLeft(5, '0'));
@@ -169,11 +169,11 @@ namespace BoletoBr.Bancos.Cef
                 headerLote = headerLote.PreencherValorNaLinha(12, 13, "00"); // Uso Exclusivo FREBRABAN/CNAB
                 headerLote = headerLote.PreencherValorNaLinha(14, 16, "030"); // Nº da versão do Layout do Lote
                 headerLote = headerLote.PreencherValorNaLinha(17, 17, " "); // Uso Exclusivo FREBRABAN/CNAB
-                headerLote = headerLote.PreencherValorNaLinha(18, 18, infoHeaderLote.NumeroInscricaoEmpresa.Replace(".", "").Replace("/", "").Replace("-", "").Length == 11
+                headerLote = headerLote.PreencherValorNaLinha(18, 18, infoHeaderLote.NumeroInscricao.Replace(".", "").Replace("/", "").Replace("-", "").Length == 11
                         ? "1"
                         : "2");
                 headerLote = headerLote.PreencherValorNaLinha(19, 33,
-                    infoHeaderLote.NumeroInscricaoEmpresa.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(15, '0'));
+                    infoHeaderLote.NumeroInscricao.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(15, '0'));
                 headerLote = headerLote.PreencherValorNaLinha(34, 39, infoHeaderLote.CodigoCedente.PadLeft(6, '0'));
                 headerLote = headerLote.PreencherValorNaLinha(40, 53, string.Empty.PadLeft(14, '0'));
                 headerLote = headerLote.PreencherValorNaLinha(54, 58, infoHeaderLote.Agencia.PadLeft(5, '0'));
@@ -427,11 +427,8 @@ namespace BoletoBr.Bancos.Cef
 
         public string EscreverTrailerDeLote(TrailerLoteRemessaCnab240 infoTrailerLote)
         {
-            if (infoTrailerLote.LoteServico == 0)
-                throw new Exception("Sequencial do lote não foi informado na geração do HEADER DE LOTE.");
-
             if (infoTrailerLote.QtdRegistrosLote == 0)
-                throw new Exception("Sequencial do registro no lote não foi informado na geração do HEADER DE LOTE.");
+                throw new Exception("Sequencial do registro no lote não foi informado na geração do TRAILER DE LOTE.");
 
             var trailerLote = new string(' ', 240);
             try
@@ -488,9 +485,6 @@ namespace BoletoBr.Bancos.Cef
 
         public string EscreverTrailer(TrailerRemessaCnab240 infoTrailer)
         {
-            if (infoTrailer.QtdLotesArquivo == 0)
-                throw new Exception("Não foi informada a quantidade de lotes do arquivo.");
-
             if (infoTrailer.QtdRegistrosArquivo == 0)
                 throw new Exception("Não foi informada a quantidade de registros do arquivo.");
 
@@ -588,14 +582,14 @@ namespace BoletoBr.Bancos.Cef
 
             #region #LOTES
 
-            foreach (var lote in remessaValidar.Lotes)
-            {
-                if (String.IsNullOrEmpty(lote.HeaderLote.Convenio))
-                    throw new Exception("O número do convênio não foi informado para geração do HEADER DE LOTE no arquivo de remessa.");
+            //foreach (var lote in remessaValidar.Lotes)
+            //{
+            //    if (String.IsNullOrEmpty(lote.HeaderLote.Convenio))
+            //        throw new Exception("O número do convênio não foi informado para geração do HEADER DE LOTE no arquivo de remessa.");
 
-                if (lote.TrailerLote.QtdRegistrosLote <= 0)
-                    throw new Exception("A quantidade de registros do arquivo não foi informada no TRAILER.");
-            }
+            //    if (lote.TrailerLote.QtdRegistrosLote <= 0)
+            //        throw new Exception("A quantidade de registros do arquivo não foi informada no TRAILER.");
+            //}
 
             #endregion #LOTES
 

@@ -5,7 +5,18 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
 {
     public class HeaderRemessaCnab240
     {
-        public int CodigoBanco { get; set; }
+        public HeaderRemessaCnab240(Boleto boleto, int sequencialArquivo)
+        {
+            this.CodigoBanco = boleto.BancoBoleto.CodigoBanco;
+            this.NumeroInscricao = boleto.CedenteBoleto.CpfCnpj;
+            this.AgenciaMantenedora = boleto.CedenteBoleto.ContaBancariaCedente.Agencia;
+            this.DigitoAgenciaMantenedora = boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia;
+            this.CodigoCedente = boleto.CedenteBoleto.CodigoCedente;
+            this.NomeEmpresa = boleto.CedenteBoleto.Nome;
+            this.SequencialNsa = sequencialArquivo;
+        }
+
+        public string CodigoBanco { get; set; }
         public int LoteServico { get; set; }
         public int TipoRegistro { get; set; }
         public int TipoInscricao { get; set; }

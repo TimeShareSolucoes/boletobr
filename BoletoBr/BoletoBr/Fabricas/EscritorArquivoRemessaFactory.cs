@@ -11,7 +11,7 @@ namespace BoletoBr.Fabricas
         {
             try
             {
-                switch (remessaEscrever.Header.CodigoBanco.ToString("000"))
+                switch (remessaEscrever.Header.CodigoBanco.PadLeft(3, '0'))
                 {
                     /* 001 - Banco do Brasil */
                     case "001":
@@ -53,7 +53,7 @@ namespace BoletoBr.Fabricas
         {
             try
             {
-                switch (remessaEscrever.Header.CodigoBanco.ToString("000"))
+                switch (remessaEscrever.Header.CodigoBanco.PadLeft(3, '0'))
                 {
                     /* 001 - Banco do Brasil */
                     case "001":
