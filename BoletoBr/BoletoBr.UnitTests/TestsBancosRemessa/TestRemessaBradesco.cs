@@ -70,27 +70,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
 
             remessa.Header = new HeaderRemessaCnab400(boleto, 1, 1);
 
-            var detalheIndividual = new DetalheRemessaCnab400
-            {
-                CodigoCedente = "123456",
-                NossoNumero = "123456",
-                DvNossoNumero = "0",
-                NumeroDocumento = "123456",
-                CodigoOcorrencia = new CodigoOcorrencia(01),
-                Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil),
-                Aceite = "N",
-                DataVencimento = new DateTime(2014,10,01),
-                ValorBoleto = (decimal) 100.51,
-                Agencia = "1234",
-                DvAgencia = "1",
-                NomePagador = "Fulano",
-                InscricaoPagador = "12345678900",
-                EnderecoPagador = "Rua X",
-                CidadePagador = "Cidade X",
-                UfPagador = "UF",
-                CepPagador = "00123000",
-                NumeroSequencialRegistro = 1,
-            };
+            var detalheIndividual = new DetalheRemessaCnab400(boleto, 1);
 
             remessa.RegistrosDetalhe = new List<DetalheRemessaCnab400>
             {

@@ -33,12 +33,12 @@ namespace BoletoBr
         public Sacado SacadoBoleto { get; set; }
         public CarteiraCobranca CarteiraCobranca { get; set; }
         public string SequencialNossoNumero { get; set; }
+        public string NossoNumero { get; set; }
+        public string DigitoNossoNumero { get; set; }
         /// <summary>
         /// Deve ser gerado pelo componente
         /// </summary>
         public string NossoNumeroFormatado { get; private set; }
-
-        public string DigitoNossoNumero { get; set; }
         public DateTime DataVencimento { get; set; }
         public DateTime DataDocumento { get; set; }
         public DateTime? DataProcessamento { get; set; }

@@ -282,7 +282,7 @@ namespace BoletoBr.Bancos.Bradesco
             if (String.IsNullOrEmpty(boleto.NumeroDocumento) || String.IsNullOrEmpty(boleto.NumeroDocumento.TrimStart('0')))
                 throw new Exception("Número do Documento não foi informado.");
 
-            boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(11, '0');
+            boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(10, '0');
         }
 
         public IEspecieDocumento ObtemEspecieDocumento(EnumEspecieDocumento especie)

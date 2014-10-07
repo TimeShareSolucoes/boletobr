@@ -22,10 +22,22 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
             return loteAdd;
         }
 
-        public DetalheRemessaCnab240 AdicionarBoletoAoLote(LoteRemessaCnab240 loteContainer, Boleto boletoAdicionar, int numeroRegistroNoLote)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="loteContainer">Lote onde serão adicionados os lançamentos</param>
+        /// <param name="boletoAdicionar">Boleto que será detalhado nos detalhes de segmento</param>
+        /// <param name="reg1">Primeiro registro detalhe do boleto - SEGMENTO P</param>
+        /// <param name="reg2">Segundo registro detalhe do boleto - SEGMENTO Q</param>
+        /// <returns></returns>
+        public DetalheRemessaCnab240 AdicionarBoletoAoLote(LoteRemessaCnab240 loteContainer, Boleto boletoAdicionar, int contador, int reg1, int reg2)
         {
-            var detalheRemessaAdd = new DetalheRemessaCnab240(boletoAdicionar, numeroRegistroNoLote);
+            var detalheRemessaAdd = new DetalheRemessaCnab240(boletoAdicionar, contador);
+            var numeroRegistroNoLote = 0;
+
+            numeroRegistroNoLote = reg1;
             detalheRemessaAdd.SegmentoP = new DetalheSegmentoPRemessaCnab240(boletoAdicionar, numeroRegistroNoLote);
+            numeroRegistroNoLote = reg2;
             detalheRemessaAdd.SegmentoQ = new DetalheSegmentoQRemessaCnab240(boletoAdicionar, numeroRegistroNoLote);
 
             loteContainer.RegistrosDetalheSegmentos.Add(detalheRemessaAdd);

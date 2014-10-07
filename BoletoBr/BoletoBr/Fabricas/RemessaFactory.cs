@@ -26,11 +26,15 @@ namespace BoletoBr.Fabricas
 
             // Usado para identificar com número único e sequencial cada boleto (registro) dentro do lote.
             var contador = 1;
+            var reg1 = 1;
+            var reg2 = 2;
 
             foreach (var boletoAddRemessa in boletos)
             {
-                objReturn.AdicionarBoletoAoLote(ultimoLoteAdicionado, boletoAddRemessa, contador);
+                objReturn.AdicionarBoletoAoLote(ultimoLoteAdicionado, boletoAddRemessa, contador, reg1, reg2);
                 contador++;
+                reg1 = reg1 + 2;
+                reg2 = reg2 + 2;
             }
 
             objReturn.Trailer = trailer;
@@ -38,16 +42,19 @@ namespace BoletoBr.Fabricas
             return objReturn;
         }
 
-        public RemessaCnab400 GerarRemessa(HeaderRemessaCnab400 header, List<Boleto> boletos,
-            TrailerRemessaCnab400 trailer)
+        public RemessaCnab400 GerarRemessa(HeaderRemessaCnab400 header, List<Boleto> boletos, List<DetalheRemessaCnab400> detalhes, TrailerRemessaCnab400 trailer)
         {
+            //var contadorSequencialRegistro = 1;
             var objReturn = new RemessaCnab400();
+            objReturn.RegistrosDetalhe = new List<DetalheRemessaCnab400>();
 
             objReturn.Header = header;
 
-            foreach (var boletoAddRemessa in boletos)
+            foreach (var detalhe in detalhes)
             {
-                objReturn.AdicionarBoleto(boletoAddRemessa);
+                objReturn.RegistrosDetalhe.Add(detalhe);
+                //objReturn.AdicionarBoleto(boletoAddRemessa, contadorSequencialRegistro);
+                //contadorSequencialRegistro++;
             }
 
             objReturn.Trailer = trailer;

@@ -7,6 +7,33 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
 {
     public class DetalheRemessaCnab400
     {
+        public DetalheRemessaCnab400(Boleto boleto, int numeroSequencialRegistro)
+        {
+            this.CodigoBanco = boleto.BancoBoleto.CodigoBanco;
+            this.CodigoOcorrencia = boleto.CodigoOcorrenciaRemessa;
+            this.Agencia = boleto.CedenteBoleto.ContaBancariaCedente.Agencia;
+            this.DvAgencia = boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia;
+            this.CodigoCedente = boleto.CedenteBoleto.CodigoCedente;
+            this.NossoNumero = boleto.SequencialNossoNumero;
+            this.DvNossoNumero = boleto.DigitoNossoNumero;
+            this.NumeroDocumento = boleto.NumeroDocumento;
+            this.DataVencimento = boleto.DataVencimento;
+            this.ValorBoleto = boleto.ValorBoleto;
+            this.Especie = boleto.Especie;
+            this.Aceite = boleto.Aceite;
+            this.DataEmissao = boleto.DataDocumento;
+            this.ValorDesconto = boleto.ValorDesconto.HasValue ? boleto.ValorDesconto : 0;
+            this.ValorIof = boleto.Iof.HasValue ? boleto.Iof : 0;
+            this.ValorAbatimento = boleto.ValorAbatimento.HasValue ? boleto.ValorAbatimento : 0;
+            this.InscricaoPagador = boleto.SacadoBoleto.CpfCnpj;
+            this.NomePagador = boleto.SacadoBoleto.Nome;
+            this.EnderecoPagador = boleto.SacadoBoleto.EnderecoSacado.LogradouroNumeroComplementoConcatenado;
+            this.CidadePagador = boleto.SacadoBoleto.EnderecoSacado.Cidade;
+            this.UfPagador = boleto.SacadoBoleto.EnderecoSacado.SiglaUf;
+            this.CepPagador = boleto.SacadoBoleto.EnderecoSacado.Cep;
+            this.NumeroSequencialRegistro = numeroSequencialRegistro;
+        }
+
         public int TipoRegistro { get; set; }
         public string Agencia { get; set; }
         public string DvAgencia { get; set; }

@@ -63,7 +63,7 @@ namespace BoletoBr.Bancos.Bradesco
             var enderecoSacado = infoDetalhe.EnderecoPagador;
 
             if (enderecoSacado.Length > 40)
-                throw new Exception("Endereço do sacado excedeu o limite permitido.");
+                enderecoSacado = enderecoSacado.Substring(0, 40);
 
             var detalhe = new string(' ', 400);
             try
@@ -122,7 +122,7 @@ namespace BoletoBr.Bancos.Bradesco
                 detalhe = detalhe.PreencherValorNaLinha(105, 105, " ");
                 detalhe = detalhe.PreencherValorNaLinha(106, 106, "2");
                 detalhe = detalhe.PreencherValorNaLinha(107, 108, string.Empty.PadLeft(2, ' '));
-                detalhe = detalhe.PreencherValorNaLinha(109, 110, infoDetalhe.CodigoOcorrencia.Codigo.ToString().PadLeft(2, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(109, 110, "01");
                 detalhe = detalhe.PreencherValorNaLinha(111, 120, infoDetalhe.NumeroDocumento.PadLeft(10, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(121, 126, infoDetalhe.DataVencimento.ToString("ddMMyy"));
 
@@ -151,16 +151,19 @@ namespace BoletoBr.Bancos.Bradesco
 
                 #endregion
 
-                if (infoDetalhe.CodigoOcorrencia.Codigo.Equals(01))
-                {
-                    detalhe = detalhe.PreencherValorNaLinha(140, 142, string.Empty.PadLeft(3, '0'));
-                    detalhe = detalhe.PreencherValorNaLinha(143, 147, string.Empty.PadLeft(5, '0'));
-                }
-                else
-                {
-                    detalhe = detalhe.PreencherValorNaLinha(140, 142, infoDetalhe.CodigoBanco.PadLeft(3, '0'));
-                    detalhe = detalhe.PreencherValorNaLinha(143, 147, infoDetalhe.Agencia.PadLeft(4, '0') + infoDetalhe.DvAgencia);
-                }
+                //if (infoDetalhe.CodigoOcorrencia.Codigo.Equals(01))
+                //{
+                //    detalhe = detalhe.PreencherValorNaLinha(140, 142, string.Empty.PadLeft(3, '0'));
+                //    detalhe = detalhe.PreencherValorNaLinha(143, 147, string.Empty.PadLeft(5, '0'));
+                //}
+                //else
+                //{
+                //    detalhe = detalhe.PreencherValorNaLinha(140, 142, infoDetalhe.CodigoBanco.PadLeft(3, '0'));
+                //    detalhe = detalhe.PreencherValorNaLinha(143, 147, infoDetalhe.Agencia.PadLeft(4, '0') + infoDetalhe.DvAgencia);
+                //}
+
+                detalhe = detalhe.PreencherValorNaLinha(140, 142, string.Empty.PadLeft(3, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(143, 147, string.Empty.PadLeft(5, '0'));
 
                 detalhe = detalhe.PreencherValorNaLinha(148, 149,
                     infoDetalhe.Especie.Sigla.Equals("DM")
