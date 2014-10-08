@@ -505,16 +505,6 @@ namespace BoletoBr.Bancos.Bradesco
             throw new NotImplementedException();
         }
 
-        public RemessaCnab240 GerarArquivoRemessaCnab240(RemessaCnab240 remessaCnab240, List<Boleto> boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public RemessaCnab400 GerarArquivoRemessaCnab400(RemessaCnab400 remessaCnab400, List<Boleto> boletos)
-        {
-            throw new NotImplementedException();
-        }
-
         public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia,
             DateTime dataOcorrencia)
         {

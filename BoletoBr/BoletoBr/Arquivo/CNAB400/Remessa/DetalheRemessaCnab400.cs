@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BoletoBr.Dominio;
 using BoletoBr.Enums;
 using BoletoBr.Interfaces;
@@ -10,21 +11,26 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
         public DetalheRemessaCnab400(Boleto boleto, int numeroSequencialRegistro)
         {
             this.CodigoBanco = boleto.BancoBoleto.CodigoBanco;
+            this.CarteiraCobranca = boleto.CarteiraCobranca.Codigo;
+            this.InscricaoCedente = boleto.CedenteBoleto.CpfCnpj;
             this.CodigoOcorrencia = boleto.CodigoOcorrenciaRemessa;
             this.Agencia = boleto.CedenteBoleto.ContaBancariaCedente.Agencia;
             this.DvAgencia = boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia;
+            this.ContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.Conta;
+            this.DvContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta;
             this.CodigoCedente = boleto.CedenteBoleto.CodigoCedente;
             this.NossoNumero = boleto.SequencialNossoNumero;
             this.DvNossoNumero = boleto.DigitoNossoNumero;
+            this.NossoNumeroFormatado = boleto.NossoNumeroFormatado;
             this.NumeroDocumento = boleto.NumeroDocumento;
             this.DataVencimento = boleto.DataVencimento;
             this.ValorBoleto = boleto.ValorBoleto;
             this.Especie = boleto.Especie;
             this.Aceite = boleto.Aceite;
             this.DataEmissao = boleto.DataDocumento;
-            this.ValorDesconto = boleto.ValorDesconto.HasValue ? boleto.ValorDesconto : 0;
-            this.ValorIof = boleto.Iof.HasValue ? boleto.Iof : 0;
-            this.ValorAbatimento = boleto.ValorAbatimento.HasValue ? boleto.ValorAbatimento : 0;
+            this.ValorDesconto = Convert.ToDecimal(boleto.ValorDesconto).Equals(null) ? 0 : Convert.ToDecimal(boleto.ValorDesconto);
+            this.ValorIof = Convert.ToDecimal(boleto.Iof).Equals(null) ? 0 : Convert.ToDecimal(boleto.Iof);
+            this.ValorAbatimento = Convert.ToDecimal(boleto.ValorAbatimento).Equals(null) ? 0 : Convert.ToDecimal(boleto.ValorAbatimento);
             this.InscricaoPagador = boleto.SacadoBoleto.CpfCnpj;
             this.NomePagador = boleto.SacadoBoleto.Nome;
             this.EnderecoPagador = boleto.SacadoBoleto.EnderecoSacado.LogradouroNumeroComplementoConcatenado;
@@ -32,7 +38,32 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             this.UfPagador = boleto.SacadoBoleto.EnderecoSacado.SiglaUf;
             this.CepPagador = boleto.SacadoBoleto.EnderecoSacado.Cep;
             this.NumeroSequencialRegistro = numeroSequencialRegistro;
+            this.Moeda = boleto.Moeda;
+            this.QuantidadeMoeda = Convert.ToDecimal(boleto.QuantidadeMoeda).Equals(null) ? 0 : Convert.ToDecimal(boleto.QuantidadeMoeda);
+            this.DataJurosMora = boleto.DataJurosMora;
+
+            #region #033|SANTADER
+
+            // Informação cedida pelo banco que identifica o arquivo remessa do cliente
+            this.CodigoDeTransmissao = boleto.CedenteBoleto.CodigoCedente;
+            this.DataDesconto = boleto.DataDesconto;
+            this.NroDiasParaProtesto = boleto.QtdDias;
+
+            #endregion
         }
+
+        #region #INFORMAÇÕES DE USO EXCLUSIVO NA REMESSA
+
+        // Usado para identificar código da carteira no arquivo de remessa do Banco Santander
+        public string CarteiraCobranca { get; set; }
+        public string InscricaoCedente { get; set; }
+        public string CodigoDeTransmissao { get; set; }
+        public string NossoNumeroFormatado { get; set; }
+        public int NroDiasParaProtesto { get; set; }
+        public string Moeda { get; set; }
+        public decimal QuantidadeMoeda { get; set; }
+
+        #endregion
 
         public int TipoRegistro { get; set; }
         public string Agencia { get; set; }
@@ -61,17 +92,23 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
         public IEspecieDocumento Especie { get; set; }
         public string Aceite { get; set; }
         public DateTime DataEmissao { get; set; }
+        public List<IInstrucao> Instrucoes { get; set; }
         public string Instrucao1 { get; set; }
         public string Instrucao2 { get; set; }
         public decimal ValorCobradoDiaAtraso { get; set; }
         public DateTime DataLimiteConcessaoDesconto { get; set; }
-        public decimal? ValorDesconto { get; set; }
-        public decimal? ValorIof { get; set; }
-        public decimal? ValorAbatimento { get; set; }
+        public DateTime DataDesconto { get; set; }
+        public DateTime DataJurosMora { get; set; }
+        public decimal ValorDesconto { get; set; }
+        public decimal ValorIof { get; set; }
+        public decimal ValorAbatimento { get; set; }
+        public decimal ValorJuros { get; set; }
+        public decimal ValorMoraDia { get; set; }
         public int IdTipoInscricaoPagador { get; set; }
         public string InscricaoPagador { get; set; }
         public string NomePagador { get; set; }
         public string EnderecoPagador { get; set; }
+        public string BairroPagador { get; set; }
         public string CidadePagador { get; set; }
         public string UfPagador { get; set; }
         public string CepPagador { get; set; }
