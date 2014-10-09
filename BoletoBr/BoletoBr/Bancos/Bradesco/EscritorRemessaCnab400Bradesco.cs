@@ -128,24 +128,6 @@ namespace BoletoBr.Bancos.Bradesco
 
                 #region VALOR BOLETO
 
-                string valorBoleto;
-
-                if (infoDetalhe.ValorBoleto.ToString("f").Contains('.') && infoDetalhe.ValorBoleto.ToString("f").Contains(','))
-                {
-                    valorBoleto = infoDetalhe.ValorBoleto.ToString("f").Replace(".", "").Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(127, 139, valorBoleto.PadLeft(13, '0'));
-                }
-                if (infoDetalhe.ValorBoleto.ToString("f").Contains('.'))
-                {
-                    valorBoleto = infoDetalhe.ValorBoleto.ToString("f").Replace(".", "");
-                    detalhe = detalhe.PreencherValorNaLinha(127, 139, valorBoleto.PadLeft(13, '0'));
-                }
-                if (infoDetalhe.ValorBoleto.ToString("f").Contains(','))
-                {
-                    valorBoleto = infoDetalhe.ValorBoleto.ToString("f").Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(127, 139, valorBoleto.PadLeft(13, '0'));
-                }
-
                 detalhe = detalhe.PreencherValorNaLinha(127, 139,
                     infoDetalhe.ValorBoleto.ToString("f").Replace(".", "").Replace(",", "").PadLeft(13, '0'));
 
@@ -222,26 +204,7 @@ namespace BoletoBr.Bancos.Bradesco
 
                 #region VALOR DESCONTO
 
-                string descontoBoleto;
-
-                if (infoDetalhe.ValorDesconto.ToString().Contains('.') && infoDetalhe.ValorDesconto.ToString().Contains(','))
-                {
-                    descontoBoleto = infoDetalhe.ValorDesconto.ToString().Replace(".", "").Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(180, 192, descontoBoleto.PadLeft(13, '0'));
-                }
-                if (infoDetalhe.ValorDesconto.ToString().Contains('.'))
-                {
-                    descontoBoleto = infoDetalhe.ValorDesconto.ToString().Replace(".", "");
-                    detalhe = detalhe.PreencherValorNaLinha(180, 192, descontoBoleto.PadLeft(13, '0'));
-                }
-                if (infoDetalhe.ValorDesconto.ToString().Contains(','))
-                {
-                    descontoBoleto = infoDetalhe.ValorDesconto.ToString().Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(180, 192, descontoBoleto.PadLeft(13, '0'));
-                }
-
-                detalhe = detalhe.PreencherValorNaLinha(180, 192, infoDetalhe.ValorDesconto.ToString().PadLeft(13, '0'));
-                    // Valor do Desconto a ser Concedido
+                detalhe = detalhe.PreencherValorNaLinha(180, 192, infoDetalhe.ValorDesconto.ToString("f").Replace(".", "").Replace(",", "").PadLeft(13, '0'));
 
                 #endregion
 

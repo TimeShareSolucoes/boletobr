@@ -32,13 +32,16 @@ namespace BoletoBr
         public Cedente CedenteBoleto { get; set; }
         public Sacado SacadoBoleto { get; set; }
         public CarteiraCobranca CarteiraCobranca { get; set; }
-        public string SequencialNossoNumero { get; set; }
         public string NossoNumero { get; set; }
         public string DigitoNossoNumero { get; set; }
+        public string SequencialNossoNumero { get; set; }
         /// <summary>
         /// Deve ser gerado pelo componente
         /// </summary>
         public string NossoNumeroFormatado { get; private set; }
+        public string NumeroDocumento { get; set; }
+        public string DigitoNumeroDocumento { get; set; }
+        public string NumeroDocumentoFormatado { get; set; }
         public DateTime DataVencimento { get; set; }
         public DateTime DataDocumento { get; set; }
         public DateTime? DataProcessamento { get; set; }
@@ -56,7 +59,6 @@ namespace BoletoBr
         public decimal? QuantidadeMoeda { get; set; }
         public string ValorMoeda { get; set; }
         public string Aceite { get; set; }
-        public string NumeroDocumento { get; set; }
         public IEspecieDocumento Especie { get; set; }
         public string Moeda { get; set; }
         //public decimal? ValorAbatimentoDesconto { get; set; }

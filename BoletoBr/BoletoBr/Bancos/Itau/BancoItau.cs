@@ -61,8 +61,6 @@ namespace BoletoBr.Bancos.Itau
                                                       carteirasImplementadas);
                 }
 
-                var nroDoc = boleto.NumeroDocumento.Replace("-", "");
-
                 //Verifica se o tamanho para o NossoNumero s�o 8 d�gitos
                 //if (boleto.NossoNumeroFormatado.ToString().Length > 8)
                 //    throw new NotImplementedException("A quantidade de dígitos do nosso número para a carteira " +
@@ -75,13 +73,13 @@ namespace BoletoBr.Bancos.Itau
                     boleto.CarteiraCobranca.Codigo == "142" || boleto.CarteiraCobranca.Codigo == "143" || boleto.CarteiraCobranca.Codigo == "195" ||
                     boleto.CarteiraCobranca.Codigo == "196" || boleto.CarteiraCobranca.Codigo == "198")
                 {
-                    if (Convert.ToInt32(nroDoc) == 0)
+                    if (String.IsNullOrEmpty(boleto.NumeroDocumento.Replace("-", "").TrimStart('0')))
                         throw new NotImplementedException("O número do documento não pode ser igual a zero.");
                 }
 
                 //Formato o n�mero do documento 
-                if (Convert.ToInt32(nroDoc) > 0)
-                    boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(7, '0');
+                if (!String.IsNullOrEmpty(boleto.NumeroDocumento.Replace("-", "")) && boleto.NumeroDocumento.Replace("-", "").Length < 7)
+                    boleto.NumeroDocumento = boleto.NumeroDocumento.Replace("-", "").PadLeft(7, '0');
 
                 // Calcula o DAC do Nosso N�mero a maioria das carteiras
                 // agencia/conta/carteira/nosso numero
@@ -131,12 +129,11 @@ namespace BoletoBr.Bancos.Itau
             if (boleto.CarteiraCobranca.Codigo != "126" && boleto.CarteiraCobranca.Codigo != "131"
                 && boleto.CarteiraCobranca.Codigo != "145" && boleto.CarteiraCobranca.Codigo != "150"
                 && boleto.CarteiraCobranca.Codigo != "168")
-                _dacNossoNumero = Common.Mod10(boleto.CedenteBoleto.ContaBancariaCedente.Agencia + boleto.CedenteBoleto.ContaBancariaCedente.Conta +
-                          boleto.CarteiraCobranca.Codigo + nossoNum);
+                _dacNossoNumero = Common.Mod10(boleto.CedenteBoleto.ContaBancariaCedente.Agencia + boleto.CedenteBoleto.ContaBancariaCedente.Conta + nossoNum);
             else
                 // Excess�o 126 - 131 - 146 - 150 - 168
                 // carteira/nosso numero
-                _dacNossoNumero = Common.Mod10(boleto.CarteiraCobranca + nossoNum);
+                _dacNossoNumero = Common.Mod10(nossoNum);
         }
 
         public void FormataMoeda(Boleto boleto)
@@ -168,14 +165,13 @@ namespace BoletoBr.Bancos.Itau
 
             boleto.ValidaDadosEssenciaisDoBoleto();
 
+            FormataNumeroDocumento(boleto);
             FormataNossoNumero(boleto);
             FormataCodigoBarra(boleto);
             FormataLinhaDigitavel(boleto);
             FormataMoeda(boleto);
 
             ValidaBoletoComNormasBanco(boleto);
-
-            FormataNumeroDocumento(boleto);
         }
 
         public void FormataCodigoBarra(Boleto boleto)
@@ -431,10 +427,24 @@ namespace BoletoBr.Bancos.Itau
 
         public void FormataNumeroDocumento(Boleto boleto)
         {
-            if (String.IsNullOrEmpty(boleto.NumeroDocumento) || String.IsNullOrEmpty(boleto.NumeroDocumento.TrimStart('0')))
-                throw new Exception("Número do Documento não foi informado.");
+            string numeroDoDocumento;
+            string digitoNumeroDoDocumento;
+            string numeroDoDocumentoFormatado;
 
-                boleto.NumeroDocumento = string.Format("{0}-{1}", boleto.NumeroDocumento, Common.Mod10(boleto.NumeroDocumento));
+            if (String.IsNullOrEmpty(boleto.NumeroDocumento))
+                throw new Exception("O número do documento não foi informado.");
+
+            if (boleto.NumeroDocumento.Length > 10)
+                numeroDoDocumento = boleto.NumeroDocumento.Substring(0, 10);
+            else
+                numeroDoDocumento = boleto.NumeroDocumento.PadLeft(10, '0');
+
+            digitoNumeroDoDocumento = Common.Mod10(numeroDoDocumento).ToString();
+            numeroDoDocumentoFormatado = String.Format("{0}-{1}", numeroDoDocumento, digitoNumeroDoDocumento);
+
+            boleto.NumeroDocumento = numeroDoDocumento;
+            boleto.DigitoNumeroDocumento = digitoNumeroDoDocumento;
+            boleto.NumeroDocumentoFormatado = numeroDoDocumentoFormatado;
         }
 
         public IEspecieDocumento ObtemEspecieDocumento(EnumEspecieDocumento especie)

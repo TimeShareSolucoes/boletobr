@@ -41,6 +41,7 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             this.Moeda = boleto.Moeda;
             this.QuantidadeMoeda = Convert.ToDecimal(boleto.QuantidadeMoeda).Equals(null) ? 0 : Convert.ToDecimal(boleto.QuantidadeMoeda);
             this.DataJurosMora = boleto.DataJurosMora;
+            this.Instrucoes = boleto.InstrucoesDoBoleto;
 
             #region #033|SANTADER
 

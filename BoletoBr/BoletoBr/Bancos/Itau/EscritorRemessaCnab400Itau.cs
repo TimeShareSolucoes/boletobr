@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using BoletoBr.Arquivo.CNAB400.Remessa;
+using BoletoBr.Enums;
+using BoletoBr.Fabricas;
 using BoletoBr.Interfaces;
 
 namespace BoletoBr.Bancos.Itau
@@ -52,6 +54,8 @@ namespace BoletoBr.Bancos.Itau
 
             #region Variáveis
 
+            var objBanco = BancoFactory.ObterBanco(infoDetalhe.CodigoBanco);
+
             string nossoNumeroCarteira =
                 infoDetalhe.NossoNumeroFormatado.Replace(".", "").Replace("/", "").Replace("-", "").Substring(0, 3);
             string nossoNumeroSequencial =
@@ -60,20 +64,36 @@ namespace BoletoBr.Bancos.Itau
                 infoDetalhe.NossoNumeroFormatado.Replace(".", "").Replace("/", "").Replace("-", "").Substring(11, 1);
 
             string carteiraCob = infoDetalhe.CarteiraCobranca.PadLeft(3, ' ');
-            string enderecoSacado = infoDetalhe.EnderecoPagador;
-            string bairroSacado = infoDetalhe.BairroPagador;
-            string cidadeSacado = infoDetalhe.CidadePagador;
+            string enderecoSacado = string.Empty;
+            string bairroSacado = string.Empty;
+            string cidadeSacado = string.Empty;
 
             #endregion
 
-            if (enderecoSacado.Length > 40)
-                enderecoSacado.Substring(0, 40);
+            if (String.IsNullOrEmpty(infoDetalhe.EnderecoPagador))
+                enderecoSacado.PadRight(40, ' ');
+            else
+                if (infoDetalhe.EnderecoPagador.Length > 40)
+                    enderecoSacado = infoDetalhe.EnderecoPagador.Substring(0, 40);
+                else
+                    enderecoSacado = infoDetalhe.EnderecoPagador.PadRight(40, ' ');
 
-            if (bairroSacado.Length > 12)
-                bairroSacado.Substring(0, 12);
+            if (String.IsNullOrEmpty(infoDetalhe.BairroPagador))
+                bairroSacado.PadRight(12, ' ');
+            else
+                if (infoDetalhe.BairroPagador.Length > 12)
+                    bairroSacado = infoDetalhe.BairroPagador.Substring(0, 12);
+                else
+                    bairroSacado = infoDetalhe.BairroPagador.PadRight(12, ' ');
 
-            if (cidadeSacado.Length > 15)
-                cidadeSacado.Substring(0, 15);
+            if (String.IsNullOrEmpty(infoDetalhe.CidadePagador))
+                cidadeSacado.PadRight(15, ' ');
+            else
+                if (infoDetalhe.CidadePagador.Length > 15)
+                    cidadeSacado = infoDetalhe.CidadePagador.Substring(0, 15);
+                else
+                    cidadeSacado = infoDetalhe.CidadePagador.PadRight(15, ' ');
+
 
             var detalhe = new string(' ', 400);
             try
@@ -107,15 +127,14 @@ namespace BoletoBr.Bancos.Itau
                     // Identificação do Título no Banco
 
                 // Se Moeda = REAL, preenche com zeros
-                if (infoDetalhe.Moeda == "9" || infoDetalhe.Moeda == "09" || infoDetalhe.Moeda == "R$" || infoDetalhe.Moeda == "REAL")
-                    detalhe = detalhe.PreencherValorNaLinha(71, 83, infoDetalhe.QuantidadeMoeda.ToString().PadLeft(13, '0'));
-                        // Quantidade de Moeda Variável
+                if (infoDetalhe.Moeda == "9" || infoDetalhe.Moeda == "09" || infoDetalhe.Moeda == "R$" ||
+                    infoDetalhe.Moeda == "REAL")
+                    detalhe = detalhe.PreencherValorNaLinha(71, 83, string.Empty.PadLeft(13, '0'));
+                    // Quantidade de Moeda Variável
                     // Caso contrário, preenche com a quantidade
                 else
-                    detalhe = detalhe.PreencherValorNaLinha(71, 83, String.Format("{0:0.#####}", infoDetalhe.QuantidadeMoeda)
-                        .Replace(".", "")
-                        .Replace(",", "")
-                        .PadLeft(13, '0')); // Quantidade de Moeda Variável
+                    detalhe = detalhe.PreencherValorNaLinha(71, 83,
+                        infoDetalhe.QuantidadeMoeda.ToString("F5").Replace(".", "").Replace(",", "").PadLeft(13, '0')); // Quantidade de Moeda Variável
                 detalhe = detalhe.PreencherValorNaLinha(84, 86, infoDetalhe.CarteiraCobranca.PadLeft(3, '0'));
                     // Número da Carteira no Banco
                 detalhe = detalhe.PreencherValorNaLinha(87, 107, string.Empty.PadRight(21, ' '));
@@ -125,15 +144,14 @@ namespace BoletoBr.Bancos.Itau
                 if (carteiraCob == "108")
                     detalhe = detalhe.PreencherValorNaLinha(108, 108, "D");
                 // Modalidade de Carteira S - Sem Registro
-                if (carteiraCob == "103" || carteiraCob == "173" || carteiraCob == "196")
+                if (carteiraCob == "103" || carteiraCob == "173" || carteiraCob == "196" || carteiraCob == "198")
                     detalhe = detalhe.PreencherValorNaLinha(108, 108, "S");
                 // Modalidade de Carteira E - Escritural
                 if (carteiraCob == "104" || carteiraCob == "112" || carteiraCob == "138" || carteiraCob == "147")
                     detalhe = detalhe.PreencherValorNaLinha(108, 108, "E");
                 detalhe = detalhe.PreencherValorNaLinha(109, 110,
                     infoDetalhe.CodigoOcorrencia.Codigo.ToString().PadLeft(2, '0')); // Identificação da Ocorrência
-                detalhe = detalhe.PreencherValorNaLinha(111, 120,
-                    infoDetalhe.NumeroDocumento.Replace("-", "").PadLeft(10, '0')); // Nro do Documento de Cobrança
+                detalhe = detalhe.PreencherValorNaLinha(111, 120, infoDetalhe.NumeroDocumento.Replace("-", "").Substring(0, 10)); 
                 detalhe = detalhe.PreencherValorNaLinha(121, 126, infoDetalhe.DataVencimento.ToString("ddMMyy"));
                     // Data de Vencimento do Título
                 detalhe = detalhe.PreencherValorNaLinha(127, 139,
@@ -143,9 +161,11 @@ namespace BoletoBr.Bancos.Itau
                 detalhe = detalhe.PreencherValorNaLinha(143, 147, string.Empty.PadLeft(5, '0'));
                     // Agência onde o título será cobrado
                 // Espécie do documento padronizado para DM - Duplicata Mercantil
-                detalhe = detalhe.PreencherValorNaLinha(148, 149,
-                    infoDetalhe.Especie.Sigla.Equals("DM") ? "01" : infoDetalhe.Especie.Codigo.ToString()); // Espécie do Título
-                detalhe = detalhe.PreencherValorNaLinha(150, 150, infoDetalhe.Aceite.Equals("A") ? "A" : "N");
+                detalhe = detalhe.PreencherValorNaLinha(148, 149, infoDetalhe.Especie.Sigla.Equals("DM") ? "01" : infoDetalhe.Especie.Codigo.ToString());
+                if (String.IsNullOrEmpty(infoDetalhe.Aceite))
+                    detalhe = detalhe.PreencherValorNaLinha(150, 150, "N");
+                else
+                    detalhe = detalhe.PreencherValorNaLinha(150, 150, infoDetalhe.Aceite.Equals("A") ? "A" : "N");
                     // Identificação de Título Aceitou ou Não Aceito
                 detalhe = detalhe.PreencherValorNaLinha(151, 156, infoDetalhe.DataEmissao.ToString("ddMMyy"));
                     // Data da Emissão do Título
@@ -198,7 +218,7 @@ namespace BoletoBr.Bancos.Itau
                         ? "01"
                         : "02"); // Identificação do tipo de inscrição/sacado
                 detalhe = detalhe.PreencherValorNaLinha(221, 234,
-                    infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", ""));
+                    infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(14, '0'));
                     // Nro de Inscrição do Sacado (CPF/CNPJ)
                 detalhe = detalhe.PreencherValorNaLinha(235, 264, infoDetalhe.NomePagador.PadRight(30, ' '));
                     // Nome do Sacado
