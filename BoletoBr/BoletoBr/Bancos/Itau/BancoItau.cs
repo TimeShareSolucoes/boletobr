@@ -93,9 +93,6 @@ namespace BoletoBr.Bancos.Itau
                 //    // carteira/nosso numero
                 //    _dacNossoNumero = Common.Mod10(boleto.CarteiraCobranca + boleto.NossoNumeroFormatado);
 
-                // Usando Métodod e Geração do DAC do Nosso Número
-                GerarDacNossoNumero(boleto);
-
                 // Calcula o DAC da Conta Corrente
                 boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta =
                     Common.Mod10(boleto.CedenteBoleto.ContaBancariaCedente.Agencia + boleto.CedenteBoleto.ContaBancariaCedente.Conta).ToString();
@@ -122,18 +119,32 @@ namespace BoletoBr.Bancos.Itau
 
         public void GerarDacNossoNumero(Boleto boleto)
         {
-            var nossoNum = boleto.NossoNumeroFormatado.Replace("/", "").Replace("-", "");
+            /*
+             * Para todas as carteiras de cobrança do Banco Itaú o DAC do "Nosso Número" é calculado a partir dos campos:
+             * Agência, Conta do Cedente (sem DAC), Número da carteira e "Nosso Número",
+             * EXCETO
+             * As carteiras escriturais e na modalidade direta as carteiras 126, 131, 145, 150 e 168,
+             * cujo DAC do "Nosso Número" é composto apenas dos campos:
+             * Carteira e Nosso Número, mas todos calculados através do Módulo 10.
+             */
+            if (boleto.CarteiraCobranca.Codigo == "104"    /* Escritural */
+                || boleto.CarteiraCobranca.Codigo == "112" /* Escritural */
+                || boleto.CarteiraCobranca.Codigo == "126"
+                || boleto.CarteiraCobranca.Codigo == "131"
+                || boleto.CarteiraCobranca.Codigo == "138" /* Escritural */
+                || boleto.CarteiraCobranca.Codigo == "145"
+                || boleto.CarteiraCobranca.Codigo == "147" /* Escritural */
+                || boleto.CarteiraCobranca.Codigo == "150"
+                || boleto.CarteiraCobranca.Codigo == "168")
 
-            // Calcula o DAC do Nosso N�mero a maioria das carteiras
-            // agencia/conta/carteira/nosso numero
-            if (boleto.CarteiraCobranca.Codigo != "126" && boleto.CarteiraCobranca.Codigo != "131"
-                && boleto.CarteiraCobranca.Codigo != "145" && boleto.CarteiraCobranca.Codigo != "150"
-                && boleto.CarteiraCobranca.Codigo != "168")
-                _dacNossoNumero = Common.Mod10(boleto.CedenteBoleto.ContaBancariaCedente.Agencia + boleto.CedenteBoleto.ContaBancariaCedente.Conta + nossoNum);
+                _dacNossoNumero = Common.Mod10(boleto.CarteiraCobranca.Codigo + boleto.SequencialNossoNumero);
+
             else
-                // Excess�o 126 - 131 - 146 - 150 - 168
-                // carteira/nosso numero
-                _dacNossoNumero = Common.Mod10(nossoNum);
+                _dacNossoNumero = Common.Mod10(
+                    boleto.CedenteBoleto.ContaBancariaCedente.Agencia +
+                    boleto.CedenteBoleto.ContaBancariaCedente.Conta + 
+                    boleto.CarteiraCobranca.Codigo + 
+                    boleto.SequencialNossoNumero);
         }
 
         public void FormataMoeda(Boleto boleto)
@@ -406,22 +417,24 @@ namespace BoletoBr.Bancos.Itau
 
         public void FormataNossoNumero(Boleto boleto)
         {
-            if (String.IsNullOrEmpty(boleto.SequencialNossoNumero) || String.IsNullOrEmpty(boleto.SequencialNossoNumero.TrimStart('0')))
+            if (String.IsNullOrEmpty(boleto.SequencialNossoNumero) ||
+                String.IsNullOrEmpty(boleto.SequencialNossoNumero.TrimStart('0')))
                 throw new Exception("Sequencial Nosso Número não foi informado.");
 
-            boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero.PadLeft(8, '0'));
-
+            // Usando Método e Geração do DAC do Nosso Número
+            GerarDacNossoNumero(boleto);
             try
             {
-                boleto.SetNossoNumeroFormatado(string.Format("{0}/{1}-{2}", boleto.CarteiraCobranca.Codigo, boleto.NossoNumeroFormatado, _dacNossoNumero));
+                boleto.SetNossoNumeroFormatado(string.Format("{0}/{1}-{2}", boleto.CarteiraCobranca.Codigo,
+                    boleto.SequencialNossoNumero, _dacNossoNumero));
             }
             catch (Exception ex)
             {
                 throw new Exception(string.Format("<BoletoBr>" +
-                                                "{0}Mensagem: Falha ao formatar nosso número."  +
-                                                "{0}Carteira: " + boleto.CarteiraCobranca.Codigo +
-                                                "{0}Numeração Sequencial: " + boleto.NossoNumeroFormatado + " - " + 
-                                                "DAC: " + _dacNossoNumero, Environment.NewLine), ex);
+                                                  "{0}Mensagem: Falha ao formatar nosso número." +
+                                                  "{0}Carteira: " + boleto.CarteiraCobranca.Codigo +
+                                                  "{0}Numeração Sequencial: " + boleto.NossoNumeroFormatado + " - " +
+                                                  "DAC: " + _dacNossoNumero, Environment.NewLine), ex);
             }
         }
 
@@ -434,17 +447,17 @@ namespace BoletoBr.Bancos.Itau
             if (String.IsNullOrEmpty(boleto.NumeroDocumento))
                 throw new Exception("O número do documento não foi informado.");
 
-            if (boleto.NumeroDocumento.Length > 10)
-                numeroDoDocumento = boleto.NumeroDocumento.Substring(0, 10);
+            if (boleto.NumeroDocumento.Length > 9)
+                numeroDoDocumento = boleto.NumeroDocumento.Substring(0, 9);
             else
-                numeroDoDocumento = boleto.NumeroDocumento.PadLeft(10, '0');
+                numeroDoDocumento = boleto.NumeroDocumento.PadLeft(9, '0');
 
             digitoNumeroDoDocumento = Common.Mod10(numeroDoDocumento).ToString();
             numeroDoDocumentoFormatado = String.Format("{0}-{1}", numeroDoDocumento, digitoNumeroDoDocumento);
 
-            boleto.NumeroDocumento = numeroDoDocumento;
-            boleto.DigitoNumeroDocumento = digitoNumeroDoDocumento;
-            boleto.NumeroDocumentoFormatado = numeroDoDocumentoFormatado;
+            boleto.NumeroDocumento = numeroDoDocumentoFormatado;
+            //boleto.DigitoNumeroDocumento = digitoNumeroDoDocumento;
+            //boleto.NumeroDocumentoFormatado = numeroDoDocumentoFormatado;
         }
 
         public IEspecieDocumento ObtemEspecieDocumento(EnumEspecieDocumento especie)

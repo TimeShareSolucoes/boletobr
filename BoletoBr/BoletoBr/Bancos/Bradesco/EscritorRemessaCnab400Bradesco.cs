@@ -60,10 +60,25 @@ namespace BoletoBr.Bancos.Bradesco
             if (infoDetalhe.NumeroSequencialRegistro == 0)
                 throw new Exception("Sequencial do registro não foi informado na geração do DETALHE.");
 
-            var enderecoSacado = infoDetalhe.EnderecoPagador;
+            string enderecoSacado = string.Empty;
 
-            if (enderecoSacado.Length > 40)
-                enderecoSacado = enderecoSacado.Substring(0, 40);
+            string nomeSacado = string.Empty;
+
+            if (String.IsNullOrEmpty(infoDetalhe.EnderecoPagador))
+                enderecoSacado.PadRight(40, ' ');
+            else
+                if (infoDetalhe.EnderecoPagador.Length > 40)
+                    enderecoSacado = infoDetalhe.EnderecoPagador.Substring(0, 40).ToUpper();
+                else
+                    enderecoSacado = infoDetalhe.EnderecoPagador.PadRight(40, ' ').ToUpper();
+
+            if (String.IsNullOrEmpty(infoDetalhe.NomePagador))
+                nomeSacado.PadRight(40, ' ');
+            else
+                if (infoDetalhe.NomePagador.Length > 40)
+                    nomeSacado = infoDetalhe.NomePagador.Substring(0, 40).ToUpper();
+                else
+                    nomeSacado = infoDetalhe.NomePagador.PadRight(40, ' ').ToUpper();
 
             var detalhe = new string(' ', 400);
             try
@@ -260,8 +275,8 @@ namespace BoletoBr.Bancos.Bradesco
                 detalhe = detalhe.PreencherValorNaLinha(219, 220,
                     infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").Length == 11 ? "01" : "02"); // Identificação do tipo de inscrição/sacado
                 detalhe = detalhe.PreencherValorNaLinha(221, 234, infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(14, '0'));
-                detalhe = detalhe.PreencherValorNaLinha(235, 274, infoDetalhe.NomePagador.ToUpper().PadRight(40, ' '));
-                detalhe = detalhe.PreencherValorNaLinha(275, 314, enderecoSacado.ToUpper().PadRight(40, ' '));
+                detalhe = detalhe.PreencherValorNaLinha(235, 274, nomeSacado);
+                detalhe = detalhe.PreencherValorNaLinha(275, 314, enderecoSacado);
 
                 #region 1ª Mensagem
 

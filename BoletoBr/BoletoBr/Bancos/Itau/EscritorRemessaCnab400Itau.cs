@@ -68,31 +68,41 @@ namespace BoletoBr.Bancos.Itau
             string bairroSacado = string.Empty;
             string cidadeSacado = string.Empty;
 
+            string nomeSacado = string.Empty;
+
             #endregion
 
             if (String.IsNullOrEmpty(infoDetalhe.EnderecoPagador))
                 enderecoSacado.PadRight(40, ' ');
             else
                 if (infoDetalhe.EnderecoPagador.Length > 40)
-                    enderecoSacado = infoDetalhe.EnderecoPagador.Substring(0, 40);
+                    enderecoSacado = infoDetalhe.EnderecoPagador.Substring(0, 40).ToUpper();
                 else
-                    enderecoSacado = infoDetalhe.EnderecoPagador.PadRight(40, ' ');
+                    enderecoSacado = infoDetalhe.EnderecoPagador.PadRight(40, ' ').ToUpper();
 
             if (String.IsNullOrEmpty(infoDetalhe.BairroPagador))
                 bairroSacado.PadRight(12, ' ');
             else
                 if (infoDetalhe.BairroPagador.Length > 12)
-                    bairroSacado = infoDetalhe.BairroPagador.Substring(0, 12);
+                    bairroSacado = infoDetalhe.BairroPagador.Substring(0, 12).ToUpper();
                 else
-                    bairroSacado = infoDetalhe.BairroPagador.PadRight(12, ' ');
+                    bairroSacado = infoDetalhe.BairroPagador.PadRight(12, ' ').ToUpper();
 
             if (String.IsNullOrEmpty(infoDetalhe.CidadePagador))
                 cidadeSacado.PadRight(15, ' ');
             else
                 if (infoDetalhe.CidadePagador.Length > 15)
-                    cidadeSacado = infoDetalhe.CidadePagador.Substring(0, 15);
+                    cidadeSacado = infoDetalhe.CidadePagador.Substring(0, 15).ToUpper();
                 else
-                    cidadeSacado = infoDetalhe.CidadePagador.PadRight(15, ' ');
+                    cidadeSacado = infoDetalhe.CidadePagador.PadRight(15, ' ').ToUpper();
+
+            if (String.IsNullOrEmpty(infoDetalhe.NomePagador))
+                nomeSacado.PadRight(30, ' ');
+            else
+                if (infoDetalhe.NomePagador.Length > 30)
+                    nomeSacado = infoDetalhe.NomePagador.Substring(0, 30).ToUpper();
+                else
+                    nomeSacado = infoDetalhe.NomePagador.PadRight(30, ' ').ToUpper();
 
 
             var detalhe = new string(' ', 400);
@@ -151,7 +161,7 @@ namespace BoletoBr.Bancos.Itau
                     detalhe = detalhe.PreencherValorNaLinha(108, 108, "E");
                 detalhe = detalhe.PreencherValorNaLinha(109, 110,
                     infoDetalhe.CodigoOcorrencia.Codigo.ToString().PadLeft(2, '0')); // Identificação da Ocorrência
-                detalhe = detalhe.PreencherValorNaLinha(111, 120, infoDetalhe.NumeroDocumento.Replace("-", "").Substring(0, 10)); 
+                detalhe = detalhe.PreencherValorNaLinha(111, 120, infoDetalhe.NumeroDocumento.Replace("-", "")); 
                 detalhe = detalhe.PreencherValorNaLinha(121, 126, infoDetalhe.DataVencimento.ToString("ddMMyy"));
                     // Data de Vencimento do Título
                 detalhe = detalhe.PreencherValorNaLinha(127, 139,
@@ -220,7 +230,7 @@ namespace BoletoBr.Bancos.Itau
                 detalhe = detalhe.PreencherValorNaLinha(221, 234,
                     infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(14, '0'));
                     // Nro de Inscrição do Sacado (CPF/CNPJ)
-                detalhe = detalhe.PreencherValorNaLinha(235, 264, infoDetalhe.NomePagador.PadRight(30, ' '));
+                detalhe = detalhe.PreencherValorNaLinha(235, 264, nomeSacado);
                     // Nome do Sacado
                 detalhe = detalhe.PreencherValorNaLinha(265, 274, string.Empty.PadRight(10, '0'));
                     // Complemento de Registro

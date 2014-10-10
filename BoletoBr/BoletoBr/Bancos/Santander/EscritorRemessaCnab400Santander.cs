@@ -72,30 +72,43 @@ namespace BoletoBr.Bancos.Santander
             if (infoDetalhe.CarteiraCobranca == "102")
                 codigoCarteira = "4";
 
-            string enderecoSacado = infoDetalhe.EnderecoPagador;
-
-            if (enderecoSacado.Length > 40)
-                enderecoSacado.Substring(0, 40);
-
+            string enderecoSacado = string.Empty;
             string bairroSacado = string.Empty;
+            string cidadeSacado = string.Empty;
+
+            string nomeSacado = string.Empty;
+
+            if (String.IsNullOrEmpty(infoDetalhe.EnderecoPagador))
+                enderecoSacado.PadRight(40, ' ');
+            else
+                if (infoDetalhe.EnderecoPagador.Length > 40)
+                    enderecoSacado = infoDetalhe.EnderecoPagador.Substring(0, 40).ToUpper();
+                else
+                    enderecoSacado = infoDetalhe.EnderecoPagador.PadRight(40, ' ').ToUpper();
 
             if (String.IsNullOrEmpty(infoDetalhe.BairroPagador))
                 bairroSacado.PadRight(12, ' ');
             else
-                if (infoDetalhe.BairroPagador.Length > 12) 
-                    bairroSacado = infoDetalhe.BairroPagador.Substring(0, 12);
+                if (infoDetalhe.BairroPagador.Length > 12)
+                    bairroSacado = infoDetalhe.BairroPagador.Substring(0, 12).ToUpper();
                 else
-                    bairroSacado = infoDetalhe.BairroPagador.PadRight(12, ' ');
-
-            string cidadeSacado = string.Empty;
+                    bairroSacado = infoDetalhe.BairroPagador.PadRight(12, ' ').ToUpper();
 
             if (String.IsNullOrEmpty(infoDetalhe.CidadePagador))
-                cidadeSacado.PadRight(12, ' ');
+                cidadeSacado.PadRight(15, ' ');
             else
-                if (infoDetalhe.CidadePagador.Length > 12)
-                    cidadeSacado = infoDetalhe.CidadePagador.Substring(0, 12);
+                if (infoDetalhe.CidadePagador.Length > 15)
+                    cidadeSacado = infoDetalhe.CidadePagador.Substring(0, 15).ToUpper();
                 else
-                    cidadeSacado = infoDetalhe.CidadePagador.PadRight(12, ' ');
+                    cidadeSacado = infoDetalhe.CidadePagador.PadRight(15, ' ').ToUpper();
+
+            if (String.IsNullOrEmpty(infoDetalhe.NomePagador))
+                nomeSacado.PadRight(40, ' ');
+            else
+                if (infoDetalhe.NomePagador.Length > 40)
+                    nomeSacado = infoDetalhe.NomePagador.Substring(0, 40).ToUpper();
+                else
+                    nomeSacado = infoDetalhe.NomePagador.PadRight(40, ' ').ToUpper();
 
 
             string complementoRegistro = 
@@ -206,9 +219,9 @@ namespace BoletoBr.Bancos.Santander
                 
                 detalhe = detalhe.PreencherValorNaLinha(219, 220, infoDetalhe.InscricaoPagador.Length == 11 ? "01" : "02");
                 detalhe = detalhe.PreencherValorNaLinha(221, 234, infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(14, '0'));
-                detalhe = detalhe.PreencherValorNaLinha(235, 274, infoDetalhe.NomePagador.PadRight(40, ' '));
-                detalhe = detalhe.PreencherValorNaLinha(275, 314, enderecoSacado.PadRight(40, ' '));
-                detalhe = detalhe.PreencherValorNaLinha(315, 326, bairroSacado.PadRight(12, ' '));
+                detalhe = detalhe.PreencherValorNaLinha(235, 274, nomeSacado);
+                detalhe = detalhe.PreencherValorNaLinha(275, 314, enderecoSacado);
+                detalhe = detalhe.PreencherValorNaLinha(315, 326, bairroSacado);
 
                 #region CEP
 
@@ -225,7 +238,7 @@ namespace BoletoBr.Bancos.Santander
 
                 #endregion
 
-                detalhe = detalhe.PreencherValorNaLinha(335, 349, cidadeSacado.PadRight(15, ' '));
+                detalhe = detalhe.PreencherValorNaLinha(335, 349, cidadeSacado);
                 detalhe = detalhe.PreencherValorNaLinha(350, 351, infoDetalhe.UfPagador.PadRight(2, ' '));
                 
                 if (String.IsNullOrEmpty(infoDetalhe.NomeAvalistaOuMensagem2))
