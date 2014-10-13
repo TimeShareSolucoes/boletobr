@@ -343,15 +343,44 @@ namespace BoletoBr.Bancos.Cef
 
         public string EscreverDetalheSegmentoQ(DetalheSegmentoQRemessaCnab240 infoSegmentoQ)
         {
-            var enderecoSacado = infoSegmentoQ.EnderecoSacado;
+            string enderecoSacado = string.Empty;
+            string bairroSacado = string.Empty;
+            string cidadeSacado = string.Empty;
 
-            string bairroSacado = infoSegmentoQ.BairroSacado;
+            string nomeSacado = string.Empty;
 
-            if (bairroSacado.Length > 15)
-                bairroSacado = bairroSacado.Substring(0, 15);
+            if (String.IsNullOrEmpty(infoSegmentoQ.EnderecoSacado))
+                enderecoSacado.PadRight(40, ' ');
+            else
+                if (infoSegmentoQ.EnderecoSacado.Length > 40)
+                    enderecoSacado = infoSegmentoQ.EnderecoSacado.Substring(0, 40).ToUpper();
+                else
+                    enderecoSacado = infoSegmentoQ.EnderecoSacado.PadRight(40, ' ').ToUpper();
 
-            if (enderecoSacado.Length > 40)
-                throw new Exception("Endereço do sacado excedeu o limite permitido de 40 espaços.");
+            if (String.IsNullOrEmpty(infoSegmentoQ.BairroSacado))
+                bairroSacado.PadRight(15, ' ');
+            else
+                if (infoSegmentoQ.BairroSacado.Length > 15)
+                    bairroSacado = infoSegmentoQ.BairroSacado.Substring(0, 15).ToUpper();
+                else
+                    bairroSacado = infoSegmentoQ.BairroSacado.PadRight(15, ' ').ToUpper();
+
+            if (String.IsNullOrEmpty(infoSegmentoQ.CidadeSacado))
+                cidadeSacado.PadRight(15, ' ');
+            else
+                if (infoSegmentoQ.CidadeSacado.Length > 15)
+                    cidadeSacado = infoSegmentoQ.CidadeSacado.Substring(0, 15).ToUpper();
+                else
+                    cidadeSacado = infoSegmentoQ.CidadeSacado.PadRight(15, ' ').ToUpper();
+
+            if (String.IsNullOrEmpty(infoSegmentoQ.NomeSacado))
+                nomeSacado.PadRight(40, ' ');
+            else
+                if (infoSegmentoQ.NomeSacado.Length > 40)
+                    nomeSacado = infoSegmentoQ.NomeSacado.Substring(0, 40).ToUpper();
+                else
+                    nomeSacado = infoSegmentoQ.NomeSacado.PadRight(40, ' ').ToUpper();
+
 
             var segmentoQ = new string(' ', 240);
 
@@ -370,9 +399,9 @@ namespace BoletoBr.Bancos.Cef
                         : "2");
                 segmentoQ = segmentoQ.PreencherValorNaLinha(19, 33,
                     infoSegmentoQ.NumeroInscricaoSacado.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(15, '0'));
-                segmentoQ = segmentoQ.PreencherValorNaLinha(34, 73, infoSegmentoQ.NomeSacado.PadRight(40, ' '));
-                segmentoQ = segmentoQ.PreencherValorNaLinha(74, 113, enderecoSacado.PadRight(40, ' '));
-                segmentoQ = segmentoQ.PreencherValorNaLinha(114, 128, bairroSacado.PadRight(15, ' '));
+                segmentoQ = segmentoQ.PreencherValorNaLinha(34, 73, nomeSacado.PadRight(40, '0'));
+                segmentoQ = segmentoQ.PreencherValorNaLinha(74, 113, enderecoSacado.PadRight(40, '0'));
+                segmentoQ = segmentoQ.PreencherValorNaLinha(114, 128, bairroSacado.PadRight(15, '0'));
 
                 var Cep = infoSegmentoQ.CepSacado;
 
@@ -384,7 +413,7 @@ namespace BoletoBr.Bancos.Cef
                     Cep = Cep.Replace("-", "");
 
                 segmentoQ = segmentoQ.PreencherValorNaLinha(129, 136, Cep.PadLeft(8, '0'));
-                segmentoQ = segmentoQ.PreencherValorNaLinha(137, 151, infoSegmentoQ.CidadeSacado.PadRight(15, ' '));
+                segmentoQ = segmentoQ.PreencherValorNaLinha(137, 151, cidadeSacado.PadRight(15, '0'));
                 segmentoQ = segmentoQ.PreencherValorNaLinha(152, 153, infoSegmentoQ.UfSacado.PadRight(2, ' '));
 
                 if (String.IsNullOrEmpty(infoSegmentoQ.NumeroInscricaoAvalista))
