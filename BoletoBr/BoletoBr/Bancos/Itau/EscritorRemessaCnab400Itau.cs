@@ -19,6 +19,12 @@ namespace BoletoBr.Bancos.Itau
 
         public string EscreverHeader(HeaderRemessaCnab400 infoHeader)
         {
+            var nomeEmpresa = "";
+            if (infoHeader.NomeEmpresa.Length > 30)
+                nomeEmpresa = infoHeader.NomeEmpresa.Substring(0, 30).ToUpper();
+            else
+                nomeEmpresa = infoHeader.NomeEmpresa.ToUpper();
+
             var header = new string(' ', 400);
             try
             {
@@ -32,7 +38,7 @@ namespace BoletoBr.Bancos.Itau
                 header = header.PreencherValorNaLinha(33, 37, infoHeader.ContaCorrente.PadLeft(5, '0'));
                 header = header.PreencherValorNaLinha(38, 38, infoHeader.DvContaCorrente);
                 header = header.PreencherValorNaLinha(39, 46, string.Empty.PadRight(8, ' '));
-                header = header.PreencherValorNaLinha(47, 76, infoHeader.NomeEmpresa.PadRight(30, ' '));
+                header = header.PreencherValorNaLinha(47, 76, nomeEmpresa.PadRight(30, ' '));
                 header = header.PreencherValorNaLinha(77, 79, "341");
                 header = header.PreencherValorNaLinha(80, 94, "BANCO ITAU S.A.".PadRight(15, ' '));
                 header = header.PreencherValorNaLinha(95, 100, DateTime.Now.ToString("ddMMyy").Replace("/", ""));
@@ -151,7 +157,7 @@ namespace BoletoBr.Bancos.Itau
                     // Identificação da Operação no Banco
                 /* Código da Carteira */
                 // Modalidade de Carteira D - Direta
-                if (carteiraCob == "108")
+                if (carteiraCob == "108" || carteiraCob == "109" || carteiraCob == "110" || carteiraCob == "111")
                     detalhe = detalhe.PreencherValorNaLinha(108, 108, "D");
                 // Modalidade de Carteira S - Sem Registro
                 if (carteiraCob == "103" || carteiraCob == "173" || carteiraCob == "196" || carteiraCob == "198")
