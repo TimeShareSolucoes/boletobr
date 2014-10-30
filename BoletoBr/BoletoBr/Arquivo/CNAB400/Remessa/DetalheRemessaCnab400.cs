@@ -34,6 +34,7 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             this.InscricaoPagador = boleto.SacadoBoleto.CpfCnpj;
             this.NomePagador = boleto.SacadoBoleto.Nome;
             this.EnderecoPagador = boleto.SacadoBoleto.EnderecoSacado.LogradouroNumeroComplementoConcatenado;
+            this.BairroPagador = boleto.SacadoBoleto.EnderecoSacado.Bairro;
             this.CidadePagador = boleto.SacadoBoleto.EnderecoSacado.Cidade;
             this.UfPagador = boleto.SacadoBoleto.EnderecoSacado.SiglaUf;
             this.CepPagador = boleto.SacadoBoleto.EnderecoSacado.Cep;

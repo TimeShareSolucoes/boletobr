@@ -56,6 +56,7 @@
     <Compile Include="Arquivo\CNAB240\Retorno\HeaderLoteRetornoCnab240.cs" />
     <Compile Include="Arquivo\CNAB240\Retorno\LoteRetornoCnab240.cs" />
     <Compile Include="Arquivo\CNAB240\Retorno\TrailerLoteRetornoCnab240.cs" />
+    <Compile Include="Arquivo\CNAB400\Remessa\DetalheFrenteRemessaCnab400.cs" />
     <Compile Include="Arquivo\CNAB400\Retorno\DetalheRateioRetornoCnab400.cs" />
     <Compile Include="Arquivo\Generico\Retorno\RetornoDetalheGenerico.cs" />
     <Compile Include="Arquivo\Generico\Retorno\RetornoTrailerGenerico.cs" />

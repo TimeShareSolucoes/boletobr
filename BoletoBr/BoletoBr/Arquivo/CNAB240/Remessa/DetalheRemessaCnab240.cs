@@ -5,7 +5,7 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
 {
     public class DetalheRemessaCnab240
     {
-         #region Construtores
+        #region Construtores
 
         public DetalheRemessaCnab240(Boleto boleto, int numeroRegistroNoLote)
         {

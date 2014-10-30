@@ -21,7 +21,7 @@ namespace BoletoBr.Bancos.Itau
         {
             var nomeEmpresa = "";
             if (infoHeader.NomeEmpresa.Length > 30)
-                nomeEmpresa = infoHeader.NomeEmpresa.Substring(0, 30).ToUpper();
+                nomeEmpresa = infoHeader.NomeEmpresa.Substring(0, 30);
             else
                 nomeEmpresa = infoHeader.NomeEmpresa.ToUpper();
 
@@ -40,7 +40,7 @@ namespace BoletoBr.Bancos.Itau
                 header = header.PreencherValorNaLinha(39, 46, string.Empty.PadRight(8, ' '));
                 header = header.PreencherValorNaLinha(47, 76, nomeEmpresa.PadRight(30, ' '));
                 header = header.PreencherValorNaLinha(77, 79, "341");
-                header = header.PreencherValorNaLinha(80, 94, "BANCO ITAU S.A.".PadRight(15, ' '));
+                header = header.PreencherValorNaLinha(80, 94, "BANCO ITAU SA".PadRight(15, ' '));
                 header = header.PreencherValorNaLinha(95, 100, DateTime.Now.ToString("ddMMyy").Replace("/", ""));
                 header = header.PreencherValorNaLinha(101, 394, string.Empty.PadRight(294, ' '));
                 header = header.PreencherValorNaLinha(395, 400, "000001");
@@ -56,6 +56,12 @@ namespace BoletoBr.Bancos.Itau
 
         public string EscreverDetalhe(DetalheRemessaCnab400 infoDetalhe)
         {
+            if (String.IsNullOrEmpty(infoDetalhe.BairroPagador))
+                throw new Exception("Não foi informado o bairro do pagador " + infoDetalhe.NomePagador + "(" + infoDetalhe.InscricaoPagador + ")");
+
+            if (String.IsNullOrEmpty(infoDetalhe.CepPagador) || infoDetalhe.CepPagador.Length < 8)
+                throw new Exception("CEP Inválida! Verifique o CEP do pagador " + infoDetalhe.NomePagador + "(" + infoDetalhe.InscricaoPagador + ")");
+
             // Na geração do detalhe na remessa não está sendo tratado os casos de cancelamento das instruções nas posições 34-37
 
             #region Variáveis
@@ -103,12 +109,12 @@ namespace BoletoBr.Bancos.Itau
                     cidadeSacado = infoDetalhe.CidadePagador.PadRight(15, ' ').ToUpper();
 
             if (String.IsNullOrEmpty(infoDetalhe.NomePagador))
-                nomeSacado.PadRight(30, ' ');
+                nomeSacado.PadRight(40, ' ');
             else
-                if (infoDetalhe.NomePagador.Length > 30)
-                    nomeSacado = infoDetalhe.NomePagador.Substring(0, 30).ToUpper();
+                if (infoDetalhe.NomePagador.Length > 40)
+                    nomeSacado = infoDetalhe.NomePagador.Substring(0, 40).ToUpper();
                 else
-                    nomeSacado = infoDetalhe.NomePagador.PadRight(30, ' ').ToUpper();
+                    nomeSacado = infoDetalhe.NomePagador.PadRight(40, ' ').ToUpper();
 
 
             var detalhe = new string(' ', 400);
@@ -158,12 +164,14 @@ namespace BoletoBr.Bancos.Itau
                 /* Código da Carteira */
                 // Modalidade de Carteira D - Direta
                 if (carteiraCob == "108" || carteiraCob == "109" || carteiraCob == "110" || carteiraCob == "111")
-                    detalhe = detalhe.PreencherValorNaLinha(108, 108, "D");
+                    detalhe = detalhe.PreencherValorNaLinha(108, 108, "I");
                 // Modalidade de Carteira S - Sem Registro
                 if (carteiraCob == "103" || carteiraCob == "173" || carteiraCob == "196" || carteiraCob == "198")
-                    detalhe = detalhe.PreencherValorNaLinha(108, 108, "S");
+                    detalhe = detalhe.PreencherValorNaLinha(108, 108, "I");
                 // Modalidade de Carteira E - Escritural
-                if (carteiraCob == "104" || carteiraCob == "112" || carteiraCob == "138" || carteiraCob == "147")
+                if (carteiraCob == "104" || carteiraCob == "112" || carteiraCob == "138")
+                    detalhe = detalhe.PreencherValorNaLinha(108, 108, "I");
+                if (carteiraCob == "147")
                     detalhe = detalhe.PreencherValorNaLinha(108, 108, "E");
                 detalhe = detalhe.PreencherValorNaLinha(109, 110,
                     infoDetalhe.CodigoOcorrencia.Codigo.ToString().PadLeft(2, '0')); // Identificação da Ocorrência
@@ -236,24 +244,19 @@ namespace BoletoBr.Bancos.Itau
                 detalhe = detalhe.PreencherValorNaLinha(221, 234,
                     infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(14, '0'));
                     // Nro de Inscrição do Sacado (CPF/CNPJ)
-                detalhe = detalhe.PreencherValorNaLinha(235, 264, nomeSacado);
-                    // Nome do Sacado
-                detalhe = detalhe.PreencherValorNaLinha(265, 274, string.Empty.PadRight(10, '0'));
-                    // Complemento de Registro
+                detalhe = detalhe.PreencherValorNaLinha(235, 274, nomeSacado); // Nome do Sacado
                 detalhe = detalhe.PreencherValorNaLinha(275, 314, enderecoSacado.PadRight(40, ' '));
                     // Rua, Número, e Complemento do Sacado
                 detalhe = detalhe.PreencherValorNaLinha(315, 326, bairroSacado.PadRight(12, ' ')); // Bairro do Sacado
 
                 var Cep = infoDetalhe.CepPagador;
 
-                if (Cep.Contains(".") && Cep.Contains("-"))
-                    Cep = Cep.Replace(".", "").Replace("-", "");
                 if (Cep.Contains("."))
                     Cep = Cep.Replace(".", "");
                 if (Cep.Contains("-"))
                     Cep = Cep.Replace("-", "");
 
-                detalhe = detalhe.PreencherValorNaLinha(327, 334, Cep.PadLeft(8, ' '));
+                detalhe = detalhe.PreencherValorNaLinha(327, 334, Cep);
                 detalhe = detalhe.PreencherValorNaLinha(335, 349, cidadeSacado.PadRight(15, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(350, 351, infoDetalhe.UfPagador.PadRight(2, ' '));
 
@@ -264,7 +267,7 @@ namespace BoletoBr.Bancos.Itau
                     detalhe = detalhe.PreencherValorNaLinha(352, 381, infoDetalhe.NomeAvalistaOuMensagem2.PadRight(30, ' '));
                         // Nome do Sacador ou Avalista
 
-                detalhe = detalhe.PreencherValorNaLinha(382, 385, string.Empty.PadRight(4, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(382, 385, string.Empty.PadRight(4, ' '));
                     // Complemento do Registro
 
                 if (infoDetalhe.DataJurosMora == DateTime.MinValue)
@@ -274,7 +277,7 @@ namespace BoletoBr.Bancos.Itau
                         // Data de Mora
                 detalhe = detalhe.PreencherValorNaLinha(392, 393, infoDetalhe.NroDiasParaProtesto.ToString().PadLeft(2, '0'));
                     // Quantidade de Dias Posição 392 a 393
-                detalhe = detalhe.PreencherValorNaLinha(394, 394, string.Empty.PadRight(1, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(394, 394, string.Empty.PadRight(1, ' '));
                     // Complemento do Registro
                 detalhe = detalhe.PreencherValorNaLinha(395, 400, infoDetalhe.NumeroSequencialRegistro.ToString().PadLeft(6, '0'));
                     // Nro Sequencial do Registro no Arquivo
@@ -284,6 +287,30 @@ namespace BoletoBr.Bancos.Itau
             catch (Exception e)
             {
                 throw new Exception(string.Format("<BoletoBr>{0}Falha na geração do DETALHE do arquivo de REMESSA.",
+                    Environment.NewLine), e);
+            }
+        }
+
+        public string EscreverRegistroMensagemFrente(DetalheFrenteRemessaCnab400 infoDetalheFrente)
+        {
+            var registroMensagemFrente = new string(' ', 400);
+            try
+            {
+                registroMensagemFrente = registroMensagemFrente.PreencherValorNaLinha(1, 1, "7");
+                registroMensagemFrente = registroMensagemFrente.PreencherValorNaLinha(2, 4, infoDetalheFrente.CodigoFlash.PadRight(3, ' '));
+                registroMensagemFrente = registroMensagemFrente.PreencherValorNaLinha(5, 6, infoDetalheFrente.NroLinha1.ToString());
+                registroMensagemFrente = registroMensagemFrente.PreencherValorNaLinha(7, 134, infoDetalheFrente.ConteudoLinha1);
+                registroMensagemFrente = registroMensagemFrente.PreencherValorNaLinha(135, 136, infoDetalheFrente.NroLinha2.ToString());
+                registroMensagemFrente = registroMensagemFrente.PreencherValorNaLinha(137, 264, infoDetalheFrente.ConteudoLinha2);
+                registroMensagemFrente = registroMensagemFrente.PreencherValorNaLinha(265, 266, infoDetalheFrente.NroLinha3.ToString());
+                registroMensagemFrente = registroMensagemFrente.PreencherValorNaLinha(267, 393, infoDetalheFrente.ConteudoLinha3);
+                registroMensagemFrente = registroMensagemFrente.PreencherValorNaLinha(395, 400, infoDetalheFrente.NumeroSequencialRegistro.ToString().PadLeft(6, '0'));
+
+                return registroMensagemFrente;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(string.Format("<BoletoBr>{0}Falha na geração do REGISTRO DE MENSAGENS do arquivo de REMESSA.",
                     Environment.NewLine), e);
             }
         }
