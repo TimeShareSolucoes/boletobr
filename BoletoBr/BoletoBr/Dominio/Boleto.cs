@@ -96,6 +96,21 @@ namespace BoletoBr
         public ICodigoOcorrencia CodigoOcorrenciaRemessa { get; set; }
         public ICodigoOcorrencia CodigoOcorrenciaRetorno { get; set; }
 
+        public virtual decimal VlTotalDescontos
+        {
+            get { return (decimal) (ValorAbatimento + ValorDesconto + OutrosDescontos); }
+        }
+
+        public virtual decimal VlTotalAcrescimos
+        {
+            get { return (decimal) (JurosMora + ValorMulta + OutrosAcrescimos + Iof); }
+        }
+
+        public virtual decimal VlTotalCobranca
+        {
+            get { return (VlTotalAcrescimos + ValorBoleto) - VlTotalDescontos; }
+        }
+
         #region Banco Santander
 
         public int PercentualIOS { get; set; }

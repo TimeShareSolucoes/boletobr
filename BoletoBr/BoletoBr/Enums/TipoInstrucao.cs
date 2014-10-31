@@ -16,6 +16,7 @@ namespace BoletoBr.Enums
         NaoReceberAposNDiasCorridos,
         NaoReceberAposNDiasUteis,
         DevolverAposNDias,
+        DevolverApos90Dias,
         MultaVencimento,
         JurosdeMora,
         DescontoPorDia,

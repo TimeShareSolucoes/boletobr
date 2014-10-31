@@ -639,6 +639,16 @@ namespace BoletoBr.Bancos.Itau
                         TextoInstrucao = "Não protestar."
                     };
                 }
+                case EnumTipoInstrucao.DevolverApos90Dias:
+                {
+                    return new InstrucaoPadronizada()
+                    {
+                        Codigo = 18,
+                        QtdDias = diasInstrucao,
+                        Valor = valorInstrucao,
+                        TextoInstrucao = "Devolver após 90 dias do vencimento."
+                    };
+                }
                 case EnumTipoInstrucao.ProtestarAposNDiasCorridos:
                 {
                     return new InstrucaoPadronizada()

@@ -211,10 +211,11 @@ namespace BoletoBr.Bancos.Itau
                 else
                     detalhe = detalhe.PreencherValorNaLinha(157, 158, "39");
 
-                if (segundaInstrucao != null)
-                    detalhe = detalhe.PreencherValorNaLinha(159, 160, segundaInstrucao.ToString());
-                else
-                    detalhe = detalhe.PreencherValorNaLinha(159, 160, "39");
+                //if (segundaInstrucao != null)
+                //    detalhe = detalhe.PreencherValorNaLinha(159, 160, segundaInstrucao.ToString());
+                //else
+                // Pagável em qualquer agência bancária até a data de vencimento.
+                    detalhe = detalhe.PreencherValorNaLinha(159, 160, "90");
 
                 #endregion
 
