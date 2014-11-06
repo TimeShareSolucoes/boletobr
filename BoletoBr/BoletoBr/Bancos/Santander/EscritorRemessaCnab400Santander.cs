@@ -18,6 +18,12 @@ namespace BoletoBr.Bancos.Santander
 
         public string EscreverHeader(HeaderRemessaCnab400 infoHeader)
         {
+            var nomeEmpresa = "";
+            if (infoHeader.NomeEmpresa.Length > 30)
+                nomeEmpresa = infoHeader.NomeEmpresa.Substring(0, 30);
+            else
+                nomeEmpresa = infoHeader.NomeEmpresa.PadRight(30, ' ');
+
             var header = new string(' ', 400);
             try
             {
@@ -31,7 +37,7 @@ namespace BoletoBr.Bancos.Santander
                     header = header.PreencherValorNaLinha(27, 46, string.Empty.PadLeft(20, '0'));
                 else
                     header = header.PreencherValorNaLinha(27, 46, infoHeader.CodigoDeTransmissao.PadLeft(20, '0')); 
-                header = header.PreencherValorNaLinha(47, 76, infoHeader.NomeEmpresa.PadRight(30, ' '));
+                header = header.PreencherValorNaLinha(47, 76, nomeEmpresa.PadRight(30, ' '));
                 header = header.PreencherValorNaLinha(77, 79, "033");
                 header = header.PreencherValorNaLinha(80, 94, "SANTANDER".PadRight(15, ' '));
                 header = header.PreencherValorNaLinha(95, 100, DateTime.Now.ToString("ddMMyy").Replace("/", ""));
