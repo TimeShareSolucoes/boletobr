@@ -129,15 +129,15 @@ namespace BoletoBr.Bancos.Itau
              */
             var sequencialNN = boleto.SequencialNossoNumero.Replace("-", "");
 
-            if (boleto.CarteiraCobranca.Codigo == "104"    /* Escritural */
-                || boleto.CarteiraCobranca.Codigo == "112" /* Escritural */
-                || boleto.CarteiraCobranca.Codigo == "126"
-                || boleto.CarteiraCobranca.Codigo == "131"
-                || boleto.CarteiraCobranca.Codigo == "138" /* Escritural */
-                || boleto.CarteiraCobranca.Codigo == "145"
-                || boleto.CarteiraCobranca.Codigo == "147" /* Escritural */
-                || boleto.CarteiraCobranca.Codigo == "150"
-                || boleto.CarteiraCobranca.Codigo == "168")
+            if (boleto.CarteiraCobranca.Codigo == "104" || /* Escritural */
+                boleto.CarteiraCobranca.Codigo == "112" || /* Escritural */
+                boleto.CarteiraCobranca.Codigo == "126" ||
+                boleto.CarteiraCobranca.Codigo == "131" ||
+                boleto.CarteiraCobranca.Codigo == "138" || /* Escritural */
+                boleto.CarteiraCobranca.Codigo == "145" ||
+                boleto.CarteiraCobranca.Codigo == "147" || /* Escritural */
+                boleto.CarteiraCobranca.Codigo == "150" ||
+                boleto.CarteiraCobranca.Codigo == "168")
 
                 _dacNossoNumero = Common.Mod10(boleto.CarteiraCobranca.Codigo + sequencialNN);
 
@@ -146,7 +146,7 @@ namespace BoletoBr.Bancos.Itau
                     boleto.CedenteBoleto.ContaBancariaCedente.Agencia +
                     boleto.CedenteBoleto.ContaBancariaCedente.Conta + 
                     boleto.CarteiraCobranca.Codigo +
-                    sequencialNN;
+                    sequencialNN);
         }
 
         public void FormataMoeda(Boleto boleto)
