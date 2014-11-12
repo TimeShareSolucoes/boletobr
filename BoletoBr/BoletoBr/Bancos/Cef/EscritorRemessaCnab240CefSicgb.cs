@@ -108,7 +108,7 @@ namespace BoletoBr.Bancos.Cef
                 header = header.PreencherValorNaLinha(164, 166, "050");
                 header = header.PreencherValorNaLinha(167, 171, string.Empty.PadLeft(5, '0'));
                 header = header.PreencherValorNaLinha(172, 191, string.Empty.PadRight(20, ' '));
-                header = header.PreencherValorNaLinha(192, 211, "REMESSA-PRODUCAO".PadRight(20, ' '));
+                header = header.PreencherValorNaLinha(192, 211, "REMESSA-TESTE".PadRight(20, ' '));
                 header = header.PreencherValorNaLinha(212, 215, string.Empty.PadRight(4, ' '));
                 header = header.PreencherValorNaLinha(216, 240, string.Empty.PadRight(25, ' '));
 

@@ -127,6 +127,8 @@ namespace BoletoBr.Bancos.Itau
              * cujo DAC do "Nosso Número" é composto apenas dos campos:
              * Carteira e Nosso Número, mas todos calculados através do Módulo 10.
              */
+            var sequencialNN = boleto.SequencialNossoNumero.Replace("-", "");
+
             if (boleto.CarteiraCobranca.Codigo == "104"    /* Escritural */
                 || boleto.CarteiraCobranca.Codigo == "112" /* Escritural */
                 || boleto.CarteiraCobranca.Codigo == "126"
@@ -137,14 +139,14 @@ namespace BoletoBr.Bancos.Itau
                 || boleto.CarteiraCobranca.Codigo == "150"
                 || boleto.CarteiraCobranca.Codigo == "168")
 
-                _dacNossoNumero = Common.Mod10(boleto.CarteiraCobranca.Codigo + boleto.SequencialNossoNumero);
+                _dacNossoNumero = Common.Mod10(boleto.CarteiraCobranca.Codigo + sequencialNN);
 
             else
                 _dacNossoNumero = Common.Mod10(
                     boleto.CedenteBoleto.ContaBancariaCedente.Agencia +
                     boleto.CedenteBoleto.ContaBancariaCedente.Conta + 
-                    boleto.CarteiraCobranca.Codigo + 
-                    boleto.SequencialNossoNumero);
+                    boleto.CarteiraCobranca.Codigo +
+                    sequencialNN;
         }
 
         public void FormataMoeda(Boleto boleto)
