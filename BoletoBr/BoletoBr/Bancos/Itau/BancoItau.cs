@@ -429,8 +429,12 @@ namespace BoletoBr.Bancos.Itau
             GerarDacNossoNumero(boleto);
             try
             {
-                boleto.SetNossoNumeroFormatado(string.Format("{0}/{1}-{2}", boleto.CarteiraCobranca.Codigo,
+                boleto.SetNossoNumeroFormatado(string.Format("{0}{1}{2}", boleto.CarteiraCobranca.Codigo,
                     sequencialNN, _dacNossoNumero));
+
+                // Usado para apresentação no boleto.
+                boleto.NossoNumero = String.Format("{0}/{1}-{2}", boleto.CarteiraCobranca.Codigo,
+                    boleto.SequencialNossoNumero, _dacNossoNumero);
             }
             catch (Exception ex)
             {
