@@ -59,7 +59,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             {
                 NumeroDocumento = "3242",
                 ValorBoleto = Convert.ToDecimal(275),
-                SequencialNossoNumero = "3242",
+                IdentificadorInternoBoleto = "3242",
                 DataVencimento = new DateTime(2014, 08, 04),
                 Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil)
             };
@@ -159,7 +159,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             {
                 NumeroDocumento = "3242",
                 ValorBoleto = Convert.ToDecimal(275),
-                SequencialNossoNumero = "3242",
+                IdentificadorInternoBoleto = "3242",
                 DataVencimento = new DateTime(2014, 08, 04),
                 Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil)
             };
@@ -214,7 +214,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             {
                 NumeroDocumento = "3242",
                 ValorBoleto = Convert.ToDecimal(275),
-                SequencialNossoNumero = "3242",
+                IdentificadorInternoBoleto = "3242",
                 DataVencimento = new DateTime(2014, 08, 04),
                 Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil),
                 CodigoOcorrenciaRemessa = new CodigoOcorrencia(01),
@@ -269,7 +269,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             {
                 NumeroDocumento = "3242",
                 ValorBoleto = Convert.ToDecimal(275),
-                SequencialNossoNumero = "3242",
+                IdentificadorInternoBoleto = "3242",
                 DataVencimento = new DateTime(2014, 08, 04),
                 Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil),
                 CodigoOcorrenciaRemessa = new CodigoOcorrencia(01),

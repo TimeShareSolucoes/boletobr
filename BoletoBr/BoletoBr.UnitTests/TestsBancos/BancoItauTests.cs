@@ -39,7 +39,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos.ITAU
             var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "1234567";
             boleto.ValorBoleto = 12345;
-            boleto.SequencialNossoNumero = "1234567";
+            boleto.IdentificadorInternoBoleto = "1234567";
             boleto.DataVencimento = new DateTime(2002, 05, 01);
 
             banco.ValidaBoletoComNormasBanco(boleto);
@@ -78,7 +78,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos.ITAU
             var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "12345678";
             boleto.ValorBoleto = 12345;
-            boleto.SequencialNossoNumero = "12345678";
+            boleto.IdentificadorInternoBoleto = "12345678";
             boleto.DataVencimento = new DateTime(2014, 11, 14);
 
             banco.ValidaBoletoComNormasBanco(boleto);
@@ -120,7 +120,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos.ITAU
             var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "1234567";
             boleto.ValorBoleto = Convert.ToDecimal(123.45);
-            boleto.SequencialNossoNumero = "1234567";
+            boleto.IdentificadorInternoBoleto = "1234567";
             boleto.DataVencimento = new DateTime(2014, 05, 01);
 
             banco.ValidaBoletoComNormasBanco(boleto);
@@ -166,7 +166,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos.ITAU
             var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "71194120";
             boleto.ValorBoleto = Convert.ToDecimal(1419.04);
-            boleto.SequencialNossoNumero = "71194120";
+            boleto.IdentificadorInternoBoleto = "71194120";
             boleto.DataVencimento = new DateTime(2014, 05, 01);
 
             banco.ValidaBoletoComNormasBanco(boleto);

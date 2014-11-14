@@ -58,7 +58,7 @@ namespace BoletoBr.Bancos.Santander
             if (CodigoBanco == "033")
             {
                 if (boleto.NossoNumeroFormatado.Length == 7 && boleto.CarteiraCobranca.Codigo.Equals("101"))
-                    boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero.PadLeft(13, '0'));
+                    boleto.SetNossoNumeroFormatado(boleto.IdentificadorInternoBoleto.PadLeft(13, '0'));
 
                 if (boleto.NossoNumeroFormatado.Length != 13)
                     throw new NotSupportedException("Nosso Número deve ter 13 posições para o banco 033.");
@@ -142,7 +142,7 @@ namespace BoletoBr.Bancos.Santander
             var valorNominal = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "").PadLeft(10, '0'); //10
             const string fixo = "9"; //1
             var codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'); //7
-            var nossoNumero = boleto.SequencialNossoNumero + Mod11Santander(boleto.SequencialNossoNumero, 9); //13
+            var nossoNumero = boleto.IdentificadorInternoBoleto + Mod11Santander(boleto.IdentificadorInternoBoleto, 9); //13
             var ios = boleto.PercentualIOS.ToString(); //1
             var tipoCarteira = boleto.CarteiraCobranca.Codigo; //3;
 
@@ -187,8 +187,8 @@ namespace BoletoBr.Bancos.Santander
         /// </summary>
         public void FormataLinhaDigitavel(Boleto boleto)
         {
-            var nossoNumero = (boleto.SequencialNossoNumero +
-                              Mod11Santander(boleto.SequencialNossoNumero, 9)).PadLeft(13, '0'); //13
+            var nossoNumero = (boleto.IdentificadorInternoBoleto +
+                              Mod11Santander(boleto.IdentificadorInternoBoleto, 9)).PadLeft(13, '0'); //13
             var codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0');
             var fatorVencimento = Common.FatorVencimento(boleto.DataVencimento).ToString();
             var ios = boleto.PercentualIOS.ToString(); //1
@@ -236,7 +236,7 @@ namespace BoletoBr.Bancos.Santander
                 //10
             const string dVfixo = "9"; //1
             var dVcodigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'); //7
-            var dVnossoNumero = boleto.SequencialNossoNumero + Mod11Santander(boleto.SequencialNossoNumero, 9);
+            var dVnossoNumero = boleto.IdentificadorInternoBoleto + Mod11Santander(boleto.IdentificadorInternoBoleto, 9);
             var dVtipoCarteira = boleto.CarteiraCobranca.Codigo; //3;
 
             var calculoDVcodigo = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}",
@@ -264,12 +264,12 @@ namespace BoletoBr.Bancos.Santander
 
         public void FormataNossoNumero(Boleto boleto)
         {
-            if (String.IsNullOrEmpty(boleto.SequencialNossoNumero) || String.IsNullOrEmpty(boleto.SequencialNossoNumero.TrimStart('0')))
+            if (String.IsNullOrEmpty(boleto.IdentificadorInternoBoleto) || String.IsNullOrEmpty(boleto.IdentificadorInternoBoleto.TrimStart('0')))
                 throw new Exception("Sequencial Nosso Número não foi informado.");
 
             // Usado para apresentação no boleto.
             boleto.SetNossoNumeroFormatado(String.Format("{0}{1}",
-                boleto.SequencialNossoNumero, Mod11Santander(boleto.SequencialNossoNumero, 9)).PadLeft(13, '0'));
+                boleto.IdentificadorInternoBoleto, Mod11Santander(boleto.IdentificadorInternoBoleto, 9)).PadLeft(13, '0'));
         }
 
         public void FormataNumeroDocumento(Boleto boleto)

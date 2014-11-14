@@ -118,7 +118,7 @@ namespace BoletoBr.Bancos.Brasil
                          boleto.CarteiraCobranca.Codigo == "17")
                     detalhe = detalhe.PreencherValorNaLinha(64, 80,
                         boleto.CedenteBoleto.Convenio.PadLeft(7, '0') +
-                        boleto.SequencialNossoNumero.PadLeft(10, '0'));
+                        boleto.IdentificadorInternoBoleto.PadLeft(10, '0'));
                 else
                     detalhe = detalhe.PreencherValorNaLinha(64, 80, boleto.NossoNumeroFormatado);
 
@@ -162,7 +162,7 @@ namespace BoletoBr.Bancos.Brasil
                 detalhe = detalhe.PreencherValorNaLinha(107, 108, boleto.CarteiraCobranca.Codigo.PadLeft(2, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(109, 110, boleto.CodigoOcorrenciaRemessa.Codigo.ToString(CultureInfo.InvariantCulture));
                 detalhe = detalhe.PreencherValorNaLinha(111, 120,
-                    boleto.SequencialNossoNumero.PadLeft(10, '0'));
+                    boleto.IdentificadorInternoBoleto.PadLeft(10, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(121, 126, boleto.DataVencimento.ToString("ddMMyy"));
 
                 #region VALOR BOLETO

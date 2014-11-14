@@ -63,7 +63,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos.CEF
             var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "19";
             boleto.ValorBoleto = 1000;
-            boleto.SequencialNossoNumero = "19";
+            boleto.IdentificadorInternoBoleto = "19";
             boleto.DataVencimento = new DateTime(2014, 06, 30);
 
             banco.FormataNossoNumero(boleto);
@@ -107,7 +107,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos.CEF
             var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "222333777777777";
             boleto.ValorBoleto = Convert.ToDecimal(321.12);
-            boleto.SequencialNossoNumero = "222333777777777";
+            boleto.IdentificadorInternoBoleto = "222333777777777";
             boleto.DataVencimento = new DateTime(2006, 08, 23);
 
             banco.FormataNossoNumero(boleto);
@@ -153,7 +153,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos.CEF
             var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "222333777777777";
             boleto.ValorBoleto = Convert.ToDecimal(321.12);
-            boleto.SequencialNossoNumero = "222333777777777";
+            boleto.IdentificadorInternoBoleto = "222333777777777";
             boleto.DataVencimento = new DateTime(2006, 08, 23);
 
             banco.FormataNossoNumero(boleto);
@@ -198,7 +198,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos.CEF
             var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "19";
             boleto.ValorBoleto = 1000;
-            boleto.SequencialNossoNumero = "19";
+            boleto.IdentificadorInternoBoleto = "19";
             boleto.DataVencimento = new DateTime(2014, 06, 30);
 
             banco.FormataNossoNumero(boleto);
@@ -241,7 +241,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos.CEF
             var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "123";
             boleto.ValorBoleto = Convert.ToDecimal(15.56);
-            boleto.SequencialNossoNumero = "123";
+            boleto.IdentificadorInternoBoleto = "123";
             boleto.DataVencimento = new DateTime(2008, 06, 27);
 
             banco.FormataNossoNumero(boleto);
@@ -287,7 +287,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos.CEF
             var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "090972714";
             boleto.ValorBoleto = Convert.ToDecimal(119.90);
-            boleto.SequencialNossoNumero = "46286";
+            boleto.IdentificadorInternoBoleto = "46286";
             boleto.DataVencimento = new DateTime(2014, 09, 15);
 
             banco.FormataNossoNumero(boleto);

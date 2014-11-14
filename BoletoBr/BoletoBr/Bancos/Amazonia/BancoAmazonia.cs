@@ -34,7 +34,7 @@ namespace BoletoBr.Bancos.Amazonia
 
         public void FormataLinhaDigitavel(Boleto boleto)
         {
-            string nossonumero = boleto.SequencialNossoNumero.PadLeft(16, '0');
+            string nossonumero = boleto.IdentificadorInternoBoleto.PadLeft(16, '0');
 
             # region GRUPO 1
 
@@ -121,7 +121,7 @@ namespace BoletoBr.Bancos.Amazonia
             string agencia = Common.Right(boleto.CedenteBoleto.ContaBancariaCedente.Agencia, 3) +
                 boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia;
             string convenio = boleto.CedenteBoleto.Convenio.PadLeft(4, '0');
-            string nossonumero = boleto.SequencialNossoNumero.PadLeft(16, '0');            
+            string nossonumero = boleto.IdentificadorInternoBoleto.PadLeft(16, '0');            
 
             /*
              * Conforme documentação técnica do BASA o identificador será sempre '8'.
@@ -195,7 +195,7 @@ namespace BoletoBr.Bancos.Amazonia
 
         public void FormataNossoNumero(Boleto boleto)
         {
-            boleto.SetNossoNumeroFormatado(string.Format("{0}", boleto.SequencialNossoNumero.PadLeft(16, '0')));
+            boleto.SetNossoNumeroFormatado(string.Format("{0}", boleto.IdentificadorInternoBoleto.PadLeft(16, '0')));
         }
 
         public void FormataMoeda(Boleto boleto)

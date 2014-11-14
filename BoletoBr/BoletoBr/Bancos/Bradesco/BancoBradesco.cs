@@ -149,7 +149,7 @@ namespace BoletoBr.Bancos.Bradesco
 
         public void FormataNossoNumero(Boleto boleto)
         {
-            boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero);
+            boleto.SetNossoNumeroFormatado(boleto.IdentificadorInternoBoleto);
 
             boleto.SetNossoNumeroFormatado(
                 string.Format("{0}/{1}-{2}",

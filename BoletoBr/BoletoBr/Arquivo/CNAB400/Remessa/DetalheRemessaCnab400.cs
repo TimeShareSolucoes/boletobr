@@ -19,7 +19,7 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             this.ContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.Conta;
             this.DvContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta;
             this.CodigoCedente = boleto.CedenteBoleto.CodigoCedente;
-            this.NossoNumero = boleto.SequencialNossoNumero;
+            this.NossoNumero = boleto.IdentificadorInternoBoleto;
             this.DvNossoNumero = boleto.DigitoNossoNumero;
             this.NossoNumeroFormatado = boleto.NossoNumeroFormatado;
             this.NumeroDocumento = boleto.NumeroDocumento;

@@ -365,10 +365,10 @@ namespace BoletoBr.Bancos.Cef
 
         public void FormataNossoNumero(Boleto boleto)
         {
-            if (String.IsNullOrEmpty(boleto.SequencialNossoNumero))
+            if (String.IsNullOrEmpty(boleto.IdentificadorInternoBoleto))
                 throw new Exception("Sequencial nosso número não pode estar em branco.");
 
-            if (boleto.SequencialNossoNumero.Length > 15)
+            if (boleto.IdentificadorInternoBoleto.Length > 15)
                 throw new Exception("Sequencial nosso número não pode exceder 15 dígitos.");
 
             string dvNossoNumero;
@@ -377,9 +377,9 @@ namespace BoletoBr.Bancos.Cef
              * Informação reservada para arquivo de remessa
              * O tipo de modalidade são os 2 primeiros dígitos do Nosso Número
              */
-            boleto.TipoModalidade = boleto.SequencialNossoNumero.Substring(0, 2);
+            boleto.TipoModalidade = boleto.IdentificadorInternoBoleto.Substring(0, 2);
 
-            boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero.PadLeft(15, '0'));
+            boleto.SetNossoNumeroFormatado(boleto.IdentificadorInternoBoleto.PadLeft(15, '0'));
 
             //Atribui ao Nosso Número o Identificador de Cobrança + Identificador do Emissor
             if (boleto.CarteiraCobranca.Codigo.Equals("RG"))

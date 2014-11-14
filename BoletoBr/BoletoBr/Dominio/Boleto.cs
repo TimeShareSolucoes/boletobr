@@ -33,7 +33,7 @@ namespace BoletoBr
         public Sacado SacadoBoleto { get; set; }
         public CarteiraCobranca CarteiraCobranca { get; set; }
         public string DigitoNossoNumero { get; set; }
-        public string SequencialNossoNumero { get; set; }
+        public string IdentificadorInternoBoleto { get; set; }
         /// <summary>
         /// Deve ser gerado pelo componente
         /// </summary>
@@ -187,7 +187,7 @@ namespace BoletoBr
             if (String.IsNullOrEmpty(this.NumeroDocumento))
                 throw new ApplicationException("Número do documento não consta no boleto.");
 
-            if (String.IsNullOrEmpty(this.SequencialNossoNumero))
+            if (String.IsNullOrEmpty(this.IdentificadorInternoBoleto))
                 throw new ApplicationException("Nosso número não foi informado.");
         }
 

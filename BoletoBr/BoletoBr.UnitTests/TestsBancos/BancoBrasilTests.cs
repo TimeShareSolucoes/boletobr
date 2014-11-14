@@ -42,7 +42,7 @@ namespace BoletoBr.UnitTests.TestsBancos
             {
                 NumeroDocumento = "1",
                 ValorBoleto = Convert.ToDecimal(221.40),
-                SequencialNossoNumero = "1",
+                IdentificadorInternoBoleto = "1",
                 DataVencimento = new DateTime(2014, 07, 10)
             };
 

@@ -45,7 +45,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos.BASA
             var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "123";
             boleto.ValorBoleto = Convert.ToDecimal(15.56);
-            boleto.SequencialNossoNumero = "123";
+            boleto.IdentificadorInternoBoleto = "123";
             boleto.DataVencimento = new DateTime(2008, 06, 27);
             
             banco.FormataNossoNumero(boleto);
@@ -87,7 +87,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos.BASA
             var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "123";
             boleto.ValorBoleto = Convert.ToDecimal(15.56);
-            boleto.SequencialNossoNumero = "123";
+            boleto.IdentificadorInternoBoleto = "123";
             boleto.DataVencimento = new DateTime(2008, 06, 27);
 
             banco.FormataNossoNumero(boleto);
@@ -133,7 +133,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos.BASA
             var boleto = new Boleto(carteira, cedente, sacado, remessa);
             boleto.NumeroDocumento = "123";
             boleto.ValorBoleto = Convert.ToDecimal(15.56);
-            boleto.SequencialNossoNumero = "123";
+            boleto.IdentificadorInternoBoleto = "123";
             boleto.DataVencimento = new DateTime(2008, 06, 27);
 
             banco.FormataNossoNumero(boleto);

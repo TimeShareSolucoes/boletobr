@@ -98,7 +98,7 @@ namespace BoletoBr.Bancos.Itau
                     Common.Mod10(boleto.CedenteBoleto.ContaBancariaCedente.Agencia + boleto.CedenteBoleto.ContaBancariaCedente.Conta).ToString();
 
                 //Verifica se o nosso n�mero � v�lido
-                if (Convert.ToInt64(boleto.SequencialNossoNumero.Replace("/", "").Replace("-", "")) == 0)
+                if (Convert.ToInt64(boleto.IdentificadorInternoBoleto.Replace("/", "").Replace("-", "")) == 0)
                     throw new NotImplementedException("Nosso número inválido");
 
                 //Verifica se data do processamento � valida
@@ -127,7 +127,7 @@ namespace BoletoBr.Bancos.Itau
              * cujo DAC do "Nosso Número" é composto apenas dos campos:
              * Carteira e Nosso Número, mas todos calculados através do Módulo 10.
              */
-            var sequencialNN = boleto.SequencialNossoNumero.Replace("-", "");
+            var sequencialNN = boleto.IdentificadorInternoBoleto.Replace("-", "");
 
             if (boleto.CarteiraCobranca.Codigo == "104" || /* Escritural */
                 boleto.CarteiraCobranca.Codigo == "112" || /* Escritural */
@@ -208,7 +208,7 @@ namespace BoletoBr.Bancos.Itau
                     boleto.CodigoBarraBoleto =
                         string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}000", CodigoBanco, MoedaBanco,
                                       Common.FatorVencimento(boleto.DataVencimento), valorBoleto, boleto.CarteiraCobranca.Codigo,
-                                      boleto.SequencialNossoNumero, _dacNossoNumero, boleto.CedenteBoleto.ContaBancariaCedente.Agencia,
+                                      boleto.IdentificadorInternoBoleto, _dacNossoNumero, boleto.CedenteBoleto.ContaBancariaCedente.Agencia,
                                       boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(5, '0'), boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta);
                          
                 else if ((boleto.CarteiraCobranca.Codigo == "107") || (boleto.CarteiraCobranca.Codigo == "122") ||
@@ -217,8 +217,8 @@ namespace BoletoBr.Bancos.Itau
                 {
                     boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}0", CodigoBanco, MoedaBanco,
                         Common.FatorVencimento(boleto.DataVencimento), boleto.ValorBoleto, boleto.CarteiraCobranca.Codigo,
-                        boleto.SequencialNossoNumero, numeroDocumento, codigoCedente,
-                        Common.Mod10(boleto.CarteiraCobranca.Codigo + boleto.SequencialNossoNumero + numeroDocumento + codigoCedente));
+                        boleto.IdentificadorInternoBoleto, numeroDocumento, codigoCedente,
+                        Common.Mod10(boleto.CarteiraCobranca.Codigo + boleto.IdentificadorInternoBoleto + numeroDocumento + codigoCedente));
                 }
 
                 _dacBoleto = Common.Mod11(boleto.CodigoBarraBoleto, 9, 0);
@@ -393,7 +393,7 @@ namespace BoletoBr.Bancos.Itau
 
                     var EEE = numeroDocumento.Substring(4, 3);
                     var FFFFF = codigoCedente;
-                    var G = Common.Mod10(boleto.CarteiraCobranca.Codigo + boleto.SequencialNossoNumero.PadLeft(8, '0') + numeroDocumento + codigoCedente).ToString();
+                    var G = Common.Mod10(boleto.CarteiraCobranca.Codigo + boleto.IdentificadorInternoBoleto.PadLeft(8, '0') + numeroDocumento + codigoCedente).ToString();
                     var H = "0";
                     var Z = Common.Mod10(EEE + FFFFF + G + H).ToString();
                     C3 = string.Format("{0}{1}.{2}{3}{4}{5}", EEE, FFFFF.Substring(0, 2), FFFFF.Substring(2, 3), G, H, Z);
@@ -419,8 +419,8 @@ namespace BoletoBr.Bancos.Itau
 
         public void FormataNossoNumero(Boleto boleto)
         {
-            if (String.IsNullOrEmpty(boleto.SequencialNossoNumero) ||
-                String.IsNullOrEmpty(boleto.SequencialNossoNumero.TrimStart('0')))
+            if (String.IsNullOrEmpty(boleto.IdentificadorInternoBoleto) ||
+                String.IsNullOrEmpty(boleto.IdentificadorInternoBoleto.TrimStart('0')))
                 throw new Exception("Sequencial Nosso Número não foi informado.");
 
             // Usando Método e Geração do DAC do Nosso Número
@@ -428,7 +428,7 @@ namespace BoletoBr.Bancos.Itau
             try
             {
                 boleto.SetNossoNumeroFormatado(string.Format("{0}/{1}-{2}", boleto.CarteiraCobranca.Codigo,
-                    boleto.SequencialNossoNumero, _dacNossoNumero));
+                    boleto.IdentificadorInternoBoleto, _dacNossoNumero));
 
                 // Usado para apresentação no boleto.
                 //boleto.NossoNumero = String.Format("{0}/{1}-{2}", boleto.CarteiraCobranca.Codigo,

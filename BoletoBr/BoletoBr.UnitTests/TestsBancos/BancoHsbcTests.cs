@@ -89,7 +89,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos.HSBC
             boleto.Moeda = "9";
             boleto.ValorBoleto = 1200;
             boleto.CodigoDoProduto = "2";
-            boleto.SequencialNossoNumero = "0000239104761";
+            boleto.IdentificadorInternoBoleto = "0000239104761";
             boleto.DataVencimento = new DateTime(2008, 7, 4);
 
             banco.FormataNossoNumero(boleto);
@@ -133,7 +133,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos.HSBC
             boleto.Moeda = "9";
             boleto.ValorBoleto = 200;
             boleto.CodigoDoProduto = "2";
-            boleto.SequencialNossoNumero = "40156";
+            boleto.IdentificadorInternoBoleto = "40156";
             boleto.DataVencimento = new DateTime(2012, 11, 15);
 
             banco.FormataNossoNumero(boleto);

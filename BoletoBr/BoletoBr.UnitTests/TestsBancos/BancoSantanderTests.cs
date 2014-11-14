@@ -45,7 +45,7 @@ namespace BoletoBr.UnitTests.TestsBancos
             {
                 NumeroDocumento = "001N002",
                 ValorBoleto = Convert.ToDecimal(80.55),
-                SequencialNossoNumero = "000000000027",
+                IdentificadorInternoBoleto = "000000000027",
                 DataVencimento = new DateTime(2012, 11, 26)
             };
 
@@ -89,7 +89,7 @@ namespace BoletoBr.UnitTests.TestsBancos
             {
                 NumeroDocumento = "0000006152007",
                 ValorBoleto = Convert.ToDecimal(252.00),
-                SequencialNossoNumero = "000000615200",
+                IdentificadorInternoBoleto = "000000615200",
                 DataVencimento = new DateTime(2014, 07, 07)
             };
 
@@ -131,7 +131,7 @@ namespace BoletoBr.UnitTests.TestsBancos
             {
                 NumeroDocumento = "0000006152007",
                 ValorBoleto = Convert.ToDecimal(252.00),
-                SequencialNossoNumero = "566612457800",
+                IdentificadorInternoBoleto = "566612457800",
                 DataVencimento = new DateTime(2014, 07, 07)
             };
 

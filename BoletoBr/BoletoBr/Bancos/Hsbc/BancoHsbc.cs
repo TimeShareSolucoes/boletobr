@@ -648,7 +648,7 @@ namespace BoletoBr.Bancos.Hsbc
 
         public void FormataNossoNumero(Boleto boleto)
         {
-            if (String.IsNullOrEmpty(boleto.SequencialNossoNumero) || String.IsNullOrEmpty(boleto.SequencialNossoNumero.TrimStart('0')))
+            if (String.IsNullOrEmpty(boleto.IdentificadorInternoBoleto) || String.IsNullOrEmpty(boleto.IdentificadorInternoBoleto.TrimStart('0')))
                 throw new Exception("Sequencial Nosso Número não foi informado.");
 
             try
@@ -658,7 +658,7 @@ namespace BoletoBr.Bancos.Hsbc
                     string nossoNumeroComposto =
                         boleto.CedenteBoleto.CodigoCedente.PadLeft(5, '0')
                         +
-                        boleto.SequencialNossoNumero.PadLeft(5, '0');
+                        boleto.IdentificadorInternoBoleto.PadLeft(5, '0');
 
                     string digitoAutoConferenciaNossoNumero = Common.Mod11(nossoNumeroComposto, 7).ToString(CultureInfo.InvariantCulture);
 
@@ -674,11 +674,11 @@ namespace BoletoBr.Bancos.Hsbc
                      * Disponível em: https://www.hsbc.com.br/1/PA_esf-ca-app-content/content/hbbr-pws-gip16/portugues/business/comum/pdf/cnrbarra.pdf
                      */
 
-                    string codigoDoPagador = boleto.SequencialNossoNumero;
+                    string codigoDoPagador = boleto.IdentificadorInternoBoleto;
                     string primeiroDigitoVerificador =
-                        CalculaPrimeiroDigitoVerificadorCnrTipo4(boleto.SequencialNossoNumero);
+                        CalculaPrimeiroDigitoVerificadorCnrTipo4(boleto.IdentificadorInternoBoleto);
                     string segundoDigitoVerificador =
-                        CalculaSegundoDigitoVerificadorCnrTipo4(boleto.SequencialNossoNumero,
+                        CalculaSegundoDigitoVerificadorCnrTipo4(boleto.IdentificadorInternoBoleto,
                             primeiroDigitoVerificador, boleto.CedenteBoleto.CodigoCedente,
                             boleto.DataVencimento);
 
@@ -873,7 +873,7 @@ namespace BoletoBr.Bancos.Hsbc
                             Common.FatorVencimento(boleto.DataVencimento),
                             valorBoletoTexto,
                             boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'),
-                            boleto.SequencialNossoNumero.PadLeft(13, '0'),
+                            boleto.IdentificadorInternoBoleto.PadLeft(13, '0'),
                             (boleto.DataVencimento.DayOfYear +
                              boleto.DataVencimento.ToString("yy").Substring(1, 1)).PadLeft(4, '0')
                             );

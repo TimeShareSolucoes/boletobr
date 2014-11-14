@@ -1072,13 +1072,13 @@ namespace BoletoBr.Bancos.Brasil
 
             if (boleto.CedenteBoleto.Convenio.ToString().Length == 4)
             {
-                boleto.SetNossoNumeroFormatado(string.Format("{0}{1}-{2}", boleto.CedenteBoleto.Convenio, boleto.SequencialNossoNumero.PadLeft(7, '0'), Mod11BancoBrasil(boleto.SequencialNossoNumero)));
+                boleto.SetNossoNumeroFormatado(string.Format("{0}{1}-{2}", boleto.CedenteBoleto.Convenio, boleto.IdentificadorInternoBoleto.PadLeft(7, '0'), Mod11BancoBrasil(boleto.IdentificadorInternoBoleto)));
                 return;
             }
 
             if (boleto.CedenteBoleto.Convenio.ToString().Length == 6) //somente monta o digito verificador no nosso numero se o convenio tiver 6 posições
             {
-                boleto.SetNossoNumeroFormatado(string.Format("{0}{1}-{2}", boleto.CedenteBoleto.Convenio, boleto.SequencialNossoNumero.PadLeft(7, '0'), Mod11BancoBrasil(boleto.SequencialNossoNumero)));
+                boleto.SetNossoNumeroFormatado(string.Format("{0}{1}-{2}", boleto.CedenteBoleto.Convenio, boleto.IdentificadorInternoBoleto.PadLeft(7, '0'), Mod11BancoBrasil(boleto.IdentificadorInternoBoleto)));
                 return;
                 //switch (boleto.CarteiraCobranca.Codigo)
                 //{
@@ -1090,7 +1090,7 @@ namespace BoletoBr.Bancos.Brasil
 
             if (boleto.CedenteBoleto.Convenio.ToString().Length == 7)
             {
-                boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.SequencialNossoNumero));
+                boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.IdentificadorInternoBoleto));
                 return;
             }
 
@@ -1098,10 +1098,10 @@ namespace BoletoBr.Bancos.Brasil
             {
                 case "17-019":
                 case "18-019":
-                    boleto.SetNossoNumeroFormatado(string.Format("{0}/{1}", LimparCarteira(boleto.CarteiraCobranca.Codigo), boleto.SequencialNossoNumero));
+                    boleto.SetNossoNumeroFormatado(string.Format("{0}/{1}", LimparCarteira(boleto.CarteiraCobranca.Codigo), boleto.IdentificadorInternoBoleto));
                     return;
                 case "31":
-                    boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio.PadLeft(7, '0'), boleto.SequencialNossoNumero));
+                    boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio.PadLeft(7, '0'), boleto.IdentificadorInternoBoleto));
                     return;
             }
 
