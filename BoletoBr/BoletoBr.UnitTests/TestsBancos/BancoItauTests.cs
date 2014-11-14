@@ -49,6 +49,45 @@ namespace BoletoBr.UnitTests.Tests.Bancos.ITAU
         }
 
         [TestMethod]
+        public void TesteCalculoNossoNumeroCarteira109BoletoItau()
+        {
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+
+            var banco = Fabricas.BancoFactory.ObterBanco("341", "7");
+
+            var contaBancariaCedente = new ContaBancaria("0057", "", "72192", "");
+
+            var cedente = new Cedente("9999999", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente, null);
+
+            var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
+            {
+                TipoLogradouro = "R",
+                Logradouro = "1",
+                Bairro = "Bairro X",
+                Cidade = "Cidade X",
+                SiglaUf = "XX",
+                Cep = "12345-000",
+                Complemento = "Comp X",
+                Numero = "9"
+            });
+
+            var carteira = new CarteiraCobranca();
+
+            carteira.Codigo = "109";
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa);
+            boleto.NumeroDocumento = "12345678";
+            boleto.ValorBoleto = 12345;
+            boleto.SequencialNossoNumero = "12345678";
+            boleto.DataVencimento = new DateTime(2014, 11, 14);
+
+            banco.ValidaBoletoComNormasBanco(boleto);
+            banco.FormataNossoNumero(boleto);
+
+            Assert.AreEqual("109/12345678-8", boleto.NossoNumeroFormatado);
+        }
+
+        [TestMethod]
         public void TesteLinhaDigitavelCarteira198BoletoDocumentacaoItau()
         {
             /* 

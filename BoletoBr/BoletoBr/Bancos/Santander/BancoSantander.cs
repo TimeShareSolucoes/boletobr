@@ -267,12 +267,9 @@ namespace BoletoBr.Bancos.Santander
             if (String.IsNullOrEmpty(boleto.SequencialNossoNumero) || String.IsNullOrEmpty(boleto.SequencialNossoNumero.TrimStart('0')))
                 throw new Exception("Sequencial Nosso Número não foi informado.");
 
+            // Usado para apresentação no boleto.
             boleto.SetNossoNumeroFormatado(String.Format("{0}{1}",
                 boleto.SequencialNossoNumero, Mod11Santander(boleto.SequencialNossoNumero, 9)).PadLeft(13, '0'));
-
-            // Usado para apresentação no boleto.
-            boleto.NossoNumero = String.Format("{0}-{1}",
-                boleto.SequencialNossoNumero, Mod11Santander(boleto.SequencialNossoNumero, 9)).PadLeft(14, '0');
         }
 
         public void FormataNumeroDocumento(Boleto boleto)
