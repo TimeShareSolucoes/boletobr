@@ -267,7 +267,6 @@ namespace BoletoBr.Bancos.Santander
             if (String.IsNullOrEmpty(boleto.IdentificadorInternoBoleto) || String.IsNullOrEmpty(boleto.IdentificadorInternoBoleto.TrimStart('0')))
                 throw new Exception("Sequencial Nosso Número não foi informado.");
 
-            // Usado para apresentação no boleto.
             boleto.SetNossoNumeroFormatado(String.Format("{0}{1}",
                 boleto.IdentificadorInternoBoleto, Mod11Santander(boleto.IdentificadorInternoBoleto, 9)).PadLeft(13, '0'));
         }
