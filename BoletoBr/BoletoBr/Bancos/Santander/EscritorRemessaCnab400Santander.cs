@@ -135,7 +135,7 @@ namespace BoletoBr.Bancos.Santander
                 var seuNumero = doc + infoDetalhe.NossoNumeroFormatado.PadRight(25 - doc.Length, ' ');
 
                 detalhe = detalhe.PreencherValorNaLinha(38, 62, seuNumero);
-                // NossoNumero com DV, pegar os 8 primeiros dígitos, da direita para esquerda
+                // NossoNumero com DV, pegar os 8 primeiros dígitos, da direita para esquerda ( para CNAB 400)
                 detalhe = detalhe.PreencherValorNaLinha(63, 70, infoDetalhe.NossoNumeroFormatado.Replace("-", "").Substring(5, 8));
 
                 if (infoDetalhe.DataLimiteConcessaoDesconto == DateTime.MinValue)
