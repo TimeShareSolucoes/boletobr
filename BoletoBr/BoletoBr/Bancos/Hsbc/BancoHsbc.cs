@@ -910,12 +910,17 @@ namespace BoletoBr.Bancos.Hsbc
             FormataNossoNumero(boleto);
             // Calcula o DAC do Nosso N�mero
             // Nosso N�mero = Range(5) + Numero Sequencial(5)
-            _digitoAutoConferenciaNossoNumero = Common.Mod11(boleto.NossoNumeroFormatado, 7).ToString(CultureInfo.InvariantCulture);
+            _digitoAutoConferenciaNossoNumero =
+                Common.Mod11(boleto.NossoNumeroFormatado, 7).ToString(CultureInfo.InvariantCulture);
             FormataCodigoBarra(boleto);
             FormataLinhaDigitavel(boleto);
             FormataMoeda(boleto);
 
             ValidaBoletoComNormasBanco(boleto);
+
+            boleto.CedenteBoleto.CodigoCedenteFormatado = String.Format("{0}/{1}",
+                boleto.CedenteBoleto.ContaBancariaCedente.Agencia,
+                boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'));
         }
 
         /// <summary>

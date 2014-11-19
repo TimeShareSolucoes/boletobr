@@ -115,7 +115,9 @@ namespace BoletoBr.Bancos.Cef
                 boleto.CedenteBoleto.DigitoCedente = Convert.ToInt32(dvCodigoCedente);
 
             boleto.CedenteBoleto.CodigoCedenteFormatado = String.Format("{0}/{1}-{2}",
-                boleto.CedenteBoleto.ContaBancariaCedente.Agencia, codigoCedente, dvCodigoCedente);
+                boleto.CedenteBoleto.ContaBancariaCedente.Agencia, 
+                codigoCedente, 
+                dvCodigoCedente);
         }
 
         public void FormataCodigoBarra(Boleto boleto)

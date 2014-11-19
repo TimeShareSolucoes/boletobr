@@ -129,6 +129,12 @@ namespace BoletoBr.Bancos.Bradesco
             FormataMoeda(boleto);
 
             ValidaBoletoComNormasBanco(boleto);
+
+            boleto.CedenteBoleto.CodigoCedenteFormatado = String.Format("{0}-{1}/{2}-{3}",
+                boleto.CedenteBoleto.ContaBancariaCedente.Agencia, 
+                boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia,
+                boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(7, '0'),
+                boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta);
         }
 
         /// <summary>

@@ -185,6 +185,11 @@ namespace BoletoBr.Bancos.Itau
             FormataMoeda(boleto);
 
             ValidaBoletoComNormasBanco(boleto);
+
+            boleto.CedenteBoleto.CodigoCedenteFormatado = String.Format("{0}/{1}-{2}",
+                boleto.CedenteBoleto.ContaBancariaCedente.Agencia, 
+                boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(5, '0'), 
+                boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta);
         }
 
         public void FormataCodigoBarra(Boleto boleto)
