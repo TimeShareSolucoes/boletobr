@@ -187,7 +187,7 @@ namespace BoletoBr.Bancos.Itau
             ValidaBoletoComNormasBanco(boleto);
 
             boleto.CedenteBoleto.CodigoCedenteFormatado = String.Format("{0}/{1}-{2}",
-                boleto.CedenteBoleto.ContaBancariaCedente.Agencia, 
+                boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'), 
                 boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(5, '0'), 
                 boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta);
         }

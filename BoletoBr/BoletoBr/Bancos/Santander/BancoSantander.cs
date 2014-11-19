@@ -115,7 +115,7 @@ namespace BoletoBr.Bancos.Santander
             ValidaBoletoComNormasBanco(boleto);
 
             boleto.CedenteBoleto.CodigoCedenteFormatado = String.Format("{0}/{1}", 
-                boleto.CedenteBoleto.ContaBancariaCedente.Agencia, 
+                boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'), 
                 boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'));
         }
 
