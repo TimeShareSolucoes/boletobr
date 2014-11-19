@@ -24,6 +24,12 @@ namespace BoletoBr.Bancos.Bradesco
             if (infoHeader.NumeroSequencialRemessa == 0)
                 throw new Exception("Sequencial da remessa não foi informado na geração do HEADER.");
 
+            var nomeEmpresa = string.Empty;
+            if (infoHeader.NomeEmpresa.Length > 30)
+                nomeEmpresa = infoHeader.NomeEmpresa.Substring(0, 30);
+            else
+                nomeEmpresa = infoHeader.NomeEmpresa.PadRight(30, ' ');
+
             var header = new string(' ', 400);
             try
             {
@@ -33,7 +39,7 @@ namespace BoletoBr.Bancos.Bradesco
                 header = header.PreencherValorNaLinha(10, 11, "01");
                 header = header.PreencherValorNaLinha(12, 26, "COBRANCA".PadRight(15, ' '));
                 header = header.PreencherValorNaLinha(27, 46, infoHeader.CodigoEmpresa.PadLeft(20, '0'));
-                header = header.PreencherValorNaLinha(47, 76, infoHeader.NomeEmpresa.ToUpper().PadRight(30, ' '));
+                header = header.PreencherValorNaLinha(47, 76, nomeEmpresa.ToUpper());
                 header = header.PreencherValorNaLinha(77, 79, "237");
                 header = header.PreencherValorNaLinha(80, 94, "BRADESCO".PadRight(15, ' '));
                 header = header.PreencherValorNaLinha(95, 100, DateTime.Now.ToString("ddMMyy"));
@@ -98,7 +104,7 @@ namespace BoletoBr.Bancos.Bradesco
                 #endregion
 
                 const string doc = "DOC";
-                var seuNumero = doc + infoDetalhe.NossoNumero.PadRight(25 - doc.Length, ' ');
+                var seuNumero = doc + infoDetalhe.NossoNumeroFormatado.PadRight(25 - doc.Length, ' ');
 
                 detalhe = detalhe.PreencherValorNaLinha(38, 62, seuNumero);
                 detalhe = detalhe.PreencherValorNaLinha(63, 65, "237");

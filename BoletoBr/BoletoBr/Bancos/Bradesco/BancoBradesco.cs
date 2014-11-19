@@ -31,7 +31,7 @@ namespace BoletoBr.Bancos.Bradesco
 
         public string CalcularDigitoNossoNumero(Boleto boleto)
         {
-            return Common.Mod11Base7Bradesco(boleto.CarteiraCobranca.Codigo + boleto.NossoNumeroFormatado, 7);
+            return Common.Mod11Base7Bradesco(boleto.CarteiraCobranca.Codigo + boleto.IdentificadorInternoBoleto, 7);
         }
 
         private int _digitoAutoConferenciaBoleto;
