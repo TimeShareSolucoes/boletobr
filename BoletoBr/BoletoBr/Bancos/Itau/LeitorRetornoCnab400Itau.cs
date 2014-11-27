@@ -156,7 +156,7 @@ namespace BoletoBr.Bancos.Itau
             objRetornar.ValorOutrosCreditos = linha.ExtrairValorDaLinha(280, 292).BoletoBrToDecimal()/100;
             objRetornar.IndicadorBoletoDDA = linha.ExtrairValorDaLinha(293, 293);
             // Brancos
-            objRetornar.DataDeCredito = (DateTime) linha.ExtrairValorDaLinha(296, 301).ToString().ToDateTimeFromDdMmAa();
+            objRetornar.DataDeCredito = linha.ExtrairValorDaLinha(296, 301).ToString().ToDateTimeFromDdMmAa().Equals(null) ? new DateTime(0001, 01, 01) : (DateTime)linha.ExtrairValorDaLinha(296, 301).ToString().ToDateTimeFromDdMmAa();
             objRetornar.CodigoInstrucaoCancelada = linha.ExtrairValorDaLinha(302, 305).BoletoBrToInt();
             // Brancos
             // Zeros

@@ -68,12 +68,12 @@ namespace BoletoBr.Bancos.Itau
 
             var objBanco = BancoFactory.ObterBanco(infoDetalhe.CodigoBanco);
 
-            string nossoNumeroCarteira =
-                infoDetalhe.NossoNumeroFormatado.Replace(".", "").Replace("/", "").Replace("-", "").Substring(0, 3);
+            //string nossoNumeroCarteira =
+            //    infoDetalhe.NossoNumeroFormatado.Replace(".", "").Replace("/", "").Replace("-", "").Substring(0, 3);
             string nossoNumeroSequencial =
                 infoDetalhe.NossoNumeroFormatado.Replace(".", "").Replace("/", "").Replace("-", "").Substring(3, 8);
-            string nossoNumeroDigito =
-                infoDetalhe.NossoNumeroFormatado.Replace(".", "").Replace("/", "").Replace("-", "").Substring(11, 1);
+            //string nossoNumeroDigito =
+            //    infoDetalhe.NossoNumeroFormatado.Replace(".", "").Replace("/", "").Replace("-", "").Substring(11, 1);
 
             string carteiraCob = infoDetalhe.CarteiraCobranca.PadLeft(3, ' ');
             string enderecoSacado = string.Empty;
