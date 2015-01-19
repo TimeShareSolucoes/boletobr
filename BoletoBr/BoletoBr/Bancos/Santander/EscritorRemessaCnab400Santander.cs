@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace BoletoBr.Bancos.Santander
     public class EscritorRemessaCnab400Santander : IEscritorArquivoRemessaCnab400
     {
         private RemessaCnab400 _remessaEscrever;
+        private int _numeroSequencialDeRegistro = 0;
+        private int _numeroAtualDeRegistro = 0;
 
         public EscritorRemessaCnab400Santander(RemessaCnab400 remessaEscrever)
         {
@@ -86,11 +89,12 @@ namespace BoletoBr.Bancos.Santander
 
             if (String.IsNullOrEmpty(infoDetalhe.EnderecoPagador))
                 enderecoSacado.PadRight(40, ' ');
+            else if (infoDetalhe.EnderecoPagador.Length > 40)
+            {
+                enderecoSacado = infoDetalhe.EnderecoPagador.Substring(0, 40).ToUpper();
+            }
             else
-                if (infoDetalhe.EnderecoPagador.Length > 40)
-                    enderecoSacado = infoDetalhe.EnderecoPagador.Substring(0, 40).ToUpper();
-                else
-                    enderecoSacado = infoDetalhe.EnderecoPagador.PadRight(40, ' ').ToUpper();
+                enderecoSacado = infoDetalhe.EnderecoPagador.PadRight(40, ' ').ToUpper();
 
             if (String.IsNullOrEmpty(infoDetalhe.BairroPagador))
                 bairroSacado.PadRight(12, ' ');
@@ -257,8 +261,16 @@ namespace BoletoBr.Bancos.Santander
                 detalhe = detalhe.PreencherValorNaLinha(384, 385, complementoRegistro);
                 detalhe = detalhe.PreencherValorNaLinha(386, 391, string.Empty.PadLeft(6, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(392, 393, infoDetalhe.NroDiasParaProtesto.ToString().PadLeft(2, '0'));
-                detalhe = detalhe.PreencherValorNaLinha(394, 394, "0");
-                detalhe = detalhe.PreencherValorNaLinha(395, 400, infoDetalhe.NumeroSequencialRegistro.ToString().PadLeft(6, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(394, 394, " ");
+
+                // TODO: Essa implementação não ficou legal mas está funcional..
+                if (_numeroSequencialDeRegistro < infoDetalhe.NumeroSequencialRegistro)
+                    _numeroSequencialDeRegistro = infoDetalhe.NumeroSequencialRegistro;
+                else if (_numeroSequencialDeRegistro == _numeroAtualDeRegistro)
+                    _numeroSequencialDeRegistro += 1;
+
+                _numeroAtualDeRegistro = _numeroSequencialDeRegistro;
+                detalhe = detalhe.PreencherValorNaLinha(395, 400, _numeroSequencialDeRegistro.ToString().PadLeft(6, '0'));
 
                 return detalhe;
             }
@@ -267,6 +279,143 @@ namespace BoletoBr.Bancos.Santander
                 throw new Exception(string.Format("<BoletoBr>{0}Falha na geração do DETALHE do arquivo de REMESSA.",
                     Environment.NewLine), e);
             }
+        }
+
+        /// <summary>
+        /// Método que escreve a mensagem variável com código de registro 2 (Recibo Sacado)
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        private string EscreverMensagemVariavelReciboSacado(DetalheRemessaCnab400 info)
+        {
+            string complementoRegistro =
+                info.ContaCorrente.Remove(0, info.ContaCorrente.Length - 1) +
+                info.DvContaCorrente;
+
+            // A primeira instrução é a instrução do sacado conforme layout do SANTANDER
+            var primeiraInstrucao = info.Instrucoes.FirstOrDefault();
+
+            var msgVariavel = new string(' ', 400);
+            try
+            {
+                msgVariavel = msgVariavel.PreencherValorNaLinha(1, 1, "2");
+                msgVariavel = msgVariavel.PreencherValorNaLinha(2, 17, string.Empty.PadRight(16, ' '));
+                // Uso do Banco
+                msgVariavel = msgVariavel.PreencherValorNaLinha(18, 21, string.Empty.PadRight(4, ' '));
+                // Código da Agência
+                msgVariavel = msgVariavel.PreencherValorNaLinha(22, 29, string.Empty.PadRight(8, ' '));
+                // Conta Movimento
+                msgVariavel = msgVariavel.PreencherValorNaLinha(30, 37, string.Empty.PadRight(8, ' '));
+                // Conta Cobrança
+                msgVariavel = msgVariavel.PreencherValorNaLinha(38, 47, string.Empty.PadRight(10, ' '));
+                // Uso do Banco
+                msgVariavel = msgVariavel.PreencherValorNaLinha(48, 49, "01");
+                msgVariavel = msgVariavel.PreencherValorNaLinha(50, 99, primeiraInstrucao != null
+                    ? primeiraInstrucao.TextoInstrucao.PadRight(50, ' ')
+                    : string.Empty.PadRight(50, ' '));
+                msgVariavel = msgVariavel.PreencherValorNaLinha(100, 382, string.Empty.PadRight(283, ' '));
+                // Uso do Banco
+                msgVariavel = msgVariavel.PreencherValorNaLinha(383, 383, "i".ToUpper());
+                msgVariavel = msgVariavel.PreencherValorNaLinha(384, 385, complementoRegistro);
+                msgVariavel = msgVariavel.PreencherValorNaLinha(386, 394, string.Empty.PadLeft(9, ' '));
+                _numeroSequencialDeRegistro += 1;
+                _numeroAtualDeRegistro = _numeroSequencialDeRegistro;
+                msgVariavel = msgVariavel.PreencherValorNaLinha(395, 400, _numeroSequencialDeRegistro.ToString().PadLeft(6, '0'));
+            }
+            catch (Exception e)
+            {
+                throw new Exception(
+                            string.Format(
+                                "<BoletoBr>{0}Falha na geração das MENSAGENS PARA O BOLETO no arquivo de REMESSA.",
+                                Environment.NewLine), e);
+            }
+
+            return msgVariavel;
+        }
+
+        /// <summary>
+        /// Método que escreve a mensagem variável com código de registro 3 (Ficha de Compensação)
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        private string EscreverMensagemVariavelFichaCompensacao(DetalheRemessaCnab400 info)
+        {
+            var listaLinhas = PreparaLinhaMensagemVariavel(info);
+            string registroAtual = string.Empty;
+
+            if (listaLinhas != null)
+            {
+                foreach (var linha in listaLinhas)
+                {
+                    if (listaLinhas.Last() == linha)
+                    {
+                        registroAtual += linha;
+                    }
+                    else
+                    {
+                        registroAtual += linha + Environment.NewLine;
+                    }
+                }
+            }
+
+            return registroAtual;
+        }
+
+        public List<string> PreparaLinhaMensagemVariavel(DetalheRemessaCnab400 info)
+        {
+            string complementoRegistro =
+                info.ContaCorrente.Remove(0, info.ContaCorrente.Length - 1) +
+                info.DvContaCorrente;
+
+            var lista = new List<string>();
+            int cont = 3;
+            if (info.Instrucoes.Count > 0)
+            {
+                info.Instrucoes.RemoveAt(0);
+                foreach (var instrucaoAtual in info.Instrucoes)
+                {
+                    // Primeira Mensagem (Mensagem 1) Variável que irá constar na linha 2 do detalhe atual
+                    var msgVariavel = new string(' ', 400);
+                    try
+                    {
+                        msgVariavel = msgVariavel.PreencherValorNaLinha(1, 1, cont.ToString());
+                        msgVariavel = msgVariavel.PreencherValorNaLinha(2, 17, string.Empty.PadRight(16, ' '));
+                            // Uso do Banco
+                        msgVariavel = msgVariavel.PreencherValorNaLinha(18, 21, string.Empty.PadRight(4, ' '));
+                            // Código da Agência
+                        msgVariavel = msgVariavel.PreencherValorNaLinha(22, 29, string.Empty.PadRight(8, ' '));
+                            // Conta Movimento
+                        msgVariavel = msgVariavel.PreencherValorNaLinha(30, 37, string.Empty.PadRight(8, ' '));
+                            // Conta Cobrança
+                        msgVariavel = msgVariavel.PreencherValorNaLinha(38, 47, string.Empty.PadRight(10, ' '));
+                            // Uso do Banco
+                        msgVariavel = msgVariavel.PreencherValorNaLinha(48, 49, "01");
+                        msgVariavel = msgVariavel.PreencherValorNaLinha(50, 99, instrucaoAtual != null
+                            ? instrucaoAtual.TextoInstrucao.PadRight(50, ' ')
+                            : string.Empty.PadRight(50, ' '));
+                        msgVariavel = msgVariavel.PreencherValorNaLinha(100, 382, string.Empty.PadRight(283, ' '));
+                            // Uso do Banco
+                        msgVariavel = msgVariavel.PreencherValorNaLinha(383, 383, "i".ToUpper());
+                        msgVariavel = msgVariavel.PreencherValorNaLinha(384, 385, complementoRegistro);
+                        msgVariavel = msgVariavel.PreencherValorNaLinha(386, 394, string.Empty.PadLeft(9, ' '));
+                        _numeroSequencialDeRegistro += 1;
+                        _numeroAtualDeRegistro = _numeroSequencialDeRegistro;
+                        msgVariavel = msgVariavel.PreencherValorNaLinha(395, 400, _numeroSequencialDeRegistro.ToString().PadLeft(6, '0'));
+                        cont++;
+                        lista.Add(msgVariavel);
+                    }
+
+                    catch (Exception e)
+                    {
+                        throw new Exception(
+                            string.Format(
+                                "<BoletoBr>{0}Falha na geração das MENSAGENS PARA O BOLETO no arquivo de REMESSA.",
+                                Environment.NewLine), e);
+                    }
+                }
+            }
+
+            return lista;
         }
 
         public string EscreverTrailer(TrailerRemessaCnab400 infoTrailer)
@@ -298,6 +447,8 @@ namespace BoletoBr.Bancos.Santander
             foreach (var detalheAdicionar in remessaEscrever.RegistrosDetalhe)
             {
                 listaRetornar.AddRange(new[] { EscreverDetalhe(detalheAdicionar) });
+                listaRetornar.AddRange(new[] { EscreverMensagemVariavelReciboSacado(detalheAdicionar) });
+                listaRetornar.AddRange(new[] { EscreverMensagemVariavelFichaCompensacao(detalheAdicionar) });
             }
 
             listaRetornar.Add(EscreverTrailer(remessaEscrever.Trailer));

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BoletoBr.Dominio;
 using BoletoBr.Enums;
 using BoletoBr.Interfaces;
@@ -43,6 +44,12 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             this.QuantidadeMoeda = Convert.ToDecimal(boleto.QuantidadeMoeda).Equals(null) ? 0 : Convert.ToDecimal(boleto.QuantidadeMoeda);
             this.DataJurosMora = boleto.DataJurosMora;
             this.Instrucoes = boleto.InstrucoesDoBoleto;
+            //this.MensagemLinha1 = boleto.InstrucoesDoBoleto.ElementAt(0).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(0).TextoInstrucao;
+            //this.MensagemLinha2 = boleto.InstrucoesDoBoleto.ElementAt(1).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(1).TextoInstrucao;
+            //this.MensagemLinha3 = boleto.InstrucoesDoBoleto.ElementAt(2).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(2).TextoInstrucao;
+            //this.MensagemLinha4 = boleto.InstrucoesDoBoleto.ElementAt(3).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(3).TextoInstrucao;
+            //this.MensagemLinha5 = boleto.InstrucoesDoBoleto.ElementAt(4).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(4).TextoInstrucao;
+            //this.MensagemLinha6 = boleto.InstrucoesDoBoleto.ElementAt(5).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(5).TextoInstrucao;
 
             #region #033|SANTADER
 
@@ -64,6 +71,17 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
         public int NroDiasParaProtesto { get; set; }
         public string Moeda { get; set; }
         public decimal QuantidadeMoeda { get; set; }
+
+        #endregion
+
+        #region Mensagens Boleto
+
+        public string MensagemLinha1 { get; set; }
+        public string MensagemLinha2 { get; set; }
+        public string MensagemLinha3 { get; set; }
+        public string MensagemLinha4 { get; set; }
+        public string MensagemLinha5 { get; set; }
+        public string MensagemLinha6 { get; set; }
 
         #endregion
 
