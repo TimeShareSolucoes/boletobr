@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using BoletoBr.Arquivo.CNAB240.Remessa;
 using BoletoBr.Arquivo.CNAB400.Remessa;
 using BoletoBr.Arquivo.Generico.Retorno;
+using BoletoBr.Bancos.Cef;
 using BoletoBr.Dominio;
 using BoletoBr.Dominio.Instrucao;
 using BoletoBr.Enums;
@@ -623,7 +625,24 @@ namespace BoletoBr.Bancos.Hsbc
 
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
         {
-            throw new NotImplementedException();
+            if (linhasArquivo == null || linhasArquivo.Any() == false)
+                throw new ApplicationException("Arquivo informado é inválido.");
+
+            /* Identifica o layout: 240 ou 400 */
+            if (linhasArquivo.First().Length == 240)
+            {
+                throw new NotImplementedException();
+            }
+            if (linhasArquivo.First().Length == 400)
+            {
+                var leitor = new LeitorRetornoCnab400Hsbc(linhasArquivo);
+                var retornoProcessado = leitor.ProcessarRetorno();
+
+                var objRetornar = new RetornoGenerico(retornoProcessado);
+                return objRetornar;
+            }
+
+            throw new Exception("Arquivo de RETORNO com " + linhasArquivo.First().Length + " posições, não é suportado.");
         }
 
         public RemessaCnab240 GerarArquivoRemessaCnab240(RemessaCnab240 remessaCnab240, List<Boleto> boletos)

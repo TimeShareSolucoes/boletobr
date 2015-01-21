@@ -134,11 +134,11 @@ namespace BoletoBr.Bancos
             objRetornar.SubConta = linha.ExtrairValorDaLinha(23, 24).BoletoBrToInt();
             objRetornar.ContaCorrente = linha.ExtrairValorDaLinha(25, 35);
             // Posição 36-37 brancos
-            objRetornar.CodigoDoDocumentoEmpresa = linha.ExtrairValorDaLinha(38, 53);
+            objRetornar.NumeroDocumento = linha.ExtrairValorDaLinha(38, 53); // Alterado de 'objRetornar.CodigoDoDocumentoEmpresa' para NumeroDocumento
             // Posição 54 branco
             objRetornar.CodigoDePostagem = linha.ExtrairValorDaLinha(55, 55).BoletoBrToInt();
             // Posição 56-62 brancos
-            objRetornar.CodigoDoDocumentoBanco = linha.ExtrairValorDaLinha(63, 78);
+            objRetornar.NossoNumero = linha.ExtrairValorDaLinha(63, 78); // Alterado de 'objRetornar.CodigoDoDocumentoBanco' para NossoNumero
             // Posição 79-82 brancos
             objRetornar.DataDeCredito = (DateTime) linha.ExtrairValorDaLinha(83, 88).ToString().ToDateTimeFromDdMmAa();
             objRetornar.Moeda = linha.ExtrairValorDaLinha(89, 89).BoletoBrToInt();
@@ -146,7 +146,7 @@ namespace BoletoBr.Bancos
             objRetornar.CodigoCarteira = linha.ExtrairValorDaLinha(108, 108);
             objRetornar.CodigoDeOcorrencia = linha.ExtrairValorDaLinha(109, 110).BoletoBrToInt();
             objRetornar.DataDaOcorrencia = (DateTime) linha.ExtrairValorDaLinha(111, 116).ToString().ToDateTimeFromDdMmAa();
-            objRetornar.SeuNumero = linha.ExtrairValorDaLinha(117, 122).BoletoBrToInt();
+            objRetornar.SeuNumero = linha.ExtrairValorDaLinha(117, 122).BoletoBrToStringSafe();
             objRetornar.MotivoDaOcorrencia = linha.ExtrairValorDaLinha(123, 131).BoletoBrToInt();
             // Posição 132-146 brancos
             objRetornar.DataDeVencimento = (DateTime) linha.ExtrairValorDaLinha(147, 152).ToString().ToDateTimeFromDdMmAa();
@@ -157,7 +157,7 @@ namespace BoletoBr.Bancos
             objRetornar.ValorIof = linha.ExtrairValorDaLinha(176, 186).BoletoBrToDecimal() / 100;
             // Posição 187-240 brancos
             objRetornar.ValorDesconto = linha.ExtrairValorDaLinha(241, 253).BoletoBrToDecimal() / 100;
-            objRetornar.ValorPrincipal = linha.ExtrairValorDaLinha(254, 266).BoletoBrToDecimal() / 100;
+            objRetornar.ValorLiquidoRecebido = linha.ExtrairValorDaLinha(254, 266).BoletoBrToDecimal() / 100;
             objRetornar.ValorJurosDeMora = linha.ExtrairValorDaLinha(267, 279).BoletoBrToDecimal() / 100;
             objRetornar.Constante = linha.ExtrairValorDaLinha(280, 280).BoletoBrToInt();
             objRetornar.QuantidadeMoeda = linha.ExtrairValorDaLinha(281, 293).BoletoBrToInt();

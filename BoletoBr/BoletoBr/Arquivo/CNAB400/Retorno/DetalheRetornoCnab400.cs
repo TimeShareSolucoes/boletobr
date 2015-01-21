@@ -31,7 +31,7 @@ namespace BoletoBr
         /// Número da parcela e total de parcelas, sendo 3 dítidos para cada campo.
         /// PPP/TTT
         /// </summary>
-        public int SeuNumero { get; set; }
+        public string SeuNumero { get; set; }
         public string NossoNumero { get; set; }
         public int MotivoDaOcorrencia { get; set; }
         public DateTime DataDeVencimento { get; set; }
