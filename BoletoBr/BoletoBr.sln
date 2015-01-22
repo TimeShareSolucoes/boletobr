@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30626.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoletoBr", "BoletoBr\BoletoBr.csproj", "{EA3EBD2B-932E-42E1-9914-20C13185EBE2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoletoBrUnitTests", "BoletoBr.UnitTests\BoletoBrUnitTests.csproj", "{D99DF35D-54A4-46F7-9B41-61F3029B104A}"
+EndProject
+Project("{FF286327-C783-4F7A-AB73-9BCBAD0D4460}") = "BoletoBr.NuGet", "BoletoBr.NuGet\BoletoBr.NuGet.nuproj", "{598BC53F-6B67-4007-B5A5-6411571430D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{D99DF35D-54A4-46F7-9B41-61F3029B104A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D99DF35D-54A4-46F7-9B41-61F3029B104A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D99DF35D-54A4-46F7-9B41-61F3029B104A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{598BC53F-6B67-4007-B5A5-6411571430D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{598BC53F-6B67-4007-B5A5-6411571430D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{598BC53F-6B67-4007-B5A5-6411571430D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{598BC53F-6B67-4007-B5A5-6411571430D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
