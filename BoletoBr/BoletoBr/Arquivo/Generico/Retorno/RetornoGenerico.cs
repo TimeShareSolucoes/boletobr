@@ -33,6 +33,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     // Segmento T
                     var valorDoc = d.SegmentoT.ValorTitulo;
                     detalheGenericoAdd.ValorDocumento = valorDoc;
+                    detalheGenericoAdd.DataVencimento = Convert.ToDateTime(d.SegmentoT.DataVencimento);
                     //detalheGenericoAdd.ValorDocumento = Math.Round(d.SegmentoT.ValorTitulo, 2);
                     //detalheGenericoAdd.ValorTarifaCustas = d.SegmentoT.ValorTarifas / 100;
                     //detalheGenericoAdd.CodigoMovimento = d.SegmentoT.CodigoMovimento.ToString();
@@ -96,6 +97,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     Especie = registroAtual.Especie,
                     //DataPagamento = registroAtual.DataPagamento.ToString("ddMMyy").Equals("0") ? new DateTime(0001, 01, 01) : Convert.ToDateTime(registroAtual.DataPagamento.ToString("ddMMyy")),
                     DataCredito = registroAtual.DataDeCredito,
+                    DataVencimento = registroAtual.DataDeVencimento,
                     //DataOcorrencia = registroAtual.DataEmissao.ToString("ddMMyy").Equals(null) ? new DateTime(0001, 01, 01) : Convert.ToDateTime(registroAtual.DataEmissao.ToString("ddMMyy")),
                     NumeroDocumento = registroAtual.NumeroDocumento,
                     ValorDocumento = registroAtual.ValorDoTituloParcela,
