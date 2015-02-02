@@ -63,6 +63,7 @@
     <Compile Include="Arquivo\Generico\Retorno\RetornoGenerico.cs" />
     <Compile Include="Arquivo\Generico\Retorno\RetornoHeaderGenerico.cs" />
     <Compile Include="Bancos\Brasil\EscritorRemessaCnab400BancoDoBrasil.cs" />
+    <Compile Include="Dominio\InformacoesAdicionais.cs" />
     <Compile Include="Fabricas\EscritorArquivoRemessaFactory.cs" />
     <Compile Include="Fabricas\RemessaFactory.cs" />
     <Compile Include="Interfaces\IArquivoRemessa.cs" />
