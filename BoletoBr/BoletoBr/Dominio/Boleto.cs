@@ -82,6 +82,7 @@ namespace BoletoBr
         public TipoArquivo TipoArquivo { get; set; }
         public string CodigoDoProduto { get; set; }
         public int QtdDias { get; set; }
+        public dynamic InformacoesAdicionaisDynamic { get; set; }
         public List<InformacoesAdicionais> InformacoesAdicionais { get; set; }
         public List<IInstrucao> InstrucoesDoBoleto { get; set; }
         public Remessa Remessa { get; set; }

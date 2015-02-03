@@ -133,7 +133,11 @@ namespace BoletoBr.Bancos.Santander
                 // 02 - CNPJ
                 detalhe = detalhe.PreencherValorNaLinha(2, 3, infoDetalhe.InscricaoCedente.Length == 11 ? "01" : "02");
                 detalhe = detalhe.PreencherValorNaLinha(4, 17, infoDetalhe.InscricaoCedente.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(14, '0'));
-                detalhe = detalhe.PreencherValorNaLinha(18, 37, infoDetalhe.CodigoDeTransmissao.PadLeft(20, '0'));
+                //detalhe = detalhe.PreencherValorNaLinha(18, 37, infoDetalhe.CodigoDeTransmissao.PadLeft(20, '0')); Versão 2.0 do layout
+
+                detalhe = detalhe.PreencherValorNaLinha(18, 21, infoDetalhe.Agencia.PadLeft(4, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(22, 29, infoDetalhe.ContaCorrente.Substring(0, 8)); // Conta Movimento
+                detalhe = detalhe.PreencherValorNaLinha(30, 37, infoDetalhe.ContaCorrente.Substring(0, 8)); // Conta Cobrança
 
                 const string doc = "DOC";
                 var seuNumero = doc + infoDetalhe.NossoNumeroFormatado.PadRight(25 - doc.Length, ' ');
@@ -401,8 +405,8 @@ namespace BoletoBr.Bancos.Santander
                         _numeroSequencialDeRegistro += 1;
                         _numeroAtualDeRegistro = _numeroSequencialDeRegistro;
                         msgVariavel = msgVariavel.PreencherValorNaLinha(395, 400, _numeroSequencialDeRegistro.ToString().PadLeft(6, '0'));
-                        cont++;
                         lista.Add(msgVariavel);
+                        cont++;
                     }
 
                     catch (Exception e)

@@ -22,7 +22,7 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             #region #033|SANTANDER
 
             // Informação cedida pelo banco que identifica o arquivo remessa do cliente
-            this.CodigoDeTransmissao = boleto.CedenteBoleto.CodigoCedente;
+            this.CodigoDeTransmissao = boleto.CodigoDeTransmissao;
 
             #endregion
         }
