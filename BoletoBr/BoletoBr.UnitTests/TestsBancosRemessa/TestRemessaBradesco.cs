@@ -77,7 +77,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 detalheIndividual
             };
 
-            remessa.Trailer = new TrailerRemessaCnab400(1);
+            remessa.Trailer = new TrailerRemessaCnab400(1, 1);
 
             var escritor = new EscritorRemessaCnab400Bradesco(remessa);
 

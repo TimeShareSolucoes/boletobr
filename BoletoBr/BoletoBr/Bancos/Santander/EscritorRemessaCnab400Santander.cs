@@ -133,11 +133,11 @@ namespace BoletoBr.Bancos.Santander
                 // 02 - CNPJ
                 detalhe = detalhe.PreencherValorNaLinha(2, 3, infoDetalhe.InscricaoCedente.Length == 11 ? "01" : "02");
                 detalhe = detalhe.PreencherValorNaLinha(4, 17, infoDetalhe.InscricaoCedente.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(14, '0'));
-                //detalhe = detalhe.PreencherValorNaLinha(18, 37, infoDetalhe.CodigoDeTransmissao.PadLeft(20, '0')); Versão 2.0 do layout
+                detalhe = detalhe.PreencherValorNaLinha(18, 37, infoDetalhe.CodigoDeTransmissao.PadLeft(20, '0')); //Versão 2.0 do layout
 
-                detalhe = detalhe.PreencherValorNaLinha(18, 21, infoDetalhe.Agencia.PadLeft(4, '0'));
-                detalhe = detalhe.PreencherValorNaLinha(22, 29, infoDetalhe.ContaCorrente.Substring(0, 8)); // Conta Movimento
-                detalhe = detalhe.PreencherValorNaLinha(30, 37, infoDetalhe.ContaCorrente.Substring(0, 8)); // Conta Cobrança
+                //detalhe = detalhe.PreencherValorNaLinha(18, 21, infoDetalhe.Agencia.PadLeft(4, '0'));
+                //detalhe = detalhe.PreencherValorNaLinha(22, 29, infoDetalhe.ContaCorrente.Substring(0, 8)); // Conta Movimento
+                //detalhe = detalhe.PreencherValorNaLinha(30, 37, infoDetalhe.ContaCorrente.Substring(0, 8)); // Conta Cobrança
 
                 const string doc = "DOC";
                 var seuNumero = doc + infoDetalhe.NossoNumeroFormatado.PadRight(25 - doc.Length, ' ');
@@ -303,16 +303,12 @@ namespace BoletoBr.Bancos.Santander
             try
             {
                 msgVariavel = msgVariavel.PreencherValorNaLinha(1, 1, "2");
-                msgVariavel = msgVariavel.PreencherValorNaLinha(2, 17, string.Empty.PadRight(16, ' '));
-                // Uso do Banco
-                msgVariavel = msgVariavel.PreencherValorNaLinha(18, 21, string.Empty.PadRight(4, ' '));
-                // Código da Agência
-                msgVariavel = msgVariavel.PreencherValorNaLinha(22, 29, string.Empty.PadRight(8, ' '));
-                // Conta Movimento
-                msgVariavel = msgVariavel.PreencherValorNaLinha(30, 37, string.Empty.PadRight(8, ' '));
-                // Conta Cobrança
-                msgVariavel = msgVariavel.PreencherValorNaLinha(38, 47, string.Empty.PadRight(10, ' '));
-                // Uso do Banco
+                msgVariavel = msgVariavel.PreencherValorNaLinha(2, 17, string.Empty.PadRight(16, ' ')); // Uso do Banco
+                //msgVariavel = msgVariavel.PreencherValorNaLinha(18, 21, string.Empty.PadRight(4, ' ')); // Código da Agência
+                //msgVariavel = msgVariavel.PreencherValorNaLinha(22, 29, string.Empty.PadRight(8, ' ')); // Conta Movimento
+                //msgVariavel = msgVariavel.PreencherValorNaLinha(30, 37, string.Empty.PadRight(8, ' ')); // Conta Cobrança
+                msgVariavel = msgVariavel.PreencherValorNaLinha(18, 37, info.CodigoDeTransmissao.PadLeft(20, '0'));
+                msgVariavel = msgVariavel.PreencherValorNaLinha(38, 47, string.Empty.PadRight(10, ' ')); // Uso do Banco
                 msgVariavel = msgVariavel.PreencherValorNaLinha(48, 49, "01");
                 msgVariavel = msgVariavel.PreencherValorNaLinha(50, 99, primeiraInstrucao != null
                     ? primeiraInstrucao.TextoInstrucao.PadRight(50, ' ')
@@ -383,16 +379,12 @@ namespace BoletoBr.Bancos.Santander
                     try
                     {
                         msgVariavel = msgVariavel.PreencherValorNaLinha(1, 1, cont.ToString());
-                        msgVariavel = msgVariavel.PreencherValorNaLinha(2, 17, string.Empty.PadRight(16, ' '));
-                            // Uso do Banco
-                        msgVariavel = msgVariavel.PreencherValorNaLinha(18, 21, string.Empty.PadRight(4, ' '));
-                            // Código da Agência
-                        msgVariavel = msgVariavel.PreencherValorNaLinha(22, 29, string.Empty.PadRight(8, ' '));
-                            // Conta Movimento
-                        msgVariavel = msgVariavel.PreencherValorNaLinha(30, 37, string.Empty.PadRight(8, ' '));
-                            // Conta Cobrança
-                        msgVariavel = msgVariavel.PreencherValorNaLinha(38, 47, string.Empty.PadRight(10, ' '));
-                            // Uso do Banco
+                        msgVariavel = msgVariavel.PreencherValorNaLinha(2, 17, string.Empty.PadRight(16, ' ')); // Uso do Banco
+                        //msgVariavel = msgVariavel.PreencherValorNaLinha(18, 21, string.Empty.PadRight(4, ' ')); // Código da Agência
+                        //msgVariavel = msgVariavel.PreencherValorNaLinha(22, 29, string.Empty.PadRight(8, ' ')); // Conta Movimento
+                        //msgVariavel = msgVariavel.PreencherValorNaLinha(30, 37, string.Empty.PadRight(8, ' ')); // Conta Cobrança
+                        msgVariavel = msgVariavel.PreencherValorNaLinha(18, 37, info.CodigoDeTransmissao.PadLeft(20, '0'));
+                        msgVariavel = msgVariavel.PreencherValorNaLinha(38, 47, string.Empty.PadRight(10, ' ')); // Uso do Banco
                         msgVariavel = msgVariavel.PreencherValorNaLinha(48, 49, "01");
                         msgVariavel = msgVariavel.PreencherValorNaLinha(50, 99, instrucaoAtual != null
                             ? instrucaoAtual.TextoInstrucao.PadRight(50, ' ')

@@ -54,7 +54,7 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             #region #033|SANTADER
 
             // Informação cedida pelo banco que identifica o arquivo remessa do cliente
-            this.CodigoDeTransmissao = boleto.CedenteBoleto.CodigoCedente;
+            this.CodigoDeTransmissao = boleto.CodigoDeTransmissao;
             this.DataDesconto = boleto.DataDesconto;
             this.NroDiasParaProtesto = boleto.QtdDias;
 

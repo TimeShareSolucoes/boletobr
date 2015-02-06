@@ -129,15 +129,16 @@ namespace BoletoBr.UnitTests.TestsBancos
 
             var boleto = new Boleto(carteira, cedente, sacado, remessa)
             {
-                NumeroDocumento = "0000006152007",
+                //NumeroDocumento = "0000006152007",
+                NumeroDocumento = "0000000014070",
                 ValorBoleto = Convert.ToDecimal(252.00),
-                IdentificadorInternoBoleto = "566612457800",
+                IdentificadorInternoBoleto = "14070",
                 DataVencimento = new DateTime(2014, 07, 07)
             };
 
             banco.FormataNossoNumero(boleto);
 
-            const string valorEsperado = "566612457800-2";
+            const string valorEsperado = "0000000140709";
             Assert.AreEqual(valorEsperado.Length, boleto.NossoNumeroFormatado.Length);
             Assert.AreEqual(valorEsperado, boleto.NossoNumeroFormatado);
         }
