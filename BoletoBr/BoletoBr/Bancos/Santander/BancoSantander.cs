@@ -263,7 +263,7 @@ namespace BoletoBr.Bancos.Santander
             boleto.LinhaDigitavelBoleto = string.Format("{0}{1}{2}{3}{4}", grupo1, grupo2, grupo3, grupo4, grupo5);
 
             //Usado somente no Santander
-            boleto.CedenteBoleto.ContaBancariaCedente.Conta = boleto.CedenteBoleto.CodigoCedente;
+            //boleto.CedenteBoleto.ContaBancariaCedente.Conta = boleto.CedenteBoleto.CodigoCedente;
         }
 
         public void FormataNossoNumero(Boleto boleto)

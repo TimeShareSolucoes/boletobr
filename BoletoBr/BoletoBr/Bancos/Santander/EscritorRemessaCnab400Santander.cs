@@ -122,7 +122,7 @@ namespace BoletoBr.Bancos.Santander
 
 
             string complementoRegistro = 
-                infoDetalhe.ContaCorrente.Remove(0, infoDetalhe.ContaCorrente.Length - 1) + 
+                infoDetalhe.ContaCorrente.Substring(infoDetalhe.ContaCorrente.Length - 1, 1) + 
                 infoDetalhe.DvContaCorrente;
 
             var detalhe = new string(' ', 400);
@@ -178,7 +178,7 @@ namespace BoletoBr.Bancos.Santander
 
                 detalhe = detalhe.PreencherValorNaLinha(140, 142, "033");
                 if (codigoCarteira == "5")
-                    detalhe = detalhe.PreencherValorNaLinha(143, 147, infoDetalhe.Agencia.PadLeft(4, '0') + infoDetalhe.DvAgencia);
+                    detalhe = detalhe.PreencherValorNaLinha(143, 147, infoDetalhe.Agencia.PadLeft(5, '0'));
                 else
                     detalhe = detalhe.PreencherValorNaLinha(143, 147, string.Empty.PadLeft(5, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(148, 149, infoDetalhe.Especie.Sigla.Equals("DM") ? "01" : infoDetalhe.Especie.Codigo.ToString(CultureInfo.InvariantCulture));
