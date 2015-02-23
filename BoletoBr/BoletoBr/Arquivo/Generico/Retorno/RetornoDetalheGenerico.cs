@@ -62,7 +62,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
         public decimal ValorLancamento { get; set; }
         #endregion
 
-        public string CodOcorrenciaRetornoBancario { get; set; }
+        public string MensagemOcorrenciaRetornoBancario { get; set; }
 
         #region Propriedades de uso livre
         /// <summary>

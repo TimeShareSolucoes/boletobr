@@ -122,7 +122,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     NomeSacado = registroAtual.NomeSacado,
                     //CodigoMovimento = registroAtual.MotivoCodigoRejeicao.Equals(null) ? "0" : registroAtual.MotivoCodigoRejeicao,
                     CodigoOcorrencia = String.IsNullOrEmpty(registroAtual.MotivoCodigoOcorrencia) ? "00" : registroAtual.MotivoCodigoOcorrencia,
-                    CodOcorrenciaRetornoBancario = ocorrencia.Descricao
+                    MensagemOcorrenciaRetornoBancario = ocorrencia.Descricao
                 };
 
                 RegistrosDetalhe.Add(detalheGenericoAdd);
