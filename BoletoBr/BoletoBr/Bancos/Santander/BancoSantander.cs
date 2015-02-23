@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
@@ -583,6 +584,364 @@ namespace BoletoBr.Bancos.Santander
                     {
                         Codigo = 98,
                         Descricao = "Não Protestar"
+                    };
+                }
+            }
+            throw new Exception(
+                String.Format(
+                    "Não foi possível obter Código de Comando/Movimento/Ocorrência. Banco: {0} Código: {1}",
+                    CodigoBanco, ocorrencia.ToString()));
+        }
+
+        public ICodigoOcorrencia ObtemCodigoOcorrenciaByInt(int numeroOcorrencia)
+        {
+            switch (numeroOcorrencia)
+            {
+                case 01:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 01,
+                        Descricao = "TÍTULO NÃO EXISTE"
+                    };
+                case 02:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 02,
+                        Descricao = "ENTRADA TÍT. CONFIRMADA"
+                    };
+                case 03:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 02,
+                        Descricao = "ENTRADA TÍT. CONFIRMADA"
+                    };
+                case 06:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 06,
+                        Descricao = "LIQUIDAÇÃO"
+                    };
+                case 07:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 07,
+                        Descricao = "LIQUIDAÇÃO POR CONTA"
+                    };
+                case 08:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 08,
+                        Descricao = "LIQUIDAÇÃO POR SALDO"
+                    };
+                case 09:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 09,
+                        Descricao = "BAIXA AUTOMÁTICA"
+                    };
+                case 10:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 10,
+                        Descricao = "TÍT. BAIX. CONF. INSTRUÇÃO"
+                    };
+                case 11:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 11,
+                        Descricao = "EM SER"
+                    };
+                case 12:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 12,
+                        Descricao = "ABATIMENTO CONCEDIDO"
+                    };
+                case 13:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 13,
+                        Descricao = "ABATIMENTO CANCELADO"
+                    };
+                case 14:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 14,
+                        Descricao = "PRORROGAÇÃO DE VENCIMENTO"
+                    };
+                case 15:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 15,
+                        Descricao = "CONFIRMAÇÃO DE PROTESTO"
+                    };
+                case 16:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 16,
+                        Descricao = "TÍT. JÁ BAIXADO/LIQUIDADO"
+                    };
+                case 17:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 17,
+                        Descricao = "LIQUIDADO EM CARTÓRIO"
+                    };
+                case 21:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 21,
+                        Descricao = "TÍT. ENVIADO A CARTÓRIO"
+                    };
+                case 22:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 22,
+                        Descricao = "TÍT. RETIRADO DE CARTÓRIO"
+                    };
+                case 24:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 24,
+                        Descricao = "CUSTAS DE CARTÓRIO"
+                    };
+                case 25:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 25,
+                        Descricao = "PROTESTAR TÍTULO"
+                    };
+                case 26:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 26,
+                        Descricao = "SUSTAR"
+                    };
+                case 35:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 35,
+                        Descricao = "TÍTULO DDA RECONHECIDO PELO PAGADOR"
+                    };
+                case 36:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 36,
+                        Descricao = "TÍTULO DDA NÃO RECONHECIDO PELO PAGADOR"
+                    };
+                case 37:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 37,
+                        Descricao = "TÍTULO DDA RECUSADO PELA CIP"
+                    };
+                case 38:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 38,
+                        Descricao = "RECEBIMENTO DA INSTRUÇÃO NÃO PROTESTAR"
+                    };
+            }
+            throw new Exception(
+                String.Format(
+                    "Não foi possível obter Código de Comando/Movimento/Ocorrência. Banco: {0} Código: {1}",
+                    CodigoBanco, numeroOcorrencia.ToString()));
+        }
+
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRetorno ocorrencia)
+        {
+            switch (ocorrencia)
+            {
+                case EnumCodigoOcorrenciaRetorno.RetTituloNaoExiste:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 01,
+                        Descricao = "TÍTULO NÃO EXISTE"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetRegistroConfirmado:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 02,
+                        Descricao = "ENTRADA TÍT. CONFIRMADA"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetRegistroRecusado:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 03,
+                        Descricao = "ENTRADA TÍT. REJEITADA"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetLiquidado:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 06,
+                        Descricao = "LIQUIDAÇÃO"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetLiquidadoPorConta:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 07,
+                        Descricao = "LIQUIDAÇÃO POR CONTA"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetLiquidadoSaldoRestante:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 08,
+                        Descricao = "LIQUIDAÇÃO POR SALDO"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetBaixaAutomatica:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 09,
+                        Descricao = "BAIXA AUTOMÁTICA"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetBaixado:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 10,
+                        Descricao = "TÍT. BAIX. CONF. INSTRUÇÃO"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetTituloEmSer:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 11,
+                        Descricao = "EM SER"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetAbatimentoConcedido:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 12,
+                        Descricao = "ABATIMENTO CONCEDIDO"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetAbatimentoCancelado:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 13,
+                        Descricao = "ABATIMENTO CANCELADO"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetProrrogVencto:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 14,
+                        Descricao = "PRORROGAÇÃO DE VENCIMENTO"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetConfirmacaoProtesto:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 15,
+                        Descricao = "CONFIRMAÇÃO DE PROTESTO"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetJaBaixado:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 16,
+                        Descricao = "TÍT. JÁ BAIXADO/LIQUIDADO"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetLiquidadoEmCartorio:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 17,
+                        Descricao = "LIQUIDADO EM CARTÓRIO"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetEncaminhadoACartorio:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 21,
+                        Descricao = "TÍT. ENVIADO A CARTÓRIO"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetRetiradoDeCartorio:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 22,
+                        Descricao = "TÍT. RETIRADO DE CARTÓRIO"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetCustasCartorioDistribuidor:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 24,
+                        Descricao = "CUSTAS DE CARTÓRIO"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetRecebimentoInstrucaoProtestar:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 25,
+                        Descricao = "PROTESTAR TÍTULO"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetRecebimentoInstrucaoSustarProtesto:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 26,
+                        Descricao = "SUSTAR"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetTituloDdaReconhecido:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 35,
+                        Descricao = "TÍTULO DDA RECONHECIDO PELO PAGADOR"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetTituloDdaNaoReconhecido:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 36,
+                        Descricao = "TÍTULO DDA NÃO RECONHECIDO PELO PAGADOR"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetTituloDdaRecusado:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 37,
+                        Descricao = "TÍTULO DDA RECUSADO PELA CIP"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetNaoProtestar:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
+                    {
+                        Codigo = 38,
+                        Descricao = "RECEBIMENTO DA INSTRUÇÃO NÃO PROTESTAR"
                     };
                 }
             }

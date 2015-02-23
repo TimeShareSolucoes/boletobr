@@ -57,6 +57,12 @@ namespace BoletoBr.Interfaces
         void FormataNumeroDocumento(Boleto boleto);
 
         /// <summary>
+        /// Retorna o código do comando/movimento/ocorrência.
+        /// </summary>
+        /// <param name="numeroOcorrencia"></param>
+        /// <returns></returns>
+        ICodigoOcorrencia ObtemCodigoOcorrenciaByInt(int numeroOcorrencia);
+        /// <summary>
         /// Retorna o código do comando/movimento/ocorrência a ser usada na geração do arquivo de remessa.
         /// </summary>
         /// <param name="ocorrenciaRemessa"></param>
@@ -64,6 +70,13 @@ namespace BoletoBr.Interfaces
         /// <param name="dataOcorrencia"></param>
         /// <returns></returns>
         ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrenciaRemessa, double valorOcorrencia, DateTime dataOcorrencia);
+
+        /// <summary>
+        /// Retorna o código do comando/movimento/ocorrência devolvido no arquivo de retorno bancário.
+        /// </summary>
+        /// <param name="ocorrenciaRetorno"></param>
+        /// <returns></returns>
+        ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRetorno ocorrenciaRetorno);
 
         /// <summary>
         /// Retorna a espécie de documento a ser usada na geração do arquivo de remessa.

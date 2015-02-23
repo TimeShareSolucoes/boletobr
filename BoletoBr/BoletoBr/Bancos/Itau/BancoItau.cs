@@ -471,6 +471,16 @@ namespace BoletoBr.Bancos.Itau
             //boleto.NumeroDocumentoFormatado = numeroDoDocumentoFormatado;
         }
 
+        public ICodigoOcorrencia ObtemCodigoOcorrenciaByInt(int numeroOcorrencia)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRetorno ocorrenciaRetorno)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEspecieDocumento ObtemEspecieDocumento(EnumEspecieDocumento especie)
         {
             #region Código Espécie

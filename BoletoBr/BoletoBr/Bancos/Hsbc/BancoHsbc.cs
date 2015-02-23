@@ -108,6 +108,16 @@ namespace BoletoBr.Bancos.Hsbc
             boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(13, '0');
         }
 
+        public ICodigoOcorrencia ObtemCodigoOcorrenciaByInt(int numeroOcorrencia)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRetorno ocorrenciaRetorno)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEspecieDocumento ObtemEspecieDocumento(EnumEspecieDocumento especie)
         {
             switch (especie)

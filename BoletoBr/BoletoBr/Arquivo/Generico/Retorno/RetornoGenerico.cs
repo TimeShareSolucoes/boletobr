@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using BoletoBr.Arquivo.CNAB240.Retorno;
+using BoletoBr.Fabricas;
 
 namespace BoletoBr.Arquivo.Generico.Retorno
 {
@@ -75,6 +76,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
         {
             Inicializa();
             RetornoCnab400Especifico = retornoCnab400;
+            
             /* Transformar de CNAB400 para formato genérico */
             Header.CodigoDoBanco = retornoCnab400.Header.CodigoDoBanco;
             Header.Convenio = retornoCnab400.Header.NumeroConvenio.ToString(CultureInfo.InvariantCulture);
@@ -87,6 +89,9 @@ namespace BoletoBr.Arquivo.Generico.Retorno
 
             foreach (var registroAtual in retornoCnab400.RegistrosDetalhe)
             {
+                var banco = BancoFactory.ObterBanco(Header.CodigoDoBanco);
+                var ocorrencia = banco.ObtemCodigoOcorrenciaByInt(registroAtual.CodigoDeOcorrencia);
+
                 var detalheGenericoAdd = new RetornoDetalheGenerico
                 {
                     NossoNumero = registroAtual.NossoNumero,
@@ -116,7 +121,8 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     InscricaoSacado = registroAtual.NumeroInscricaoSacado.ToString(CultureInfo.InvariantCulture),
                     NomeSacado = registroAtual.NomeSacado,
                     //CodigoMovimento = registroAtual.MotivoCodigoRejeicao.Equals(null) ? "0" : registroAtual.MotivoCodigoRejeicao,
-                    //CodigoOcorrencia = registroAtual.MotivoCodigoOcorrencia.Equals(null) ? "0" : registroAtual.MotivoCodigoOcorrencia,
+                    CodigoOcorrencia = String.IsNullOrEmpty(registroAtual.MotivoCodigoOcorrencia) ? "00" : registroAtual.MotivoCodigoOcorrencia,
+                    CodOcorrenciaRetornoBancario = ocorrencia.Descricao
                 };
 
                 RegistrosDetalhe.Add(detalheGenericoAdd);

@@ -9,6 +9,7 @@ namespace BoletoBr.Enums
     public enum EnumCodigoOcorrenciaRetorno
     {
         //Ocorrências para arquivo retorno
+        RetTituloNaoExiste,
         RetRegistroConfirmado,
         RetRegistroRecusado,
         RetComandoRecusado,
@@ -20,6 +21,8 @@ namespace BoletoBr.Enums
         RetLiquidadoPorConta,
         RetBaixaSolicitada,
         RetBaixado,
+        RetJaBaixado,
+        RetBaixaAutomatica,
         RetBaixadoPorDevolucao,
         RetBaixadoFrancoPagamento,
         RetBaixaPorProtesto,
@@ -41,6 +44,7 @@ namespace BoletoBr.Enums
         RetAlteracaoDadosNovaEntrada,
         RetAlteracaoDadosBaixa,
         RetRecebimentoInstrucaoProtestar,
+        RetNaoProtestar,
         RetProtestado,
         RetRecebimentoInstrucaoSustarProtesto,
         RetProtestoSustado,
@@ -65,6 +69,11 @@ namespace BoletoBr.Enums
         RetProtestoOuSustacaoEstornado,
         RetDebitoTarifas,
         RetAcertoDepositaria,
+        RetProrrogVencto,
+        RetConfirmacaoProtesto,
+        RetTituloDdaReconhecido,
+        RetTituloDdaNaoReconhecido,
+        RetTituloDdaRecusado,
         RetOutrasOcorrencias
     }
 }

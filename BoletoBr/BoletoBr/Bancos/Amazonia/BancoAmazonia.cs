@@ -151,8 +151,18 @@ namespace BoletoBr.Bancos.Amazonia
             boleto.NumeroDocumento = string.Format("{0}", boleto.NumeroDocumento);
         }
 
+        public ICodigoOcorrencia ObtemCodigoOcorrenciaByInt(int numeroOcorrencia)
+        {
+            throw new NotImplementedException();
+        }
+
         public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrenciaRemessa, double valorOcorrencia,
             DateTime dataOcorrencia)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRetorno ocorrenciaRetorno)
         {
             throw new NotImplementedException();
         }

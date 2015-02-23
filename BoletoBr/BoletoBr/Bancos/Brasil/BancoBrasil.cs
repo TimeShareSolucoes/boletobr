@@ -1116,6 +1116,11 @@ namespace BoletoBr.Bancos.Brasil
             boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(10, '0');
         }
 
+        public ICodigoOcorrencia ObtemCodigoOcorrenciaByInt(int numeroOcorrencia)
+        {
+            throw new NotImplementedException();
+        }
+
         public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa comando, double valorOcorrencia,
             DateTime dataOcorrencia)
         {
@@ -1310,6 +1315,11 @@ namespace BoletoBr.Bancos.Brasil
                 String.Format(
                     "Não foi possível obter Código de Comando/Movimento/Ocorrência. Banco: {0} Código: {1}",
                     CodigoBanco, comando.ToString()));
+        }
+
+        public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRetorno ocorrenciaRetorno)
+        {
+            throw new NotImplementedException();
         }
 
         public IEspecieDocumento ObtemEspecieDocumento(EnumEspecieDocumento especie)
