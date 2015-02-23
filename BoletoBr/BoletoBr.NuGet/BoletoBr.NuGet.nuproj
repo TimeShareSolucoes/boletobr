@@ -19,13 +19,14 @@
   <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
   <PropertyGroup Label="Configuration">
     <Id>BoletoBr</Id>
-    <Version>1.0.2.6</Version>
+    <Version>1.0.2.7</Version>
     <Title>BoletoBr</Title>
     <Authors>Gabriel, Samuel</Authors>
     <Owners>Gabriel, Samuel</Owners>
     <Summary>Geração de Boletos, Remessa, Leitura de Retorno para Bancos Brasileiros, no padrão CNAB 240 e CNAB 400. O BoletoBr, cuida de todos os cálculos, validações, para garantir que os dados do boleto estejam de acordo com as normas dos respectivos bancos.</Summary>
     <Description>Geração de Boletos, Remessa, Leitura de Retorno para Bancos Brasileiros, no padrão CNAB 240 e CNAB 400. O BoletoBr, cuida de todos os cálculos, validações, para garantir que os dados do boleto estejam de acordo com as normas dos respectivos bancos. A biblioteca AINDA não gera a apresentação do boleto, estamos procurando colaboradores para criar uma renderização do boleto em HTML ou em PDF:  https://github.com/gabrielrb/boletobr</Description>
-    <ReleaseNotes>*Inclusão de informações adicionais no boleto.</ReleaseNotes>
+    <ReleaseNotes>
+    </ReleaseNotes>
     <ProjectUrl>https://github.com/gabrielrb/boletobr</ProjectUrl>
     <LicenseUrl>
     </LicenseUrl>

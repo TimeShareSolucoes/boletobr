@@ -42,10 +42,12 @@ namespace BoletoBr
                 {
                     if (textoRetornar.Length > 0)
                     {
-                        textoRetornar += ",";
+                        textoRetornar += ", Nro ";
                     }
                     textoRetornar += Numero;
                 }
+                else
+                    textoRetornar += "Nro 0";
 
                 if (!String.IsNullOrEmpty(Complemento))
                 {
@@ -75,10 +77,12 @@ namespace BoletoBr
                 {
                     if (textoRetornar.Length > 0)
                     {
-                        textoRetornar += ",";
+                        textoRetornar += ", Nro ";
                     }
                     textoRetornar += Numero;
                 }
+                else
+                    textoRetornar += "Nro 0";
 
                 if (!String.IsNullOrEmpty(Complemento))
                 {
