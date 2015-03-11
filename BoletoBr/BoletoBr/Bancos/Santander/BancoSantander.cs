@@ -147,7 +147,7 @@ namespace BoletoBr.Bancos.Santander
             var valorNominal = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "").PadLeft(10, '0'); //10
             const string fixo = "9"; //1
             var codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'); //7
-            var nossoNumero = boleto.IdentificadorInternoBoleto + Mod11Santander(boleto.IdentificadorInternoBoleto, 9); //13
+            var nossoNumero = boleto.IdentificadorInternoBoleto + Mod11Santander(boleto.IdentificadorInternoBoleto); //13
             var ios = boleto.PercentualIOS.ToString(); //1
             var tipoCarteira = boleto.CarteiraCobranca.Codigo; //3;
 
@@ -193,7 +193,7 @@ namespace BoletoBr.Bancos.Santander
         public void FormataLinhaDigitavel(Boleto boleto)
         {
             var nossoNumero = (boleto.IdentificadorInternoBoleto +
-                              Mod11Santander(boleto.IdentificadorInternoBoleto, 9)).PadLeft(13, '0'); //13
+                              Mod11Santander(boleto.IdentificadorInternoBoleto)).PadLeft(13, '0'); //13
             var codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0');
             var fatorVencimento = Common.FatorVencimento(boleto.DataVencimento).ToString();
             var ios = boleto.PercentualIOS.ToString(); //1
@@ -241,7 +241,7 @@ namespace BoletoBr.Bancos.Santander
                 //10
             const string dVfixo = "9"; //1
             var dVcodigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'); //7
-            var dVnossoNumero = boleto.IdentificadorInternoBoleto + Mod11Santander(boleto.IdentificadorInternoBoleto, 9);
+            var dVnossoNumero = boleto.IdentificadorInternoBoleto + Mod11Santander(boleto.IdentificadorInternoBoleto);
             var dVtipoCarteira = boleto.CarteiraCobranca.Codigo; //3;
 
             var calculoDVcodigo = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}",
@@ -273,7 +273,7 @@ namespace BoletoBr.Bancos.Santander
                 throw new Exception("Sequencial Nosso Número não foi informado.");
 
             boleto.SetNossoNumeroFormatado(String.Format("{0}{1}",
-                boleto.IdentificadorInternoBoleto, Mod11Santander(boleto.IdentificadorInternoBoleto, 9)).PadLeft(13, '0'));
+                boleto.IdentificadorInternoBoleto, Mod11Santander(boleto.IdentificadorInternoBoleto)).PadLeft(13, '0'));
         }
 
         public void FormataNumeroDocumento(Boleto boleto)
@@ -987,25 +987,29 @@ namespace BoletoBr.Bancos.Santander
             throw new NotImplementedException();
         }
 
-        private static int Mod11Santander(string seq, int lim)
+        protected static int Mod11Santander(string seq)
         {
             var ndig = 0;
             var nresto = 0;
             var total = 0;
-            var multiplicador = 5;
+            var multiplicador = 2;
 
-            while (seq.Length > 0)
+            char[] posicaoSeq = seq.ToCharArray();
+            Array.Reverse(posicaoSeq);
+            var sequencia = new string(posicaoSeq);
+
+            while (sequencia.Length > 0)
             {
-                var valorPosicao = Convert.ToInt32(seq.Substring(0, 1));
-                total += valorPosicao*multiplicador;
-                multiplicador--;
+                int valorPosicao = Convert.ToInt32(sequencia.Substring(0, 1));
+                total += valorPosicao * multiplicador;
+                multiplicador++;
 
-                if (multiplicador == 1)
+                if (multiplicador == 10)
                 {
-                    multiplicador = 9;
+                    multiplicador = 2;
                 }
 
-                seq = seq.Remove(0, 1);
+                sequencia = sequencia.Remove(0, 1);
             }
 
             nresto = total - ((total/11)*11);
@@ -1020,7 +1024,7 @@ namespace BoletoBr.Bancos.Santander
             return ndig;
         }
 
-        private static int Mod10Mod11Santander(string seq, int lim)
+        protected static int Mod10Mod11Santander(string seq, int lim)
         {
             var ndig = 0;
             var nresto = 0;

@@ -120,6 +120,15 @@ namespace BoletoBr
                     textoRetornar += SiglaUf + ")";
                 }
 
+                if (!String.IsNullOrEmpty(Cep))
+                {
+                    if (textoRetornar.Length > 0)
+                    {
+                        textoRetornar += " - CEP: ";
+                    }
+                    textoRetornar += Cep;
+                }
+
                 return textoRetornar;
             }
         }
