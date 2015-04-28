@@ -110,12 +110,67 @@ namespace BoletoBr.Bancos.Hsbc
 
         public ICodigoOcorrencia ObtemCodigoOcorrenciaByInt(int numeroOcorrencia)
         {
-            throw new NotImplementedException();
+            switch (numeroOcorrencia)
+            {
+                case 06:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 06,
+                        Descricao = "LIQUIDAÇÃO"
+                    };
+                case 07:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 07,
+                        Descricao = "EMISSÃO CONFIRMADA"
+                    };
+                case 08:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 08,
+                        Descricao = "PARCELA REJEITADA"
+                    };
+            }
+            throw new Exception(
+                String.Format(
+                    "Não foi possível obter Código de Comando/Movimento/Ocorrência. Banco: {0} Código: {1}",
+                    CodigoBanco, numeroOcorrencia.ToString()));
         }
 
         public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRetorno ocorrenciaRetorno)
         {
-            throw new NotImplementedException();
+            switch (ocorrenciaRetorno)
+            {
+                case EnumCodigoOcorrenciaRetorno.RetLiquidado:
+                {
+                    return new CodigoOcorrencia((int) ocorrenciaRetorno)
+                    {
+                        Codigo = 06,
+                        Descricao = "LIQUIDAÇÃO"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetRegistroConfirmado:
+                {
+                    return new CodigoOcorrencia((int) ocorrenciaRetorno)
+                    {
+                        Codigo = 07,
+                        Descricao = "EMISSÃO CONFIRMADA"
+                    };
+                }
+                case EnumCodigoOcorrenciaRetorno.RetRegistroRecusado:
+                {
+                    return new CodigoOcorrencia((int) ocorrenciaRetorno)
+                    {
+                        Codigo = 08,
+                        Descricao = "PARCELA REJEITADA"
+                    };
+                }
+
+            }
+            throw new Exception(
+                String.Format(
+                    "Não foi possível obter Código de Comando/Movimento/Ocorrência. Banco: {0} Código: {1}",
+                    CodigoBanco, ocorrenciaRetorno.ToString()));
         }
 
         public IEspecieDocumento ObtemEspecieDocumento(EnumEspecieDocumento especie)
