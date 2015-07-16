@@ -20,6 +20,7 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             this.ContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.Conta;
             this.DvContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta;
             this.CodigoCedente = boleto.CedenteBoleto.CodigoCedente;
+            this.RazaoContaCorrente = boleto.CedenteBoleto.Nome;
             this.NossoNumero = boleto.IdentificadorInternoBoleto;
             this.DvNossoNumero = boleto.DigitoNossoNumero;
             this.NossoNumeroFormatado = boleto.NossoNumeroFormatado;
@@ -44,6 +45,7 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             this.QuantidadeMoeda = Convert.ToDecimal(boleto.QuantidadeMoeda).Equals(null) ? 0 : Convert.ToDecimal(boleto.QuantidadeMoeda);
             this.DataJurosMora = boleto.DataJurosMora;
             this.Instrucoes = boleto.InstrucoesDoBoleto;
+            this.TipoCobrancaJuro = boleto.TipoCobrancaJuro;
             //this.MensagemLinha1 = boleto.InstrucoesDoBoleto.ElementAt(0).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(0).TextoInstrucao;
             //this.MensagemLinha2 = boleto.InstrucoesDoBoleto.ElementAt(1).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(1).TextoInstrucao;
             //this.MensagemLinha3 = boleto.InstrucoesDoBoleto.ElementAt(2).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(2).TextoInstrucao;
@@ -65,6 +67,7 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
 
         // Usado para identificar código da carteira no arquivo de remessa do Banco Santander
         public string CarteiraCobranca { get; set; }
+        public string TipoCarteiraCobranca { get; set; }
         public string InscricaoCedente { get; set; }
         public string CodigoDeTransmissao { get; set; }
         public string NossoNumeroFormatado { get; set; }
@@ -135,5 +138,6 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
         public string Mensagem1 { get; set; }
         public string NomeAvalistaOuMensagem2 { get; set; }
         public int NumeroSequencialRegistro { get; set; }
+        public TipoCobrancaJuro TipoCobrancaJuro { get; set; }
     }
 }

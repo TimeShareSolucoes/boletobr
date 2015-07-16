@@ -60,11 +60,13 @@
     <Compile Include="TestsBancosRemessa\TestRemessaCef.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaItau.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaSantander.cs" />
+    <Compile Include="TestsBancosRemessa\TestRemessaBRB.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBancoDoBrasil.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBancoItau.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBradesco.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoCef.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoHsbcCnr.cs" />
+    <Compile Include="TestsBancosRetorno\TestRetornoBancoBRB.cs" />
     <Compile Include="TestsBancos\BancoAmazoniaTests.cs" />
     <Compile Include="TestsBancos\BancoBradescoTests.cs" />
     <Compile Include="TestsBancos\BancoBrasilTests.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="TestsBancos\BancoSantanderTests.cs" />
     <Compile Include="TestsBancos\HsbcCarteiraCnrTipoIdentificador4.cs" />
     <Compile Include="TestsBancos\BancoItauTests.cs" />
+    <Compile Include="TestsBancos\BancoBRBTests.cs" />
     <Compile Include="TestsCommon\CommonTests.cs" />
     <Compile Include="TestsCommon\FatorVencimentoTests.cs" />
     <Compile Include="TestsBancos\BancoHsbcTests.cs" />

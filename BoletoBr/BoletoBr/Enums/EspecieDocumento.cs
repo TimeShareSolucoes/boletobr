@@ -14,6 +14,7 @@ namespace BoletoBr.Enums
         DuplicataServico,
         DuplicataServicoIndicacao,
         DuplicataRural, //DR � DUPLICATA RURAL
+        DuplicataPrestacao,
         LetraCambio, //LC � LETRA DE CAMBIO
         NotaCreditoComercial, //NCC � NOTA DE CR�DITO COMERCIAL
         NotaCreditoExportacao, //NCE � NOTA DE CR�DITO A EXPORTA��O

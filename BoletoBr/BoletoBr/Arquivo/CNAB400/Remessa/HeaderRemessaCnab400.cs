@@ -6,7 +6,8 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
 {
     public class HeaderRemessaCnab400
     {
-        public HeaderRemessaCnab400(Boleto boleto, int numeroSequencialRemessa, int numeroSequencialRegistro)
+        public HeaderRemessaCnab400(Boleto boleto, int numeroSequencialRemessa, int numeroSequencialRegistro,
+            DateTime? dataHora = null)
         {
             this.CodigoBanco = boleto.BancoBoleto.CodigoBanco;
             this.Agencia = boleto.CedenteBoleto.ContaBancariaCedente.Agencia;
@@ -15,9 +16,13 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             this.DvContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta;
             this.CodigoEmpresa = boleto.CedenteBoleto.CodigoCedente;
             this.NomeEmpresa = boleto.CedenteBoleto.Nome;
-            this.DataDeGravacao = DateTime.Now;
             this.NumeroSequencialRemessa = numeroSequencialRemessa;
             this.NumeroSequencialRegistro = numeroSequencialRegistro;
+
+            if (dataHora == null)
+                this.DataDeGravacao = DateTime.Now;
+            else
+                this.DataDeGravacao = (DateTime) dataHora;
 
             #region #033|SANTANDER
 
