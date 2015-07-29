@@ -1,0 +1,5 @@
+C:\Users\Kalley\Documents\GitHub\boletobr\BoletoBr\BoletoBr\bin\Debug\BoletoBr.dll
+C:\Users\Kalley\Documents\GitHub\boletobr\BoletoBr\BoletoBr\bin\Debug\BoletoBr.pdb
+C:\Users\Kalley\Documents\GitHub\boletobr\BoletoBr\BoletoBr\obj\Debug\BoletoBr.csprojResolveAssemblyReference.cache
+C:\Users\Kalley\Documents\GitHub\boletobr\BoletoBr\BoletoBr\obj\Debug\BoletoBr.dll
+C:\Users\Kalley\Documents\GitHub\boletobr\BoletoBr\BoletoBr\obj\Debug\BoletoBr.pdb

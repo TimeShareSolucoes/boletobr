@@ -153,6 +153,8 @@ namespace BoletoBr
             }
         }
 
+        public TipoCobrancaJuro TipoCobrancaJuro { get; set; }
+
         #endregion
 
         public Boleto()

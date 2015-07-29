@@ -359,6 +359,49 @@ namespace BoletoBr
             else
                 return (11 - r).ToString();
         }
+
+        public static int Mod11Base7BRB(string seq)
+        {
+            int digito;
+            int soma = 0;
+            int peso = 7;
+
+            for (int i = 0; i < seq.Length; i++)
+            {
+                soma = soma + (Convert.ToInt32(Mid(seq, i + 1, 1))*peso);
+
+                if (peso == 2) peso = 7;
+                else peso--;
+            }
+
+            digito = (soma%11);
+
+            if (digito > 0)
+            {
+                if (digito == 1)
+                {
+                    /*
+                    Se o resto fosse 1 (um), D2 teria de ser recalculado com um novo D1, da
+                    seguinte forma:
+                    Somaria 1 ao D1. Se o resultado fosse 10, o novo D1 seria 0 (zero).Caso
+                    contrário seria o resultado da soma. Em qualquer situação o novo D1 seria mantido
+                    na chave.
+                     */
+
+                    var D1 = seq.ExtrairValorDaLinha(seq.Length, seq.Length).BoletoBrToInt();
+                    D1 += 1;
+                    if (D1 == 10) D1 = 0;
+
+                    var newSeq = seq.ExtrairValorDaLinha(1, seq.Length - 1) + D1;
+                    digito = Mod11Base7BRB(newSeq);
+                }
+                else
+                    digito = 11 - digito;
+            }
+
+            return digito;
+        }
+
         #endregion Mod
 
         #region Funções para strings

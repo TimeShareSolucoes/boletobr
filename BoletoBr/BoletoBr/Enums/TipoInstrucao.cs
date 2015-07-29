@@ -90,7 +90,16 @@ namespace BoletoBr.Enums
         // COMANDO 02
         Devolver,
         Baixar,
-        EntregarAoSacado
+        EntregarAoSacado,
+
+        #endregion
+
+        #region BRB
+
+        MultaDeVPorCentoSobreValorTitulo,
+        MultaDeVPorCentoSobreValorTituloMaisEncargos,
+        MultaDeVPorCentoAposNDiasCorridosValorTituloMaisEncargos,
+        CobrarJurosMaisVariacaoIDTR50
 
         #endregion
     }

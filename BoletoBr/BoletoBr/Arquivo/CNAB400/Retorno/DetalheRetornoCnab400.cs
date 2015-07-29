@@ -27,11 +27,13 @@ namespace BoletoBr
         public int NumeroCarteira { get; set; }
         public int CodigoDeOcorrencia { get; set; }
         public DateTime DataDaOcorrencia { get; set; }
+
         /// <summary>
         /// Número da parcela e total de parcelas, sendo 3 dítidos para cada campo.
         /// PPP/TTT
         /// </summary>
         public string SeuNumero { get; set; }
+
         public string NossoNumero { get; set; }
         public int MotivoDaOcorrencia { get; set; }
         public DateTime DataDeVencimento { get; set; }
@@ -65,12 +67,14 @@ namespace BoletoBr
 
         public string IdentificacaoEmpresaNoBanco { get; set; }
         public string IndicadorRateioCredito { get; set; }
+
         /// <summary>
         /// Despesas de cobrança para os códigos de ocorrência:
         /// 02 - Entrada Confirmada
         /// 28 - Débito de Tarifas
         /// </summary>
         public decimal ValorDespesas { get; set; }
+
         public decimal ValorJurosAtraso { get; set; }
         public string MotivoCodigoOcorrencia { get; set; }
         public int OrigemPagamento { get; set; }
@@ -97,6 +101,7 @@ namespace BoletoBr
         public string DvContaCorrente { get; set; }
         public int NumeroConvenio { get; set; }
         public string NumeroControle { get; set; }
+
         /// <summary>
         /// Tipo de Cobrança
         /// 1 - Simples
@@ -106,6 +111,7 @@ namespace BoletoBr
         /// 8 - Vendor
         /// </summary>
         public int TipoCobranca { get; set; }
+
         /// <summary>
         /// Tipo de Cobrança Específico para Comando 72
         /// Alteração de tipo de cobrança de títulos das carteiras 11 e 17
@@ -117,6 +123,7 @@ namespace BoletoBr
         /// 8 - Vendor
         /// </summary>
         public int TipoCobrancaCmd17 { get; set; }
+
         public int DiasCalculo { get; set; }
         public int NaturezaRecebimento { get; set; }
         public string PrefixoTitulo { get; set; }
@@ -126,10 +133,12 @@ namespace BoletoBr
         public int TaxaIof { get; set; }
         public int Comando { get; set; }
         public DateTime DataLiquidacao { get; set; }
+
         /// <summary>
         /// Número do título dado pelo cedente
         /// </summary>
         public string TituloDadoCedente { get; set; }
+
         public string DvAgenciaCobradora { get; set; }
         public decimal ValorOutrosRecebimentos { get; set; }
         public decimal ValorAbatimentosNaoAproveitado { get; set; }
@@ -137,6 +146,7 @@ namespace BoletoBr
         public string IndicativoDebitoCredito { get; set; }
         public int IndicadorValor { get; set; }
         public decimal ValorAjuste { get; set; }
+
         /// <summary>
         /// Posição: 333 a 333
         /// Para cobrança compartilhada usar:
@@ -144,48 +154,57 @@ namespace BoletoBr
         /// 3 - Convênio compartilhado
         /// </summary>
         public string BrancosIndicadorConvenio { get; set; }
+
         /// <summary>
         /// Posição: 334 a 342
         /// Valor original do título pago pelo sacado
         /// </summary>
         public decimal BrancosValorPagoTitulo { get; set; }
+
         /// <summary>
         /// Posição: 343 a 349
         /// Se 333 igual a 2 - informado convênio compartilhado.
         /// Se 333 igual a 3 - informado convênio compartilhador.
         /// </summary>
         public long ZerosNumeroPrimeiroConvenio { get; set; }
+
         /// <summary>
         /// Posição: 350 a 358
         /// Se 333 igual a 2 - valor repassado para o primeiro convênio compartilhado.
         /// Se 333 igual a 3 - valor recebido no convênio compartilhador.
         /// </summary>
         public decimal ZerosValorPrimeiroConvenio { get; set; }
+
         /// <summary>
         /// Posição: 359 a 365
         /// Se 333 igual a 2 - número do segundo convênio compartilhado.
         /// Se 333 igual a 3 - zeros.
         /// </summary>
         public long ZerosNumeroSegundoConvenio { get; set; }
+
         /// <summary>
         /// Posição: 366 a 374
         /// Se 333 igual a 2 - valor repassado para o segundo convênio compartilhado.
         /// Se 333 igual a 3 - zeros
         /// </summary>
         public decimal ZerosValorSegundoConvenio { get; set; }
+
         /// <summary>
         /// Posição: 375 a 381
         /// Se 333 igual a 2 - número do terceiro convênio compartilhado.
         /// Se 333 igual a 3 - zeros
         /// </summary>
         public long ZerosNumeroTerceiroConvenio { get; set; }
+
         /// <summary>
         /// Posição: 382 a 390
         /// Se 333 igual a 2 - valor repassado para o terceiro convênio compartilhado.
         /// Se 333 igual a 3 - zeros
         /// </summary>
         public decimal ZerosValorTerceiroConvenio { get; set; }
+
         public int AutorizacaoLiquidacaoParcial { get; set; }
+
         /// <summary>
         /// Canal utilizado para pagamento/Meios de apresenção do título ao sacado.
         /// -> Comando 02 nas posições 109/110 (Confirmação de entrada de título)
@@ -265,24 +284,30 @@ namespace BoletoBr
         #region Detalhe Tipo 3 - Cobrança Vendor
 
         public string DvNossoNumero { get; set; }
+
         /// <summary>
         /// Número da operação BBVendor no aplicativo CIOPE
         /// </summary>
         public long NumeroOperacaoBBVendor { get; set; }
+
         /// <summary>
         /// Data da operação BBVendor (DDMMAAAA)
         /// </summary>
         public DateTime DataOperacaoBBVendor { get; set; }
+
         public int TaxaJurosVendedor { get; set; }
         public int TaxaJurosComprador { get; set; }
+
         /// <summary>
         /// Valor do título no vencimento
         /// </summary>
         public decimal ValorTituloVencimento { get; set; }
+
         /// <summary>
         /// Valor original da venda
         /// </summary>
         public decimal ValorOriginal { get; set; }
+
         public decimal ValorEncargosComprador { get; set; }
         public decimal ValorIofFinanciado { get; set; }
         public decimal ValorAcumuladoAbatimento { get; set; }
@@ -301,18 +326,22 @@ namespace BoletoBr
         public decimal ValorEqualizacaoEstornada { get; set; }
         public decimal ValorNovaEqualizacao { get; set; }
         public decimal ValorDiferencaEqualizacao { get; set; }
+
         /// <summary>
         /// Indicativo de débito/crédito (corresponde ao valor indicado no campo 25)
         /// </summary>
         public int IndicativoDebitoCreditoCampo25 { get; set; }
+
         /// <summary>
         /// Indicativo da natureza da equalização (corresponde ao valor indicado no campo 25)
         /// </summary>
         public int IndicativoNaturezaEqualizacao1 { get; set; }
+
         /// <summary>
         /// Indicativo da natureza da equalização (corresponde ao valor indicado no campo 26)
         /// </summary>
         public int IndicativoNaturezaEqualizacao2 { get; set; }
+
         public decimal ValorIofNaoFinanciado { get; set; }
         public decimal ValorComissaoPermanencia { get; set; }
 
@@ -354,29 +383,36 @@ namespace BoletoBr
         public long NumeroInscricao { get; set; }
         public int IdEmissao { get; set; }
         public int IdPostagem { get; set; }
+
         /// <summary>
         /// Identificação do título na empresa
         /// </summary>
         public string UsoDaEmpresa { get; set; }
+
         public int ModalidadeNossoNumero { get; set; }
         public int CodigoRejeicao { get; set; }
         public string NumeroDocumento { get; set; }
+
         /// <summary>
         /// Valor da Tarifa / Despesa de Cobrança
         /// </summary>
         public decimal ValorTarifa { get; set; }
+
         /// <summary>
         /// Código do canal de liquidação ou da baixa do título
         /// </summary>
         public int CodigoBaixaTitulo { get; set; }
+
         /// <summary>
         /// Código que identifica a forma de pagamento
         /// </summary>
         public string CodigoFormaPagamento { get; set; }
+
         /// <summary>
         /// Informação de float negociado
         /// </summary>
         public int FloatNegociado { get; set; }
+
         /// <summary>
         /// Data do débito da tarifa
         /// </summary>
@@ -409,6 +445,7 @@ namespace BoletoBr
         public string BandaMagneticaCheque { get; set; }
         public string IndicadorBoletoDDA { get; set; }
         public int CodigoInstrucaoCancelada { get; set; }
+
         /// <summary>
         /// Registros rejeitados ou alegação do sacado ou registro de mensagem informativa
         /// </summary>
@@ -428,6 +465,16 @@ namespace BoletoBr
         public decimal ValorIOCOutraUnidadeValor { get; set; }
         public decimal ValorDoDebitoCredito { get; set; }
         public int Versao { get; set; }
+
+        #endregion
+
+        #region BRB
+
+        public string CodigoInstrucao { get; set; }
+        public string DescricaoInstrucao { get; set; }
+        public string CodigoDoRateio { get; set; }
+        public decimal ValorOutrosDebitos { get; set; }
+
         #endregion
     }
 }
