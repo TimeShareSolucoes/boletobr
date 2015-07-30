@@ -50,6 +50,21 @@ namespace BoletoBr.UnitTests.TestsBancosRetorno
             Assert.AreEqual(resultado.DataDeVencimento, "090714");
         }
 
+        [TestMethod]
+        public void TestArquivoRetornoOcorrencia()
+        {
+            var banco = Fabricas.BancoFactory.ObterBanco("341", "7");
+
+            List<string> arquivo = new List<string>();
+            arquivo.Add("02RETORNO01COBRANCA       434300295509        REZ E ROCHA S EM TI LTDA - ME 341BANCO ITAU S.A.15071501600BPI00138160715                                                                                                                                                                                                                                                                                   000001");
+            arquivo.Add("10218183122000126434300295509                                 57417541            157574175411             I06140715          57417541            140715000000017680010436327  000000000000000000000000000000000000000000000000000000000000000000000000000000000000017680000000000000000000000000000   16071500000000000000000000000ETR CONST. E INCORPORA LTDA                                         B3000002");
+            arquivo.Add("9201341          000000000000000000000000000000          000000000000000000000000000000                                                  000000000000000000000000000000          0000000500000001487691  16/07S001380000000100000000176800                                                                                                                                                                000003");
+
+            var retorno = banco.LerArquivoRetorno(arquivo);
+
+            Assert.AreNotEqual(retorno.RegistrosDetalhe[0].MensagemOcorrenciaRetornoBancario, "");
+        }
+
         #endregion
     }
 }
