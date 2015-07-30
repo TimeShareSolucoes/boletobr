@@ -5,6 +5,5 @@ C:\Users\Kalley\Documents\GitHub\boletobr\BoletoBr\BoletoBr\obj\Debug\BoletoBr.d
 C:\Users\Kalley\Documents\GitHub\boletobr\BoletoBr\BoletoBr\obj\Debug\BoletoBr.pdb
 D:\boletobr\BoletoBr\BoletoBr\bin\Debug\BoletoBr.dll
 D:\boletobr\BoletoBr\BoletoBr\bin\Debug\BoletoBr.pdb
-D:\boletobr\BoletoBr\BoletoBr\obj\Debug\BoletoBr.csprojResolveAssemblyReference.cache
 D:\boletobr\BoletoBr\BoletoBr\obj\Debug\BoletoBr.dll
 D:\boletobr\BoletoBr\BoletoBr\obj\Debug\BoletoBr.pdb
