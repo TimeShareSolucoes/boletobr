@@ -9,6 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoletoBrUnitTests", "Boleto
 EndProject
 Project("{FF286327-C783-4F7A-AB73-9BCBAD0D4460}") = "BoletoBr.NuGet", "BoletoBr.NuGet\BoletoBr.NuGet.nuproj", "{598BC53F-6B67-4007-B5A5-6411571430D6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3DBC0B66-2B74-4C0B-AD32-8255690D5A0D}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
