@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>BoletoBr</id>
+    <version>1.0.2.13</version>
+    <title>BoletoBr</title>
+    <authors>Gabriel, Samuel</authors>
+    <owners>Gabriel, Samuel</owners>
+    <projectUrl>https://github.com/gabrielrb/boletobr</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Geração de Boletos, Remessa, Leitura de Retorno para Bancos Brasileiros, no padrão CNAB 240 e CNAB 400. O BoletoBr, cuida de todos os cálculos, validações, para garantir que os dados do boleto estejam de acordo com as normas dos respectivos bancos. A biblioteca AINDA não gera a apresentação do boleto, estamos procurando colaboradores para criar uma renderização do boleto em HTML ou em PDF:  https://github.com/gabrielrb/boletobr</description>
+    <summary>Geração de Boletos, Remessa, Leitura de Retorno para Bancos Brasileiros, no padrão CNAB 240 e CNAB 400. O BoletoBr, cuida de todos os cálculos, validações, para garantir que os dados do boleto estejam de acordo com as normas dos respectivos bancos.</summary>
+    <tags>boleto cnab240 cnab400</tags>
+  </metadata>
+  <files>
+    <file src="D:\boletobr\BoletoBr\BoletoBr\obj\Debug\BoletoBr.dll" target="lib\net45" exclude="" />
+    <file src="D:\boletobr\BoletoBr\BoletoBr\obj\Debug\BoletoBr.pdb" target="lib\net45" exclude="" />
+    <file src="D:\boletobr\BoletoBr\BoletoBr.NuGet\Readme.txt" target="" exclude="" />
+  </files>
+</package>
