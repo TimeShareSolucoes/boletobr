@@ -285,7 +285,8 @@ namespace BoletoBr.Bancos.Bradesco
 
         public void FormataNumeroDocumento(Boleto boleto)
         {
-            if (String.IsNullOrEmpty(boleto.NumeroDocumento) || String.IsNullOrEmpty(boleto.NumeroDocumento.TrimStart('0')))
+            if (String.IsNullOrEmpty(boleto.NumeroDocumento) ||
+                String.IsNullOrEmpty(boleto.NumeroDocumento.TrimStart('0')))
                 throw new Exception("Número do Documento não foi informado.");
 
             boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(10, '0');

@@ -54,6 +54,7 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             this.TipoCobrancaJuro = boleto.TipoCobrancaJuro;
             PercentualMulta = boleto.PercentualMulta.BoletoBrToStringSafe().BoletoBrToDecimal();
             ValorMoraDia = boleto.PercentualJurosMora.BoletoBrToStringSafe().BoletoBrToDecimal();
+            TipoCarteiraCobranca = boleto.CarteiraCobranca.Tipo;
 
             //this.MensagemLinha1 = boleto.InstrucoesDoBoleto.ElementAt(0).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(0).TextoInstrucao;
             //this.MensagemLinha2 = boleto.InstrucoesDoBoleto.ElementAt(1).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(1).TextoInstrucao;

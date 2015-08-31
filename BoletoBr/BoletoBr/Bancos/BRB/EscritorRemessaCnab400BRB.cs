@@ -72,7 +72,7 @@ namespace BoletoBr.Bancos.BRB
             }
 
             if (String.IsNullOrEmpty(infoDetalhe.CidadePagador))
-                cidadeSacado.PadRight(15, ' ');
+                cidadeSacado = cidadeSacado.PadRight(15, ' ');
             else
             {
                 cidadeSacado = infoDetalhe.CidadePagador.Length > 15
@@ -81,7 +81,7 @@ namespace BoletoBr.Bancos.BRB
             }
 
             if (String.IsNullOrEmpty(infoDetalhe.NomePagador))
-                nomeSacado.PadRight(35, ' ');
+                nomeSacado = nomeSacado.PadRight(35, ' ');
             else
             {
                 nomeSacado = infoDetalhe.NomePagador.Length > 35
@@ -115,14 +115,15 @@ namespace BoletoBr.Bancos.BRB
                 detalhe = detalhe.PreencherValorNaLinha(27, 61, nomeSacado);
                 detalhe = detalhe.PreencherValorNaLinha(62, 96, enderecoSacado);
                 detalhe = detalhe.PreencherValorNaLinha(97, 111, cidadeSacado);
-                detalhe = detalhe.PreencherValorNaLinha(112, 113, infoDetalhe.UfPagador.PadRight(2, ' '));
+                detalhe = detalhe.PreencherValorNaLinha(112, 113,
+                    infoDetalhe.UfPagador.BoletoBrToStringSafe().PadRight(2, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(114, 121,
-                    infoDetalhe.CepPagador.Replace(".", "").Replace("-", "").PadLeft(8, '0'));
+                    infoDetalhe.CepPagador.BoletoBrToStringSafe().Replace(".", "").Replace("-", "").PadLeft(8, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(122, 122, tipoSacado);
                 detalhe = detalhe.PreencherValorNaLinha(123, 135, infoDetalhe.NumeroDocumento.PadLeft(13, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(136, 136, infoDetalhe.TipoCarteiraCobranca);
                 detalhe = detalhe.PreencherValorNaLinha(137, 144, infoDetalhe.DataEmissao.ToString("ddMMyyyy"));
-                detalhe = detalhe.PreencherValorNaLinha(145, 146, infoDetalhe.Especie.Codigo.ToString());
+                detalhe = detalhe.PreencherValorNaLinha(145, 146, infoDetalhe.Especie.Codigo.ToString().PadLeft(2, '0'));
 
                 //0- Simples
                 detalhe = detalhe.PreencherValorNaLinha(147, 147, "0");
