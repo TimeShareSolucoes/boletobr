@@ -20,7 +20,7 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 	- <b>001-9 | Banco do Brasil</b>
 		- Implementação / Testes
 			- Carteiras
-				- [x] Carteira 11 
+				- [x] Carteira 11 (*Envio de remessa homologado com o banco em: 27-08-2015*)
 				- [x] Carteira 16
 				- [ ] Carteira 17
 				- [ ] Carteira 17-019
