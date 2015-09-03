@@ -52,5 +52,47 @@ namespace BoletoBr.UnitTests.TestsBancos
 
 
         }
+
+        [TestMethod]
+        public void CalculoCodigoBarrasCarteira11BancoDoBrasil()
+        {
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+
+            var banco = Fabricas.BancoFactory.ObterBanco("001", "9");
+
+            var contaBancariaCedente = new ContaBancaria("165", "1", "32473", "6");
+
+            var cedente = new Cedente("9999999", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente, null)
+            {
+                Convenio = "2749885"
+            };
+
+            var sacado = new Sacado("Sacado Fulano de Tal", "999.999.999-99", new Endereco()
+            {
+                TipoLogradouro = "R",
+                Logradouro = "1",
+                Bairro = "Bairro X",
+                Cidade = "Cidade X",
+                SiglaUf = "XX",
+                Cep = "12345-000",
+                Complemento = "Comp X",
+                Numero = "9"
+            });
+
+            var carteira = new CarteiraCobranca {Codigo = "11"};
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "3745",
+                ValorBoleto = Convert.ToDecimal(701.11),
+                IdentificadorInternoBoleto = "3745",
+                DataVencimento = new DateTime(2015, 08, 20)
+            };
+
+            banco.FormataNossoNumero(boleto);
+            banco.FormataCodigoBarra(boleto);
+
+            Assert.AreEqual("00194652600000701110000002749885000000374511", boleto.CodigoBarraBoleto);
+        }
     }
 }

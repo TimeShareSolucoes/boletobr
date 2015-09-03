@@ -144,7 +144,7 @@ namespace BoletoBr.Bancos.Itau
             else
                 _dacNossoNumero = Common.Mod10(
                     boleto.CedenteBoleto.ContaBancariaCedente.Agencia +
-                    boleto.CedenteBoleto.ContaBancariaCedente.Conta + 
+                    boleto.CedenteBoleto.ContaBancariaCedente.Conta +
                     boleto.CarteiraCobranca.Codigo +
                     sequencialNN);
         }
@@ -165,8 +165,8 @@ namespace BoletoBr.Bancos.Itau
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("<BoletoBr>" + 
-                    "{0}Mensagem: Falha ao formatar moeda para o Banco: " + 
+                throw new Exception(string.Format("<BoletoBr>" +
+                    "{0}Mensagem: Falha ao formatar moeda para o Banco: " +
                     CodigoBanco + " - " + NomeBanco, Environment.NewLine), ex);
             }
         }
@@ -187,8 +187,8 @@ namespace BoletoBr.Bancos.Itau
             ValidaBoletoComNormasBanco(boleto);
 
             boleto.CedenteBoleto.CodigoCedenteFormatado = String.Format("{0}/{1}-{2}",
-                boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'), 
-                boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(5, '0'), 
+                boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'),
+                boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(5, '0'),
                 boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta);
         }
 
@@ -205,17 +205,17 @@ namespace BoletoBr.Bancos.Itau
 
                 string numeroDocumento = boleto.NumeroDocumento.PadLeft(7, '0');
                 string codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(5, '0');
-                
+
                 if ((boleto.CarteiraCobranca.Codigo == "109") || (boleto.CarteiraCobranca.Codigo == "198") ||
                     (boleto.CarteiraCobranca.Codigo == "121") || (boleto.CarteiraCobranca.Codigo == "175") ||
                     (boleto.CarteiraCobranca.Codigo == "176") || (boleto.CarteiraCobranca.Codigo == "178"))
-                    
+
                     boleto.CodigoBarraBoleto =
                         string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}000", CodigoBanco, MoedaBanco,
                                       Common.FatorVencimento(boleto.DataVencimento), valorBoleto, boleto.CarteiraCobranca.Codigo,
                                       boleto.IdentificadorInternoBoleto, _dacNossoNumero, boleto.CedenteBoleto.ContaBancariaCedente.Agencia,
                                       boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(5, '0'), boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta);
-                         
+
                 else if ((boleto.CarteiraCobranca.Codigo == "107") || (boleto.CarteiraCobranca.Codigo == "122") ||
                     (boleto.CarteiraCobranca.Codigo == "142") || (boleto.CarteiraCobranca.Codigo == "143") ||
                     (boleto.CarteiraCobranca.Codigo == "196"))
@@ -350,10 +350,10 @@ namespace BoletoBr.Bancos.Itau
                 else if (boleto.CarteiraCobranca.Codigo == "107" || boleto.CarteiraCobranca.Codigo == "122" || boleto.CarteiraCobranca.Codigo == "142"
                          || boleto.CarteiraCobranca.Codigo == "143" || boleto.CarteiraCobranca.Codigo == "196" || boleto.CarteiraCobranca.Codigo == "198")
                 {
-              
-                #region Definições Carteiras 107 - 122 - 142 - 143 - 196 - 198
 
-              /* AAABC.CCDDX.DDDDD.DEEEEY.EEEFF.FFFGHZ.K.UUUUVVVVVVVVVV
+                    #region Definições Carteiras 107 - 122 - 142 - 143 - 196 - 198
+
+                    /* AAABC.CCDDX.DDDDD.DEEEEY.EEEFF.FFFGHZ.K.UUUUVVVVVVVVVV
               * ------------------------------------------------------
               * Campo 1 - AAABC.CCDDX
               * AAA - C�digo do Banco
@@ -473,7 +473,109 @@ namespace BoletoBr.Bancos.Itau
 
         public ICodigoOcorrencia ObtemCodigoOcorrenciaByInt(int numeroOcorrencia)
         {
-            throw new NotImplementedException();
+            switch (numeroOcorrencia)
+            {
+                case 01:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 01,
+                        Descricao = "REMESSA"
+                    };
+                case 02:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 02,
+                        Descricao = "PEDIDO DE BAIXA"
+                    };
+                case 04:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 04,
+                        Descricao = "CONCESSÃO DE ABATIMENTO (INDICADOR 12.5)"
+                    };
+                case 05:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 05,
+                        Descricao = "CANCELAMENTO DE ABATIMENTO"
+                    };
+                case 06:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 06,
+                        Descricao = "ALTERAÇÃO DO VENCIMENTO"
+                    };
+                case 09:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 09,
+                        Descricao = "PROTESTAR"
+                    };
+                case 10:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 10,
+                        Descricao = "NÃO PROTESTAR (INIBE O PROTESTO AUTOMÁTICO)"
+                    };
+                case 18:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 18,
+                        Descricao = "SUSTAR O PROTESTO"
+                    };
+                case 31:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 31,
+                        Descricao = "ALTERAÇÃO DE OUTROS DADOS"
+                    };
+                case 38:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 38,
+                        Descricao = "BENEFICIÁRIO NÃO CONCORDA COM A ALEGAÇÃO DO PAGADOR"
+                    };
+                case 41:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 41,
+                        Descricao = "EXCLUSÃO DE SACADOR AVALISTA"
+                    };
+                case 49:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 49,
+                        Descricao = "ALTERAÇÃO DE DADOS EXTRAS (REGISTRO DE MULTA)"
+                    };
+                case 66:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 66,
+                        Descricao = "ENTRADA EM NEGATIVAÇÃO EXPRESSA"
+                    };
+                case 67:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 67,
+                        Descricao = "NÃO NEGATIVAR (INIBE ENTRADA EM NEGATIVAÇÃO EXPRESSA)"
+                    };
+                case 68:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 68,
+                        Descricao = "EXCLUIR NEGATIVAÇÃO EXPRESSA (ATÉ 15 DIAS CORRIDOS APÓS A ENTRADA EM NEGATIVAÇÃO EXPRESSA)"
+                    };
+                case 69:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 69,
+                        Descricao = "CANCELAR NEGATIVAÇÃO EXPRESSA (APÓS TÍTULO TER SIDO NEGATIVADO)"
+                    };
+            }
+            throw new Exception(
+                String.Format(
+                    "Não foi possível obter Código de Comando/Movimento/Ocorrência. Banco: {0} Código: {1}",
+                    CodigoBanco, numeroOcorrencia.ToString()));
         }
 
         public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRetorno ocorrenciaRetorno)
@@ -641,125 +743,125 @@ namespace BoletoBr.Bancos.Itau
             switch (tipoInstrucao)
             {
                 case EnumTipoInstrucao.Protestar:
-                {
-                    return new InstrucaoPadronizada()
                     {
-                        Codigo = 9,
-                        QtdDias = diasInstrucao,
-                        Valor = valorInstrucao,
-                        TextoInstrucao = "Protestar após " + valorInstrucao + " dias úteis."
-                    };
-                }
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 9,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Protestar após " + valorInstrucao + " dias úteis."
+                        };
+                    }
                 case EnumTipoInstrucao.NaoProtestar:
-                {
-                    return new InstrucaoPadronizada()
                     {
-                        Codigo = 10,
-                        QtdDias = diasInstrucao,
-                        Valor = valorInstrucao,
-                        TextoInstrucao = "Não protestar."
-                    };
-                }
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 10,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Não protestar."
+                        };
+                    }
                 case EnumTipoInstrucao.DevolverApos90Dias:
-                {
-                    return new InstrucaoPadronizada()
                     {
-                        Codigo = 18,
-                        QtdDias = diasInstrucao,
-                        Valor = valorInstrucao,
-                        TextoInstrucao = "Devolver após 90 dias do vencimento."
-                    };
-                }
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 18,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Devolver após 90 dias do vencimento."
+                        };
+                    }
                 case EnumTipoInstrucao.ProtestarAposNDiasCorridos:
-                {
-                    return new InstrucaoPadronizada()
                     {
-                        Codigo = 34,
-                        QtdDias = diasInstrucao,
-                        Valor = valorInstrucao,
-                        TextoInstrucao = "Protestar após " + diasInstrucao + " dias corridos do vencimento."
-                    };
-                }
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 34,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Protestar após " + diasInstrucao + " dias corridos do vencimento."
+                        };
+                    }
                 case EnumTipoInstrucao.ProtestarAposNDiasUteis:
-                {
-                    return new InstrucaoPadronizada()
                     {
-                        Codigo = 35,
-                        QtdDias = diasInstrucao,
-                        Valor = valorInstrucao,
-                        TextoInstrucao = "Protestar após " + diasInstrucao + " dias úteis do vencimento."
-                    };
-                }
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 35,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Protestar após " + diasInstrucao + " dias úteis do vencimento."
+                        };
+                    }
                 case EnumTipoInstrucao.NaoReceberAposOVencimento:
-                {
-                    return new InstrucaoPadronizada()
                     {
-                        Codigo = 39,
-                        QtdDias = diasInstrucao,
-                        Valor = valorInstrucao,
-                        TextoInstrucao = "Não receber após o vencimento."
-                    };
-                }
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 39,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Não receber após o vencimento."
+                        };
+                    }
                 case EnumTipoInstrucao.ImportanciaPorDiaDeAtrasoAPartirDeDDMMAA:
-                {
-                    return new InstrucaoPadronizada()
                     {
-                        Codigo = 44,
-                        QtdDias = diasInstrucao,
-                        Valor = valorInstrucao,
-                        TextoInstrucao = "Importância por dia de atraso a partir de " + dataInstrucao.ToString("ddmmyy")
-                    };
-                }
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 44,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Importância por dia de atraso a partir de " + dataInstrucao.ToString("ddmmyy")
+                        };
+                    }
                 case EnumTipoInstrucao.NoVencimentoPagavelEmQualquerAgencia:
-                {
-                    return new InstrucaoPadronizada()
                     {
-                        Codigo = 90,
-                        QtdDias = diasInstrucao,
-                        Valor = valorInstrucao,
-                        TextoInstrucao = "No vencimento pagável em qualquer agência bancária."
-                    };
-                }
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 90,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "No vencimento pagável em qualquer agência bancária."
+                        };
+                    }
                 case EnumTipoInstrucao.NaoReceberAposNDiasCorridos:
-                {
-                    return new InstrucaoPadronizada()
                     {
-                        Codigo = 91,
-                        QtdDias = diasInstrucao,
-                        Valor = valorInstrucao,
-                        TextoInstrucao = "Não receber após " + diasInstrucao + " dias do vencimento."
-                    };
-                }
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 91,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Não receber após " + diasInstrucao + " dias do vencimento."
+                        };
+                    }
                 case EnumTipoInstrucao.DevolverAposNDias:
-                {
-                    return new InstrucaoPadronizada()
                     {
-                        Codigo = 92,
-                        QtdDias = diasInstrucao,
-                        Valor = valorInstrucao,
-                        TextoInstrucao = "Devolver após " + diasInstrucao + " dias do vencimento."
-                    };
-                }
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 92,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Devolver após " + diasInstrucao + " dias do vencimento."
+                        };
+                    }
                 case EnumTipoInstrucao.MultaVencimento:
-                {
-                    return new InstrucaoPadronizada()
                     {
-                        Codigo = 997,
-                        QtdDias = diasInstrucao,
-                        Valor = valorInstrucao,
-                        TextoInstrucao = "Cobrar multa após o vencimento."
-                    };
-                }
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 997,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Cobrar multa após o vencimento."
+                        };
+                    }
                 case EnumTipoInstrucao.JurosdeMora:
-                {
-                    return new InstrucaoPadronizada()
                     {
-                        Codigo = 998,
-                        QtdDias = diasInstrucao,
-                        Valor = valorInstrucao,
-                        TextoInstrucao = "Cobrar juros após o vencimento."
-                    };
-                }
+                        return new InstrucaoPadronizada()
+                        {
+                            Codigo = 998,
+                            QtdDias = diasInstrucao,
+                            Valor = valorInstrucao,
+                            TextoInstrucao = "Cobrar juros após o vencimento."
+                        };
+                    }
             }
             throw new Exception(String.Format("Não foi possível obter instrução padronizada. Banco: {0} Código Instrução: {1} Qtd Dias/Valor: {2}",
                 CodigoBanco, tipoInstrucao.ToString(), valorInstrucao));
@@ -771,7 +873,7 @@ namespace BoletoBr.Bancos.Itau
             {
                 case EnumCodigoOcorrenciaRemessa.Registro:
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
+                        return new CodigoOcorrencia((int)ocorrencia)
                         {
                             Codigo = 01,
                             Descricao = "Remessa"
@@ -779,7 +881,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.Baixa:
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
+                        return new CodigoOcorrencia((int)ocorrencia)
                         {
                             Codigo = 02,
                             Descricao = "Pedido de baixa"
@@ -787,7 +889,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
+                        return new CodigoOcorrencia((int)ocorrencia)
                         {
                             Codigo = 04,
                             Descricao = "Concessão de abatimento"
@@ -795,7 +897,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
+                        return new CodigoOcorrencia((int)ocorrencia)
                         {
                             Codigo = 05,
                             Descricao = "Cancelamento de abatimento"
@@ -803,7 +905,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDeVencimento:
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
+                        return new CodigoOcorrencia((int)ocorrencia)
                         {
                             Codigo = 06,
                             Descricao = "Alteração do vencimento"
@@ -811,7 +913,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDoControleDoParticipante:
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
+                        return new CodigoOcorrencia((int)ocorrencia)
                         {
                             Codigo = 07,
                             Descricao = "Alteração do uso da empresa"
@@ -819,7 +921,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoSeuNumero:
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
+                        return new CodigoOcorrencia((int)ocorrencia)
                         {
                             Codigo = 08,
                             Descricao = "Alteração de seu número"
@@ -827,7 +929,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.Protesto:
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
+                        return new CodigoOcorrencia((int)ocorrencia)
                         {
                             Codigo = 09,
                             Descricao = "Protestar"
@@ -835,7 +937,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.NaoProtestar:
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
+                        return new CodigoOcorrencia((int)ocorrencia)
                         {
                             Codigo = 10,
                             Descricao = "Não protestar"
@@ -843,7 +945,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.ProtestoParaFinsFalimentares:
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
+                        return new CodigoOcorrencia((int)ocorrencia)
                         {
                             Codigo = 11,
                             Descricao = "Protesto para fins falimentares"
@@ -851,7 +953,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.SustarProtesto:
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
+                        return new CodigoOcorrencia((int)ocorrencia)
                         {
                             Codigo = 18,
                             Descricao = "Sustar o protesto"
@@ -859,7 +961,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.ExclusaoDeSacadorAvalista:
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
+                        return new CodigoOcorrencia((int)ocorrencia)
                         {
                             Codigo = 30,
                             Descricao = "Exclusão de sacador avalista"
@@ -867,7 +969,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDeOutrosDados:
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
+                        return new CodigoOcorrencia((int)ocorrencia)
                         {
                             Codigo = 31,
                             Descricao = "Alteração de outros dados"
@@ -875,7 +977,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.BaixaPorTerSidoPagoDiretamenteAoCedente:
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
+                        return new CodigoOcorrencia((int)ocorrencia)
                         {
                             Codigo = 34,
                             Descricao = "Baixa por ter sido pago diretamente ao cedente"
@@ -883,7 +985,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.CancelamentoDeInstrucao:
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
+                        return new CodigoOcorrencia((int)ocorrencia)
                         {
                             Codigo = 35,
                             Descricao = "Cancelamento de instrução"
@@ -891,7 +993,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDoVencimentoESustarProtesto:
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
+                        return new CodigoOcorrencia((int)ocorrencia)
                         {
                             Codigo = 37,
                             Descricao = "Alteração do vencimento e sustar protesto"
@@ -899,7 +1001,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.CedenteNaoConcordaComAlegacaoDoSacado:
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
+                        return new CodigoOcorrencia((int)ocorrencia)
                         {
                             Codigo = 38,
                             Descricao = "Cedente não concorda com alegação do sacado"
@@ -907,7 +1009,7 @@ namespace BoletoBr.Bancos.Itau
                     }
                 case EnumCodigoOcorrenciaRemessa.CedenteSolicitaDispensaDeJuros:
                     {
-                        return new CodigoOcorrencia((int) ocorrencia)
+                        return new CodigoOcorrencia((int)ocorrencia)
                         {
                             Codigo = 47,
                             Descricao = "Cedente solicita dispensa de juros"

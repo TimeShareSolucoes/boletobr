@@ -7,3 +7,12 @@ C:\Users\Kalley\Documents\GitHub\boletobr\BoletoBr\BoletoBr.UnitTests\obj\Debug\
 C:\Users\Kalley\Documents\GitHub\boletobr\BoletoBr\BoletoBr.UnitTests\obj\Debug\BoletoBrUnitTests.csproj.GenerateResource.Cache
 C:\Users\Kalley\Documents\GitHub\boletobr\BoletoBr\BoletoBr.UnitTests\obj\Debug\BoletoBr.UnitTests.dll
 C:\Users\Kalley\Documents\GitHub\boletobr\BoletoBr\BoletoBr.UnitTests\obj\Debug\BoletoBr.UnitTests.pdb
+D:\boletobr\BoletoBr\BoletoBr.UnitTests\bin\Debug\BoletoBr.UnitTests.dll
+D:\boletobr\BoletoBr\BoletoBr.UnitTests\bin\Debug\BoletoBr.UnitTests.pdb
+D:\boletobr\BoletoBr\BoletoBr.UnitTests\bin\Debug\BoletoBr.dll
+D:\boletobr\BoletoBr\BoletoBr.UnitTests\bin\Debug\BoletoBr.pdb
+D:\boletobr\BoletoBr\BoletoBr.UnitTests\obj\Debug\BoletoBrUnitTests.csprojResolveAssemblyReference.cache
+D:\boletobr\BoletoBr\BoletoBr.UnitTests\obj\Debug\BoletoBr.UnitTests.Properties.Resources.resources
+D:\boletobr\BoletoBr\BoletoBr.UnitTests\obj\Debug\BoletoBrUnitTests.csproj.GenerateResource.Cache
+D:\boletobr\BoletoBr\BoletoBr.UnitTests\obj\Debug\BoletoBr.UnitTests.dll
+D:\boletobr\BoletoBr\BoletoBr.UnitTests\obj\Debug\BoletoBr.UnitTests.pdb

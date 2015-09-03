@@ -49,6 +49,7 @@ namespace BoletoBr.Fabricas
                 throw new Exception("Erro durante a execução da transação.", ex);
             }
         }
+        
         public static IEscritorArquivoRemessaCnab400 ObterEscritorRemessa(RemessaCnab400 remessaEscrever)
         {
             try

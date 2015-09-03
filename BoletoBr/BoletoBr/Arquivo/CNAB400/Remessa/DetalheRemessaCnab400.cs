@@ -13,12 +13,14 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
         {
             this.CodigoBanco = boleto.BancoBoleto.CodigoBanco;
             this.CarteiraCobranca = boleto.CarteiraCobranca.Codigo;
+            Variacao = boleto.CarteiraCobranca.Variacao;
             this.InscricaoCedente = boleto.CedenteBoleto.CpfCnpj;
             this.CodigoOcorrencia = boleto.CodigoOcorrenciaRemessa;
             this.Agencia = boleto.CedenteBoleto.ContaBancariaCedente.Agencia;
             this.DvAgencia = boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia;
             this.ContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.Conta;
             this.DvContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta;
+            Convenio = boleto.CedenteBoleto.Convenio;
             this.CodigoCedente = boleto.CedenteBoleto.CodigoCedente;
             this.RazaoContaCorrente = boleto.CedenteBoleto.Nome;
             this.NossoNumero = boleto.IdentificadorInternoBoleto;
@@ -30,9 +32,13 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             this.Especie = boleto.Especie;
             this.Aceite = boleto.Aceite;
             this.DataEmissao = boleto.DataDocumento;
-            this.ValorDesconto = Convert.ToDecimal(boleto.ValorDesconto).Equals(null) ? 0 : Convert.ToDecimal(boleto.ValorDesconto);
+            this.ValorDesconto = Convert.ToDecimal(boleto.ValorDesconto).Equals(null)
+                ? 0
+                : Convert.ToDecimal(boleto.ValorDesconto);
             this.ValorIof = Convert.ToDecimal(boleto.Iof).Equals(null) ? 0 : Convert.ToDecimal(boleto.Iof);
-            this.ValorAbatimento = Convert.ToDecimal(boleto.ValorAbatimento).Equals(null) ? 0 : Convert.ToDecimal(boleto.ValorAbatimento);
+            this.ValorAbatimento = Convert.ToDecimal(boleto.ValorAbatimento).Equals(null)
+                ? 0
+                : Convert.ToDecimal(boleto.ValorAbatimento);
             this.InscricaoPagador = boleto.SacadoBoleto.CpfCnpj;
             this.NomePagador = boleto.SacadoBoleto.Nome;
             this.EnderecoPagador = boleto.SacadoBoleto.EnderecoSacado.LogradouroNumeroComplementoConcatenado;
@@ -42,10 +48,15 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             this.CepPagador = boleto.SacadoBoleto.EnderecoSacado.Cep;
             this.NumeroSequencialRegistro = numeroSequencialRegistro;
             this.Moeda = boleto.Moeda;
-            this.QuantidadeMoeda = Convert.ToDecimal(boleto.QuantidadeMoeda).Equals(null) ? 0 : Convert.ToDecimal(boleto.QuantidadeMoeda);
+            this.QuantidadeMoeda = Convert.ToDecimal(boleto.QuantidadeMoeda).Equals(null)
+                ? 0
+                : Convert.ToDecimal(boleto.QuantidadeMoeda);
             this.DataJurosMora = boleto.DataJurosMora;
             this.Instrucoes = boleto.InstrucoesDoBoleto;
             this.TipoCobrancaJuro = boleto.TipoCobrancaJuro;
+            PercentualMulta = boleto.PercentualMulta.BoletoBrToStringSafe().BoletoBrToDecimal();
+            ValorMoraDia = boleto.PercentualJurosMora.BoletoBrToStringSafe().BoletoBrToDecimal();
+
             //this.MensagemLinha1 = boleto.InstrucoesDoBoleto.ElementAt(0).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(0).TextoInstrucao;
             //this.MensagemLinha2 = boleto.InstrucoesDoBoleto.ElementAt(1).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(1).TextoInstrucao;
             //this.MensagemLinha3 = boleto.InstrucoesDoBoleto.ElementAt(2).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(2).TextoInstrucao;
@@ -67,6 +78,7 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
 
         // Usado para identificar código da carteira no arquivo de remessa do Banco Santander
         public string CarteiraCobranca { get; set; }
+        public string Variacao { get; set; }
         public string TipoCarteiraCobranca { get; set; }
         public string InscricaoCedente { get; set; }
         public string CodigoDeTransmissao { get; set; }
@@ -94,11 +106,12 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
         public string RazaoContaCorrente { get; set; }
         public string ContaCorrente { get; set; }
         public string DvContaCorrente { get; set; }
+        public string Convenio { get; set; }
         public string CodigoCedente { get; set; }
         public string UsoEmpresa { get; set; }
         public string CodigoBanco { get; set; }
         public int CampoMulta { get; set; }
-        public int PercentualMulta { get; set; }
+        public decimal PercentualMulta { get; set; }
         public string NossoNumero { get; set; }
         public string DvNossoNumero { get; set; }
         public decimal ValorDescontoDia { get; set; }

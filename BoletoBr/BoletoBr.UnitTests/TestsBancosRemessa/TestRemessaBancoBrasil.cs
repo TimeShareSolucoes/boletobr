@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BoletoBr.Arquivo;
+using BoletoBr.Arquivo.CNAB400.Remessa;
 using BoletoBr.Bancos.Brasil;
 using BoletoBr.Dominio;
 using BoletoBr.Enums;
@@ -104,9 +105,22 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil),
                 TipoModalidade = "21",
                 CodigoOcorrenciaRemessa = new CodigoOcorrencia(01),
+                BancoBoleto = banco
             };
 
             banco.FormatarBoleto(boleto);
+
+            var remessaEscrever = new RemessaCnab400();
+
+            remessaEscrever.Header = new HeaderRemessaCnab400(boleto, 1, 1, DateTime.Now);
+            var detalheIndividual = new DetalheRemessaCnab400(boleto, 1);
+            remessaEscrever.RegistrosDetalhe = new List<DetalheRemessaCnab400>
+            {
+                detalheIndividual
+            };
+            var escritor = new EscritorRemessaCnab400BancoDoBrasil(remessaEscrever);
+
+            var linhasEscrever = escritor.EscreverTexto(remessaEscrever);
 
             //const int numeroRegistro = 1;
 
