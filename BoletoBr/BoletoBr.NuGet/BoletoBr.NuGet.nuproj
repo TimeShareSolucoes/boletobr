@@ -19,7 +19,7 @@
   <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
   <PropertyGroup Label="Configuration">
     <Id>BoletoBr</Id>
-    <Version>1.0.2.14</Version>
+    <Version>1.0.2.15</Version>
     <Title>BoletoBr</Title>
     <Authors>Gabriel, Samuel</Authors>
     <Owners>Gabriel, Samuel</Owners>

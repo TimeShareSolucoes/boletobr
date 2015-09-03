@@ -85,6 +85,11 @@ namespace BoletoBr.Bancos.Santander
             var nossoNumeroFormatadoA = boleto.NossoNumeroFormatado.Substring(0, boleto.NossoNumeroFormatado.Length - 1);
             var nossoNumeroFormatadoB = boleto.NossoNumeroFormatado.Remove(0, boleto.NossoNumeroFormatado.Length - 1);
             boleto.SetNossoNumeroFormatado(string.Format("{0}-{1}", nossoNumeroFormatadoA, nossoNumeroFormatadoB));
+
+            /* TAMANHO DO CODIGO DE BARRAS DEVE SER 44 POSIÇÕES, CASO NÃO, GERAR EXCEPTION DE CODIGO DE BARRAS INVALIDO */
+            if (boleto.CodigoBarraBoleto.Length != 44)
+                throw new Exception(
+                    "O código de barras gerado para o boleto é invalido, verifique as configurações de carteira.");
         }
 
         public void FormataMoeda(Boleto boleto)
@@ -147,19 +152,19 @@ namespace BoletoBr.Bancos.Santander
             var valorNominal = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "").PadLeft(10, '0'); //10
             const string fixo = "9"; //1
             var codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'); //7
-            var nossoNumero = boleto.IdentificadorInternoBoleto + Mod11Santander(boleto.IdentificadorInternoBoleto); //13
+            var nossoNumero =
+                (boleto.IdentificadorInternoBoleto + Mod11Santander(boleto.IdentificadorInternoBoleto)).PadLeft(13, '0');
+                //13
             var ios = boleto.PercentualIOS.ToString(); //1
             var tipoCarteira = boleto.CarteiraCobranca.Codigo; //3;
 
-            boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}",
-                codigoBanco, codigoMoeda, fatorVencimento, valorNominal, fixo, codigoCedente, nossoNumero, ios,
-                tipoCarteira);
+            boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", codigoBanco, codigoMoeda,
+                fatorVencimento, valorNominal, fixo, codigoCedente, nossoNumero, ios, tipoCarteira);
 
             var calculoDv = Mod10Mod11Santander(boleto.CodigoBarraBoleto, 9).ToString();
 
-            boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}",
-                codigoBanco, codigoMoeda, calculoDv, fatorVencimento, valorNominal, fixo, codigoCedente, nossoNumero,
-                ios, tipoCarteira);
+            boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}", codigoBanco, codigoMoeda,
+                calculoDv, fatorVencimento, valorNominal, fixo, codigoCedente, nossoNumero, ios, tipoCarteira);
         }
 
         /// <summary>

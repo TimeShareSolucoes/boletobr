@@ -19,7 +19,9 @@ namespace BoletoBr.Bancos.Brasil
         {
             /* Validações */
             #region Validações
+            
             ValidaArquivoRetorno();
+            
             #endregion
 
             var objRetornar = new RetornoCnab400 {RegistrosDetalhe = new List<DetalheRetornoCnab400>()};
@@ -30,7 +32,7 @@ namespace BoletoBr.Bancos.Brasil
                 {
                    objRetornar.Header = ObterHeader(linhaAtual);
                 }
-                if (linhaAtual.ExtrairValorDaLinha(1, 1) == "1")
+                if (linhaAtual.ExtrairValorDaLinha(1, 1) == "7")
                 {
                     var objDetalhe = ObterRegistrosDetalhe(linhaAtual);
                     objRetornar.RegistrosDetalhe.Add(objDetalhe);
@@ -69,7 +71,7 @@ namespace BoletoBr.Bancos.Brasil
             if (qtdLinhasHeader > 1)
                 throw new Exception("Não é permitido mais de um HEADER no arquivo de retorno.");
 
-            var qtdLinhasDetalhe = _linhasArquivo.Count(wh => wh.ExtrairValorDaLinha(1, 1) == "1");
+            var qtdLinhasDetalhe = _linhasArquivo.Count(wh => wh.ExtrairValorDaLinha(1, 1) == "7");
 
             if (qtdLinhasDetalhe <= 0)
                 throw new Exception("Não foi encontrado DETALHE do arquivo de retorno.");
@@ -104,12 +106,14 @@ namespace BoletoBr.Bancos.Brasil
                 ContaCorrente = linha.ExtrairValorDaLinha(32, 39),
                 DvContaCorrente = linha.ExtrairValorDaLinha(40, 40),
                 NomeDoBeneficiario = linha.ExtrairValorDaLinha(47, 76),
+                CodigoDoBanco = linha.ExtrairValorDaLinha(77, 79),
                 CodigoENomeBanco = linha.ExtrairValorDaLinha(77, 94),
                 DataGeracaoGravacao = Convert.ToDateTime(linha.ExtrairValorDaLinha(95, 100).ToDateTimeFromDdMmAa()),
                 SequencialRetorno = linha.ExtrairValorDaLinha(101, 107),
                 NumeroConvenio = linha.ExtrairValorDaLinha(150, 156).BoletoBrToInt(),
                 NumeroSequencial = linha.ExtrairValorDaLinha(395, 400)
             };
+
             return objRetornar;
         }
 
@@ -153,9 +157,17 @@ namespace BoletoBr.Bancos.Brasil
                 objRetornar.TaxaIof = linha.ExtrairValorDaLinha(101, 105).BoletoBrToInt()/100;
                 // Brancos
                 objRetornar.CodigoCarteira = linha.ExtrairValorDaLinha(107, 108);
+                
+                /* Comando e o mesmo de ocorrencia */
                 objRetornar.Comando = linha.ExtrairValorDaLinha(109, 110).BoletoBrToInt();
+                objRetornar.CodigoDeOcorrencia = linha.ExtrairValorDaLinha(109, 110).BoletoBrToInt();
+                
                 objRetornar.DataLiquidacao = Convert.ToDateTime(linha.ExtrairValorDaLinha(111, 116).ToDateTimeFromDdMmAa());
+                
+                /* Titulo dado pelo cedente mesmo numero do documento */
                 objRetornar.TituloDadoCedente = linha.ExtrairValorDaLinha(117, 126);
+                objRetornar.NumeroDocumento = linha.ExtrairValorDaLinha(117, 126);
+                
                 // Brancos
                 objRetornar.DataDeVencimento = Convert.ToDateTime(linha.ExtrairValorDaLinha(147, 152).ToDateTimeFromDdMmAa());
                 objRetornar.ValorDoTituloParcela = linha.ExtrairValorDaLinha(153, 165).BoletoBrToDecimal()/100;
@@ -403,7 +415,37 @@ namespace BoletoBr.Bancos.Brasil
         /// <returns></returns>
         public TrailerRetornoCnab400 ObterTrailer(string linha)
         {
-            throw new NotImplementedException();
+            var objRetornar = new TrailerRetornoCnab400
+            {
+                CodigoDoRegistro = linha.ExtrairValorDaLinha(1, 1).BoletoBrToInt(),
+                CodigoDeRetorno = linha.ExtrairValorDaLinha(2, 2).BoletoBrToInt(),
+                CodigoDoServico = linha.ExtrairValorDaLinha(3, 4),
+                CodigoDoBanco = linha.ExtrairValorDaLinha(5, 7),
+                //Brancos
+                QtdTitulosCobrancaSimples = linha.ExtrairValorDaLinha(18, 25).BoletoBrToLong(),
+                ValorTitulosCobrancaSimples = linha.ExtrairValorDaLinha(26, 39).BoletoBrToDecimal()/100,
+                NumeroAvisoCobrancaSimples = linha.ExtrairValorDaLinha(40, 47).BoletoBrToInt(),
+                //Brancos
+                QtdTitulosCobrancaVinculada = linha.ExtrairValorDaLinha(58, 65).BoletoBrToLong(),
+                ValorTitulosCobrancaVinculada = linha.ExtrairValorDaLinha(66, 79).BoletoBrToDecimal()/100,
+                NumeroAvisoCobrancaVinculada = linha.ExtrairValorDaLinha(80, 87).BoletoBrToInt(),
+                //Brancos
+                QtdTitulosCobrancaCaucionada = linha.ExtrairValorDaLinha(98, 105).BoletoBrToInt(),
+                ValorTitulosCobrancaCaucionada = linha.ExtrairValorDaLinha(106, 119).BoletoBrToDecimal()/100,
+                NumeroAvisoCobrancaCaucionada = linha.ExtrairValorDaLinha(120, 127).BoletoBrToInt(),
+                //Brancos
+                QtdTitulosCobrancaDescontada = linha.ExtrairValorDaLinha(138, 145).BoletoBrToInt(),
+                ValorTitulosCobrancaDescontada = linha.ExtrairValorDaLinha(146, 159).BoletoBrToDecimal()/100,
+                NumeroAvisoCobrancaDescontada = linha.ExtrairValorDaLinha(160, 167).BoletoBrToInt(),
+                //Brancos
+                QtdTitulosCobrancaVendor = linha.ExtrairValorDaLinha(218, 225).BoletoBrToInt(),
+                ValorTitulosCobrancaVendor = linha.ExtrairValorDaLinha(226, 239).BoletoBrToDecimal()/100,
+                NumeroAvisoCobrancaVendor = linha.ExtrairValorDaLinha(240, 247).BoletoBrToInt(),
+                //Brancos
+                NumeroSequencial = linha.ExtrairValorDaLinha(395, 400).BoletoBrToInt()
+            };
+
+            return objRetornar;
         }
     }
 }

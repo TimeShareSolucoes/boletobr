@@ -18,6 +18,7 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             this.NomeEmpresa = boleto.CedenteBoleto.Nome;
             this.NumeroSequencialRemessa = numeroSequencialRemessa;
             this.NumeroSequencialRegistro = numeroSequencialRegistro;
+            Convenio = boleto.CedenteBoleto.Convenio;
 
             if (dataHora == null)
                 this.DataDeGravacao = DateTime.Now;
@@ -51,6 +52,12 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
         public string DvAgencia { get; set; }
         public string ContaCorrente { get; set; }
         public string DvContaCorrente { get; set; }
+
+        #endregion
+
+        #region #001|BANCO DO BRASIL
+
+        public string Convenio { get; set; }
 
         #endregion
     }
