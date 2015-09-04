@@ -54,7 +54,6 @@ namespace BoletoBr.Fabricas
             }
             catch (Exception ex)
             {
-
                 throw new Exception("Erro durante a execução da transação.", ex);
             }
         }

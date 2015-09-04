@@ -20,7 +20,7 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 	- <b>001-9 | Banco do Brasil</b>
 		- Implementação / Testes
 			- Carteiras
-				- [ ] Carteira 11 
+				- [x] Carteira 11 (*Envio de remessa homologado com o banco em: 27-08-2015*)
 				- [x] Carteira 16
 				- [ ] Carteira 17
 				- [ ] Carteira 17-019
@@ -71,3 +71,8 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 			- Carteiras
 				- [x] CNR - Cobrança Não Registrada
 				- [ ] CSB - Cobrança Registrada
+	- <b>070-1 | Banco BRB</b>
+		- Implementação / Testes
+			- Carteiras
+				- [x] TIPO 1 - COBRANÇA DIRETA SEM REGISTRO				
+				- [x] TIPO 2 - COBRANÇA DIRETA COM REGISTRO

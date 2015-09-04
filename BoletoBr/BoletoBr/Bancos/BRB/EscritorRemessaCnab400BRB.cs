@@ -67,7 +67,7 @@ namespace BoletoBr.Bancos.BRB
             else
             {
                 enderecoSacado = infoDetalhe.EnderecoPagador.Length > 35
-                    ? infoDetalhe.EnderecoPagador.ExtrairValorDaLinha(0, 35).ToUpper()
+                    ? infoDetalhe.EnderecoPagador.ExtrairValorDaLinha(1, 35).ToUpper()
                     : infoDetalhe.EnderecoPagador.PadRight(35, ' ').ToUpper();
             }
 
@@ -76,7 +76,7 @@ namespace BoletoBr.Bancos.BRB
             else
             {
                 cidadeSacado = infoDetalhe.CidadePagador.Length > 15
-                    ? infoDetalhe.CidadePagador.ExtrairValorDaLinha(0, 15).ToUpper()
+                    ? infoDetalhe.CidadePagador.ExtrairValorDaLinha(1, 15).ToUpper()
                     : infoDetalhe.CidadePagador.PadRight(15, ' ').ToUpper();
             }
 
@@ -85,7 +85,7 @@ namespace BoletoBr.Bancos.BRB
             else
             {
                 nomeSacado = infoDetalhe.NomePagador.Length > 35
-                    ? infoDetalhe.NomePagador.ExtrairValorDaLinha(0, 35).ToUpper()
+                    ? infoDetalhe.NomePagador.ExtrairValorDaLinha(1, 35).ToUpper()
                     : infoDetalhe.NomePagador.PadRight(35, ' ').ToUpper();
             }
 
@@ -136,7 +136,7 @@ namespace BoletoBr.Bancos.BRB
 
                 detalhe = detalhe.PreencherValorNaLinha(151, 153, "070");
                 detalhe = detalhe.PreencherValorNaLinha(154, 157, infoDetalhe.Agencia.PadLeft(4, '0'));
-                //detalhe = detalhe.PreencherValorNaLinha(158, 187, " ");
+                detalhe = detalhe.PreencherValorNaLinha(158, 187, string.Empty.PadRight(30, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(188, 195, infoDetalhe.DataVencimento.ToString("ddMMyyyy"));
                 detalhe = detalhe.PreencherValorNaLinha(196, 209,
                     infoDetalhe.ValorBoleto.ToString("f").Replace(".", "").Replace(",", "").PadLeft(14, '0'));

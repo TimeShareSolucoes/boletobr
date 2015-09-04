@@ -13,12 +13,14 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
         {
             this.CodigoBanco = boleto.BancoBoleto.CodigoBanco;
             this.CarteiraCobranca = boleto.CarteiraCobranca.Codigo;
+            Variacao = boleto.CarteiraCobranca.Variacao;
             this.InscricaoCedente = boleto.CedenteBoleto.CpfCnpj;
             this.CodigoOcorrencia = boleto.CodigoOcorrenciaRemessa;
             this.Agencia = boleto.CedenteBoleto.ContaBancariaCedente.Agencia;
             this.DvAgencia = boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia;
             this.ContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.Conta;
             this.DvContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta;
+            Convenio = boleto.CedenteBoleto.Convenio;
             this.CodigoCedente = boleto.CedenteBoleto.CodigoCedente;
             this.RazaoContaCorrente = boleto.CedenteBoleto.Nome;
             this.NossoNumero = boleto.IdentificadorInternoBoleto;
@@ -77,6 +79,7 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
 
         // Usado para identificar código da carteira no arquivo de remessa do Banco Santander
         public string CarteiraCobranca { get; set; }
+        public string Variacao { get; set; }
         public string TipoCarteiraCobranca { get; set; }
         public string InscricaoCedente { get; set; }
         public string CodigoDeTransmissao { get; set; }
@@ -104,6 +107,7 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
         public string RazaoContaCorrente { get; set; }
         public string ContaCorrente { get; set; }
         public string DvContaCorrente { get; set; }
+        public string Convenio { get; set; }
         public string CodigoCedente { get; set; }
         public string UsoEmpresa { get; set; }
         public string CodigoBanco { get; set; }
