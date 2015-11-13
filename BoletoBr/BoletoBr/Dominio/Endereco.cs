@@ -41,20 +41,18 @@ namespace BoletoBr
                 if (!String.IsNullOrEmpty(Numero))
                 {
                     if (textoRetornar.Length > 0)
-                    {
-                        textoRetornar += ", Nro ";
-                    }
+                        textoRetornar += ",";
+
                     textoRetornar += Numero;
                 }
                 else
-                    textoRetornar += "Nro 0";
+                    textoRetornar += " SN";
 
                 if (!String.IsNullOrEmpty(Complemento))
                 {
                     if (textoRetornar.Length > 0)
-                    {
                         textoRetornar += ",";
-                    }
+
                     textoRetornar += Complemento;
                 }
 
@@ -76,20 +74,18 @@ namespace BoletoBr
                 if (!String.IsNullOrEmpty(Numero))
                 {
                     if (textoRetornar.Length > 0)
-                    {
-                        textoRetornar += ", Nro ";
-                    }
+                        textoRetornar += ",";
+
                     textoRetornar += Numero;
                 }
                 else
-                    textoRetornar += "Nro 0";
+                    textoRetornar += " SN";
 
                 if (!String.IsNullOrEmpty(Complemento))
                 {
                     if (textoRetornar.Length > 0)
-                    {
                         textoRetornar += ",";
-                    }
+
                     textoRetornar += Complemento;
                 }
 
