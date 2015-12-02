@@ -14,16 +14,16 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 ## Tarefas/Implementações
 
 - <b>Arquitetura</b>
-	- [ ] Classes base
-	- [ ] Common methods
+	- [x] Classes base
+	- [x] Common methods
 - <b>Bancos Brasileiros</b>
 	- <b>001-9 | Banco do Brasil</b>
 		- Implementação / Testes
 			- Carteiras
 				- [x] Carteira 11 (*Envio de remessa homologado com o banco em: 27-08-2015*)
+				- [ ] Carteira 11-019 (**Em processo de homologação com o Banco - 02/12/2015 by @kalleyaoliveira**)
 				- [x] Carteira 16
-				- [x] Carteira 17 (Em processo de homologação com o Banco - 02/12/2015 by Kalley)
-				- [ ] Carteira 17-019
+				- [ ] Carteira 17
 				- [ ] Carteira 18
 				- [ ] Carteira 18-019
 				- [ ] Carteira 18-027
@@ -51,7 +51,7 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 				- [ ] Carteira 02
 				- [ ] Carteira 03
 				- [x] Carteira 06 - Sem Registro
-				- [-] Carteira 09 (Em processo de homologação com Banco - 02/12/2015 by Kalley)
+				- [ ] Carteira 09 (**Em processo de homologação com Banco - 02/12/2015 by @kalleyaoliveira**)
 				- [ ] Carteira 19
 	- <b>341-7 | Banco Itaú</b>
 		- Implementação / Testes 
@@ -67,7 +67,7 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 				- [x] 173 - Sem Registro
 				- [ ] 196 - Sem Registro (15 Posições)
 			- Carteira COM Registro
-				- [-] 109 - Com Registro (Em processo de homologação com Banco - 02/12/2015 by Kalley)
+				- [ ] 109 - Com Registro (**Em processo de homologação com Banco - 02/12/2015 by @kalleyaoliveira**)
 	- <b>399-9 | Banco Hsbc</b>
 		- Implementação / Testes
 			- Carteiras
