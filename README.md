@@ -22,7 +22,7 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 			- Carteiras
 				- [x] Carteira 11 (*Envio de remessa homologado com o banco em: 27-08-2015*)
 				- [x] Carteira 16
-				- [ ] Carteira 17
+				- [x] Carteira 17 (Em processo de homologação com o Banco - 02/12/2015 by Kalley)
 				- [ ] Carteira 17-019
 				- [ ] Carteira 18
 				- [ ] Carteira 18-019
@@ -51,7 +51,7 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 				- [ ] Carteira 02
 				- [ ] Carteira 03
 				- [x] Carteira 06 - Sem Registro
-				- [ ] Carteira 09
+				- [-] Carteira 09 (Em processo de homologação com Banco - 02/12/2015 by Kalley)
 				- [ ] Carteira 19
 	- <b>341-7 | Banco Itaú</b>
 		- Implementação / Testes 
@@ -66,6 +66,8 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 				- [x] 103 - Sem Registro (Carnê)
 				- [x] 173 - Sem Registro
 				- [ ] 196 - Sem Registro (15 Posições)
+			- Carteira COM Registro
+				- [-] 109 - Com Registro (Em processo de homologação com Banco - 02/12/2015 by Kalley)
 	- <b>399-9 | Banco Hsbc</b>
 		- Implementação / Testes
 			- Carteiras
