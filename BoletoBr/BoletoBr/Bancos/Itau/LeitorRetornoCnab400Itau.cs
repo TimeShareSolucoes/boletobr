@@ -11,9 +11,9 @@ namespace BoletoBr.Bancos.Itau
 {
     public class LeitorRetornoCnab400Itau : ILeitorArquivoRetornoCnab400
     {
-       private readonly List<string> _linhasArquivo;
+        private readonly List<string> _linhasArquivo;
 
-       public LeitorRetornoCnab400Itau(List<string> linhasArquivo)
+        public LeitorRetornoCnab400Itau(List<string> linhasArquivo)
         {
             _linhasArquivo = linhasArquivo;
         }
@@ -21,8 +21,11 @@ namespace BoletoBr.Bancos.Itau
         public RetornoCnab400 ProcessarRetorno()
         {
             /* Validações */
+
             #region Validações
+
             ValidaArquivoRetorno();
+
             #endregion
 
             var objRetornar = new RetornoCnab400();
@@ -32,7 +35,7 @@ namespace BoletoBr.Bancos.Itau
             {
                 if (linhaAtual.ExtrairValorDaLinha(1, 1) == "0")
                 {
-                   objRetornar.Header = ObterHeader(linhaAtual);
+                    objRetornar.Header = ObterHeader(linhaAtual);
                 }
                 if (linhaAtual.ExtrairValorDaLinha(1, 1) == "1")
                 {
@@ -135,11 +138,13 @@ namespace BoletoBr.Bancos.Itau
             // Brancos
             objRetornar.CodigoCarteira = linha.ExtrairValorDaLinha(108, 108);
             objRetornar.CodigoDeOcorrencia = linha.ExtrairValorDaLinha(109, 110).BoletoBrToInt();
-            objRetornar.DataDaOcorrencia = (DateTime) linha.ExtrairValorDaLinha(111, 116).ToString().ToDateTimeFromDdMmAa();
+            objRetornar.DataDaOcorrencia =
+                (DateTime) linha.ExtrairValorDaLinha(111, 116).BoletoBrToStringSafe().ToDateTimeFromDdMmAa();
             objRetornar.NumeroDocumento = linha.ExtrairValorDaLinha(117, 126);
             objRetornar.NossoNumero = linha.ExtrairValorDaLinha(127, 134);
             // Brancos
-            objRetornar.DataDeVencimento = (DateTime) linha.ExtrairValorDaLinha(147, 152).ToString().ToDateTimeFromDdMmAa();
+            objRetornar.DataDeVencimento =
+                linha.ExtrairValorDaLinha(147, 152).BoletoBrToStringSafe().ToDateTimeFromDdMmAa() ?? DateTime.MinValue;
             objRetornar.ValorDoTituloParcela = linha.ExtrairValorDaLinha(153, 165).BoletoBrToDecimal()/100;
             objRetornar.BancoCobrador = linha.ExtrairValorDaLinha(166, 168).BoletoBrToInt();
             objRetornar.AgenciaCobradora = linha.ExtrairValorDaLinha(169, 172).BoletoBrToInt();
@@ -150,13 +155,22 @@ namespace BoletoBr.Bancos.Itau
             objRetornar.ValorIof = linha.ExtrairValorDaLinha(215, 227).BoletoBrToDecimal()/100;
             objRetornar.ValorAbatimento = linha.ExtrairValorDaLinha(228, 240).BoletoBrToDecimal()/100;
             objRetornar.ValorDesconto = linha.ExtrairValorDaLinha(241, 253).BoletoBrToDecimal()/100;
+
             objRetornar.ValorPrincipal = linha.ExtrairValorDaLinha(254, 266).BoletoBrToDecimal()/100;
+            objRetornar.ValorLiquidoRecebido = linha.ExtrairValorDaLinha(254, 266).BoletoBrToDecimal()/100;
+
+            /* Valor recebido não considera a tarifa */
+            objRetornar.ValorLiquidoRecebido += objRetornar.ValorTarifa;
+
             // Multa também é considerada
             objRetornar.ValorJurosDeMora = linha.ExtrairValorDaLinha(267, 279).BoletoBrToDecimal()/100;
             objRetornar.ValorOutrosCreditos = linha.ExtrairValorDaLinha(280, 292).BoletoBrToDecimal()/100;
             objRetornar.IndicadorBoletoDDA = linha.ExtrairValorDaLinha(293, 293);
             // Brancos
-            objRetornar.DataDeCredito = linha.ExtrairValorDaLinha(296, 301).ToString().ToDateTimeFromDdMmAa().Equals(null) ? new DateTime(0001, 01, 01) : (DateTime)linha.ExtrairValorDaLinha(296, 301).ToString().ToDateTimeFromDdMmAa();
+            objRetornar.DataDeCredito =
+                linha.ExtrairValorDaLinha(296, 301).BoletoBrToStringSafe().ToDateTimeFromDdMmAa().Equals(null)
+                    ? new DateTime(0001, 01, 01)
+                    : (DateTime) linha.ExtrairValorDaLinha(296, 301).ToString().ToDateTimeFromDdMmAa();
             objRetornar.CodigoInstrucaoCancelada = linha.ExtrairValorDaLinha(302, 305).BoletoBrToInt();
             // Brancos
             // Zeros
@@ -174,7 +188,7 @@ namespace BoletoBr.Bancos.Itau
         {
             var objRetornar = new TrailerRetornoCnab400();
 
-            objRetornar.CodigoDoRegistro = linha.ExtrairValorDaLinha(1,1).BoletoBrToInt();
+            objRetornar.CodigoDoRegistro = linha.ExtrairValorDaLinha(1, 1).BoletoBrToInt();
             objRetornar.CodigoDeRetorno = linha.ExtrairValorDaLinha(2, 2).BoletoBrToInt();
             objRetornar.CodigoDoServico = linha.ExtrairValorDaLinha(3, 4);
             objRetornar.CodigoDoBanco = linha.ExtrairValorDaLinha(5, 7);
@@ -188,7 +202,8 @@ namespace BoletoBr.Bancos.Itau
             objRetornar.ReferenciaAvisoBancario2 = linha.ExtrairValorDaLinha(80, 87);
             // Brancos
             objRetornar.QtdTitulosCobrancaDiretivaEscritural = linha.ExtrairValorDaLinha(178, 185).BoletoBrToInt();
-            objRetornar.ValorTitulosCobrancaDiretivaEscritural = linha.ExtrairValorDaLinha(186, 199).BoletoBrToDecimal()/100;
+            objRetornar.ValorTitulosCobrancaDiretivaEscritural =
+                linha.ExtrairValorDaLinha(186, 199).BoletoBrToDecimal()/100;
             objRetornar.ReferenciaAvisoBancario3 = linha.ExtrairValorDaLinha(200, 207);
             objRetornar.NumeroSequencialRetorno = linha.ExtrairValorDaLinha(208, 212).BoletoBrToInt();
             objRetornar.QtdRegistrosDetalhe = linha.ExtrairValorDaLinha(213, 220).BoletoBrToInt();

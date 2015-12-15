@@ -536,6 +536,7 @@ namespace BoletoBr.Bancos.Brasil
             valorBoleto = valorBoleto.PadLeft(10, '0');
 
             //Criada por AFK
+
             #region Carteira 11
 
             if (boleto.CarteiraCobranca.Codigo.Equals("11"))
@@ -568,6 +569,7 @@ namespace BoletoBr.Bancos.Brasil
             #endregion Carteira 11
 
             #region Carteira 16
+
             if (boleto.CarteiraCobranca.Codigo.Equals("16"))
             {
                 if (boleto.CedenteBoleto.Convenio.ToString().Length == 6)
@@ -595,6 +597,7 @@ namespace BoletoBr.Bancos.Brasil
                         boleto.CarteiraCobranca.Codigo);
                 }
             }
+
             #endregion Carteira 16
 
             #region Carteira 17
@@ -637,14 +640,17 @@ namespace BoletoBr.Bancos.Brasil
                         boleto.CarteiraCobranca.Codigo);
                 }
             }
+
             #endregion Carteira 17
 
             #region Carteira 17-019
+
             if (boleto.CarteiraCobranca.Codigo.Equals("17-019"))
             {
                 if (boleto.CedenteBoleto.Convenio.ToString().Length == 7)
                 {
                     #region Especificação Convênio 7 posições
+
                     /*
                     Posição     Tamanho     Picture     Conteúdo
                     01 a 03         03      9(3)            Código do Banco na Câmara de Compensação = ‘001’
@@ -658,6 +664,7 @@ namespace BoletoBr.Bancos.Brasil
                     33 a 42         9       (10)            Complemento do Nosso-Número, sem DV (NNNNNNNNNN)
                     43 a 44         02      9(2)            Tipo de Carteira/Modalidade de Cobrança
                      */
+
                     #endregion Especificação Convênio 7 posições
 
                     boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}",
@@ -672,14 +679,14 @@ namespace BoletoBr.Bancos.Brasil
                 else if (boleto.CedenteBoleto.Convenio.ToString().Length == 6)
                 {
                     boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}",
-                            this.CodigoBanco.PadLeft(3, '0'),
-                            boleto.Moeda,
-                            Common.FatorVencimento(boleto.DataVencimento),
-                            valorBoleto,
-                            boleto.NossoNumeroFormatado,
-                            boleto.CedenteBoleto.ContaBancariaCedente.Agencia,
-                            boleto.CedenteBoleto.ContaBancariaCedente.Conta,
-                            LimparCarteira(boleto.CarteiraCobranca.Codigo));
+                        this.CodigoBanco.PadLeft(3, '0'),
+                        boleto.Moeda,
+                        Common.FatorVencimento(boleto.DataVencimento),
+                        valorBoleto,
+                        boleto.NossoNumeroFormatado,
+                        boleto.CedenteBoleto.ContaBancariaCedente.Agencia,
+                        boleto.CedenteBoleto.ContaBancariaCedente.Conta,
+                        LimparCarteira(boleto.CarteiraCobranca.Codigo));
                 }
                 else if (boleto.CedenteBoleto.Convenio.ToString().Length == 4)
                 {
@@ -694,9 +701,11 @@ namespace BoletoBr.Bancos.Brasil
                         LimparCarteira(boleto.CarteiraCobranca.Codigo));
                 }
             }
+
             #endregion Carteira 17-019
 
             #region Carteira 18
+
             if (boleto.CarteiraCobranca.Codigo.Equals("18"))
             {
                 boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}",
@@ -709,14 +718,17 @@ namespace BoletoBr.Bancos.Brasil
                     boleto.CedenteBoleto.ContaBancariaCedente.Conta,
                     boleto.CarteiraCobranca.Codigo);
             }
+
             #endregion Carteira 18
 
             #region Carteira 18-019
+
             if (boleto.CarteiraCobranca.Codigo.Equals("18-019"))
             {
                 if (boleto.CedenteBoleto.Convenio.ToString().Length == 7)
                 {
                     #region Especificação Convênio 7 posições
+
                     /*
                     Posição     Tamanho     Picture     Conteúdo
                     01 a 03         03      9(3)            Código do Banco na Câmara de Compensação = ‘001’
@@ -730,6 +742,7 @@ namespace BoletoBr.Bancos.Brasil
                     33 a 42         9       (10)            Complemento do Nosso-Número, sem DV (NNNNNNNNNN)
                     43 a 44         02      9(2)            Tipo de Carteira/Modalidade de Cobrança
                      */
+
                     #endregion Especificação Convênio 7 posições
 
                     boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}",
@@ -776,15 +789,19 @@ namespace BoletoBr.Bancos.Brasil
                         LimparCarteira(boleto.CarteiraCobranca.Codigo));
                 }
             }
+
             #endregion Carteira 18-019
 
             //Para atender o cliente Fiemg foi adptado no código na variação 18-027 as variações 18-035 e 18-140
+
             #region Carteira 18-027
+
             if (boleto.CarteiraCobranca.Codigo.Equals("18-027"))
             {
                 if (boleto.CedenteBoleto.Convenio.ToString().Length == 7)
                 {
                     #region Especificação Convênio 7 posições
+
                     /*
                     Posição     Tamanho     Picture     Conteúdo
                     01 a 03         03      9(3)            Código do Banco na Câmara de Compensação = ‘001’
@@ -798,6 +815,7 @@ namespace BoletoBr.Bancos.Brasil
                     33 a 42         9       (10)            Complemento do Nosso-Número, sem DV (NNNNNNNNNN)
                     43 a 44         02      9(2)            Tipo de Carteira/Modalidade de Cobrança
                      */
+
                     #endregion Especificação Convênio 7 posições
 
                     boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}",
@@ -844,14 +862,17 @@ namespace BoletoBr.Bancos.Brasil
                         LimparCarteira(boleto.CarteiraCobranca.Codigo));
                 }
             }
+
             #endregion Carteira 18-027
 
             #region Carteira 18-035
+
             if (boleto.CarteiraCobranca.Codigo.Equals("18-035"))
             {
                 if (boleto.CedenteBoleto.Convenio.ToString().Length == 7)
                 {
                     #region Especificação Convênio 7 posições
+
                     /*
                     Posição     Tamanho     Picture     Conteúdo
                     01 a 03         03      9(3)            Código do Banco na Câmara de Compensação = ‘001’
@@ -865,6 +886,7 @@ namespace BoletoBr.Bancos.Brasil
                     33 a 42         9       (10)            Complemento do Nosso-Número, sem DV (NNNNNNNNNN)
                     43 a 44         02      9(2)            Tipo de Carteira/Modalidade de Cobrança
                      */
+
                     #endregion Especificação Convênio 7 posições
 
                     boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}",
@@ -911,14 +933,17 @@ namespace BoletoBr.Bancos.Brasil
                         LimparCarteira(boleto.CarteiraCobranca.Codigo));
                 }
             }
+
             #endregion Carteira 18-035
 
             #region Carteira 18-140
+
             if (boleto.CarteiraCobranca.Codigo.Equals("18-140"))
             {
                 if (boleto.CedenteBoleto.Convenio.ToString().Length == 7)
                 {
                     #region Especificação Convênio 7 posições
+
                     /*
                     Posição     Tamanho     Picture     Conteúdo
                     01 a 03         03      9(3)            Código do Banco na Câmara de Compensação = ‘001’
@@ -932,6 +957,7 @@ namespace BoletoBr.Bancos.Brasil
                     33 a 42         9       (10)            Complemento do Nosso-Número, sem DV (NNNNNNNNNN)
                     43 a 44         02      9(2)            Tipo de Carteira/Modalidade de Cobrança
                      */
+
                     #endregion Especificação Convênio 7 posições
 
                     boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}",
@@ -978,9 +1004,11 @@ namespace BoletoBr.Bancos.Brasil
                         LimparCarteira(boleto.CarteiraCobranca.Codigo));
                 }
             }
+
             #endregion Carteira 18-140
 
             #region Carteira 31
+
             if (boleto.CarteiraCobranca.Codigo.Equals("31"))
             {
                 boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}",
@@ -993,18 +1021,19 @@ namespace BoletoBr.Bancos.Brasil
                     boleto.CedenteBoleto.ContaBancariaCedente.Conta,
                     boleto.CarteiraCobranca.Codigo);
             }
+
             #endregion Carteira 31
 
             _digitoAutoConferenciaBoleto = Common.Mod11(boleto.CodigoBarraBoleto, 9);
 
-            boleto.CodigoBarraBoleto = Common.Left(boleto.CodigoBarraBoleto, 4) + _digitoAutoConferenciaBoleto + Common.Right(boleto.CodigoBarraBoleto, 39);
+            boleto.CodigoBarraBoleto = Common.Left(boleto.CodigoBarraBoleto, 4) + _digitoAutoConferenciaBoleto +
+                                       Common.Right(boleto.CodigoBarraBoleto, 39);
         }
 
         public void FormataLinhaDigitavel(Boleto boleto)
         {
-            boleto.Moeda = this.MoedaBanco;
+            boleto.Moeda = MoedaBanco;
 
-            string cmplivre = string.Empty;
             string campo1 = string.Empty;
             string campo2 = string.Empty;
             string campo3 = string.Empty;
@@ -1020,30 +1049,27 @@ namespace BoletoBr.Bancos.Brasil
             C = Posição 20 a 24 do código de barras
             X = DV que amarra o campo 1 (Módulo 10, contido no Anexo 7)
              */
-
-            cmplivre = Common.Mid(boleto.CodigoBarraBoleto, 20, 25);
-
-            campo1 = Common.Left(boleto.CodigoBarraBoleto, 4) + Common.Mid(cmplivre, 1, 5);
+            campo1 = CodigoBanco.PadLeft(3, '0') + boleto.Moeda + Common.Mid(boleto.CodigoBarraBoleto, 20, 5);
             digitoMod = Common.Mod10(campo1);
-            campo1 = campo1 + digitoMod.ToString();
+            campo1 = campo1 + digitoMod;
             campo1 = Common.Mid(campo1, 1, 5) + "." + Common.Mid(campo1, 6, 5);
+            
             /*
             Campo 2 (DDDDD.DDDDDY)
             D = Posição 25 a 34 do código de barras
             Y = DV que amarra o campo 2 (Módulo 10, contido no Anexo 7)
              */
-            campo2 = Common.Mid(cmplivre, 6, 10);
+            campo2 = Common.Mid(boleto.CodigoBarraBoleto, 25, 10);
             digitoMod = Common.Mod10(campo2);
-            campo2 = campo2 + digitoMod.ToString();
+            campo2 = campo2 + digitoMod;
             campo2 = Common.Mid(campo2, 1, 5) + "." + Common.Mid(campo2, 6, 6);
-
 
             /*
             Campo 3 (EEEEE.EEEEEZ)
             E = Posição 35 a 44 do código de barras
             Z = DV que amarra o campo 3 (Módulo 10, contido no Anexo 7)
              */
-            campo3 = Common.Mid(cmplivre, 16, 10);
+            campo3 = Common.Mid(boleto.CodigoBarraBoleto, 35, 10);
             digitoMod = Common.Mod10(campo3);
             campo3 = campo3 + digitoMod;
             campo3 = Common.Mid(campo3, 1, 5) + "." + Common.Mid(campo3, 6, 6);

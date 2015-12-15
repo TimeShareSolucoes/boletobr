@@ -61,7 +61,7 @@ namespace BoletoBr.Bancos.Itau
                                     infoDetalhe.InscricaoPagador + ")");
 
             if (String.IsNullOrEmpty(infoDetalhe.CepPagador) || infoDetalhe.CepPagador.Length < 8)
-                throw new Exception("CEP Inválida! Verifique o CEP do pagador " + infoDetalhe.NomePagador + "(" +
+                throw new Exception("CEP Inválido! Verifique o CEP do pagador " + infoDetalhe.NomePagador + "(" +
                                     infoDetalhe.InscricaoPagador + ")");
 
             // Na geração do detalhe na remessa não está sendo tratado os casos de cancelamento das instruções nas posições 34-37
@@ -127,7 +127,7 @@ namespace BoletoBr.Bancos.Itau
                     infoDetalhe.InscricaoCedente.Replace(".", "").Replace("/", "").Replace("-", ""));
                 // Nro de Inscrição da Empresa (CPF/CNPJ)
                 detalhe = detalhe.PreencherValorNaLinha(18, 21, infoDetalhe.Agencia.PadLeft(4, '0'));
-                    // Agência Mantenedora da Conta
+                // Agência Mantenedora da Conta
                 detalhe = detalhe.PreencherValorNaLinha(22, 23, string.Empty.PadRight(2, '0'));
                 // Complemento de Registro
                 detalhe = detalhe.PreencherValorNaLinha(24, 28, infoDetalhe.ContaCorrente.PadLeft(5, '0'));
@@ -156,7 +156,7 @@ namespace BoletoBr.Bancos.Itau
                 else
                     detalhe = detalhe.PreencherValorNaLinha(71, 83,
                         infoDetalhe.QuantidadeMoeda.ToString("F5").Replace(".", "").Replace(",", "").PadLeft(13, '0'));
-                        // Quantidade de Moeda Variável
+                // Quantidade de Moeda Variável
                 detalhe = detalhe.PreencherValorNaLinha(84, 86, infoDetalhe.CarteiraCobranca.PadLeft(3, '0'));
                 // Número da Carteira no Banco
                 detalhe = detalhe.PreencherValorNaLinha(87, 107, string.Empty.PadRight(21, ' '));
@@ -175,7 +175,10 @@ namespace BoletoBr.Bancos.Itau
                     detalhe = detalhe.PreencherValorNaLinha(108, 108, "E");
                 detalhe = detalhe.PreencherValorNaLinha(109, 110,
                     infoDetalhe.CodigoOcorrencia.Codigo.ToString().PadLeft(2, '0')); // Identificação da Ocorrência
-                detalhe = detalhe.PreencherValorNaLinha(111, 120, infoDetalhe.NumeroDocumento.Replace("-", ""));
+
+                detalhe = detalhe.PreencherValorNaLinha(111, 120,
+                    infoDetalhe.NumeroDocumento.Replace("-", "").PadLeft(10, '0'));
+
                 detalhe = detalhe.PreencherValorNaLinha(121, 126, infoDetalhe.DataVencimento.ToString("ddMMyy"));
                 // Data de Vencimento do Título
                 detalhe = detalhe.PreencherValorNaLinha(127, 139,
@@ -248,7 +251,7 @@ namespace BoletoBr.Bancos.Itau
                 // Nro de Inscrição do Sacado (CPF/CNPJ)
                 detalhe = detalhe.PreencherValorNaLinha(235, 264, nomeSacado.PadRight(30, ' ')); // Nome do Sacado
                 detalhe = detalhe.PreencherValorNaLinha(265, 274, string.Empty.PadRight(10, ' '));
-                    // Complemento de registro
+                // Complemento de registro
                 detalhe = detalhe.PreencherValorNaLinha(275, 314, enderecoSacado.PadRight(40, ' '));
                 // Rua, Número, e Complemento do Sacado
                 detalhe = detalhe.PreencherValorNaLinha(315, 326, bairroSacado.PadRight(12, ' ')); // Bairro do Sacado

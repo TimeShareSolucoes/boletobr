@@ -113,7 +113,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     ValorAbatimento = registroAtual.ValorAbatimento,
                     ValorDesconto = registroAtual.ValorDesconto,
                     ValorRecebido = registroAtual.ValorLiquidoRecebido + registroAtual.ValorDoDebitoCredito,
-                    ValorAcrescimos = registroAtual.ValorJurosDeMora + registroAtual.ValorMulta,
+                    ValorAcrescimos = registroAtual.ValorJurosDeMora + registroAtual.ValorMulta + registroAtual.ValorTarifa,
                     ValorOutrosRecebimentos = registroAtual.ValorOutrosRecebimentos,
                     ValorAbatimentoNaoAproveitadoPeloSacado = registroAtual.ValorAbatimentosNaoAproveitado,
                     ValorLancamento = registroAtual.ValorLancamento,
