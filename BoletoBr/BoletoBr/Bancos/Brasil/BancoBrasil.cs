@@ -469,8 +469,14 @@ namespace BoletoBr.Bancos.Brasil
             FormataMoeda(boleto);
 
             ValidaBoletoComNormasBanco(boleto);
+
+            boleto.CedenteBoleto.CodigoCedenteFormatado = String.Format("{0}-{1}/{2}-{3}",
+                boleto.CedenteBoleto.ContaBancariaCedente.Agencia,
+                boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia,
+                boleto.CedenteBoleto.ContaBancariaCedente.Conta,
+                boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta);
         }
-        
+
         private string LimparCarteira(string carteira)
         {
             return carteira.Split('-')[0];
