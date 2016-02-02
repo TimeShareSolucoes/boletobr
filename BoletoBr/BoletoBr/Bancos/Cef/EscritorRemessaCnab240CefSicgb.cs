@@ -56,6 +56,7 @@ namespace BoletoBr.Bancos.Cef
         {
             _remessaEscrever = remessaEscrever;
         }
+        
         public string EscreverHeader(HeaderRemessaCnab240 infoHeader)
         {
             string nomeCedente = infoHeader.NomeEmpresa;
@@ -160,8 +161,7 @@ namespace BoletoBr.Bancos.Cef
             try
             {
                 headerLote = headerLote.PreencherValorNaLinha(1, 3, "104"); // Código do Banco na Compensação
-                headerLote = headerLote.PreencherValorNaLinha(4, 7, infoHeaderLote.LoteServico.ToString().PadLeft(4, '0'));
-                    // Lote de Serviço
+                headerLote = headerLote.PreencherValorNaLinha(4, 7, infoHeaderLote.LoteServico.ToString().PadLeft(4, '0')); // Lote de Serviço
                 headerLote = headerLote.PreencherValorNaLinha(8, 8, "1"); // Tipo de Registro
                 headerLote = headerLote.PreencherValorNaLinha(9, 9, "R");
                 // Padronizado para 02 - COBRANÇA SEM REGISTRO
@@ -185,7 +185,7 @@ namespace BoletoBr.Bancos.Cef
                 headerLote = headerLote.PreencherValorNaLinha(104, 143, string.Empty.PadRight(40, ' ')); // Mensagem 1
                 headerLote = headerLote.PreencherValorNaLinha(144, 183, string.Empty.PadRight(40, ' ')); // Mensagem 2
                 headerLote = headerLote.PreencherValorNaLinha(184, 191, infoHeaderLote.NumeroRemessaRetorno.PadLeft(8, '0'));
-                    // Número Remessa/Retorno
+                // Número Remessa/Retorno
                 headerLote = headerLote.PreencherValorNaLinha(192, 199, DateTime.Now.ToString("ddMMyyyy"));
                 headerLote = headerLote.PreencherValorNaLinha(200, 207, string.Empty.PadLeft(8, '0'));
                 headerLote = headerLote.PreencherValorNaLinha(208, 240, string.Empty.PadRight(33, ' '));
@@ -228,9 +228,9 @@ namespace BoletoBr.Bancos.Cef
                 segmentoP = segmentoP.PreencherValorNaLinha(15, 15, " ");
                 // Padronizado para 01 - Entrada de Título
                 segmentoP = segmentoP.PreencherValorNaLinha(16, 17, "01"); // Código de Movimento Remessa
-                segmentoP = segmentoP.PreencherValorNaLinha(18, 22, infoSegmentoP.AgenciaMantenedora.PadLeft(5, ' '));
+                segmentoP = segmentoP.PreencherValorNaLinha(18, 22, infoSegmentoP.AgenciaMantenedora.PadLeft(5, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(23, 23, infoSegmentoP.DvAgenciaMantenedora);
-                segmentoP = segmentoP.PreencherValorNaLinha(24, 29, infoSegmentoP.CodigoCedente.PadLeft(6, '0'));       
+                segmentoP = segmentoP.PreencherValorNaLinha(24, 29, infoSegmentoP.CodigoCedente.PadLeft(6, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(30, 37, string.Empty.PadLeft(8, '0')); // Uso Exclusivo CAIXA
                 segmentoP = segmentoP.PreencherValorNaLinha(38, 40, string.Empty.PadLeft(3, '0')); // Uso Exclusivo CAIXA
                 segmentoP = segmentoP.PreencherValorNaLinha(41, 57, CCNNNNNNNNNNNNNNN);
@@ -246,9 +246,9 @@ namespace BoletoBr.Bancos.Cef
                 // Fixo 2 - Escritural
                 segmentoP = segmentoP.PreencherValorNaLinha(60, 60, "2"); // Tipo de Documento
                 // '1' = Banco Emite
-                segmentoP = segmentoP.PreencherValorNaLinha(61, 61, "1"); // Identificação da Emissão do Bloqueto
+                segmentoP = segmentoP.PreencherValorNaLinha(61, 61, "2"); // Identificação da Emissão do Bloqueto
                 // '1' = Sacado Via Correios
-                segmentoP = segmentoP.PreencherValorNaLinha(62, 62, "1"); // Identificação da Entrega do Bloqueto
+                segmentoP = segmentoP.PreencherValorNaLinha(62, 62, "0"); // Identificação da Entrega do Bloqueto
                 segmentoP = segmentoP.PreencherValorNaLinha(63, 73, infoSegmentoP.NumeroDocumento.PadLeft(11, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(74, 77, string.Empty.PadLeft(4, ' '));
                 segmentoP = segmentoP.PreencherValorNaLinha(78, 85, infoSegmentoP.DataVencimento.ToString("ddMMyyyy"));
@@ -325,8 +325,9 @@ namespace BoletoBr.Bancos.Cef
 
                 segmentoP = segmentoP.PreencherValorNaLinha(221, 221, "3"); // Código para Protesto
                 segmentoP = segmentoP.PreencherValorNaLinha(222, 223, "00"); // Número de Dias para Protesto
-                segmentoP = segmentoP.PreencherValorNaLinha(224, 224, "2"); // Código para Baixa/Devolução
-                segmentoP = segmentoP.PreencherValorNaLinha(225, 227, "030"); // Número de Dias para Baixa/Devolução
+                segmentoP = segmentoP.PreencherValorNaLinha(224, 224, "1"); // Código para Baixa/Devolução
+                segmentoP = segmentoP.PreencherValorNaLinha(225, 227, "010"); // Número de Dias para Baixa/Devolução
+                
                 // Fixo 09 - REAL
                 segmentoP = segmentoP.PreencherValorNaLinha(228, 229, "09"); // Código da Moeda
                 segmentoP = segmentoP.PreencherValorNaLinha(230, 239, string.Empty.PadLeft(10, '0')); // Uso Exclusivo CAIXA
@@ -548,9 +549,19 @@ namespace BoletoBr.Bancos.Cef
             listaRet.Add(EscreverHeader(remessaEscrever.Header));
 
             /* Detalhes */
+            /* Caso não venha a sequencia do lote informada no header criar a mesma */
+            var sequenciaLote = 1;
             foreach (var loteEscrever in remessaEscrever.Lotes)
             {
+                if (loteEscrever.HeaderLote.LoteServico.BoletoBrToStringSafe().BoletoBrToInt() == 0)
+                    loteEscrever.HeaderLote.LoteServico = sequenciaLote;
+
+                if (loteEscrever.TrailerLote.LoteServico.BoletoBrToStringSafe().BoletoBrToInt() == 0)
+                    loteEscrever.TrailerLote.LoteServico = sequenciaLote;
+
                 listaRet.AddRange(EscreverLote(loteEscrever));
+
+                sequenciaLote++;
             }
 
             /* Trailer */
@@ -567,6 +578,12 @@ namespace BoletoBr.Bancos.Cef
 
             foreach (var detalhe in loteEscrever.RegistrosDetalheSegmentos)
             {
+                if (detalhe.SegmentoP.LoteServico.BoletoBrToStringSafe().BoletoBrToInt() == 0)
+                    detalhe.SegmentoP.LoteServico = loteEscrever.HeaderLote.LoteServico;
+
+                if (detalhe.SegmentoQ.LoteServico.BoletoBrToStringSafe().BoletoBrToInt() == 0)
+                    detalhe.SegmentoQ.LoteServico = loteEscrever.HeaderLote.LoteServico;
+
                 listaRet.Add(EscreverDetalheSegmentoP(detalhe.SegmentoP));
                 listaRet.Add(EscreverDetalheSegmentoQ(detalhe.SegmentoQ));
             }
