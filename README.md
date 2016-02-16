@@ -20,10 +20,12 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 	- <b>001-9 | Banco do Brasil</b>
 		- Implementação / Testes
 			- Carteiras
-				- [x] Carteira 11 (*Envio de remessa homologado com o banco em: 27-08-2015*)
-				- [x] Carteira 11-019 (*Homologado com o Banco - 02/12/2015 by @kalleyaoliveira**)
+				- [x] Carteira 11 		(*Envio de remessa homologado com o banco em: 27-08-2015*)
+				- [x] Carteira 11-019 	(*Homologado com o Banco - 02/12/2015 by @kalleyaoliveira*)
 				- [x] Carteira 16
-				- [ ] Carteira 17
+				- [x] Carteira 17		(*Homologado com o Banco - 03/02/2016 by @kalleyaoliveira*)
+				- [x] Carteira 17-019 	(*Homologado com o Banco - 03/02/2016 by @kalleyaoliveira*)
+				- [x] Carteira 17-035 	(*Homologado com o Banco - 03/02/2016 by @kalleyaoliveira*)
 				- [ ] Carteira 18
 				- [ ] Carteira 18-019
 				- [ ] Carteira 18-027
@@ -48,7 +50,7 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 	- <b>237-2 | Banco Bradesco</b>
 		- Implementação / Testes
 			- Carteiras
-				- [ ] Carteira 02
+				- [x] Carteira 02
 				- [ ] Carteira 03
 				- [x] Carteira 06 - Sem Registro
 				- [x] Carteira 09 (*Homologado com Banco - 02/12/2015 by @kalleyaoliveira**)

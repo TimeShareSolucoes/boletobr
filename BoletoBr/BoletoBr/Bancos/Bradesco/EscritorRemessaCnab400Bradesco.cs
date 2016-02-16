@@ -126,8 +126,36 @@ namespace BoletoBr.Bancos.Bradesco
 
                 detalhe = detalhe.PreencherValorNaLinha(38, 62, seuNumero);
                 detalhe = detalhe.PreencherValorNaLinha(63, 65, "000");
-                detalhe = detalhe.PreencherValorNaLinha(66, 66, "0"); // Sem cobrança de multa
-                detalhe = detalhe.PreencherValorNaLinha(67, 70, "0000"); // Percentual de multa
+
+                #region PERCENTUAL MULTA
+
+                if (infoDetalhe.PercentualMulta.BoletoBrToStringSafe().BoletoBrToDecimal() > 0)
+                    detalhe = detalhe.PreencherValorNaLinha(66, 66, "2"); // 2 - Com cobrança de multa
+                else
+                    detalhe = detalhe.PreencherValorNaLinha(66, 66, "0"); // 0 - Sem cobrança de multa
+
+                // Percentual de multa
+                var multaBoleto = string.Empty;
+
+                if (infoDetalhe.PercentualMulta.ToString().Contains('.') &&
+                    infoDetalhe.PercentualMulta.ToString().Contains(','))
+                {
+                    multaBoleto = infoDetalhe.PercentualMulta.ToString().Replace(".", "").Replace(",", "");
+                    detalhe = detalhe.PreencherValorNaLinha(67, 70, multaBoleto.PadLeft(4, '0'));
+                }
+                if (infoDetalhe.PercentualMulta.ToString().Contains('.'))
+                {
+                    multaBoleto = infoDetalhe.PercentualMulta.ToString().Replace(".", "");
+                    detalhe = detalhe.PreencherValorNaLinha(67, 70, multaBoleto.PadLeft(4, '0'));
+                }
+                if (infoDetalhe.PercentualMulta.ToString().Contains(','))
+                {
+                    multaBoleto = infoDetalhe.PercentualMulta.ToString().Replace(",", "");
+                    detalhe = detalhe.PreencherValorNaLinha(67, 70, multaBoleto.PadLeft(4, '0'));
+                }
+
+                #endregion
+
                 detalhe = detalhe.PreencherValorNaLinha(71, 81, infoDetalhe.NossoNumero.PadLeft(11, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(82, 82, infoDetalhe.DvNossoNumero);
 
@@ -173,17 +201,6 @@ namespace BoletoBr.Bancos.Bradesco
 
                 #endregion
 
-                //if (infoDetalhe.CodigoOcorrencia.Codigo.Equals(01))
-                //{
-                //    detalhe = detalhe.PreencherValorNaLinha(140, 142, string.Empty.PadLeft(3, '0'));
-                //    detalhe = detalhe.PreencherValorNaLinha(143, 147, string.Empty.PadLeft(5, '0'));
-                //}
-                //else
-                //{
-                //    detalhe = detalhe.PreencherValorNaLinha(140, 142, infoDetalhe.CodigoBanco.PadLeft(3, '0'));
-                //    detalhe = detalhe.PreencherValorNaLinha(143, 147, infoDetalhe.Agencia.PadLeft(4, '0') + infoDetalhe.DvAgencia);
-                //}
-
                 detalhe = detalhe.PreencherValorNaLinha(140, 142, string.Empty.PadLeft(3, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(143, 147, string.Empty.PadLeft(5, '0'));
 
@@ -212,7 +229,15 @@ namespace BoletoBr.Bancos.Bradesco
 
                 #region VALOR JUROS
 
+                // Valor de Mora Por Dia de Atraso
+                /* Bradesco não passa % para juros e sim o valor calculado a ser cobrado por dia */
                 var jurosBoleto = string.Empty;
+
+                if (infoDetalhe.ValorMoraDia > 0)
+                {
+                    var valorCobrarJuroDia = infoDetalhe.ValorBoleto * ((infoDetalhe.ValorMoraDia / 30) / 100);
+                    infoDetalhe.ValorCobradoDiaAtraso = Math.Round(valorCobrarJuroDia, 2);
+                }
 
                 if (infoDetalhe.ValorCobradoDiaAtraso.ToString().Contains('.') &&
                     infoDetalhe.ValorCobradoDiaAtraso.ToString().Contains(','))
@@ -232,7 +257,6 @@ namespace BoletoBr.Bancos.Bradesco
                 }
 
                 detalhe = detalhe.PreencherValorNaLinha(161, 173, jurosBoleto.PadLeft(13, '0'));
-                // Valor de Mora Por Dia de Atraso
 
                 #endregion
 
@@ -316,7 +340,13 @@ namespace BoletoBr.Bancos.Bradesco
                  * Campo livre para uso da empresa.
                  * A mensagem enviada nesse campo será impressa somente no boleto enão será confirmada no arquivo retorno.
                  */
-                detalhe = detalhe.PreencherValorNaLinha(315, 326, string.Empty.PadLeft(12, ' ')); // 1ª Mensagem
+                var mensagem1 = "";
+                if (infoDetalhe.Instrucoes != null && infoDetalhe.Instrucoes.Count > 0)
+                    mensagem1 = infoDetalhe.Instrucoes[0].TextoInstrucao;
+                if (mensagem1.Trim().Length > 12)
+                    mensagem1 = mensagem1.ExtrairValorDaLinha(1, 12);
+
+                detalhe = detalhe.PreencherValorNaLinha(315, 326, mensagem1.PadRight(12, ' ')); // 1ª Mensagem
 
                 #endregion
 
@@ -348,37 +378,27 @@ namespace BoletoBr.Bancos.Bradesco
 
                 string str = string.Empty;
 
-                if (String.IsNullOrEmpty(infoDetalhe.NomeAvalistaOuMensagem2))
+                if (infoDetalhe.NomeAvalistaOuMensagem2.BoletoBrToStringSafe().Trim().Length > 0)
+                {
+                    str = infoDetalhe.NomeAvalistaOuMensagem2;
+                    if (str.BoletoBrToStringSafe().Trim().Length > 60)
+                        str = str.ExtrairValorDaLinha(1, 60);
+                 
                     detalhe = detalhe.PreencherValorNaLinha(335, 394, str.PadLeft(60, ' '));
-                //else
-                //{
-                //    if (boleto.SacadoBoleto.CpfCnpjAvalista.Replace(".", "").Replace("/", "").Replace("-", "").Length ==
-                //        11)
-                //    {
-                //        str = (boleto.SacadoBoleto.NomeAvalista.ToUpper() +
-                //               string.Empty.PadLeft(2, ' ') +
-                //               boleto.SacadoBoleto.CpfCnpjAvalista.Replace(".", "")
-                //                   .Replace("/", "")
-                //                   .Replace("-", "")
-                //                   .Substring(0, 9) +
-                //               string.Empty.PadLeft(4, '0') +
-                //               boleto.SacadoBoleto.CpfCnpjAvalista.Replace(".", "")
-                //                   .Replace("/", "")
-                //                   .Replace("-", "")
-                //                   .Substring(9, 2));
-                //    }
-                //    else
-                //    {
-                //        str = (boleto.SacadoBoleto.NomeAvalista.ToUpper() +
-                //               string.Empty.PadLeft(2, ' ') +
-                //               boleto.SacadoBoleto.CpfCnpjAvalista.Replace(".", "")
-                //                   .Replace("/", "")
-                //                   .Replace("-", "")
-                //                   .PadLeft(15, '0'));
-                //    }
+                }
+                else
+                {
+                    if (infoDetalhe.Instrucoes != null && infoDetalhe.Instrucoes.Count > 1)
+                    {
+                        var mensagem2 = "";
+                        mensagem2 = infoDetalhe.Instrucoes[1].TextoInstrucao;
 
-                //    detalhe = detalhe.PreencherValorNaLinha(335, 394, str.PadLeft(60, ' '));
-                //}
+                        if (mensagem2.Trim().Length > 60)
+                            mensagem2 = mensagem2.ExtrairValorDaLinha(1, 60);
+
+                        detalhe = detalhe.PreencherValorNaLinha(335, 394, mensagem2.PadRight(60, ' '));
+                    }
+                }
 
                 #endregion
 

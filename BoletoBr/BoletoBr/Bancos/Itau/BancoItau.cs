@@ -218,15 +218,15 @@ namespace BoletoBr.Bancos.Itau
                 if ((boleto.CarteiraCobranca.Codigo == "109") || (boleto.CarteiraCobranca.Codigo == "198") ||
                     (boleto.CarteiraCobranca.Codigo == "121") || (boleto.CarteiraCobranca.Codigo == "175") ||
                     (boleto.CarteiraCobranca.Codigo == "176") || (boleto.CarteiraCobranca.Codigo == "178"))
-
+                {
                     boleto.CodigoBarraBoleto =
                         string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}000", CodigoBanco, MoedaBanco,
                             Common.FatorVencimento(boleto.DataVencimento), valorBoleto, boleto.CarteiraCobranca.Codigo,
-                            boleto.IdentificadorInternoBoleto, _dacNossoNumero,
+                            boleto.IdentificadorInternoBoleto.PadLeft(8, '0'), _dacNossoNumero,
                             boleto.CedenteBoleto.ContaBancariaCedente.Agencia,
                             boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(5, '0'),
                             boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta);
-
+                }
                 else if ((boleto.CarteiraCobranca.Codigo == "107") || (boleto.CarteiraCobranca.Codigo == "122") ||
                          (boleto.CarteiraCobranca.Codigo == "142") || (boleto.CarteiraCobranca.Codigo == "143") ||
                          (boleto.CarteiraCobranca.Codigo == "196"))
@@ -234,7 +234,7 @@ namespace BoletoBr.Bancos.Itau
                     boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}0", CodigoBanco, MoedaBanco,
                         Common.FatorVencimento(boleto.DataVencimento), boleto.ValorBoleto,
                         boleto.CarteiraCobranca.Codigo,
-                        boleto.IdentificadorInternoBoleto, numeroDocumento, codigoCedente,
+                        boleto.IdentificadorInternoBoleto.PadLeft(8, '0'), numeroDocumento, codigoCedente,
                         Common.Mod10(boleto.CarteiraCobranca.Codigo + boleto.IdentificadorInternoBoleto +
                                      numeroDocumento + codigoCedente));
                 }

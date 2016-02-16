@@ -110,6 +110,7 @@ namespace BoletoBr.Bancos.Brasil
             #endregion Carteira 16
 
             #region Carteira 17
+            
             //Carteira 17
             if (boleto.CarteiraCobranca.Codigo.Equals("17"))
             {
@@ -124,12 +125,12 @@ namespace BoletoBr.Bancos.Brasil
                     case 7:
                         if (boleto.NossoNumeroFormatado.Length > 17)
                             throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, a quantidade máxima são de 10 de posições para o nosso número", boleto.CarteiraCobranca.Codigo));
-                        boleto.SetNossoNumeroFormatado(string.Format("{0}{1}", boleto.CedenteBoleto.Convenio, boleto.NossoNumeroFormatado.PadLeft(10, '0')));
                         break;
                     default:
                         throw new ValidacaoBoletoException(string.Format("Para a carteira {0}, o número do convênio deve ter 6 ou 7 posições", boleto.CarteiraCobranca.Codigo));
                 }
             }
+            
             #endregion Carteira 17
 
             #region Carteira 17-019
