@@ -184,7 +184,14 @@ namespace BoletoBr.Bancos.Bradesco
 
                 #endregion
 
-                detalhe = detalhe.PreencherValorNaLinha(93, 93, "2");
+                //posição 93: preencher com a condição para emissão do boleto.
+                //Caso a impressão seja via banco, preencher com o número 1.
+                //Caso a impressão seja via empresa, preencher com o número 2;
+                if (infoDetalhe.BancoEmiteBoleto)
+                    detalhe = detalhe.PreencherValorNaLinha(93, 93, "1");
+                else
+                    detalhe = detalhe.PreencherValorNaLinha(93, 93, "2");
+
                 detalhe = detalhe.PreencherValorNaLinha(94, 94, "S");
                 detalhe = detalhe.PreencherValorNaLinha(95, 104, string.Empty.PadLeft(10, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(105, 105, " ");
@@ -383,7 +390,7 @@ namespace BoletoBr.Bancos.Bradesco
                     str = infoDetalhe.NomeAvalistaOuMensagem2;
                     if (str.BoletoBrToStringSafe().Trim().Length > 60)
                         str = str.ExtrairValorDaLinha(1, 60);
-                 
+
                     detalhe = detalhe.PreencherValorNaLinha(335, 394, str.PadLeft(60, ' '));
                 }
                 else
@@ -447,7 +454,7 @@ namespace BoletoBr.Bancos.Bradesco
 
             foreach (var detalheAdicionar in remessaEscrever.RegistrosDetalhe)
             {
-                listaRetornar.AddRange(new[] {EscreverDetalhe(detalheAdicionar)});
+                listaRetornar.AddRange(new[] { EscreverDetalhe(detalheAdicionar) });
             }
 
             listaRetornar.Add(EscreverTrailer(remessaEscrever.Trailer));

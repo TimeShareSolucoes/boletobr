@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace BoletoBr
 {
@@ -12,6 +13,14 @@ namespace BoletoBr
         public string CpfCnpj { get; set; }
         public string Nome { get; set; }
         public Endereco EnderecoCedente { get; set; }
+        public Image LogoCedente { get; set; }
+
+        /// <summary>
+        /// Informar a imagem do selo dos correios
+        /// no caso de boleto com modelo carta
+        /// </summary>
+        public Image LogoSeloCorreios { get; set; }
+
         public string CpfCnpjFormatado
         {
             get

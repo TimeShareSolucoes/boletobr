@@ -57,6 +57,7 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             PercentualMulta = boleto.PercentualMulta.BoletoBrToStringSafe().BoletoBrToDecimal();
             ValorMoraDia = boleto.PercentualJurosMora.BoletoBrToStringSafe().BoletoBrToDecimal();
             TipoCarteiraCobranca = boleto.CarteiraCobranca.Tipo;
+            BancoEmiteBoleto = boleto.CarteiraCobranca.BancoEmiteBoleto;
 
             //this.MensagemLinha1 = boleto.InstrucoesDoBoleto.ElementAt(0).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(0).TextoInstrucao;
             //this.MensagemLinha2 = boleto.InstrucoesDoBoleto.ElementAt(1).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(1).TextoInstrucao;
@@ -153,5 +154,6 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
         public string NomeAvalistaOuMensagem2 { get; set; }
         public int NumeroSequencialRegistro { get; set; }
         public TipoCobrancaJuro TipoCobrancaJuro { get; set; }
+        public bool BancoEmiteBoleto { get; set; }
     }
 }
