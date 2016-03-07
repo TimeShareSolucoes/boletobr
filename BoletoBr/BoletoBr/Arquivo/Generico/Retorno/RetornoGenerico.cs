@@ -14,6 +14,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
             RegistrosDetalhe = new List<RetornoDetalheGenerico>();
             Trailer = new RetornoTrailerGenerico();
         }
+
         public RetornoGenerico(RetornoCnab240 retornoCnab240)
         {
             Inicializa();
@@ -100,10 +101,8 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     PercentualDesconto = registroAtual.TaxaDesconto,
                     PercentualIof = registroAtual.TaxaIof,
                     Especie = registroAtual.Especie,
-                    //DataPagamento = registroAtual.DataPagamento.ToString("ddMMyy").Equals("0") ? new DateTime(0001, 01, 01) : Convert.ToDateTime(registroAtual.DataPagamento.ToString("ddMMyy")),
                     DataCredito = registroAtual.DataDeCredito,
                     DataVencimento = registroAtual.DataDeVencimento,
-                    //DataOcorrencia = registroAtual.DataEmissao.ToString("ddMMyy").Equals(null) ? new DateTime(0001, 01, 01) : Convert.ToDateTime(registroAtual.DataEmissao.ToString("ddMMyy")),
                     NumeroDocumento = registroAtual.NumeroDocumento,
                     ValorDocumento = registroAtual.ValorDoTituloParcela,
                     ValorTarifaCustas = registroAtual.ValorTarifa,
@@ -114,13 +113,13 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     ValorDesconto = registroAtual.ValorDesconto,
                     ValorRecebido = registroAtual.ValorLiquidoRecebido + registroAtual.ValorDoDebitoCredito,
                     ValorAcrescimos = registroAtual.ValorJurosDeMora + registroAtual.ValorMulta + registroAtual.ValorTarifa,
+                    ValorJuros = registroAtual.ValorJurosDeMora,
+                    ValorMulta = registroAtual.ValorMulta,
                     ValorOutrosRecebimentos = registroAtual.ValorOutrosRecebimentos,
                     ValorAbatimentoNaoAproveitadoPeloSacado = registroAtual.ValorAbatimentosNaoAproveitado,
                     ValorLancamento = registroAtual.ValorLancamento,
-                    //DataLiquidacao = registroAtual.DataLiquidacao.ToString("ddMMyy").Equals(null) ? new DateTime(0001, 01, 01) : Convert.ToDateTime(registroAtual.DataLiquidacao.ToString("ddMMyy")),
                     InscricaoSacado = registroAtual.NumeroInscricaoSacado.ToString(CultureInfo.InvariantCulture),
                     NomeSacado = registroAtual.NomeSacado,
-                    //CodigoMovimento = registroAtual.MotivoCodigoRejeicao.Equals(null) ? "0" : registroAtual.MotivoCodigoRejeicao,
                     CodigoOcorrencia = String.IsNullOrEmpty(registroAtual.MotivoCodigoOcorrencia) ? "00" : registroAtual.MotivoCodigoOcorrencia,
                     MensagemOcorrenciaRetornoBancario = ocorrencia.Descricao
                 };
@@ -128,6 +127,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                 RegistrosDetalhe.Add(detalheGenericoAdd);
             }
         }
+        
         public RetornoHeaderGenerico Header { get; set; }
         public List<RetornoDetalheGenerico> RegistrosDetalhe { get; set; } 
         public RetornoTrailerGenerico Trailer { get; set; }

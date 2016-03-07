@@ -60,6 +60,9 @@ namespace BoletoBr.Arquivo.Generico.Retorno
         public decimal ValorOutrosRecebimentos { get; set; }
         public decimal ValorAbatimentoNaoAproveitadoPeloSacado { get; set; }
         public decimal ValorLancamento { get; set; }
+        public decimal ValorJuros { get; set; }
+        public decimal ValorMulta { get; set; }
+
         #endregion
 
         public string MensagemOcorrenciaRetornoBancario { get; set; }

@@ -39,7 +39,7 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 	- <b>033-7 | Banco Santander</b>
 		- Implementação / Testes
 			- Carteiras
-				- [x] 101 - Cobrança Simples COM Registro
+				- [x] 101 - Cobrança Simples COM Registro	(*Homologado com o Banco - 04/03/2016 by @kalleyaoliveira*)
 				- [x] 102 - Cobrança Simples SEM Registro
 				- [ ] 201 - Penhor Rápida COM Registro
 	- <b>104-0 | Caixa Econômica Federal</b>
