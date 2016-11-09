@@ -43,7 +43,7 @@ namespace BoletoBr.Bancos.Itau
                 //Carteiras v�lidas
                 string[] cv = new string[]
                 {
-                    "107", "109", "121", "122", "126", "131", "142", "143", "145", "146", "150", "168", "169", "175", "176",
+                    "107", "109", "112", "121", "122", "126", "131", "142", "143", "145", "146", "150", "168", "169", "175", "176",
                     "178", "196", "198"
                 };
                 bool valida = false;
@@ -65,15 +65,9 @@ namespace BoletoBr.Bancos.Itau
                                                       carteirasImplementadas);
                 }
 
-                //Verifica se o tamanho para o NossoNumero s�o 8 d�gitos
-                //if (boleto.NossoNumeroFormatado.ToString().Length > 8)
-                //    throw new NotImplementedException("A quantidade de dígitos do nosso número para a carteira " +
-                //                                      boleto.CarteiraCobranca.Codigo + ", s�o 8 n�meros.");
-                //else if (boleto.NossoNumeroFormatado.ToString().Length < 8)
-                //    boleto.SetNossoNumeroFormatado(boleto.SequencialNossoNumero.PadLeft(8, '0'));
-
                 //� obrigat�rio o preenchimento do n�mero do documento
                 if (boleto.CarteiraCobranca.Codigo == "106" || boleto.CarteiraCobranca.Codigo == "107" ||
+                    boleto.CarteiraCobranca.Codigo == "109" || boleto.CarteiraCobranca.Codigo == "112" ||
                     boleto.CarteiraCobranca.Codigo == "122" ||
                     boleto.CarteiraCobranca.Codigo == "142" || boleto.CarteiraCobranca.Codigo == "143" ||
                     boleto.CarteiraCobranca.Codigo == "195" ||
@@ -87,18 +81,6 @@ namespace BoletoBr.Bancos.Itau
                 if (!String.IsNullOrEmpty(boleto.NumeroDocumento.Replace("-", "")) &&
                     boleto.NumeroDocumento.Replace("-", "").Length < 8)
                     boleto.NumeroDocumento = boleto.NumeroDocumento.Replace("-", "").PadLeft(8, '0');
-
-                // Calcula o DAC do Nosso N�mero a maioria das carteiras
-                // agencia/conta/carteira/nosso numero
-                //if (boleto.CarteiraCobranca.Codigo != "126" && boleto.CarteiraCobranca.Codigo != "131"
-                //    && boleto.CarteiraCobranca.Codigo != "145" && boleto.CarteiraCobranca.Codigo != "150"
-                //    && boleto.CarteiraCobranca.Codigo != "168")
-                //    _dacNossoNumero = Common.Mod10(boleto.CedenteBoleto.ContaBancariaCedente.Agencia + boleto.CedenteBoleto.ContaBancariaCedente.Conta +
-                //              boleto.CarteiraCobranca.Codigo + boleto.NossoNumeroFormatado);
-                //else
-                //    // Excess�o 126 - 131 - 146 - 150 - 168
-                //    // carteira/nosso numero
-                //    _dacNossoNumero = Common.Mod10(boleto.CarteiraCobranca + boleto.NossoNumeroFormatado);
 
                 // Calcula o DAC da Conta Corrente
                 boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta =
@@ -139,17 +121,15 @@ namespace BoletoBr.Bancos.Itau
             if (sequencialNN.Length < 8) sequencialNN = sequencialNN.PadLeft(8, '0');
 
             if (boleto.CarteiraCobranca.Codigo == "104" || /* Escritural */
-                boleto.CarteiraCobranca.Codigo == "112" || /* Escritural */
                 boleto.CarteiraCobranca.Codigo == "126" ||
                 boleto.CarteiraCobranca.Codigo == "131" ||
                 boleto.CarteiraCobranca.Codigo == "138" || /* Escritural */
                 boleto.CarteiraCobranca.Codigo == "145" ||
                 boleto.CarteiraCobranca.Codigo == "147" || /* Escritural */
                 boleto.CarteiraCobranca.Codigo == "150" ||
-                boleto.CarteiraCobranca.Codigo == "168")
-
+                boleto.CarteiraCobranca.Codigo == "168" ||
+                boleto.CarteiraCobranca.Codigo == "112")
                 _dacNossoNumero = Common.Mod10(boleto.CarteiraCobranca.Codigo + sequencialNN);
-
             else
                 _dacNossoNumero = Common.Mod10(
                     boleto.CedenteBoleto.ContaBancariaCedente.Agencia +
@@ -206,7 +186,7 @@ namespace BoletoBr.Bancos.Itau
             try
             {
                 /*
-                 * C�digo de Barras
+                 * Código de Barras
                  * banco & moeda & fator & valor & carteira & nossonumero & dac_nossonumero & agencia & conta & dac_conta & "000"
                  */
                 string valorBoleto = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "");
@@ -215,7 +195,8 @@ namespace BoletoBr.Bancos.Itau
                 string numeroDocumento = boleto.NumeroDocumento.PadLeft(7, '0');
                 string codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(5, '0');
 
-                if ((boleto.CarteiraCobranca.Codigo == "109") || (boleto.CarteiraCobranca.Codigo == "198") ||
+                if ((boleto.CarteiraCobranca.Codigo == "109") || (boleto.CarteiraCobranca.Codigo == "112") ||
+                    (boleto.CarteiraCobranca.Codigo == "198") ||
                     (boleto.CarteiraCobranca.Codigo == "121") || (boleto.CarteiraCobranca.Codigo == "175") ||
                     (boleto.CarteiraCobranca.Codigo == "176") || (boleto.CarteiraCobranca.Codigo == "178"))
                 {
@@ -295,9 +276,9 @@ namespace BoletoBr.Bancos.Itau
 
                 #endregion UUUUVVVVVVVVVV
 
-                if (boleto.CarteiraCobranca.Codigo == "109" || boleto.CarteiraCobranca.Codigo == "121" ||
-                    boleto.CarteiraCobranca.Codigo == "175" || boleto.CarteiraCobranca.Codigo == "176" ||
-                    boleto.CarteiraCobranca.Codigo == "178")
+                if (boleto.CarteiraCobranca.Codigo == "109" || boleto.CarteiraCobranca.Codigo == "112" ||
+                    boleto.CarteiraCobranca.Codigo == "121" || boleto.CarteiraCobranca.Codigo == "175" || 
+                    boleto.CarteiraCobranca.Codigo == "176" || boleto.CarteiraCobranca.Codigo == "178")
                 {
                     #region Definições Carteiras 109 - 121 - 175 - 176 - 178
 
@@ -368,33 +349,33 @@ namespace BoletoBr.Bancos.Itau
                     #region Definições Carteiras 107 - 122 - 142 - 143 - 196 - 198
 
                     /* AAABC.CCDDX.DDDDD.DEEEEY.EEEFF.FFFGHZ.K.UUUUVVVVVVVVVV
-              * ------------------------------------------------------
-              * Campo 1 - AAABC.CCDDX
-              * AAA - C�digo do Banco
-              * B   - Moeda
-              * CCC - Carteira
-              * DD  - 2 primeiros n�meros Nosso N�mero
-              * X   - DAC Campo 1 (AAABC.CCDD) Mod10
-              * 
-              * Campo 2 - DDDDD.DEEEEY
-              * DDDDD.D - Restante Nosso N�mero
-              * EEEE    - 4 primeiros numeros do n�mero do documento
-              * Y       - DAC Campo 2 (DDDDD.DEEEEY) Mod10
-              * 
-              * Campo 3 - EEEFF.FFFGHZ
-              * EEE     - Restante do n�mero do documento
-              * FFFFF   - C�digo do Cliente
-              * G       - DAC (Carteira/Nosso Numero(sem DAC)/Numero Documento/Codigo Cliente)
-              * H       - zero
-              * Z       - DAC Campo 3
-              * 
-              * Campo 4 - K
-              * K       - DAC C�digo de Barras
-              * 
-              * Campo 5 - UUUUVVVVVVVVVV
-              * UUUU       - Fator Vencimento
-              * VVVVVVVVVV - Valor do T�tulo 
-              */
+                    * ------------------------------------------------------
+                    * Campo 1 - AAABC.CCDDX
+                    * AAA - C�digo do Banco
+                    * B   - Moeda
+                    * CCC - Carteira
+                    * DD  - 2 primeiros n�meros Nosso N�mero
+                    * X   - DAC Campo 1 (AAABC.CCDD) Mod10
+                    * 
+                    * Campo 2 - DDDDD.DEEEEY
+                    * DDDDD.D - Restante Nosso N�mero
+                    * EEEE    - 4 primeiros numeros do n�mero do documento
+                    * Y       - DAC Campo 2 (DDDDD.DEEEEY) Mod10
+                    * 
+                    * Campo 3 - EEEFF.FFFGHZ
+                    * EEE     - Restante do n�mero do documento
+                    * FFFFF   - C�digo do Cliente
+                    * G       - DAC (Carteira/Nosso Numero(sem DAC)/Numero Documento/Codigo Cliente)
+                    * H       - zero
+                    * Z       - DAC Campo 3
+                    * 
+                    * Campo 4 - K
+                    * K       - DAC C�digo de Barras
+                    * 
+                    * Campo 5 - UUUUVVVVVVVVVV
+                    * UUUU       - Fator Vencimento
+                    * VVVVVVVVVV - Valor do T�tulo 
+                      */
 
                     #endregion Defini��es
 

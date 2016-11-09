@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>BoletoBr</id>
-    <version>1.0.2.21</version>
+    <version>1.0.2.25</version>
     <title>BoletoBr</title>
     <authors>Gabriel, Samuel</authors>
     <owners>Gabriel, Samuel</owners>
@@ -13,8 +13,8 @@
     <tags>boleto cnab240 cnab400</tags>
   </metadata>
   <files>
-    <file src="D:\boletobr\BoletoBr\BoletoBr\obj\Debug\BoletoBr.dll" target="lib\net45" exclude="" />
-    <file src="D:\boletobr\BoletoBr\BoletoBr\obj\Debug\BoletoBr.pdb" target="lib\net45" exclude="" />
+    <file src="D:\boletobr\BoletoBr\BoletoBr\bin\Debug\BoletoBr.dll" target="lib\net45\BoletoBr.dll" exclude="" />
+    <file src="D:\boletobr\BoletoBr\BoletoBr\bin\Debug\BoletoBr.pdb" target="lib\net45\BoletoBr.pdb" exclude="" />
     <file src="D:\boletobr\BoletoBr\BoletoBr.NuGet\Readme.txt" target="" exclude="" />
   </files>
 </package>

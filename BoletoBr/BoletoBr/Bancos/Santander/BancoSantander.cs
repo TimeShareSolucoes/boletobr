@@ -206,7 +206,9 @@ namespace BoletoBr.Bancos.Santander
             var codigoModeda = MoedaBanco; //1
             const string fixo = "9"; //1
             var codigoCedente1 = codigoCedente.Substring(0, 4); //4
-            var calculoDv1 = Common.Mod10(string.Format("{0}{1}{2}{3}", codigoBanco, codigoModeda, fixo, codigoCedente1)).ToString(CultureInfo.InvariantCulture); //1
+            var calculoDv1 =
+                Common.Mod10(string.Format("{0}{1}{2}{3}", codigoBanco, codigoModeda, fixo, codigoCedente1))
+                    .ToString(CultureInfo.InvariantCulture); //1
 
             var grupo1 = string.Format("{0}{1}{2}.{3}{4}", codigoBanco, codigoModeda, fixo, codigoCedente1,
                 calculoDv1);
@@ -217,7 +219,9 @@ namespace BoletoBr.Bancos.Santander
 
             var codigoCedente2 = codigoCedente.Substring(4, 3); //3
             var nossoNumero1 = nossoNumero.Substring(0, 7); //7
-            var calculoDv2 = Common.Mod10(string.Format("{0}{1}", codigoCedente2, nossoNumero1)).ToString(CultureInfo.InvariantCulture);
+            var calculoDv2 =
+                Common.Mod10(string.Format("{0}{1}", codigoCedente2, nossoNumero1))
+                    .ToString(CultureInfo.InvariantCulture);
             var grupo2 = string.Format("{0}{1}{2}", codigoCedente2, nossoNumero1, calculoDv2);
 
             grupo2 = " " + grupo2.Substring(0, 5) + "." + grupo2.Substring(5, 6);
@@ -228,7 +232,9 @@ namespace BoletoBr.Bancos.Santander
 
             var nossoNumero2 = nossoNumero.Substring(7, 6); //6
             var tipoCarteira = boleto.CarteiraCobranca.Codigo; //3
-            var calculoDv3 = Common.Mod10(string.Format("{0}{1}{2}", nossoNumero2, ios, tipoCarteira)).ToString(CultureInfo.InvariantCulture); //1
+            var calculoDv3 =
+                Common.Mod10(string.Format("{0}{1}{2}", nossoNumero2, ios, tipoCarteira))
+                    .ToString(CultureInfo.InvariantCulture); //1
 
             var grupo3 = string.Format("{0}{1}{2}{3}", nossoNumero2, ios, tipoCarteira, calculoDv3);
             grupo3 = " " + grupo3.Substring(0, 5) + "." + grupo3.Substring(5, 6) + " ";
@@ -239,14 +245,14 @@ namespace BoletoBr.Bancos.Santander
 
             var dVcodigoBanco = CodigoBanco.PadLeft(3, '0'); //3
             var dVcodigoMoeda = MoedaBanco; //1
-            var dVvalorNominal = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "").PadLeft(10, '0'); //10
+            var dVvalorNominal = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "").PadLeft(10, '0');
+            //10
             const string dVfixo = "9"; //1
             var dVcodigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'); //7
-            var dVnossoNumero = boleto.IdentificadorInternoBoleto + Mod11Santander(boleto.IdentificadorInternoBoleto);
             var dVtipoCarteira = boleto.CarteiraCobranca.Codigo; //3;
 
             var calculoDVcodigo = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}",
-                dVcodigoBanco, dVcodigoMoeda, fatorVencimento, dVvalorNominal, dVfixo, dVcodigoCedente, dVnossoNumero,
+                dVcodigoBanco, dVcodigoMoeda, fatorVencimento, dVvalorNominal, dVfixo, dVcodigoCedente, nossoNumero,
                 ios, dVtipoCarteira);
 
             var grupo4 = Mod10Mod11Santander(calculoDVcodigo, 9) + " ";
@@ -266,7 +272,8 @@ namespace BoletoBr.Bancos.Santander
 
         public void FormataNossoNumero(Boleto boleto)
         {
-            if (String.IsNullOrEmpty(boleto.IdentificadorInternoBoleto) || String.IsNullOrEmpty(boleto.IdentificadorInternoBoleto.TrimStart('0')))
+            if (String.IsNullOrEmpty(boleto.IdentificadorInternoBoleto) ||
+                String.IsNullOrEmpty(boleto.IdentificadorInternoBoleto.TrimStart('0')))
                 throw new Exception("Sequencial Nosso Número não foi informado.");
 
             boleto.SetNossoNumeroFormatado(String.Format("{0}{1}",
@@ -275,7 +282,8 @@ namespace BoletoBr.Bancos.Santander
 
         public void FormataNumeroDocumento(Boleto boleto)
         {
-            if (String.IsNullOrEmpty(boleto.NumeroDocumento) || String.IsNullOrEmpty(boleto.NumeroDocumento.TrimStart('0')))
+            if (String.IsNullOrEmpty(boleto.NumeroDocumento) ||
+                String.IsNullOrEmpty(boleto.NumeroDocumento.TrimStart('0')))
                 throw new Exception("Número do Documento não foi informado.");
 
             boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(10, '0');
@@ -301,97 +309,97 @@ namespace BoletoBr.Bancos.Santander
             switch (especie)
             {
                 case EnumEspecieDocumento.DuplicataMercantil:
+                {
+                    return new EspecieDocumento((int) especie)
                     {
-                        return new EspecieDocumento((int)especie)
-                        {
-                            Codigo = 02,
-                            Descricao = "Duplicata mercantil",
-                            Sigla = "DM"
-                        };
-                    }
+                        Codigo = 02,
+                        Descricao = "Duplicata mercantil",
+                        Sigla = "DM"
+                    };
+                }
                 case EnumEspecieDocumento.DuplicataServico:
+                {
+                    return new EspecieDocumento((int) especie)
                     {
-                        return new EspecieDocumento((int)especie)
-                        {
-                            Codigo = 04,
-                            Descricao = "Duplicata de serviço",
-                            Sigla = "DS"
-                        };
-                    }
+                        Codigo = 04,
+                        Descricao = "Duplicata de serviço",
+                        Sigla = "DS"
+                    };
+                }
                 // Somente para banco 353
                 case EnumEspecieDocumento.LetraCambio353:
+                {
+                    return new EspecieDocumento((int) especie)
                     {
-                        return new EspecieDocumento((int)especie)
-                        {
-                            Codigo = 07,
-                            Descricao = "Letra de câmbio",
-                            Sigla = "LC"
-                        };
-                    }
+                        Codigo = 07,
+                        Descricao = "Letra de câmbio",
+                        Sigla = "LC"
+                    };
+                }
                 case EnumEspecieDocumento.NotaPromissoria:
+                {
+                    return new EspecieDocumento((int) especie)
                     {
-                        return new EspecieDocumento((int)especie)
-                        {
-                            Codigo = 12,
-                            Descricao = "Nota promissória",
-                            Sigla = "NP"
-                        };
-                    }
+                        Codigo = 12,
+                        Descricao = "Nota promissória",
+                        Sigla = "NP"
+                    };
+                }
                 case EnumEspecieDocumento.NotaPromissoriaRural:
+                {
+                    return new EspecieDocumento((int) especie)
                     {
-                        return new EspecieDocumento((int)especie)
-                        {
-                            Codigo = 13,
-                            Descricao = "Nota promissória rural",
-                            Sigla = "NP"
-                        };
-                    }
+                        Codigo = 13,
+                        Descricao = "Nota promissória rural",
+                        Sigla = "NP"
+                    };
+                }
                 case EnumEspecieDocumento.Recibo:
+                {
+                    return new EspecieDocumento((int) especie)
                     {
-                        return new EspecieDocumento((int)especie)
-                        {
-                            Codigo = 17,
-                            Descricao = "Recibo",
-                            Sigla = "RC"
-                        };
-                    }
+                        Codigo = 17,
+                        Descricao = "Recibo",
+                        Sigla = "RC"
+                    };
+                }
                 case EnumEspecieDocumento.ApoliceSeguro:
+                {
+                    return new EspecieDocumento((int) especie)
                     {
-                        return new EspecieDocumento((int)especie)
-                        {
-                            Codigo = 20,
-                            Descricao = "Apólice seguro",
-                            Sigla = "AP"
-                        };
-                    }
+                        Codigo = 20,
+                        Descricao = "Apólice seguro",
+                        Sigla = "AP"
+                    };
+                }
                 // Somente para banco 008
                 case EnumEspecieDocumento.LetraCambio008:
+                {
+                    return new EspecieDocumento((int) especie)
                     {
-                        return new EspecieDocumento((int)especie)
-                        {
-                            Codigo = 30,
-                            Descricao = "Letra de câmbio",
-                            Sigla = "LC"
-                        };
-                    }
+                        Codigo = 30,
+                        Descricao = "Letra de câmbio",
+                        Sigla = "LC"
+                    };
+                }
                 case EnumEspecieDocumento.Cheque:
+                {
+                    return new EspecieDocumento((int) especie)
                     {
-                        return new EspecieDocumento((int)especie)
-                        {
-                            Codigo = 97,
-                            Descricao = "Cheque",
-                            Sigla = "CH"
-                        };
-                    }
+                        Codigo = 97,
+                        Descricao = "Cheque",
+                        Sigla = "CH"
+                    };
+                }
                 case EnumEspecieDocumento.NotaPromissoariaDireta:
+                {
+                    return new EspecieDocumento((int) especie)
                     {
-                        return new EspecieDocumento((int)especie)
-                        {
-                            Codigo = 98,
-                            Descricao = "Nota promissória direta",
-                            Sigla = "ND"
-                        };
-                    }
+                        Codigo = 98,
+                        Descricao = "Nota promissória direta",
+                        Sigla = "ND"
+                    };
+                }
             }
 
             throw new Exception(
@@ -405,68 +413,68 @@ namespace BoletoBr.Bancos.Santander
             switch (tipoInstrucao)
             {
                 case EnumTipoInstrucao.NaoHaInstrucoes:
+                {
+                    return new InstrucaoPadronizada
                     {
-                        return new InstrucaoPadronizada
-                        {
-                            Codigo = 00,
-                            QtdDias = (int)valorInstrucao,
-                            TextoInstrucao = ""
-                        };
-                    }
+                        Codigo = 00,
+                        QtdDias = (int) valorInstrucao,
+                        TextoInstrucao = ""
+                    };
+                }
                 case EnumTipoInstrucao.BaixarAposQuinzeDiasDoVencto:
+                {
+                    return new InstrucaoPadronizada
                     {
-                        return new InstrucaoPadronizada
-                        {
-                            Codigo = 02,
-                            QtdDias = (int)valorInstrucao,
-                            TextoInstrucao = "Baixar após 15 dias do vencimento."
-                        };
-                    }
+                        Codigo = 02,
+                        QtdDias = (int) valorInstrucao,
+                        TextoInstrucao = "Baixar após 15 dias do vencimento."
+                    };
+                }
                 case EnumTipoInstrucao.BaixarAposTrintaDiasDoVencto:
+                {
+                    return new InstrucaoPadronizada
                     {
-                        return new InstrucaoPadronizada
-                        {
-                            Codigo = 03,
-                            QtdDias = (int)valorInstrucao,
-                            TextoInstrucao = "Baixar após 30 dias do vencimento."
-                        };
-                    }
+                        Codigo = 03,
+                        QtdDias = (int) valorInstrucao,
+                        TextoInstrucao = "Baixar após 30 dias do vencimento."
+                    };
+                }
                 case EnumTipoInstrucao.NaoBaixar:
+                {
+                    return new InstrucaoPadronizada
                     {
-                        return new InstrucaoPadronizada
-                        {
-                            Codigo = 04,
-                            QtdDias = (int)valorInstrucao,
-                            TextoInstrucao = "Não baixar."
-                        };
-                    }
+                        Codigo = 04,
+                        QtdDias = (int) valorInstrucao,
+                        TextoInstrucao = "Não baixar."
+                    };
+                }
                 case EnumTipoInstrucao.Protestar:
+                {
+                    return new InstrucaoPadronizada
                     {
-                        return new InstrucaoPadronizada
-                        {
-                            Codigo = 06,
-                            QtdDias = (int)valorInstrucao,
-                            TextoInstrucao = "Protestar após " + valorInstrucao + " dias úteis."
-                        };
-                    }
+                        Codigo = 06,
+                        QtdDias = (int) valorInstrucao,
+                        TextoInstrucao = "Protestar após " + valorInstrucao + " dias úteis."
+                    };
+                }
                 case EnumTipoInstrucao.NaoProtestar:
+                {
+                    return new InstrucaoPadronizada
                     {
-                        return new InstrucaoPadronizada
-                        {
-                            Codigo = 07,
-                            QtdDias = (int)valorInstrucao,
-                            TextoInstrucao = "Não protestar."
-                        };
-                    }
+                        Codigo = 07,
+                        QtdDias = (int) valorInstrucao,
+                        TextoInstrucao = "Não protestar."
+                    };
+                }
                 case EnumTipoInstrucao.NaoCobrarJurosDeMora:
+                {
+                    return new InstrucaoPadronizada
                     {
-                        return new InstrucaoPadronizada
-                        {
-                            Codigo = 08,
-                            QtdDias = (int)valorInstrucao,
-                            TextoInstrucao = "Não cobrar juros de mora."
-                        };
-                    }
+                        Codigo = 08,
+                        QtdDias = (int) valorInstrucao,
+                        TextoInstrucao = "Não cobrar juros de mora."
+                    };
+                }
             }
             throw new Exception(
                 String.Format(
@@ -480,109 +488,109 @@ namespace BoletoBr.Bancos.Santander
             switch (ocorrencia)
             {
                 case EnumCodigoOcorrenciaRemessa.Registro:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 01,
-                            Descricao = "Entrada de título"
-                        };
-                    }
+                        Codigo = 01,
+                        Descricao = "Entrada de título"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.Baixa:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 02,
-                            Descricao = "Pedido de baixa"
-                        };
-                    }
+                        Codigo = 02,
+                        Descricao = "Pedido de baixa"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.ConcessaoDeAbatimento:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 04,
-                            Descricao = "Concessão de abatimento"
-                        };
-                    }
+                        Codigo = 04,
+                        Descricao = "Concessão de abatimento"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.CancelamentoDeAbatimento:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 05,
-                            Descricao = "Cancelamento de abatimento"
-                        };
-                    }
+                        Codigo = 05,
+                        Descricao = "Cancelamento de abatimento"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDeVencimento:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 06,
-                            Descricao = "Alteração de vencimento"
-                        };
-                    }
+                        Codigo = 06,
+                        Descricao = "Alteração de vencimento"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDaIdentificacaoDotituloNaEmpresa:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 07,
-                            Descricao = "Alteração da identificação do título na empresa"
-                        };
-                    }
+                        Codigo = 07,
+                        Descricao = "Alteração da identificação do título na empresa"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoSeuNumero:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 08,
-                            Descricao = "Alteração seu número"
-                        };
-                    }
+                        Codigo = 08,
+                        Descricao = "Alteração seu número"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.Protesto:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 09,
-                            Descricao = "Pedido de Protesto"
-                        };
-                    }
+                        Codigo = 09,
+                        Descricao = "Pedido de Protesto"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.ConcessaoDeDesconto:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 10,
-                            Descricao = "Concessão de Desconto"
-                        };
-                    }
+                        Codigo = 10,
+                        Descricao = "Concessão de Desconto"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.CancelamentoDeDesconto:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 11,
-                            Descricao = "Cancelamento de desconto"
-                        };
-                    }
+                        Codigo = 11,
+                        Descricao = "Cancelamento de desconto"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.SustarProtesto:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 18,
-                            Descricao = "Pedido de Sustação de Protesto"
-                        };
-                    }
+                        Codigo = 18,
+                        Descricao = "Pedido de Sustação de Protesto"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.AlteracaoDeOutrosDados:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 31,
-                            Descricao = "Alteração de outros dados"
-                        };
-                    }
+                        Codigo = 31,
+                        Descricao = "Alteração de outros dados"
+                    };
+                }
                 case EnumCodigoOcorrenciaRemessa.NaoProtestar:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 98,
-                            Descricao = "Não Protestar"
-                        };
-                    }
+                        Codigo = 98,
+                        Descricao = "Não Protestar"
+                    };
+                }
             }
             throw new Exception(
                 String.Format(
@@ -750,197 +758,197 @@ namespace BoletoBr.Bancos.Santander
             switch (ocorrencia)
             {
                 case EnumCodigoOcorrenciaRetorno.RetTituloNaoExiste:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 01,
-                            Descricao = "TÍTULO NÃO EXISTE"
-                        };
-                    }
+                        Codigo = 01,
+                        Descricao = "TÍTULO NÃO EXISTE"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetRegistroConfirmado:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 02,
-                            Descricao = "ENTRADA TÍT. CONFIRMADA"
-                        };
-                    }
+                        Codigo = 02,
+                        Descricao = "ENTRADA TÍT. CONFIRMADA"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetRegistroRecusado:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 03,
-                            Descricao = "ENTRADA TÍT. REJEITADA"
-                        };
-                    }
+                        Codigo = 03,
+                        Descricao = "ENTRADA TÍT. REJEITADA"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetLiquidado:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 06,
-                            Descricao = "LIQUIDAÇÃO"
-                        };
-                    }
+                        Codigo = 06,
+                        Descricao = "LIQUIDAÇÃO"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetLiquidadoPorConta:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 07,
-                            Descricao = "LIQUIDAÇÃO POR CONTA"
-                        };
-                    }
+                        Codigo = 07,
+                        Descricao = "LIQUIDAÇÃO POR CONTA"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetLiquidadoSaldoRestante:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 08,
-                            Descricao = "LIQUIDAÇÃO POR SALDO"
-                        };
-                    }
+                        Codigo = 08,
+                        Descricao = "LIQUIDAÇÃO POR SALDO"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetBaixaAutomatica:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 09,
-                            Descricao = "BAIXA AUTOMÁTICA"
-                        };
-                    }
+                        Codigo = 09,
+                        Descricao = "BAIXA AUTOMÁTICA"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetBaixado:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 10,
-                            Descricao = "TÍT. BAIX. CONF. INSTRUÇÃO"
-                        };
-                    }
+                        Codigo = 10,
+                        Descricao = "TÍT. BAIX. CONF. INSTRUÇÃO"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetTituloEmSer:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 11,
-                            Descricao = "EM SER"
-                        };
-                    }
+                        Codigo = 11,
+                        Descricao = "EM SER"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetAbatimentoConcedido:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 12,
-                            Descricao = "ABATIMENTO CONCEDIDO"
-                        };
-                    }
+                        Codigo = 12,
+                        Descricao = "ABATIMENTO CONCEDIDO"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetAbatimentoCancelado:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 13,
-                            Descricao = "ABATIMENTO CANCELADO"
-                        };
-                    }
+                        Codigo = 13,
+                        Descricao = "ABATIMENTO CANCELADO"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetProrrogVencto:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 14,
-                            Descricao = "PRORROGAÇÃO DE VENCIMENTO"
-                        };
-                    }
+                        Codigo = 14,
+                        Descricao = "PRORROGAÇÃO DE VENCIMENTO"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetConfirmacaoProtesto:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 15,
-                            Descricao = "CONFIRMAÇÃO DE PROTESTO"
-                        };
-                    }
+                        Codigo = 15,
+                        Descricao = "CONFIRMAÇÃO DE PROTESTO"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetJaBaixado:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 16,
-                            Descricao = "TÍT. JÁ BAIXADO/LIQUIDADO"
-                        };
-                    }
+                        Codigo = 16,
+                        Descricao = "TÍT. JÁ BAIXADO/LIQUIDADO"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetLiquidadoEmCartorio:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 17,
-                            Descricao = "LIQUIDADO EM CARTÓRIO"
-                        };
-                    }
+                        Codigo = 17,
+                        Descricao = "LIQUIDADO EM CARTÓRIO"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetEncaminhadoACartorio:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 21,
-                            Descricao = "TÍT. ENVIADO A CARTÓRIO"
-                        };
-                    }
+                        Codigo = 21,
+                        Descricao = "TÍT. ENVIADO A CARTÓRIO"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetRetiradoDeCartorio:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 22,
-                            Descricao = "TÍT. RETIRADO DE CARTÓRIO"
-                        };
-                    }
+                        Codigo = 22,
+                        Descricao = "TÍT. RETIRADO DE CARTÓRIO"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetCustasCartorioDistribuidor:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 24,
-                            Descricao = "CUSTAS DE CARTÓRIO"
-                        };
-                    }
+                        Codigo = 24,
+                        Descricao = "CUSTAS DE CARTÓRIO"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetRecebimentoInstrucaoProtestar:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 25,
-                            Descricao = "PROTESTAR TÍTULO"
-                        };
-                    }
+                        Codigo = 25,
+                        Descricao = "PROTESTAR TÍTULO"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetRecebimentoInstrucaoSustarProtesto:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 26,
-                            Descricao = "SUSTAR"
-                        };
-                    }
+                        Codigo = 26,
+                        Descricao = "SUSTAR"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetTituloDdaReconhecido:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 35,
-                            Descricao = "TÍTULO DDA RECONHECIDO PELO PAGADOR"
-                        };
-                    }
+                        Codigo = 35,
+                        Descricao = "TÍTULO DDA RECONHECIDO PELO PAGADOR"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetTituloDdaNaoReconhecido:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 36,
-                            Descricao = "TÍTULO DDA NÃO RECONHECIDO PELO PAGADOR"
-                        };
-                    }
+                        Codigo = 36,
+                        Descricao = "TÍTULO DDA NÃO RECONHECIDO PELO PAGADOR"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetTituloDdaRecusado:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 37,
-                            Descricao = "TÍTULO DDA RECUSADO PELA CIP"
-                        };
-                    }
+                        Codigo = 37,
+                        Descricao = "TÍTULO DDA RECUSADO PELA CIP"
+                    };
+                }
                 case EnumCodigoOcorrenciaRetorno.RetNaoProtestar:
+                {
+                    return new CodigoOcorrencia((int) ocorrencia)
                     {
-                        return new CodigoOcorrencia((int)ocorrencia)
-                        {
-                            Codigo = 38,
-                            Descricao = "RECEBIMENTO DA INSTRUÇÃO NÃO PROTESTAR"
-                        };
-                    }
+                        Codigo = 38,
+                        Descricao = "RECEBIMENTO DA INSTRUÇÃO NÃO PROTESTAR"
+                    };
+                }
             }
             throw new Exception(
                 String.Format(
@@ -998,7 +1006,7 @@ namespace BoletoBr.Bancos.Santander
             while (sequencia.Length > 0)
             {
                 int valorPosicao = Convert.ToInt32(sequencia.Substring(0, 1));
-                total += valorPosicao * multiplicador;
+                total += valorPosicao*multiplicador;
                 multiplicador++;
 
                 if (multiplicador == 10)
@@ -1009,7 +1017,7 @@ namespace BoletoBr.Bancos.Santander
                 sequencia = sequencia.Remove(0, 1);
             }
 
-            nresto = total - ((total / 11) * 11);
+            nresto = total - ((total/11)*11);
 
             if (nresto == 0 || nresto == 1)
                 ndig = 0;
@@ -1035,7 +1043,7 @@ namespace BoletoBr.Bancos.Santander
             while (sequencia.Length > 0)
             {
                 int valorPosicao = Convert.ToInt32(sequencia.Substring(0, 1));
-                total += valorPosicao * multiplicador;
+                total += valorPosicao*multiplicador;
                 multiplicador++;
 
                 if (multiplicador == 10)
@@ -1046,7 +1054,7 @@ namespace BoletoBr.Bancos.Santander
                 sequencia = sequencia.Remove(0, 1);
             }
 
-            nresto = (total * 10) % 11; //nresto = (((total * 10) / 11) % 10); Jefhtavares em 19/03/14
+            nresto = (total*10)%11; //nresto = (((total * 10) / 11) % 10); Jefhtavares em 19/03/14
 
             if (nresto == 0 || nresto == 1 || nresto == 10)
                 ndig = 1;
@@ -1065,7 +1073,7 @@ namespace BoletoBr.Bancos.Santander
             var nresto = 0;
             var num = string.Empty;
 
-            mult = 1 + (seq.Length % (lim - 1));
+            mult = 1 + (seq.Length%(lim - 1));
 
             if (mult == 1)
                 mult = lim;
@@ -1073,7 +1081,7 @@ namespace BoletoBr.Bancos.Santander
             while (pos <= seq.Length)
             {
                 num = Common.Mid(seq, pos, 1);
-                total += Convert.ToInt32(num) * mult;
+                total += Convert.ToInt32(num)*mult;
 
                 mult -= 1;
                 if (mult == 1)
@@ -1082,7 +1090,7 @@ namespace BoletoBr.Bancos.Santander
                 pos += 1;
             }
 
-            nresto = ((total * 10) % 11);
+            nresto = ((total*10)%11);
 
             if (flag == 1)
                 return nresto;

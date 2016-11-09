@@ -8,7 +8,6 @@ namespace BoletoBr
 {
     public class TrailerRetornoCnab400
     {
-
         #region Propriedades Comuns
 
         public int CodigoDoRegistro { get; set; }
@@ -112,6 +111,20 @@ namespace BoletoBr
         #region Santander
 
         public int Versao { get; set; }
+
+        #endregion
+
+        #region Sicoob
+
+        public string CodigoCooperativa { get; set; }
+        public string SiglaCooperativa { get; set; }
+        public string EnderecoCooperativa { get; set; }
+        public string BairroCooperativa { get; set; }
+        public string CEPCooperativa { get; set; }
+        public string CidadeCooperativa { get; set; }
+        public string UFCooperativa { get; set; }
+        public DateTime? DataMovimento { get; set; }
+        public string UltimoNossoNumero { get; set; }
 
         #endregion
     }

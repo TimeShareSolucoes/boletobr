@@ -1,4 +1,5 @@
 ﻿using System;
+using BoletoBr.Interfaces;
 
 namespace BoletoBr.Arquivo.Generico.Retorno
 {
@@ -34,7 +35,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
         //public decimal ValorLiquido { get; set; }
         public decimal ValorOutrasDespesas { get; set; }
         public decimal ValorOutrosCreditos { get; set; }
-        public DateTime DataLiquidacao { get; set; }
+        public DateTime? DataLiquidacao { get; set; }
         public DateTime? DataCredito { get; set; }
         public DateTime DataOcorrencia { get; set; }
         public decimal ValorOcorrencia { get; set; }
@@ -62,10 +63,13 @@ namespace BoletoBr.Arquivo.Generico.Retorno
         public decimal ValorLancamento { get; set; }
         public decimal ValorJuros { get; set; }
         public decimal ValorMulta { get; set; }
+        public string SeuNumero { get; set; }
 
         #endregion
 
         public string MensagemOcorrenciaRetornoBancario { get; set; }
+
+        public ICodigoOcorrencia Ocorrencia { get; set; }
 
         #region Propriedades de uso livre
         /// <summary>
@@ -83,7 +87,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
         {
             get
             {
-                if (ValorRecebido > 0 && DataCredito.HasValue)
+                if (ValorRecebido > 0 && DataCredito.HasValue && DataCredito.Value > DateTime.MinValue)
                     return true;
 
                 return false;

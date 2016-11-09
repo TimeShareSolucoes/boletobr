@@ -58,13 +58,10 @@ namespace BoletoBr.Bancos.Bradesco
             }
         }
 
-        public string EscreverDetalhe(DetalheRemessaCnab400 infoDetalhe)
+        public string EscreverDetalhe(DetalheRemessaCnab400 infoDetalhe, int sequenciaRegistro)
         {
             if (infoDetalhe == null)
                 throw new Exception("Não há boleto para geração do DETALHE");
-
-            if (infoDetalhe.NumeroSequencialRegistro == 0)
-                throw new Exception("Sequencial do registro não foi informado na geração do DETALHE.");
 
             string enderecoSacado = string.Empty;
 
@@ -348,10 +345,10 @@ namespace BoletoBr.Bancos.Bradesco
                  * A mensagem enviada nesse campo será impressa somente no boleto enão será confirmada no arquivo retorno.
                  */
                 var mensagem1 = "";
-                if (infoDetalhe.Instrucoes != null && infoDetalhe.Instrucoes.Count > 0)
-                    mensagem1 = infoDetalhe.Instrucoes[0].TextoInstrucao;
-                if (mensagem1.Trim().Length > 12)
-                    mensagem1 = mensagem1.ExtrairValorDaLinha(1, 12);
+                //if (infoDetalhe.Instrucoes != null && infoDetalhe.Instrucoes.Count > 0)
+                //    mensagem1 = infoDetalhe.Instrucoes[0].TextoInstrucao;
+                //if (mensagem1.Trim().Length > 12)
+                //    mensagem1 = mensagem1.ExtrairValorDaLinha(1, 12);
 
                 detalhe = detalhe.PreencherValorNaLinha(315, 326, mensagem1.PadRight(12, ' ')); // 1ª Mensagem
 
@@ -393,24 +390,23 @@ namespace BoletoBr.Bancos.Bradesco
 
                     detalhe = detalhe.PreencherValorNaLinha(335, 394, str.PadLeft(60, ' '));
                 }
-                else
-                {
-                    if (infoDetalhe.Instrucoes != null && infoDetalhe.Instrucoes.Count > 1)
-                    {
-                        var mensagem2 = "";
-                        mensagem2 = infoDetalhe.Instrucoes[1].TextoInstrucao;
+                //else
+                //{
+                //    if (infoDetalhe.Instrucoes != null && infoDetalhe.Instrucoes.Count > 1)
+                //    {
+                //        var mensagem2 = "";
+                //        mensagem2 = infoDetalhe.Instrucoes[1].TextoInstrucao;
 
-                        if (mensagem2.Trim().Length > 60)
-                            mensagem2 = mensagem2.ExtrairValorDaLinha(1, 60);
+                //        if (mensagem2.Trim().Length > 60)
+                //            mensagem2 = mensagem2.ExtrairValorDaLinha(1, 60);
 
-                        detalhe = detalhe.PreencherValorNaLinha(335, 394, mensagem2.PadRight(60, ' '));
-                    }
-                }
+                //        detalhe = detalhe.PreencherValorNaLinha(335, 394, mensagem2.PadRight(60, ' '));
+                //    }
+                //}
 
                 #endregion
 
-                detalhe = detalhe.PreencherValorNaLinha(395, 400,
-                    infoDetalhe.NumeroSequencialRegistro.ToString().PadLeft(6, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(395, 400, sequenciaRegistro.BoletoBrToStringSafe().PadLeft(6, '0'));
 
                 return detalhe;
             }
@@ -421,21 +417,17 @@ namespace BoletoBr.Bancos.Bradesco
             }
         }
 
-        public string EscreverTrailer(TrailerRemessaCnab400 infoTrailer)
+        public string EscreverTrailer(TrailerRemessaCnab400 infoTrailer, int sequenciaRegistro)
         {
             if (infoTrailer == null)
                 throw new Exception("Os dados não foram informados na geração do TRAILER.");
-
-            if (infoTrailer.NumeroSequencialRegistro == 0)
-                throw new Exception("Sequencial do registro não foi informado na geração do TRAILER.");
 
             var trailer = new string(' ', 400);
             try
             {
                 trailer = trailer.PreencherValorNaLinha(1, 1, "9");
                 trailer = trailer.PreencherValorNaLinha(2, 394, string.Empty.PadRight(393, ' '));
-                trailer = trailer.PreencherValorNaLinha(395, 400,
-                    infoTrailer.NumeroSequencialRegistro.ToString().PadLeft(6, '0'));
+                trailer = trailer.PreencherValorNaLinha(395, 400, sequenciaRegistro.ToString().PadLeft(6, '0'));
 
                 return trailer;
             }
@@ -446,18 +438,87 @@ namespace BoletoBr.Bancos.Bradesco
             }
         }
 
+        public string EscreverMensagemTipo2(DetalheRemessaCnab400 infoDetalhe, int sequenciaRegistro)
+        {
+            if (infoDetalhe == null)
+                throw new Exception("Os dados não foram informados na geração do DETALHE.");
+
+            var tipo2 = new string(' ', 400);
+            try
+            {
+                var mensagem1 = "";
+                var mensagem2 = "";
+                var mensagem3 = "";
+                var mensagem4 = "";
+
+                foreach (var item in infoDetalhe.Instrucoes)
+                {
+                    if (mensagem1 == "")
+                    {
+                        mensagem1 = item.TextoInstrucao;
+                        if (mensagem1.Length > 80) mensagem1 = mensagem1.ExtrairValorDaLinha(1, 80);
+                    }
+                    else if (mensagem2 == "")
+                    {
+                        mensagem2 = item.TextoInstrucao;
+                        if (mensagem2.Length > 80) mensagem2 = mensagem2.ExtrairValorDaLinha(1, 80);
+                    }
+                    else if (mensagem3 == "")
+                    {
+                        mensagem3 = item.TextoInstrucao;
+                        if (mensagem3.Length > 80) mensagem3 = mensagem3.ExtrairValorDaLinha(1, 80);
+                    }
+                    else if (mensagem4 == "")
+                    {
+                        mensagem4 = item.TextoInstrucao;
+                        if (mensagem4.Length > 80) mensagem4 = mensagem4.ExtrairValorDaLinha(1, 80);
+                    }
+                }
+
+                tipo2 = tipo2.PreencherValorNaLinha(1, 1, "2");
+                tipo2 = tipo2.PreencherValorNaLinha(2, 81, mensagem1.PadRight(80, ' '));
+                tipo2 = tipo2.PreencherValorNaLinha(82, 161, mensagem2.PadRight(80, ' '));
+                tipo2 = tipo2.PreencherValorNaLinha(162, 241, mensagem3.PadRight(80, ' '));
+                tipo2 = tipo2.PreencherValorNaLinha(242, 321, mensagem4.PadRight(80, ' '));
+                tipo2 = tipo2.PreencherValorNaLinha(322, 366, string.Empty.PadRight(45, ' '));
+                tipo2 = tipo2.PreencherValorNaLinha(367, 369, infoDetalhe.CarteiraCobranca.PadLeft(3, '0'));
+                tipo2 = tipo2.PreencherValorNaLinha(370, 374, infoDetalhe.Agencia.PadLeft(5, '0'));
+                tipo2 = tipo2.PreencherValorNaLinha(375, 381, infoDetalhe.ContaCorrente.PadLeft(7, '0'));
+                tipo2 = tipo2.PreencherValorNaLinha(382, 382, infoDetalhe.DvContaCorrente.PadLeft(1, '0'));
+                tipo2 = tipo2.PreencherValorNaLinha(383, 393, infoDetalhe.NossoNumero.PadLeft(11, '0'));
+                tipo2 = tipo2.PreencherValorNaLinha(394, 394, infoDetalhe.DvNossoNumero);
+                tipo2 = tipo2.PreencherValorNaLinha(395, 400, sequenciaRegistro.ToString().PadLeft(6, '0'));
+
+                return tipo2;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(string.Format("<BoletoBr>{0}Falha na geração do Registro Tipo 2 do arquivo de REMESSA.",
+                    Environment.NewLine), e);
+            }
+        }
+
         public List<string> EscreverTexto(RemessaCnab400 remessaEscrever)
         {
             List<string> listaRetornar = new List<string>();
 
             listaRetornar.Add(EscreverHeader(remessaEscrever.Header));
 
+            var sequencia = 2;
             foreach (var detalheAdicionar in remessaEscrever.RegistrosDetalhe)
             {
-                listaRetornar.AddRange(new[] { EscreverDetalhe(detalheAdicionar) });
+                listaRetornar.AddRange(new[] { EscreverDetalhe(detalheAdicionar, sequencia) });
+                sequencia++;
+
+                /* REGISTRO TIPO 2 (MENSAGENS )*/
+                if (detalheAdicionar.Instrucoes != null && detalheAdicionar.Instrucoes.Count > 0)
+                {
+                    listaRetornar.AddRange(new[] { EscreverMensagemTipo2(detalheAdicionar, sequencia) });
+                    sequencia++;
+                }
             }
 
-            listaRetornar.Add(EscreverTrailer(remessaEscrever.Trailer));
+            listaRetornar.Add(EscreverTrailer(remessaEscrever.Trailer, sequencia));
 
             return listaRetornar;
         }

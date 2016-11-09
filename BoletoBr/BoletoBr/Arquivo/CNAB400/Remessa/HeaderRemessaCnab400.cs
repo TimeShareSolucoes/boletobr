@@ -15,10 +15,11 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             this.ContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.Conta;
             this.DvContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta;
             this.CodigoEmpresa = boleto.CedenteBoleto.CodigoCedente;
+            this.DigitoCedenteEmpresa = boleto.CedenteBoleto.DigitoCedente.BoletoBrToStringSafe();
             this.NomeEmpresa = boleto.CedenteBoleto.Nome;
             this.NumeroSequencialRemessa = numeroSequencialRemessa;
             this.NumeroSequencialRegistro = numeroSequencialRegistro;
-            Convenio = boleto.CedenteBoleto.Convenio;
+            this.Convenio = boleto.CedenteBoleto.Convenio;
 
             if (dataHora == null)
                 this.DataDeGravacao = DateTime.Now;
@@ -38,6 +39,7 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
         public int NumeroSequencialRegistro { get; set; }
         public int NumeroSequencialRemessa { get; set; }
         public string CodigoEmpresa { get; set; }
+        public string DigitoCedenteEmpresa { get; set; }
         public string NomeEmpresa { get; set; }
 
         #region #033|SANTANDER

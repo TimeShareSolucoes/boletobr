@@ -349,12 +349,27 @@ namespace BoletoBr.Bancos.Brasil
                     ? infoDetalhe.NomePagador.ExtrairValorDaLinha(1, 37)
                     : infoDetalhe.NomePagador;
 
-                detalhe = detalhe.PreencherValorNaLinha(219, 220,
-                    infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").Length == 11
-                        ? "01"
-                        : "02");
-                detalhe = detalhe.PreencherValorNaLinha(221, 234,
-                    infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(14, '0'));
+                /* CPF/CNPJ em branco 
+                 * 00 - ISENTO
+                 * 01 - CPF
+                 * 02 - CNPJ
+                 */
+                if (infoDetalhe.InscricaoPagador.BoletoBrToStringSafe().Trim().Length == 0)
+                {
+                    detalhe = detalhe.PreencherValorNaLinha(219, 220, "00");
+                    detalhe = detalhe.PreencherValorNaLinha(221, 234, string.Empty.PadLeft(14, '0'));
+                }
+                else
+                {
+                    detalhe = detalhe.PreencherValorNaLinha(219, 220,
+                           infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").Length == 11
+                               ? "01"
+                               : "02");
+
+                    detalhe = detalhe.PreencherValorNaLinha(221, 234,
+                        infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(14, '0'));
+                }
+
                 detalhe = detalhe.PreencherValorNaLinha(235, 271, nomePagador.ToUpper().PadRight(37, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(272, 274, string.Empty.PadRight(3, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(275, 314, enderecoSacado.PadRight(40, ' '));

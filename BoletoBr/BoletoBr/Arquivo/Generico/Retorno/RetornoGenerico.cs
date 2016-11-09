@@ -20,7 +20,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
             Inicializa();
             RetornoCnab240Especifico = retornoCnab240;
             /* Transformar de CNAB240 para formato genérico */
-                
+
             foreach (var loteAtual in retornoCnab240.Lotes)
             {
                 foreach (var d in loteAtual.RegistrosDetalheSegmentos)
@@ -59,7 +59,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     detalheGenericoAdd.ValorRecebido = valorRecebido;
 
                     #endregion
-                    
+
                     //detalheGenericoAdd.ValorIof = d.SegmentoU.ValorIofRecolhido / 100;
                     //detalheGenericoAdd.ValorOutrasDespesas = d.SegmentoU.ValorOutrasDespesas / 100;
                     //detalheGenericoAdd.ValorOutrosCreditos = d.SegmentoU.ValorOutrosCreditos / 100;
@@ -67,9 +67,15 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     //detalheGenericoAdd.DataOcorrencia = d.SegmentoU.DataOcorrenciaPagador;
                     //detalheGenericoAdd.ValorOcorrencia = d.SegmentoU.ValorOcorrenciaPagador / 100;
                     //detalheGenericoAdd.DataDebitoTarifaCustas = Convert.ToDateTime(d.SegmentoU.DataDebitoTarifa.ToString());
+
+                    //DATA LIQUIDAÇÃO E DATA OCORRENCIA
+                    if (detalheGenericoAdd.Pago && detalheGenericoAdd.DataLiquidacao == DateTime.MinValue)
+                        detalheGenericoAdd.DataLiquidacao = d.SegmentoU.DataOcorrencia;
+
                     RegistrosDetalhe.Add(detalheGenericoAdd);
                 }
             }
+
             Trailer.QtdRegistrosArquivo = retornoCnab240.Trailer.QtdRegistrosArquivo.ToString(CultureInfo.InvariantCulture);
         }
 
@@ -77,7 +83,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
         {
             Inicializa();
             RetornoCnab400Especifico = retornoCnab400;
-            
+
             /* Transformar de CNAB400 para formato genérico */
             Header.CodigoDoBanco = retornoCnab400.Header.CodigoDoBanco;
             Header.Convenio = retornoCnab400.Header.NumeroConvenio.ToString(CultureInfo.InvariantCulture);
@@ -103,7 +109,9 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     Especie = registroAtual.Especie,
                     DataCredito = registroAtual.DataDeCredito,
                     DataVencimento = registroAtual.DataDeVencimento,
+                    DataLiquidacao = registroAtual.DataLiquidacao,
                     NumeroDocumento = registroAtual.NumeroDocumento,
+                    SeuNumero = registroAtual.SeuNumero,
                     ValorDocumento = registroAtual.ValorDoTituloParcela,
                     ValorTarifaCustas = registroAtual.ValorTarifa,
                     ValorOutrasDespesas = registroAtual.ValorOutrasDespesas,
@@ -121,8 +129,13 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     InscricaoSacado = registroAtual.NumeroInscricaoSacado.ToString(CultureInfo.InvariantCulture),
                     NomeSacado = registroAtual.NomeSacado,
                     CodigoOcorrencia = String.IsNullOrEmpty(registroAtual.MotivoCodigoOcorrencia) ? "00" : registroAtual.MotivoCodigoOcorrencia,
-                    MensagemOcorrenciaRetornoBancario = ocorrencia.Descricao
+                    MensagemOcorrenciaRetornoBancario = ocorrencia.Descricao,
+                    Ocorrencia = ocorrencia
                 };
+
+                //DATA LIQUIDAÇÃO E DATA OCORRENCIA
+                if (detalheGenericoAdd.Pago && detalheGenericoAdd.DataLiquidacao == DateTime.MinValue)
+                    detalheGenericoAdd.DataLiquidacao = registroAtual.DataDaOcorrencia;
 
                 RegistrosDetalhe.Add(detalheGenericoAdd);
             }

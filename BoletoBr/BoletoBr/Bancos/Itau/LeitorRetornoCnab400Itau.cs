@@ -21,7 +21,6 @@ namespace BoletoBr.Bancos.Itau
         public RetornoCnab400 ProcessarRetorno()
         {
             /* Validações */
-
             #region Validações
 
             ValidaArquivoRetorno();

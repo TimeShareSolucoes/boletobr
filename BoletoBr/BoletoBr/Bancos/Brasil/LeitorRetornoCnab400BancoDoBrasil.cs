@@ -175,7 +175,9 @@ namespace BoletoBr.Bancos.Brasil
                 objRetornar.AgenciaCobradora = linha.ExtrairValorDaLinha(169, 172).BoletoBrToInt();
                 objRetornar.DvAgenciaCobradora = linha.ExtrairValorDaLinha(173, 173);
                 objRetornar.Especie = linha.ExtrairValorDaLinha(174, 175);
+
                 objRetornar.DataDeCredito = Convert.ToDateTime(linha.ExtrairValorDaLinha(176, 181).ToDateTimeFromDdMmAa());
+                
                 objRetornar.ValorTarifa = linha.ExtrairValorDaLinha(182, 188).BoletoBrToDecimal() / 100;
                 objRetornar.ValorOutrasDespesas = linha.ExtrairValorDaLinha(189, 201).BoletoBrToDecimal() / 100;
                 objRetornar.ValorJurosDesconto = linha.ExtrairValorDaLinha(202, 214).BoletoBrToDecimal() / 100;

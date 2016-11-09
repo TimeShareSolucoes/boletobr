@@ -47,8 +47,8 @@ namespace BoletoBr
 
                     textoRetornar += Numero;
                 }
-                else
-                    textoRetornar += "SN";
+                //else
+                //    textoRetornar += "SN";
 
                 if (!String.IsNullOrEmpty(Complemento))
                 {
@@ -81,8 +81,8 @@ namespace BoletoBr
 
                     textoRetornar += Numero;
                 }
-                else
-                    textoRetornar += "SN";
+                //else
+                //    textoRetornar += "SN";
 
                 if (!String.IsNullOrEmpty(Complemento))
                 {

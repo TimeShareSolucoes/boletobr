@@ -61,7 +61,7 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 				- [ ] 108 - Direta Eletrônica (Carnê) 
 			- Carteira Escritural
 				- [ ] 104 - Escritural Eletrônica (Carnê)
-				- [ ] 112 - Escritural Eletrônica (Simples)
+				- [x] 112 - Escritural Eletrônica (Simples) (*Homologado com Banco - 30/06/2016 by @kalleyaoliveira**)
 				- [ ] 138 - Escritural Eletrônica (Mensagem Colorida)
 				- [ ] 147 - Escritural Eletrônica (Dólar)
 			- Carteira Sem Registro
@@ -74,9 +74,12 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 		- Implementação / Testes
 			- Carteiras
 				- [x] CNR - Cobrança Não Registrada
-				- [ ] CSB - Cobrança Registrada
+				- [x] CSB - Cobrança Registrada (*Homologado com Banco - 03/06/2016 by @kalleyaoliveira**)
 	- <b>070-1 | Banco BRB</b>
 		- Implementação / Testes
 			- Carteiras
 				- [x] TIPO 1 - COBRANÇA DIRETA SEM REGISTRO				
 				- [x] TIPO 2 - COBRANÇA DIRETA COM REGISTRO
+	- <b>756-0 | Banco Cooperativo do Brasil - SICOOB</b>
+		- Implementação
+				- [x] 1/01 - Simples com Registro (*Homologado com o Banco - 04/08/2016 by @kalleyaoliveira**)

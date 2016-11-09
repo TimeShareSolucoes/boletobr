@@ -476,5 +476,14 @@ namespace BoletoBr
         public decimal ValorOutrosDebitos { get; set; }
 
         #endregion
+
+        #region Sicoob
+
+        public int NumeroParcela { get; set; }
+        public int CodigoBaixaRecusa { get; set; }
+        public int CodigoDeResponsabilidade { get; set; }
+        public int DVCodigoDeResponsabilidade { get; set; }
+
+        #endregion
     }
 }

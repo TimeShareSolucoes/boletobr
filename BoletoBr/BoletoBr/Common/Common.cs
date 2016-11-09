@@ -94,7 +94,6 @@ namespace BoletoBr
             int soma = 0;
             int peso = 2;
 
-
             for (int i = seq.Length; i > 0; i--)
             {
                 soma = soma + (Convert.ToInt32(Common.Mid(seq, i, 1)) * peso);
@@ -106,9 +105,33 @@ namespace BoletoBr
 
             digito = 11 - (soma % 11);
 
-
             if ((digito > 9) || (digito == 0) || (digito == 1))
                 digito = 1;
+
+            return digito;
+        }
+
+        public static int Mod11Base7Hsbc(string seq)
+        {
+            int digito;
+            int soma = 0;
+            int peso = 2;
+
+            for (int i = seq.Length; i > 0; i--)
+            {
+                soma = soma + (Convert.ToInt32(Common.Mid(seq, i, 1)) * peso);
+                if (peso == 7)
+                    peso = 2;
+                else
+                    peso = peso + 1;
+            }
+
+            var resto = (soma % 11);
+
+            if ((resto == 0) || (resto == 1))
+                digito = 0;
+            else
+                digito = 11 - resto;
 
             return digito;
         }
