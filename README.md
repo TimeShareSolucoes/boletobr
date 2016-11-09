@@ -81,5 +81,6 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 				- [x] TIPO 1 - COBRANÇA DIRETA SEM REGISTRO				
 				- [x] TIPO 2 - COBRANÇA DIRETA COM REGISTRO
 	- <b>756-0 | Banco Cooperativo do Brasil - SICOOB</b>
-		- Implementação
+		- Implementação / Testes
+			- Carteiras
 				- [x] 1/01 - Simples com Registro (*Homologado com o Banco - 04/08/2016 by @kalleyaoliveira**)
