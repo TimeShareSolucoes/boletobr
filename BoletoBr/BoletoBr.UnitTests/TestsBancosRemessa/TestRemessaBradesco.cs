@@ -9,6 +9,7 @@ using BoletoBr.Bancos.Bradesco;
 using BoletoBr.Dominio;
 using BoletoBr.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using BoletoBr.Fabricas;
 
 namespace BoletoBr.UnitTests.TestsBancosRemessa
 {
@@ -23,23 +24,87 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             var c3 = AppDomain.CurrentDomain.BaseDirectory;
             var c4 = System.IO.Directory.GetCurrentDirectory();
             var c5 = Environment.CurrentDirectory;
-            var c6 = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
+            var c6 =
+                System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
 
             var concat = String.Format("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}", Environment.NewLine, c1, c2, c3, c4, c5,
                 c6);
         }
 
+        #region Cnab 400
+
+        #region Carteira 02
+
+        [TestMethod]
+        public void GerarHeaderArquivoRemessaBradescoCnab400()
+        {
+            var banco = Fabricas.BancoFactory.ObterBanco("237", "2");
+            var contaBancariaCedente = new ContaBancaria("0534", "7", "2801", "0");
+            var cedente = new Cedente("4879962", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente, null);
+
+            var sacado = new Sacado("Sacado Fulano de Tal", "999.999.999-99", new Endereco()
+            {
+                TipoLogradouro = "R",
+                Logradouro = "1",
+                Bairro = "Bairro X",
+                Cidade = "Cidade X",
+                SiglaUf = "XX",
+                Cep = "12345-000",
+                Complemento = "Comp X",
+                Numero = "9"
+            });
+
+            var carteira = new CarteiraCobranca {Codigo = "02", BancoEmiteBoleto = false};
+
+            var boleto = new Boleto(carteira, cedente, sacado, null)
+            {
+                NumeroDocumento = "55617",
+                ValorBoleto = Convert.ToDecimal(501.81),
+                IdentificadorInternoBoleto = "55617",
+                DataVencimento = new DateTime(2016, 11, 25),
+                Moeda = "9",
+                BancoBoleto = banco
+            };
+
+            banco.FormatarBoleto(boleto);
+
+            var remessa = new RemessaCnab400
+            {
+                Header = new HeaderRemessaCnab400(boleto, 1, 1),
+                RegistrosDetalhe = new List<DetalheRemessaCnab400>(),
+                Trailer = new TrailerRemessaCnab400(boleto.ValorBoleto, 1)
+            };
+
+            var escritor = EscritorArquivoRemessaFactory.ObterEscritorRemessa(remessa);
+            var detalhe = new DetalheRemessaCnab400(boleto, 2);
+            remessa.RegistrosDetalhe.Add(detalhe);
+
+            var fabricaRemessa = new RemessaFactory();
+            var remessaPronta = fabricaRemessa.GerarRemessa(remessa.Header, new List<Boleto>() {boleto},
+                remessa.RegistrosDetalhe, remessa.Trailer);
+            var linhasEscrever = escritor.EscreverTexto(remessaPronta);
+
+            const string header =
+                "01REMESSA01COBRANCA       00000000000004879962HOT BEACH SUITES OLIMPIA - EMP237BRADESCO       251116        MX0000002                                                                                                                                                                                                                                                                                     000001";
+            Assert.AreEqual(header, remessaPronta.Header);
+        }
+
+        #endregion
+
+        #endregion
 
         [TestMethod]
         public void TestGeracaoArquivoRemessa()
         {
-            var dadosRemessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+            var dadosRemessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro,
+                "2");
 
             var banco = Fabricas.BancoFactory.ObterBanco("237", "2");
 
             var contaBancariaCedente = new ContaBancaria("1234", "8", "12345", "6");
 
-            var cedente = new Cedente("99999", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
+            var cedente = new Cedente("99999", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente,
+                null);
 
             var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
             {
@@ -53,7 +118,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca { Codigo = "06" };
+            var carteira = new CarteiraCobranca {Codigo = "06"};
 
             var boleto = new Boleto(carteira, cedente, sacado, dadosRemessa)
             {
@@ -98,7 +163,6 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             File.WriteAllLines(path, linhasEscrever.ToArray());
         }
 
-
         [TestMethod]
         public void TestFormataSacadorAvalistaGeracaoRemessaBradescoCnab400()
         {
@@ -112,16 +176,16 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             if (cpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "").Length == 11)
             {
                 str = (nome.ToUpper() +
-                    string.Empty.PadLeft(2, ' ') +
-                    cpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "").Substring(0, 9) +
-                    string.Empty.PadLeft(4, '0') +
-                    cpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "").Substring(9, 2)).PadLeft(60, ' ');
+                       string.Empty.PadLeft(2, ' ') +
+                       cpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "").Substring(0, 9) +
+                       string.Empty.PadLeft(4, '0') +
+                       cpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "").Substring(9, 2)).PadLeft(60, ' ');
             }
             else
             {
                 str = (nome.ToUpper() +
-                    string.Empty.PadLeft(2, ' ') +
-                    cpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(15, '0')).PadLeft(60,' ');
+                       string.Empty.PadLeft(2, ' ') +
+                       cpfCnpj.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(15, '0')).PadLeft(60, ' ');
             }
 
             const string valorEsperado = "                           SACADOR AVALISTA  999999999000011";
@@ -139,7 +203,8 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
 
             var contaBancariaCedente = new ContaBancaria("1234", "8", "12345", "6");
 
-            var cedente = new Cedente("99999", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
+            var cedente = new Cedente("99999", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente,
+                null);
 
             var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
             {
@@ -153,7 +218,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca { Codigo = "06" };
+            var carteira = new CarteiraCobranca {Codigo = "06"};
 
             var boleto = new Boleto(carteira, cedente, sacado, remessa)
             {
@@ -194,7 +259,8 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
 
             var contaBancariaCedente = new ContaBancaria("1234", "8", "12345", "6");
 
-            var cedente = new Cedente("99999", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
+            var cedente = new Cedente("99999", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente,
+                null);
 
             var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
             {
@@ -208,7 +274,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca { Codigo = "06" };
+            var carteira = new CarteiraCobranca {Codigo = "06"};
 
             var boleto = new Boleto(carteira, cedente, sacado, remessa)
             {
@@ -249,7 +315,8 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
 
             var contaBancariaCedente = new ContaBancaria("1234", "8", "12345", "6");
 
-            var cedente = new Cedente("99999", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
+            var cedente = new Cedente("99999", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente,
+                null);
 
             var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
             {
@@ -263,7 +330,7 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca { Codigo = "06" };
+            var carteira = new CarteiraCobranca {Codigo = "06"};
 
             var boleto = new Boleto(carteira, cedente, sacado, remessa)
             {

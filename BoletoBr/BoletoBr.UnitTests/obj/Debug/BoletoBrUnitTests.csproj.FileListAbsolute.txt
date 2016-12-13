@@ -16,4 +16,3 @@ D:\boletobr\BoletoBr\BoletoBr.UnitTests\obj\Debug\BoletoBr.UnitTests.Properties.
 D:\boletobr\BoletoBr\BoletoBr.UnitTests\obj\Debug\BoletoBrUnitTests.csproj.GenerateResource.Cache
 D:\boletobr\BoletoBr\BoletoBr.UnitTests\obj\Debug\BoletoBr.UnitTests.dll
 D:\boletobr\BoletoBr\BoletoBr.UnitTests\obj\Debug\BoletoBr.UnitTests.pdb
-D:\boletobr\BoletoBr\BoletoBr.UnitTests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
