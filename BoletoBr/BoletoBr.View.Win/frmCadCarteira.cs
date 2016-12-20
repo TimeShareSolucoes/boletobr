@@ -188,6 +188,7 @@ namespace BoletoBr.View.Win
                     layoutControlItemConvenio.Visibility = LayoutVisibility.Always;
                     break;
                 case "033":
+                    layoutControlItemCodigoCedente.Visibility = LayoutVisibility.Always;
                     layoutControlItemConvenio.Visibility = LayoutVisibility.Always;
                     layoutControlItemCodigoTranmissao.Visibility = LayoutVisibility.Always;
                     break;
