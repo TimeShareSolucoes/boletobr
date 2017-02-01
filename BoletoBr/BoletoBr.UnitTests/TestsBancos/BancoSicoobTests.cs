@@ -159,6 +159,7 @@ namespace BoletoBr.UnitTests.TestsBancos
             const string codigoBarras = "75691699400000465821500401028796200001061001";
             Assert.AreEqual(boleto.CodigoBarraBoleto.Length, codigoBarras.Length);
             Assert.AreEqual(codigoBarras, boleto.CodigoBarraBoleto);
+			Assert.AreEqual(boleto.CedenteBoleto.CodigoCedenteFormatado, "5004/00287962");
         }
 
         [TestMethod]
