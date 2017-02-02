@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.Linq;
 using System.Windows.Forms;
 using DevExpress.UserSkins;

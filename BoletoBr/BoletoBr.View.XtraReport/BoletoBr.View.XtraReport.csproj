@@ -30,10 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BoletoBr, Version=1.0.2.20, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ReferenciasAvulsas\BoletoBr.dll</HintPath>
-    </Reference>
     <Reference Include="DevExpress.Charts.v16.1.Core, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\DevExpress.Charts.v16.1.Core.dll</HintPath>
@@ -500,6 +496,12 @@
     <None Include="Properties\DataSources\BoletoBr.TrailerRetornoCnab240.datasource" />
     <None Include="Properties\DataSources\BoletoBr.TrailerRetornoCnab400.datasource" />
     <None Include="Properties\DataSources\BoletoBr.ValidacaoBoletoException.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BoletoBr\BoletoBr.csproj">
+      <Project>{ea3ebd2b-932e-42e1-9914-20c13185ebe2}</Project>
+      <Name>BoletoBr</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
