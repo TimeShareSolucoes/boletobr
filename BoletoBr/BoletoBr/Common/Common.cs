@@ -613,6 +613,7 @@ namespace BoletoBr
             string resultado = string.Empty;
             int i;
             bool conversao = Int32.TryParse(texto, out i);
+            tamanho = texto.Length + tamanho;
 
             if (completarDireita == true)
                 resultado = texto.ToUpper().PadRight(tamanho, caractere);

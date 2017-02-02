@@ -10,7 +10,6 @@ namespace BoletoBr.UnitTests
         {
             string texto = "75.690-";
 
-            //string resultado = texto.PadRight(30, '*');
             string resultado = Common.CompletarCadeia(true, false, texto, '0', 3);
 
             Assert.AreEqual("75.690-000", resultado);
