@@ -1,5 +1,0 @@
-D:\boletobr\BoletoBr\BoletoBr.NuGet\bin\Debug\BoletoBr.1.0.2.25.nupkg
-D:\boletobr\BoletoBr\BoletoBr.NuGet\bin\Debug\BoletoBr.1.0.2.25.symbols.nupkg
-D:\boletobr\BoletoBr\BoletoBr.NuGet\obj\Debug\BoletoBr.nuspec
-D:\boletobr\BoletoBr\BoletoBr.NuGet\obj\Debug\BoletoBr.1.0.2.25.nupkg
-D:\boletobr\BoletoBr\BoletoBr.NuGet\obj\Debug\BoletoBr.1.0.2.25.symbols.nupkg
