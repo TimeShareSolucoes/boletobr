@@ -1,50 +1,27 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using BoletoBr.Arquivo;
 using BoletoBr.Dominio;
 using BoletoBr.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BoletoBr.UnitTests.Tests.Bancos.CEF
+namespace BoletoBr.UnitTests.TestsBancos
 {
     [TestClass]
     public class BancoCefTests
     {
-        /* 
-         * Teste 1 - Nosso número
-         * Teste 2 - Linha digitável
-         * Teste 3 - Código de barras
-         */
-
-        [TestMethod]
-        public void formatanumerodoc()
-        {
-            var tamanhomaximo = 15;
-            var valor1 = 1234;
-            var valor2 = "XxXX";
-
-            var lenghtValor1 = valor1.ToString().Length;
-
-            //var numeroDocCalculado = valor1 + valor2.PadRight(tamanhomaximo - lenghtValor1, '0');
-            var numeroDocCalculado = valor1.ToString().PadLeft(tamanhomaximo - lenghtValor1, '0') + valor2;
-
-            Assert.AreEqual(numeroDocCalculado.Length, tamanhomaximo);
-
-        }
-
         #region Carteira RG - REGISTRADA
 
         [TestMethod]
-        public void TesteCalculoNossoNumeroCarteiraRgDocumentacaoCef()
+        public void FomatarNumeroDocumentoCarteiraRGCaixa()
         {
             var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
-
             var banco = Fabricas.BancoFactory.ObterBanco("104", "0");
+            var contaBancariaCedente = new ContaBancaria("0799", "4", "1679", "9");
+            var cedente = new Cedente("657224", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente,
+                null);
 
-            var contaBancariaCedente = new ContaBancaria("007", "8", "", "");
-
-            var cedente = new Cedente("9999999", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente, null);
-
-            var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
+            var sacado = new Sacado("Sacado Fulano de Tal", "999.999.999-99", new Endereco()
             {
                 TipoLogradouro = "R",
                 Logradouro = "1",
@@ -56,39 +33,32 @@ namespace BoletoBr.UnitTests.Tests.Bancos.CEF
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca();
+            var carteira = new CarteiraCobranca {Codigo = "RG"};
 
-            carteira.Codigo = "RG";
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "528",
+                ValorBoleto = Convert.ToDecimal(491.65),
+                IdentificadorInternoBoleto = "528",
+                DataVencimento = new DateTime(2016, 11, 05)
+            };
 
-            var boleto = new Boleto(carteira, cedente, sacado, remessa);
-            boleto.NumeroDocumento = "19";
-            boleto.ValorBoleto = 1000;
-            boleto.IdentificadorInternoBoleto = "19";
-            boleto.DataVencimento = new DateTime(2014, 06, 30);
+            banco.FormatarBoleto(boleto);
 
-            banco.FormataNossoNumero(boleto);
-
-            const string valorEsperado = "14000000000000019";
-            Assert.AreEqual(valorEsperado.Length, boleto.NossoNumeroFormatado.Length);
-            Assert.AreEqual(valorEsperado, boleto.NossoNumeroFormatado);
+            Assert.AreEqual(boleto.NumeroDocumento.Length, 10);
+            Assert.AreEqual("0000000528", boleto.NumeroDocumento);
         }
 
         [TestMethod]
-        public void TesteLinhaDigitavelCarteiraRgDocumentacaoCef()
+        public void FormatarNossoNumeroCarteiraRGCaixa()
         {
-            /* 
-             * Teste baseado em um boleto apresentado na documentação oficial do Banco da Amazônia versão 1
-             * Manual de Cobrança Registrada Simples
-             */
             var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
-
             var banco = Fabricas.BancoFactory.ObterBanco("104", "0");
+            var contaBancariaCedente = new ContaBancaria("0799", "4", "1679", "9");
+            var cedente = new Cedente("657224", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente,
+                null);
 
-            var contaBancariaCedente = new ContaBancaria("007", "8", "", "");
-
-            var cedente = new Cedente("005507", "", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
-
-            var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
+            var sacado = new Sacado("Sacado Fulano de Tal", "999.999.999-99", new Endereco()
             {
                 TipoLogradouro = "R",
                 Logradouro = "1",
@@ -100,41 +70,33 @@ namespace BoletoBr.UnitTests.Tests.Bancos.CEF
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca();
+            var carteira = new CarteiraCobranca {Codigo = "RG"};
 
-            carteira.Codigo = "RG";
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "528",
+                ValorBoleto = Convert.ToDecimal(491.65),
+                IdentificadorInternoBoleto = "528",
+                DataVencimento = new DateTime(2016, 11, 05)
+            };
 
-            var boleto = new Boleto(carteira, cedente, sacado, remessa);
-            boleto.NumeroDocumento = "222333777777777";
-            boleto.ValorBoleto = Convert.ToDecimal(321.12);
-            boleto.IdentificadorInternoBoleto = "222333777777777";
-            boleto.DataVencimento = new DateTime(2006, 08, 23);
+            banco.FormatarBoleto(boleto);
 
-            banco.FormataNossoNumero(boleto);
-            banco.FormataCodigoBarra(boleto);
-            banco.FormataLinhaDigitavel(boleto);
-
-            const string valorEsperado = "10410.05503 77222.133348 77777.777713 1 32420000032112";
-            Assert.AreEqual(valorEsperado.Length, boleto.LinhaDigitavelBoleto.Length);
-            Assert.AreEqual(valorEsperado, boleto.LinhaDigitavelBoleto);
+            const string nossoNumeroFormatado = "14000000000000528-3";
+            Assert.AreEqual(nossoNumeroFormatado.Length, boleto.NossoNumeroFormatado.Length);
+            Assert.AreEqual(nossoNumeroFormatado, boleto.NossoNumeroFormatado);
         }
 
         [TestMethod]
-        public void TesteCalculoCodigoBarrasCarteiraRgBoletoDocumentacaoCef()
+        public void CalcularLinhaDigitavelCarteiraRGCaixa()
         {
-            /* 
-             * Teste baseado em um boleto apresentado na documentação oficial do Banco da Amazônia versão 1
-             * Manual de Cobrança Registrada Simples
-             */
             var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
-
             var banco = Fabricas.BancoFactory.ObterBanco("104", "0");
+            var contaBancariaCedente = new ContaBancaria("0799", "4", "1679", "9");
+            var cedente = new Cedente("657224", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente,
+                null);
 
-            var contaBancariaCedente = new ContaBancaria("007", "8", "", "");
-
-            var cedente = new Cedente("005507", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
-
-            var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
+            var sacado = new Sacado("Sacado Fulano de Tal", "999.999.999-99", new Endereco()
             {
                 TipoLogradouro = "R",
                 Logradouro = "1",
@@ -146,22 +108,95 @@ namespace BoletoBr.UnitTests.Tests.Bancos.CEF
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca();
+            var carteira = new CarteiraCobranca { Codigo = "RG" };
 
-            carteira.Codigo = "RG";
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "528",
+                ValorBoleto = Convert.ToDecimal(491.65),
+                IdentificadorInternoBoleto = "528",
+                DataVencimento = new DateTime(2016, 11, 05)
+            };
 
-            var boleto = new Boleto(carteira, cedente, sacado, remessa);
-            boleto.NumeroDocumento = "222333777777777";
-            boleto.ValorBoleto = Convert.ToDecimal(321.12);
-            boleto.IdentificadorInternoBoleto = "222333777777777";
-            boleto.DataVencimento = new DateTime(2006, 08, 23);
+            banco.FormatarBoleto(boleto);
 
-            banco.FormataNossoNumero(boleto);
-            banco.FormataCodigoBarra(boleto);
+            const string linhaDigitavel = "10496.57222 43000.100040 00000.052829  4 69690000049165";
+            Assert.AreEqual(boleto.LinhaDigitavelBoleto.Length, linhaDigitavel.Length);
+            Assert.AreEqual(linhaDigitavel, boleto.LinhaDigitavelBoleto);
+        }
 
-            const string valorEsperado = "10494324200000321120055077222133347777777771";
-            Assert.AreEqual(valorEsperado.Length, boleto.CodigoBarraBoleto.Length);
-            Assert.AreEqual(valorEsperado, boleto.CodigoBarraBoleto);
+        [TestMethod]
+        public void CalcularCodigoBarrasCarteiraRGCaixa()
+        {
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+            var banco = Fabricas.BancoFactory.ObterBanco("104", "0");
+            var contaBancariaCedente = new ContaBancaria("0799", "4", "1679", "9");
+            var cedente = new Cedente("657224", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente,
+                null);
+
+            var sacado = new Sacado("Sacado Fulano de Tal", "999.999.999-99", new Endereco()
+            {
+                TipoLogradouro = "R",
+                Logradouro = "1",
+                Bairro = "Bairro X",
+                Cidade = "Cidade X",
+                SiglaUf = "XX",
+                Cep = "12345-000",
+                Complemento = "Comp X",
+                Numero = "9"
+            });
+
+            var carteira = new CarteiraCobranca { Codigo = "RG" };
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "528",
+                ValorBoleto = Convert.ToDecimal(491.65),
+                IdentificadorInternoBoleto = "528",
+                DataVencimento = new DateTime(2016, 11, 05)
+            };
+
+            banco.FormatarBoleto(boleto);
+
+            const string codigoBarras = "10494696900000491656572243000100040000005282";
+            Assert.AreEqual(boleto.CodigoBarraBoleto.Length, codigoBarras.Length);
+            Assert.AreEqual(codigoBarras, boleto.CodigoBarraBoleto);
+        }
+
+        [TestMethod]
+        public void FormatarExibicaoCodigoCedenteCarteiraRGCaixa()
+        {
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+            var banco = Fabricas.BancoFactory.ObterBanco("104", "0");
+            var contaBancariaCedente = new ContaBancaria("0799", "4", "1679", "9");
+            var cedente = new Cedente("657224", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente,
+                null);
+
+            var sacado = new Sacado("Sacado Fulano de Tal", "999.999.999-99", new Endereco()
+            {
+                TipoLogradouro = "R",
+                Logradouro = "1",
+                Bairro = "Bairro X",
+                Cidade = "Cidade X",
+                SiglaUf = "XX",
+                Cep = "12345-000",
+                Complemento = "Comp X",
+                Numero = "9"
+            });
+
+            var carteira = new CarteiraCobranca {Codigo = "RG"};
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "528",
+                ValorBoleto = Convert.ToDecimal(491.65),
+                IdentificadorInternoBoleto = "528",
+                DataVencimento = new DateTime(2016, 11, 05)
+            };
+
+            banco.FormatarBoleto(boleto);
+
+            Assert.AreEqual("0799/657224-3", boleto.CedenteBoleto.CodigoCedenteFormatado);
         }
 
         #endregion Carteira RG - REGISTRADA
@@ -169,17 +204,15 @@ namespace BoletoBr.UnitTests.Tests.Bancos.CEF
         #region Carteira SR - SEM REGISTRO
 
         [TestMethod]
-        public void TesteCalculoNossoNumeroCarteiraSrDocumentacaoCef()
+        public void FomatarNumeroDocumentoCarteiraSRCaixa()
         {
             var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
-
             var banco = Fabricas.BancoFactory.ObterBanco("104", "0");
+            var contaBancariaCedente = new ContaBancaria("0799", "4", "001024", "3");
+            var cedente = new Cedente("245", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente,
+                null);
 
-            var contaBancariaCedente = new ContaBancaria("007", "8", "", "");
-
-            var cedente = new Cedente("9999999", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente, null);
-
-            var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
+            var sacado = new Sacado("Sacado Fulano de Tal", "999.999.999-99", new Endereco()
             {
                 TipoLogradouro = "R",
                 Logradouro = "1",
@@ -191,38 +224,32 @@ namespace BoletoBr.UnitTests.Tests.Bancos.CEF
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca();
+            var carteira = new CarteiraCobranca { Codigo = "SR" };
 
-            carteira.Codigo = "SR";
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "83",
+                ValorBoleto = Convert.ToDecimal(478.01),
+                IdentificadorInternoBoleto = "83",
+                DataVencimento = new DateTime(2016, 11, 15)
+            };
 
-            var boleto = new Boleto(carteira, cedente, sacado, remessa);
-            boleto.NumeroDocumento = "19";
-            boleto.ValorBoleto = 1000;
-            boleto.IdentificadorInternoBoleto = "19";
-            boleto.DataVencimento = new DateTime(2014, 06, 30);
+            banco.FormatarBoleto(boleto);
 
-            banco.FormataNossoNumero(boleto);
-
-            //Providenciar boleto real para efetuar o teste da Carteira SEM REGISTRO
-            Assert.AreEqual("24000000000019", boleto.NossoNumeroFormatado);
+            Assert.AreEqual(boleto.NumeroDocumento.Length, 10);
+            Assert.AreEqual("0000000083", boleto.NumeroDocumento);
         }
 
         [TestMethod]
-        public void TesteLinhaDigitavelCarteiraSrDocumentacaoCef()
+        public void FormatarNossoNumeroCarteiraSRCaixa()
         {
-            /* 
-             * Teste baseado em um boleto apresentado na documentação oficial do Banco da Amazônia versão 1
-             * Manual de Cobrança Registrada Simples
-             */
             var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
-
             var banco = Fabricas.BancoFactory.ObterBanco("104", "0");
+            var contaBancariaCedente = new ContaBancaria("0799", "4", "001024", "3");
+            var cedente = new Cedente("245", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente,
+                null);
 
-            var contaBancariaCedente = new ContaBancaria("007", "8", "", "");
-
-            var cedente = new Cedente("99999", "1", 0, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
-
-            var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
+            var sacado = new Sacado("Sacado Fulano de Tal", "999.999.999-99", new Endereco()
             {
                 TipoLogradouro = "R",
                 Logradouro = "1",
@@ -234,41 +261,33 @@ namespace BoletoBr.UnitTests.Tests.Bancos.CEF
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca();
+            var carteira = new CarteiraCobranca { Codigo = "SR" };
 
-            carteira.Codigo = "SR";
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "83",
+                ValorBoleto = Convert.ToDecimal(478.01),
+                IdentificadorInternoBoleto = "83",
+                DataVencimento = new DateTime(2016, 11, 15)
+            };
 
-            var boleto = new Boleto(carteira, cedente, sacado, remessa);
-            boleto.NumeroDocumento = "123";
-            boleto.ValorBoleto = Convert.ToDecimal(15.56);
-            boleto.IdentificadorInternoBoleto = "123";
-            boleto.DataVencimento = new DateTime(2008, 06, 27);
+            banco.FormatarBoleto(boleto);
 
-            banco.FormataNossoNumero(boleto);
-            banco.FormataCodigoBarra(boleto);
-            banco.FormataLinhaDigitavel(boleto);
-
-            const string valorEsperado = "00390.07802 00100.000009  00000.012385 8 39160000001556";
-            Assert.AreEqual(valorEsperado.Length, boleto.LinhaDigitavelBoleto.Length);
-            Assert.AreEqual(valorEsperado, boleto.LinhaDigitavelBoleto);
+            const string nossoNumeroFormatado = "24000000000000083-8";
+            Assert.AreEqual(nossoNumeroFormatado.Length, boleto.NossoNumeroFormatado.Length);
+            Assert.AreEqual(nossoNumeroFormatado, boleto.NossoNumeroFormatado);
         }
 
         [TestMethod]
-        public void TesteCalculoCodigoBarrasCarteiraSrBoletoDocumentacaoCef()
+        public void CalcularLinhaDigitavelCarteiraSRCaixa()
         {
-            /* 
-             * Teste baseado em um boleto apresentado na documentação oficial do Banco da Amazônia versão 1
-             * Manual de Cobrança Registrada Simples
-             */
             var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
-
             var banco = Fabricas.BancoFactory.ObterBanco("104", "0");
+            var contaBancariaCedente = new ContaBancaria("0799", "4", "001024", "3");
+            var cedente = new Cedente("245", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente,
+                null);
 
-            var contaBancariaCedente = new ContaBancaria("1839", "", "", "");
-
-            var cedente = new Cedente("256803", "", 9, "99.999.999/9999-99", "Razao Social X", contaBancariaCedente, null);
-
-            var sacado = new Sacado("Sacado Fulano de Tal", "99.999.999/9999-99", new Endereco()
+            var sacado = new Sacado("Sacado Fulano de Tal", "999.999.999-99", new Endereco()
             {
                 TipoLogradouro = "R",
                 Logradouro = "1",
@@ -280,26 +299,95 @@ namespace BoletoBr.UnitTests.Tests.Bancos.CEF
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca();
+            var carteira = new CarteiraCobranca { Codigo = "SR" };
 
-            carteira.Codigo = "SR";
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "83",
+                ValorBoleto = Convert.ToDecimal(478.01),
+                IdentificadorInternoBoleto = "83",
+                DataVencimento = new DateTime(2016, 11, 15)
+            };
 
-            var boleto = new Boleto(carteira, cedente, sacado, remessa);
-            boleto.NumeroDocumento = "090972714";
-            boleto.ValorBoleto = Convert.ToDecimal(119.90);
-            boleto.IdentificadorInternoBoleto = "46286";
-            boleto.DataVencimento = new DateTime(2014, 09, 15);
+            banco.FormatarBoleto(boleto);
 
-            banco.FormataNossoNumero(boleto);
-            banco.FormataCodigoBarra(boleto);
-            banco.FormataLinhaDigitavel(boleto);
+            const string linhaDigitavel = "10490.00241 53000.200047 00000.008342  1 69790000047801";
+            Assert.AreEqual(boleto.LinhaDigitavelBoleto.Length, linhaDigitavel.Length);
+            Assert.AreEqual(linhaDigitavel, boleto.LinhaDigitavelBoleto);
+        }
 
-            const string valorEsperadoCodBar = "10493618700000119902568039000200040000462868"; // Código de Barras
-            const string valorEsperadoLinhaDig = "10492.56801 39000.200046 00004.628681 3 61870000011990"; // Linha Digitável
-            Assert.AreEqual(valorEsperadoCodBar.Length, boleto.CodigoBarraBoleto.Length);
-            Assert.AreEqual(valorEsperadoCodBar, boleto.CodigoBarraBoleto);
-            Assert.AreEqual(valorEsperadoLinhaDig.Length, boleto.LinhaDigitavelBoleto.Length);
-            Assert.AreEqual(valorEsperadoLinhaDig, boleto.LinhaDigitavelBoleto);
+        [TestMethod]
+        public void CalcularCodigoBarrasCarteiraSRCaixa()
+        {
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+            var banco = Fabricas.BancoFactory.ObterBanco("104", "0");
+            var contaBancariaCedente = new ContaBancaria("0799", "4", "001024", "3");
+            var cedente = new Cedente("245", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente,
+                null);
+
+            var sacado = new Sacado("Sacado Fulano de Tal", "999.999.999-99", new Endereco()
+            {
+                TipoLogradouro = "R",
+                Logradouro = "1",
+                Bairro = "Bairro X",
+                Cidade = "Cidade X",
+                SiglaUf = "XX",
+                Cep = "12345-000",
+                Complemento = "Comp X",
+                Numero = "9"
+            });
+
+            var carteira = new CarteiraCobranca { Codigo = "SR" };
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "83",
+                ValorBoleto = Convert.ToDecimal(478.01),
+                IdentificadorInternoBoleto = "83",
+                DataVencimento = new DateTime(2016, 11, 15)
+            };
+
+            banco.FormatarBoleto(boleto);
+
+            const string codigoBarras = "10491697900000478010002453000200040000000834";
+            Assert.AreEqual(boleto.CodigoBarraBoleto.Length, codigoBarras.Length);
+            Assert.AreEqual(codigoBarras, boleto.CodigoBarraBoleto);
+        }
+
+        [TestMethod]
+        public void FormatarExibicaoCodigoCedenteCarteiraSRCaixa()
+        {
+            var remessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
+            var banco = Fabricas.BancoFactory.ObterBanco("104", "0");
+            var contaBancariaCedente = new ContaBancaria("0799", "4", "001024", "3");
+            var cedente = new Cedente("245", 0, "99.999.999/9999-99", "Razão Social X", contaBancariaCedente,
+                null);
+
+            var sacado = new Sacado("Sacado Fulano de Tal", "999.999.999-99", new Endereco()
+            {
+                TipoLogradouro = "R",
+                Logradouro = "1",
+                Bairro = "Bairro X",
+                Cidade = "Cidade X",
+                SiglaUf = "XX",
+                Cep = "12345-000",
+                Complemento = "Comp X",
+                Numero = "9"
+            });
+
+            var carteira = new CarteiraCobranca {Codigo = "SR"};
+
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "83",
+                ValorBoleto = Convert.ToDecimal(478.01),
+                IdentificadorInternoBoleto = "83",
+                DataVencimento = new DateTime(2016, 11, 15)
+            };
+
+            banco.FormatarBoleto(boleto);
+
+            Assert.AreEqual("0799/000245-3", boleto.CedenteBoleto.CodigoCedenteFormatado);
         }
 
         #endregion Carteira SR - SEM REGISTRO

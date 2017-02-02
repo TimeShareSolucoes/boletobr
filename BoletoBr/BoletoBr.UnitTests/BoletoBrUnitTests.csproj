@@ -45,7 +45,9 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
@@ -72,9 +74,9 @@
     <Compile Include="TestsBancos\BancoBrasilTests.cs" />
     <Compile Include="TestsBancos\BancoCefTests.cs" />
     <Compile Include="TestsBancos\BancoSantanderTests.cs" />
-    <Compile Include="TestsBancos\HsbcCarteiraCnrTipoIdentificador4.cs" />
     <Compile Include="TestsBancos\BancoItauTests.cs" />
     <Compile Include="TestsBancos\BancoBRBTests.cs" />
+    <Compile Include="TestsBancos\BancoSicoobTests.cs" />
     <Compile Include="TestsCommon\CommonTests.cs" />
     <Compile Include="TestsCommon\FatorVencimentoTests.cs" />
     <Compile Include="TestsBancos\BancoHsbcTests.cs" />

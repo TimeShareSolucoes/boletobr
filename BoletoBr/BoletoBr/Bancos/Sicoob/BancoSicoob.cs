@@ -81,8 +81,8 @@ namespace BoletoBr.Bancos.Sicoob
 
             boleto.CedenteBoleto.CodigoCedenteFormatado = String.Format("{0}/{1}{2}",
                 boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'),
-                boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(7, '0'),
-                boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta);
+                boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'),
+                boleto.CedenteBoleto.DigitoCedente);
         }
 
         public void FormataCodigoBarra(Boleto boleto)

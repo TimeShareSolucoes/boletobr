@@ -1,0 +1,512 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EE4B4B58-6D8F-4FE8-9B19-4314A25B07AD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BoletoBr.View.XtraReport</RootNamespace>
+    <AssemblyName>BoletoBr.View.XtraReport</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\ReleaseTss\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BoletoBr, Version=1.0.2.20, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferenciasAvulsas\BoletoBr.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Charts.v16.1.Core, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.Charts.v16.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.CodeParser.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.CodeParser.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Data.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.Data.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.DataAccess.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.DataAccess.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.DataAccess.v16.1.UI, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.DataAccess.v16.1.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Diagram.v16.1.Core, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.Diagram.v16.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Docs.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.Docs.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Images.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.Images.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Mvvm.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.Mvvm.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Office.v16.1.Core, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.Office.v16.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Pdf.v16.1.Core, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.Pdf.v16.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Pdf.v16.1.Drawing, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.Pdf.v16.1.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.PivotGrid.v16.1.Core, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.PivotGrid.v16.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v16.1.Core, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.Printing.v16.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v16.1.Core, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.RichEdit.v16.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Snap.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.Snap.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Snap.v16.1.Core, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.Snap.v16.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Snap.v16.1.Extensions, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.Snap.v16.1.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Sparkline.v16.1.Core, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.Sparkline.v16.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.SpellChecker.v16.1.Core, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.SpellChecker.v16.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Spreadsheet.v16.1.Core, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.Spreadsheet.v16.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.Utils.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v16.1.UI, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.Utils.v16.1.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Core.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.Xpf.Core.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Ribbon.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.Xpf.Ribbon.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpo.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.Xpo.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraBars.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraBars.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraCharts.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v16.1.Extensions, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraCharts.v16.1.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v16.1.UI, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraCharts.v16.1.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v16.1.Wizard, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraCharts.v16.1.Wizard.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraDiagram.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraDiagram.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraEditors.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraGauges.v16.1.Core, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraGauges.v16.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraGauges.v16.1.Win, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraGauges.v16.1.Win.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraGrid.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraGrid.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraLayout.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraLayout.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraNavBar.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraNavBar.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraPivotGrid.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraPivotGrid.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraPrinting.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraPrinting.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraReports.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v16.1.Extensions, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraReports.v16.1.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraRichEdit.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraRichEdit.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraRichEdit.v16.1.Extensions, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraRichEdit.v16.1.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraScheduler.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraScheduler.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraScheduler.v16.1.Core, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraScheduler.v16.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraScheduler.v16.1.Extensions, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraScheduler.v16.1.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraScheduler.v16.1.Reporting, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraScheduler.v16.1.Reporting.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraScheduler.v16.1.Reporting.Extensions, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraScheduler.v16.1.Reporting.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraSpellChecker.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraSpellChecker.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraTreeList.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraTreeList.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraVerticalGrid.v16.1, Version=16.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\DevExpress.XtraVerticalGrid.v16.1.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BancoDeLogos.cs" />
+    <Compile Include="Modelos\BoletoFaturaCarta.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modelos\BoletoFaturaCarta.Designer.cs">
+      <DependentUpon>BoletoFaturaCarta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modelos\CarneBoletoA5Rpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modelos\CarneBoletoA5Rpt.Designer.cs">
+      <DependentUpon>CarneBoletoA5Rpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modelos\BoletoGenericoRpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modelos\BoletoGenericoRpt.Designer.cs">
+      <DependentUpon>BoletoGenericoRpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LogotiposDeBancos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LogotiposDeBancos.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Modelos\CarneBoletoGenericoRpt.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modelos\CarneBoletoGenericoRpt.Designer.cs">
+      <DependentUpon>CarneBoletoGenericoRpt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VisualizadorBoleto.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Modelos\BoletoFaturaCarta.resx">
+      <DependentUpon>BoletoFaturaCarta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modelos\CarneBoletoA5Rpt.resx">
+      <DependentUpon>CarneBoletoA5Rpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modelos\BoletoGenericoRpt.resx">
+      <DependentUpon>BoletoGenericoRpt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogotiposDeBancos.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LogotiposDeBancos.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modelos\CarneBoletoGenericoRpt.resx">
+      <DependentUpon>CarneBoletoGenericoRpt.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Logos\001.jpg" />
+    <Content Include="Logos\003.jpg" />
+    <Content Include="Logos\004.jpg" />
+    <Content Include="Logos\008.jpg" />
+    <Content Include="Logos\021.jpg" />
+    <Content Include="Logos\024.jpg" />
+    <Content Include="Logos\027.jpg" />
+    <Content Include="Logos\029.jpg" />
+    <Content Include="Logos\033.jpg" />
+    <Content Include="Logos\041.jpg" />
+    <Content Include="Logos\047.jpg" />
+    <Content Include="Logos\070.jpg" />
+    <Content Include="Logos\104.jpg" />
+    <Content Include="Logos\151.jpg" />
+    <Content Include="Logos\237.jpg" />
+    <Content Include="Logos\244.jpg" />
+    <Content Include="Logos\246.jpg" />
+    <Content Include="Logos\263.jpg" />
+    <Content Include="Logos\266.jpg" />
+    <Content Include="Logos\275.jpg" />
+    <Content Include="Logos\291.jpg" />
+    <Content Include="Logos\320.jpg" />
+    <Content Include="Logos\341.jpg" />
+    <Content Include="Logos\347.jpg" />
+    <Content Include="Logos\353.jpg" />
+    <Content Include="Logos\356.jpg" />
+    <Content Include="Logos\389.jpg" />
+    <Content Include="Logos\392.jpg" />
+    <Content Include="Logos\399.jpg" />
+    <Content Include="Logos\409.jpg" />
+    <Content Include="Logos\422.jpg" />
+    <Content Include="Logos\424.jpg" />
+    <Content Include="Logos\453.jpg" />
+    <Content Include="Logos\479.jpg" />
+    <Content Include="Logos\600.jpg" />
+    <Content Include="Logos\604.jpg" />
+    <Content Include="Logos\610.jpg" />
+    <Content Include="Logos\623.jpg" />
+    <Content Include="Logos\633.jpg" />
+    <Content Include="Logos\637.jpg" />
+    <Content Include="Logos\641.jpg" />
+    <Content Include="Logos\643.jpg" />
+    <Content Include="Logos\702.jpg" />
+    <Content Include="Logos\707.jpg" />
+    <Content Include="Logos\721.jpg" />
+    <Content Include="Logos\738.jpg" />
+    <Content Include="Logos\741.jpg" />
+    <Content Include="Logos\745.jpg" />
+    <Content Include="Logos\748.jpg" />
+    <Content Include="Logos\749.jpg" />
+    <Content Include="Logos\756.jpg" />
+    <Content Include="Logos\HSBC_Logo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\BoletoBr.Arquivo.CNAB240.HeaderLoteRetornoCnab240.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Arquivo.CNAB240.Retorno.DetalheRetornoCnab240.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Arquivo.CNAB240.Retorno.LoteRetornoCnab240.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Arquivo.CNAB240.TrailerLoteRetornoCnab240.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Arquivo.CNAB400.Retorno.DetalheRateioRetornoCnab400.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Arquivo.Generico.Retorno.RetornoDetalheGenerico.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Arquivo.Generico.Retorno.RetornoGenerico.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Arquivo.Generico.Retorno.RetornoHeaderGenerico.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Arquivo.Generico.Retorno.RetornoTrailerGenerico.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Arquivo.HeaderDeArquivoCnab240.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Arquivo.IArquivoRemessa.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Amazonia.BancoAmazonia.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Amazonia.CarteiraCobrancaBancoAmazoniaCnr.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Amazonia.CarteiraCobrancaBancoAmazoniaCsb.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.BancoBrasil.BancoBrasil.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.BancoBrasil.CarteiraCobrancaBancoBrasil17019.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.BancoBrasil.CarteiraCobrancaBancoBrasil18019.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.BancoBrasil.CarteiraCobrancaBancoBrasil31.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Bradesco.BancoBradesco.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Bradesco.CarteiraCobrancaBradesco02.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Bradesco.CarteiraCobrancaBradesco03.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Bradesco.CarteiraCobrancaBradesco06.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Bradesco.CarteiraCobrancaBradesco09.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Bradesco.CarteiraCobrancaBradesco19.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Bradesco.LeitorRetornoCnab240Bradesco.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Bradesco.LeitorRetornoCnab400Bradesco.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Brasil.LeitorRetornoCnab240BancoDoBrasil.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Brasil.LeitorRetornoCnab400BancoDoBrasil.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Cef.BancoCef.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Cef.CarteiraCobrancaCefSr.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Cef.EscritorRemessaCnab240CefSicgb.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Cef.LeitorRetornoCnab240Cef.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Cef.LeitorRetornoCnab400Cef.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.EscritorArquivoRemessaGenericoCnab240.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Hsbc.BancoHsbc.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Hsbc.CarteiraCobrancaHsbcCnr.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Hsbc.CarteiraCobrancaHsbcCsb.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.IBanco.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Itau.BancoItau.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Itau.CarteiraCobranca107.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Itau.CarteiraCobranca109.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Itau.CarteiraCobranca121.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Itau.CarteiraCobranca122.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Itau.CarteiraCobranca126.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Itau.CarteiraCobranca131.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Itau.CarteiraCobranca142.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Itau.CarteiraCobranca143.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Itau.CarteiraCobranca146.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Itau.CarteiraCobranca150.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Itau.CarteiraCobranca169.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Itau.CarteiraCobranca175.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Itau.CarteiraCobranca176.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Itau.CarteiraCobranca178.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Itau.CarteiraCobranca196.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Itau.CarteiraCobranca198.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Itau.CodigoOcorrenciaItau.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Itau.EscritorRemessaCnab400Itau.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Itau.LeitorRetornoCnab400Itau.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.LeitorRetornoCnab400Generico.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.LeitorRetornoCnab400Hsbc.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Santander.BancoSantander.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Santander.CarteiraCobrancaSantander101.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Santander.CarteiraCobrancaSantander102.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Bancos.Santander.CarteiraCobrancaSantander201.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Boleto.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.CalculoModulo.CalculadoraMod10Generica.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.CalculoModulo.CalculadoraMod11Basa.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.CalculoModulo.CalculadoraMod11Generica.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.CalculoModulo.ICalculadoraModulo10.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.CalculoModulo.ICalculadoraModulo11.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.CarteiraCobranca.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Cedente.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Common.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.ContaBancaria.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.DetalheRemessaCnab150.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.DetalheRemessaCnab240.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.DetalheRemessaCnab400.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.DetalheRetornoCnab150.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.DetalheRetornoCnab400.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.CNAB400.ArquivoRetornoCNAB400.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.CodigoLiquidacao.AbstractCodigoLiquidacao.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.CodigoLiquidacao.CodigoLiquidacao.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.CodigoLiquidacao.CodigoLiquidacaoBancoBrasil.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.CodigoLiquidacao.ICodigoLiquidacao.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.CodigoMovimento.AbstractCodigoMovimento.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.CodigoMovimento.CodigoMovimento.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.CodigoMovimento.CodigoMovimentoBancoBrasil.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.CodigoMovimento.CodigoMovimentoCaixa.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.CodigoMovimento.ICodigoMovimento.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.CodigoRejeicao.AbstractCodigoRejeicao.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.CodigoRejeicao.BancoBrasil.CodigoRejeicaoBancoBrasil.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.CodigoRejeicao.CodigoRejeicao.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.CodigoRejeicao.CodigoRejeicaoHsbc.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.CodigoRejeicao.ICodigoRejeicao.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.CodigoTarifas.AbstractCodigoTarifas.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.CodigoTarifas.BancoBrasil.CodigoTarifasBancoBrasil.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.CodigoTarifas.CodigoTarifas.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.CodigoTarifas.ICodigoTarifas.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.DetalheRetornoGenericoCnab400.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.DetalheSegmentoERetornoCnab240.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.DetalheSegmentoTRetornoCnab240.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.DetalheSegmentoURetornoCnab240.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.DetalheSegmentoWRetornoCnab240.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.EspecieDocumento.AbstractEspecieDocumento.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.EspecieDocumento.EspecieDocumento.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.EspecieDocumento.EspecieDocumentoSantander.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.EspecieDocumento.EspecieDocumento_BancoBrasil.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.EspecieDocumento.EspecieDocumento_Bradesco.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.EspecieDocumento.EspecieDocumento_Caixa.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.EspecieDocumento.EspecieDocumento_HSBC.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.EspecieDocumento.EspecieDocumento_Itau.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.EspecieDocumento.EspeciesDocumento.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.EspecieDocumento.IEspecieDocumento.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.IArquivoRetorno.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.Instrucao.IInstrucao.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.Instrucao.InstrucaoCustomizada.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.Instrucao.InstrucaoPadronizada.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.Remessa+TipoAmbiemte.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Dominio.Remessa.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Endereco.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Fabricas.BancoFactory.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.HeaderRemessaCnab150.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.HeaderRemessaCnab240.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.HeaderRemessaCnab400.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.HeaderRetornoCnab150.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.HeaderRetornoCnab240.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.HeaderRetornoCnab400.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.MetodosExtensao.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.RemessaCnab150.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.RemessaCnab240.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.RemessaCnab400.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.RetornoCnab240.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.RetornoCnab400.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.Sacado.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.TrailerRemessaCnab150.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.TrailerRemessaCnab240.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.TrailerRemessaCnab400.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.TrailerRetornoCnab150.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.TrailerRetornoCnab240.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.TrailerRetornoCnab400.datasource" />
+    <None Include="Properties\DataSources\BoletoBr.ValidacaoBoletoException.datasource" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

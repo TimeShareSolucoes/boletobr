@@ -8,6 +8,8 @@ namespace BoletoBr.UnitTests.TestsBancos
     [TestClass]
     public class BancoBRBTests
     {
+        #region Carteira 1
+
         [TestMethod]
         public void TesteCalculoNossoNumeroBoleto()
         {
@@ -29,15 +31,19 @@ namespace BoletoBr.UnitTests.TestsBancos
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca();
-            carteira.Codigo = "1";
-            carteira.Tipo = "1";
+            var carteira = new CarteiraCobranca
+            {
+                Codigo = "1",
+                Tipo = "1"
+            };
 
-            var boleto = new Boleto(carteira, cedente, sacado, remessa);
-            boleto.NumeroDocumento = "37018";
-            boleto.ValorBoleto = Convert.ToDecimal(1.00);
-            boleto.IdentificadorInternoBoleto = "37018";
-            boleto.DataVencimento = new DateTime(2008, 06, 27);
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "37018",
+                ValorBoleto = Convert.ToDecimal(1.00),
+                IdentificadorInternoBoleto = "37018",
+                DataVencimento = new DateTime(2008, 06, 27)
+            };
 
             banco.FormataNossoNumero(boleto);
 
@@ -65,14 +71,18 @@ namespace BoletoBr.UnitTests.TestsBancos
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca();
-            carteira.Codigo = "1";
-            carteira.Tipo = "1";
+            var carteira = new CarteiraCobranca
+            {
+                Codigo = "1",
+                Tipo = "1"
+            };
 
-            var boleto = new Boleto(carteira, cedente, sacado, remessa);
-            boleto.NumeroDocumento = "1";
-            boleto.ValorBoleto = Convert.ToDecimal(1.00);
-            boleto.IdentificadorInternoBoleto = "1";
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "1",
+                ValorBoleto = Convert.ToDecimal(1.00),
+                IdentificadorInternoBoleto = "1"
+            };
 
             banco.FormataNossoNumero(boleto);
             banco.FormataCodigoBarra(boleto);
@@ -101,15 +111,19 @@ namespace BoletoBr.UnitTests.TestsBancos
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca();
-            carteira.Codigo = "1";
-            carteira.Tipo = "1";
+            var carteira = new CarteiraCobranca
+            {
+                Codigo = "1",
+                Tipo = "1"
+            };
 
-            var boleto = new Boleto(carteira, cedente, sacado, remessa);
-            boleto.NumeroDocumento = "37018";
-            boleto.ValorBoleto = Convert.ToDecimal(510.35);
-            boleto.IdentificadorInternoBoleto = "37018";
-            boleto.DataVencimento = new DateTime(2015, 07, 08);
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "37018",
+                ValorBoleto = Convert.ToDecimal(510.35),
+                IdentificadorInternoBoleto = "37018",
+                DataVencimento = new DateTime(2015, 07, 08)
+            };
 
             banco.FormataNossoNumero(boleto);
             banco.FormataCodigoBarra(boleto);
@@ -138,14 +152,18 @@ namespace BoletoBr.UnitTests.TestsBancos
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca();
-            carteira.Codigo = "1";
-            carteira.Tipo = "1";
+            var carteira = new CarteiraCobranca
+            {
+                Codigo = "1",
+                Tipo = "1"
+            };
 
-            var boleto = new Boleto(carteira, cedente, sacado, remessa);
-            boleto.NumeroDocumento = "1";
-            boleto.ValorBoleto = Convert.ToDecimal(1.00);
-            boleto.IdentificadorInternoBoleto = "1";
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "1",
+                ValorBoleto = Convert.ToDecimal(1.00),
+                IdentificadorInternoBoleto = "1"
+            };
 
             banco.FormataNossoNumero(boleto);
             banco.FormataCodigoBarra(boleto);
@@ -175,15 +193,19 @@ namespace BoletoBr.UnitTests.TestsBancos
                 Numero = "9"
             });
 
-            var carteira = new CarteiraCobranca();
-            carteira.Codigo = "1";
-            carteira.Tipo = "1";
+            var carteira = new CarteiraCobranca
+            {
+                Codigo = "1",
+                Tipo = "1"
+            };
 
-            var boleto = new Boleto(carteira, cedente, sacado, remessa);
-            boleto.NumeroDocumento = "37018";
-            boleto.ValorBoleto = Convert.ToDecimal(510.35);
-            boleto.IdentificadorInternoBoleto = "37018";
-            boleto.DataVencimento = new DateTime(2015, 07, 08);
+            var boleto = new Boleto(carteira, cedente, sacado, remessa)
+            {
+                NumeroDocumento = "37018",
+                ValorBoleto = Convert.ToDecimal(510.35),
+                IdentificadorInternoBoleto = "37018",
+                DataVencimento = new DateTime(2015, 07, 08)
+            };
 
             banco.FormataNossoNumero(boleto);
             banco.FormataCodigoBarra(boleto);
@@ -191,5 +213,7 @@ namespace BoletoBr.UnitTests.TestsBancos
 
             Assert.AreEqual("07090.00202 10193.169108 37018.070104 6 64830000051035", boleto.LinhaDigitavelBoleto);
         }
+
+        #endregion
     }
 }
