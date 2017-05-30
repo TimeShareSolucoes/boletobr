@@ -98,7 +98,7 @@ namespace BoletoBr.View.Win
             boleto.Aceite = "N";
             boleto.DataProcessamento = DateTime.Now;
             boleto.CarteiraCobranca = new CarteiraCobranca();
-
+            
             #region Dados Carteira 
 
             var numeroCarteira = carteiraBoleto.NumeroCarteira;
@@ -212,7 +212,7 @@ namespace BoletoBr.View.Win
             boleto.IdentificadorInternoBoleto = identificadorInternoDocumento;
 
             boleto.ValorBoleto = valorBoleto;
-
+            boleto.PercentualJurosMora = carteiraBoleto.ValorJuros;
             boleto.InformacoesAdicionais = new List<InformacoesAdicionais>();
 
             objBanco.FormatarBoleto(boleto);
