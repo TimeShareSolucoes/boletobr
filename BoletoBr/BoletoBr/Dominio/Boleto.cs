@@ -62,6 +62,7 @@ namespace BoletoBr
         //public decimal? ValorAbatimentoDesconto { get; set; }
         public decimal? ValorAbatimento { get; set; }
         public decimal? ValorDesconto { get; set; }
+        public DateTime? DataLimitDesconto { get; set; }
         public decimal? ValorDescontoDia { get; set; }
         public bool JurosPermanente { get; set; }
         public decimal? PercentualJurosMora { get; set; }
