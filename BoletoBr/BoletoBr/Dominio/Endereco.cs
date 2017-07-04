@@ -15,6 +15,7 @@ namespace BoletoBr
         /// A abreviação é interessante, devido a limitação de caracteres em arquivos de remessa.
         /// </remarks>
         public string TipoLogradouro { get; set; }
+
         /// <summary>
         /// Nome do logradouro
         /// </summary>
@@ -22,6 +23,7 @@ namespace BoletoBr
         /// http://www.significados.com.br/logradouro/
         /// </remarks>
         public string Logradouro { get; set; }
+
         public string Numero { get; set; }
         public string Complemento { get; set; }
         public string Bairro { get; set; }
@@ -41,13 +43,12 @@ namespace BoletoBr
                 if (!String.IsNullOrEmpty(Numero))
                 {
                     if (textoRetornar.Length > 0)
-                    {
-                        textoRetornar += ", Nro ";
-                    }
+                        textoRetornar += ",";
+
                     textoRetornar += Numero;
                 }
-                else
-                    textoRetornar += "Nro 0";
+                //else
+                //    textoRetornar += "SN";
 
                 if (!String.IsNullOrEmpty(Complemento))
                 {
@@ -76,13 +77,12 @@ namespace BoletoBr
                 if (!String.IsNullOrEmpty(Numero))
                 {
                     if (textoRetornar.Length > 0)
-                    {
-                        textoRetornar += ", Nro ";
-                    }
+                        textoRetornar += ",";
+
                     textoRetornar += Numero;
                 }
-                else
-                    textoRetornar += "Nro 0";
+                //else
+                //    textoRetornar += "SN";
 
                 if (!String.IsNullOrEmpty(Complemento))
                 {
@@ -139,7 +139,9 @@ namespace BoletoBr
         /// GO, SP, MG, PR etc.
         /// </summary>
         public string SiglaUf { get; set; }
+
         public string Cep { get; set; }
+
         public string CepFormatado
         {
             get

@@ -19,8 +19,11 @@ namespace BoletoBr.Bancos.Bradesco
         public RetornoCnab400 ProcessarRetorno()
         {
             /* Validações */
+
             #region Validações
+
             ValidaArquivoRetorno();
+
             #endregion
 
             var objRetornar = new RetornoCnab400 {RegistrosDetalhe = new List<DetalheRetornoCnab400>()};
@@ -29,7 +32,7 @@ namespace BoletoBr.Bancos.Bradesco
             {
                 if (linhaAtual.ExtrairValorDaLinha(1, 1) == "0")
                 {
-                   objRetornar.Header = ObterHeader(linhaAtual);
+                    objRetornar.Header = ObterHeader(linhaAtual);
                 }
                 if (linhaAtual.ExtrairValorDaLinha(1, 1) == "1")
                 {
@@ -124,12 +127,14 @@ namespace BoletoBr.Bancos.Bradesco
                 objRetornar.IndicadorRateioCredito = linha.ExtrairValorDaLinha(105, 105);
                 objRetornar.CodigoCarteira = linha.ExtrairValorDaLinha(108, 108);
                 objRetornar.CodigoDeOcorrencia = linha.ExtrairValorDaLinha(109, 110).BoletoBrToInt();
-                objRetornar.DataDaOcorrencia = Convert.ToDateTime(linha.ExtrairValorDaLinha(111, 116).ToDateTimeFromDdMmAa());
+                objRetornar.DataDaOcorrencia =
+                    Convert.ToDateTime(linha.ExtrairValorDaLinha(111, 116).ToDateTimeFromDdMmAa());
                 objRetornar.NumeroDocumento = linha.ExtrairValorDaLinha(117, 126);
                 // 127 a 146 - Identificação do Título no Banco (Nosso Número)
                 // Mesmo nosso número informado nas posições 71 a 82 do registro de transação.
                 objRetornar.NossoNumero = linha.ExtrairValorDaLinha(127, 146);
-                objRetornar.DataDeVencimento = Convert.ToDateTime(linha.ExtrairValorDaLinha(147, 152).ToDateTimeFromDdMmAa());
+                objRetornar.DataDeVencimento =
+                    Convert.ToDateTime(linha.ExtrairValorDaLinha(147, 152).ToDateTimeFromDdMmAa());
                 objRetornar.ValorDoTituloParcela = linha.ExtrairValorDaLinha(153, 165).BoletoBrToDecimal()/100;
                 objRetornar.BancoCobrador = linha.ExtrairValorDaLinha(166, 168).BoletoBrToInt();
                 objRetornar.AgenciaCobradora = linha.ExtrairValorDaLinha(169, 173).BoletoBrToInt();
@@ -144,7 +149,8 @@ namespace BoletoBr.Bancos.Bradesco
                 objRetornar.ValorJurosDeMora = linha.ExtrairValorDaLinha(267, 279).BoletoBrToDecimal()/100;
                 objRetornar.ValorOutrosCreditos = linha.ExtrairValorDaLinha(280, 292).BoletoBrToDecimal()/100;
                 objRetornar.MotivoCodigoOcorrencia = linha.ExtrairValorDaLinha(295, 295);
-                objRetornar.DataDeCredito = Convert.ToDateTime(linha.ExtrairValorDaLinha(296, 301).ToDateTimeFromDdMmAa());
+                objRetornar.DataDeCredito =
+                    Convert.ToDateTime(linha.ExtrairValorDaLinha(296, 301).ToDateTimeFromDdMmAa());
                 objRetornar.OrigemPagamento = linha.ExtrairValorDaLinha(302, 304).BoletoBrToInt();
                 objRetornar.Cheque = linha.ExtrairValorDaLinha(315, 318);
                 objRetornar.MotivoCodigoRejeicao = linha.ExtrairValorDaLinha(319, 328);
@@ -158,7 +164,6 @@ namespace BoletoBr.Bancos.Bradesco
 
             return objRetornar;
         }
-
 
         /// <summary>
         /// Registro de Transação - TIPO 3 - Rateio de Crédito
@@ -183,7 +188,8 @@ namespace BoletoBr.Bancos.Bradesco
                 NomePrimeiroBeneficiario = linha.ExtrairValorDaLinha(81, 120),
                 ParcelaPrimeiroBeneficiario = linha.ExtrairValorDaLinha(142, 147),
                 FloatingPrimeiroBeneficiario = linha.ExtrairValorDaLinha(148, 150).BoletoBrToInt(),
-                DataCreditoPrimeiroBeneficiario = Convert.ToDateTime(linha.ExtrairValorDaLinha(151, 158).ToDateTimeFromDdMmAa()),
+                DataCreditoPrimeiroBeneficiario =
+                    Convert.ToDateTime(linha.ExtrairValorDaLinha(151, 158).ToDateTimeFromDdMmAa()),
                 MotivoOcorrenciaPrimeiroBeneficiario = linha.ExtrairValorDaLinha(159, 160).BoletoBrToInt(),
                 CodigoBancoSegundoBeneficiario = linha.ExtrairValorDaLinha(161, 163).BoletoBrToInt(),
                 CodigoAgenciaSegundoBeneficiario = linha.ExtrairValorDaLinha(164, 168).BoletoBrToInt(),
@@ -194,7 +200,8 @@ namespace BoletoBr.Bancos.Bradesco
                 NomeSegundoBeneficiario = linha.ExtrairValorDaLinha(198, 237),
                 ParcelaSegundoBeneficiario = linha.ExtrairValorDaLinha(259, 264),
                 FloatingSegundoBeneficiario = linha.ExtrairValorDaLinha(265, 267).BoletoBrToInt(),
-                DataCreditoSegundoBeneficiario = Convert.ToDateTime(linha.ExtrairValorDaLinha(268, 275).ToDateTimeFromDdMmAa()),
+                DataCreditoSegundoBeneficiario =
+                    Convert.ToDateTime(linha.ExtrairValorDaLinha(268, 275).ToDateTimeFromDdMmAa()),
                 MotivoOcorrenciaSegundoBeneficiario = linha.ExtrairValorDaLinha(276, 277).BoletoBrToInt(),
                 CodigoBancoTerceiroBeneficiario = linha.ExtrairValorDaLinha(278, 280).BoletoBrToInt(),
                 CodigoAgenciaTerceiroBeneficiario = linha.ExtrairValorDaLinha(281, 285).BoletoBrToInt(),
@@ -205,7 +212,8 @@ namespace BoletoBr.Bancos.Bradesco
                 NomeTerceiroBeneficiario = linha.ExtrairValorDaLinha(315, 354),
                 ParcelaTerceiroBeneficiario = linha.ExtrairValorDaLinha(376, 381),
                 FloatingTerceiroBeneficiario = linha.ExtrairValorDaLinha(382, 384).BoletoBrToInt(),
-                DataCreditoTerceiroBeneficiario = Convert.ToDateTime(linha.ExtrairValorDaLinha(385, 392).ToDateTimeFromDdMmAa()),
+                DataCreditoTerceiroBeneficiario =
+                    Convert.ToDateTime(linha.ExtrairValorDaLinha(385, 392).ToDateTimeFromDdMmAa()),
                 MotivoOcorrenciaTerceiroBeneficiario = linha.ExtrairValorDaLinha(393, 394).BoletoBrToInt(),
                 NumeroSequencial = linha.ExtrairValorDaLinha(395, 400).BoletoBrToInt()
             };
@@ -239,13 +247,15 @@ namespace BoletoBr.Bancos.Bradesco
             objRetornar.QtdRegistrosBaixados = linha.ExtrairValorDaLinha(104, 108).BoletoBrToInt();
             objRetornar.ValorRegistrosBaixados = linha.ExtrairValorDaLinha(109, 120).BoletoBrToDecimal()/100;
             objRetornar.QtdRegistrosAbatimentosCancelados = linha.ExtrairValorDaLinha(121, 125).BoletoBrToInt();
-            objRetornar.ValorRegistrosAbatimentosCancelados = linha.ExtrairValorDaLinha(126, 137).BoletoBrToDecimal()/100;
+            objRetornar.ValorRegistrosAbatimentosCancelados = linha.ExtrairValorDaLinha(126, 137).BoletoBrToDecimal()/
+                                                              100;
             objRetornar.QtdRegistrosVencimentosAlterados = linha.ExtrairValorDaLinha(138, 142).BoletoBrToInt();
             objRetornar.ValorRegistrosVencimentosAlterados = linha.ExtrairValorDaLinha(143, 154).BoletoBrToDecimal()/100;
             objRetornar.QtdRegistrosAbatimentoConcedido = linha.ExtrairValorDaLinha(155, 159).BoletoBrToInt();
             objRetornar.ValorRegistrosAbatimentoConcedido = linha.ExtrairValorDaLinha(160, 171).BoletoBrToDecimal()/100;
             objRetornar.QtdRegistrosConfirmacaoInstrucaoProtesto = linha.ExtrairValorDaLinha(172, 176).BoletoBrToInt();
-            objRetornar.ValorRegistrosConfirmacaoInstrucaoProtesto = linha.ExtrairValorDaLinha(177, 188).BoletoBrToDecimal()/100;
+            objRetornar.ValorRegistrosConfirmacaoInstrucaoProtesto =
+                linha.ExtrairValorDaLinha(177, 188).BoletoBrToDecimal()/100;
             objRetornar.ValorTotalRateiosEfetuados = linha.ExtrairValorDaLinha(363, 377).BoletoBrToDecimal()/100;
             objRetornar.QtdRateiosEfetuados = linha.ExtrairValorDaLinha(378, 385).BoletoBrToInt();
             objRetornar.NumeroSequencial = linha.ExtrairValorDaLinha(395, 400).BoletoBrToInt();

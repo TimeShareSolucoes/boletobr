@@ -55,5 +55,12 @@ namespace BoletoBr.Enums
 
         #endregion
 
+        #region HSBC
+
+        ComplementacaoBoletoPeloCliente,
+        CobrancaComEmissaoTotalBoletoPeloBanco,
+        CobrancaComEmissaoTotalBoletoPeloCliente,
+
+        #endregion
     }
 }

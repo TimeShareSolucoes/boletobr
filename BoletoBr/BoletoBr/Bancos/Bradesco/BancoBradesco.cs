@@ -112,6 +112,16 @@ namespace BoletoBr.Bancos.Bradesco
 
         public void FormatarBoleto(Boleto boleto)
         {
+            //N. Número com 11(onze) caracteres
+            //Identificador interno usado como nosso número para calculo do DAC tem que estar com 11 caracteres
+            //No codigo de barras no campo livre tambem considera-se 11 caracteres
+            if (boleto.IdentificadorInternoBoleto.Length > 11)
+                throw new ValidacaoBoletoException(
+                    "Tamanho máximo para o campo Identificador interno do boleto é de 11.");
+
+            if (boleto.IdentificadorInternoBoleto.Length < 11)
+                boleto.IdentificadorInternoBoleto = boleto.IdentificadorInternoBoleto.PadLeft(11, '0');
+
             //Atribui o local de pagamento
             boleto.LocalPagamento = LocalDePagamento;
 
@@ -131,7 +141,7 @@ namespace BoletoBr.Bancos.Bradesco
             ValidaBoletoComNormasBanco(boleto);
 
             boleto.CedenteBoleto.CodigoCedenteFormatado = String.Format("{0}-{1}/{2}-{3}",
-                boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'), 
+                boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'),
                 boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia,
                 boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(7, '0'),
                 boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta);
@@ -209,10 +219,9 @@ namespace BoletoBr.Bancos.Bradesco
         ///</summary>
         public string FormataCampoLivre(Boleto boleto)
         {
-
             string formataCampoLivre = string.Format("{0}{1}{2}{3}{4}",
                 boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'), boleto.CarteiraCobranca.Codigo,
-                boleto.NossoNumeroFormatado.Replace("/", "").Replace("-", "").ExtrairValorDaLinha(1, 11),
+                boleto.IdentificadorInternoBoleto.PadLeft(11, '0'),
                 boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(7, '0'), "0");
 
             return formataCampoLivre;
@@ -285,7 +294,8 @@ namespace BoletoBr.Bancos.Bradesco
 
         public void FormataNumeroDocumento(Boleto boleto)
         {
-            if (String.IsNullOrEmpty(boleto.NumeroDocumento) || String.IsNullOrEmpty(boleto.NumeroDocumento.TrimStart('0')))
+            if (String.IsNullOrEmpty(boleto.NumeroDocumento) ||
+                String.IsNullOrEmpty(boleto.NumeroDocumento.TrimStart('0')))
                 throw new Exception("Número do Documento não foi informado.");
 
             boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(10, '0');
@@ -293,7 +303,193 @@ namespace BoletoBr.Bancos.Bradesco
 
         public ICodigoOcorrencia ObtemCodigoOcorrenciaByInt(int numeroOcorrencia)
         {
-            throw new NotImplementedException();
+            switch (numeroOcorrencia)
+            {
+                case 02:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 02,
+                        Descricao = "Entrada Confirmada".ToUpper()
+                    };
+                case 03:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 03,
+                        Descricao = "Entrada Rejeitada".ToUpper()
+                    };
+                case 06:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 06,
+                        Descricao = "Liquidação normal".ToUpper()
+                    };
+                case 09:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 09,
+                        Descricao = "Baixado Automat. via Arquivo".ToUpper()
+                    };
+                case 10:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 10,
+                        Descricao = "Baixado conforme instruções da Agência".ToUpper()
+                    };
+                case 11:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 11,
+                        Descricao = "Em Ser - Arquivo de Títulos pendentes".ToUpper()
+                    };
+                case 12:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 12,
+                        Descricao = "Abatimento Concedido".ToUpper()
+                    };
+                case 13:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 13,
+                        Descricao = "Abatimento Cancelado".ToUpper()
+                    };
+                case 14:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 14,
+                        Descricao = "Vencimento Alterado".ToUpper()
+                    };
+                case 15:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 15,
+                        Descricao = "Liquidação em Cartório".ToUpper()
+                    };
+                case 16:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 16,
+                        Descricao = "Título Pago em Cheque – Vinculado".ToUpper()
+                    };
+                case 17:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 17,
+                        Descricao = "Liquidação após baixa ou Título não registrado".ToUpper()
+                    };
+                case 18:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 18,
+                        Descricao = "Acerto de Depositária".ToUpper()
+                    };
+                case 19:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 19,
+                        Descricao = "Confirmação Receb. Inst. de Protesto".ToUpper()
+                    };
+                case 20:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 20,
+                        Descricao = "Confirmação Recebimento Instrução Sustação de Protesto".ToUpper()
+                    };
+                case 21:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 21,
+                        Descricao = "Acerto do Controle do Participante".ToUpper()
+                    };
+                case 22:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 22,
+                        Descricao = "Título Com Pagamento Cancelado".ToUpper()
+                    };
+                case 23:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 23,
+                        Descricao = "Entrada do Título em Cartório".ToUpper()
+                    };
+                case 24:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 24,
+                        Descricao = "Entrada rejeitada por CEP Irregular".ToUpper()
+                    };
+                case 27:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 27,
+                        Descricao = "Baixa Rejeitada".ToUpper()
+                    };
+                case 28:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 28,
+                        Descricao = "Débito de tarifas/custas".ToUpper()
+                    };
+                case 30:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 30,
+                        Descricao = "Alteração de Outros Dados Rejeitados".ToUpper()
+                    };
+                case 32:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 32,
+                        Descricao = "Instrução Rejeitada".ToUpper()
+                    };
+                case 33:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 33,
+                        Descricao = "Confirmação Pedido Alteração Outros Dados".ToUpper()
+                    };
+                case 34:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 34,
+                        Descricao = "Retirado de Cartório e Manutenção Carteira".ToUpper()
+                    };
+                case 35:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 35,
+                        Descricao = "Desagendamento do débito automático".ToUpper()
+                    };
+                case 40:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 40,
+                        Descricao = "Estorno de pagamento".ToUpper()
+                    };
+                case 55:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 55,
+                        Descricao = "Sustado judicial".ToUpper()
+                    };
+                case 68:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 68,
+                        Descricao = "Acerto dos dados do rateio de Crédito".ToUpper()
+                    };
+                case 69:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 69,
+                        Descricao = "Cancelamento dos dados do rateio".ToUpper()
+                    };
+            }
+            throw new Exception(
+                String.Format(
+                    "Não foi possível obter Código de Comando/Movimento/Ocorrência. Banco: {0} Código: {1}",
+                    CodigoBanco, numeroOcorrencia.ToString()));
         }
 
         public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRetorno ocorrenciaRetorno)

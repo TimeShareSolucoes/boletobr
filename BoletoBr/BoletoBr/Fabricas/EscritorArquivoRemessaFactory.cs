@@ -49,45 +49,48 @@ namespace BoletoBr.Fabricas
                 throw new Exception("Erro durante a execução da transação.", ex);
             }
         }
-        
+
         public static IEscritorArquivoRemessaCnab400 ObterEscritorRemessa(RemessaCnab400 remessaEscrever)
         {
             try
             {
                 switch (remessaEscrever.Header.CodigoBanco.PadLeft(3, '0'))
                 {
-                        /* 001 - Banco do Brasil */
+                    /* 001 - Banco do Brasil */
                     case "001":
                         return new Bancos.Brasil.EscritorRemessaCnab400BancoDoBrasil(remessaEscrever);
                         break;
-                        /* 003 - Banco da Amazônia */
+                    /* 003 - Banco da Amazônia */
                     case "003":
                         throw new NotImplementedException("Banco " + remessaEscrever.Header.CodigoBanco +
                                                           " ainda não foi implementado.");
                         break;
                     case "033":
                         return new Bancos.Santander.EscritorRemessaCnab400Santander(remessaEscrever);
-                        /* 104 - Caixa */
+                    /* 104 - Caixa */
                     case "104":
                         throw new NotImplementedException("Banco " + remessaEscrever.Header.CodigoBanco +
                                                           " ainda não foi implementado.");
                         break;
-                        /* 237 - Bradesco */
+                    /* 237 - Bradesco */
                     case "237":
                         return new Bancos.Bradesco.EscritorRemessaCnab400Bradesco(remessaEscrever);
                         break;
-                        /* 341 - Itaú */
+                    /* 341 - Itaú */
                     case "341":
                         return new Bancos.Itau.EscritorRemessaCnab400Itau(remessaEscrever);
                         break;
-                        /* 399 - HSBC */
+                    /* 399 - HSBC */
                     case "399":
-                        throw new NotImplementedException("Banco " + remessaEscrever.Header.CodigoBanco +
-                                                          " ainda não foi implementado.");
+                        return new Bancos.Hsbc.EscritorRemessaCnab400Hsbc(remessaEscrever);
                         break;
-                        /* 070 - BRB */
+                    /* 070 - BRB */
                     case "070":
                         return new Bancos.BRB.EscritorRemessaCnab400BRB(remessaEscrever);
+                        break;
+                    /* 756 - SICOOB */
+                    case "756":
+                        return new Bancos.Sicoob.EscritorRemessaCnab400Sicoob(remessaEscrever);
                         break;
                     default:
                         throw new NotImplementedException("Banco " + remessaEscrever.Header.CodigoBanco +
@@ -96,7 +99,6 @@ namespace BoletoBr.Fabricas
             }
             catch (Exception ex)
             {
-
                 throw new Exception("Erro durante a execução da transação.", ex);
             }
         }

@@ -4,7 +4,7 @@ using BoletoBr.Dominio;
 using BoletoBr.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BoletoBr.UnitTests.Tests.Bancos.BASA
+namespace BoletoBr.UnitTests.TestsBancos
 {
     [TestClass]
     public class BancoAmazoniaTests
@@ -88,7 +88,7 @@ namespace BoletoBr.UnitTests.Tests.Bancos.BASA
             boleto.NumeroDocumento = "123";
             boleto.ValorBoleto = Convert.ToDecimal(15.56);
             boleto.IdentificadorInternoBoleto = "123";
-            boleto.DataVencimento = new DateTime(2008, 06, 27);
+            boleto.DataVencimento = new DateTime(2016, 11, 25);
 
             banco.FormataNossoNumero(boleto);
             banco.FormataCodigoBarra(boleto);

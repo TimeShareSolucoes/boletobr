@@ -120,8 +120,8 @@ namespace BoletoBr.Bancos.Santander
 
             ValidaBoletoComNormasBanco(boleto);
 
-            boleto.CedenteBoleto.CodigoCedenteFormatado = String.Format("{0}/{1}", 
-                boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'), 
+            boleto.CedenteBoleto.CodigoCedenteFormatado = String.Format("{0}/{1}",
+                boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'),
                 boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'));
         }
 
@@ -152,9 +152,7 @@ namespace BoletoBr.Bancos.Santander
             var valorNominal = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "").PadLeft(10, '0'); //10
             const string fixo = "9"; //1
             var codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'); //7
-            var nossoNumero =
-                (boleto.IdentificadorInternoBoleto + Mod11Santander(boleto.IdentificadorInternoBoleto)).PadLeft(13, '0');
-                //13
+            var nossoNumero = boleto.NossoNumeroFormatado.Replace("-", "").PadLeft(13, '0'); //13
             var ios = boleto.PercentualIOS.ToString(); //1
             var tipoCarteira = boleto.CarteiraCobranca.Codigo; //3;
 
@@ -197,8 +195,7 @@ namespace BoletoBr.Bancos.Santander
         /// </summary>
         public void FormataLinhaDigitavel(Boleto boleto)
         {
-            var nossoNumero = (boleto.IdentificadorInternoBoleto +
-                              Mod11Santander(boleto.IdentificadorInternoBoleto)).PadLeft(13, '0'); //13
+            var nossoNumero = boleto.NossoNumeroFormatado.Replace("-", "").PadLeft(13, '0'); //13
             var codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0');
             var fatorVencimento = Common.FatorVencimento(boleto.DataVencimento).ToString();
             var ios = boleto.PercentualIOS.ToString(); //1
@@ -210,8 +207,9 @@ namespace BoletoBr.Bancos.Santander
             const string fixo = "9"; //1
             var codigoCedente1 = codigoCedente.Substring(0, 4); //4
             var calculoDv1 =
-                Common.Mod10(string.Format("{0}{1}{2}{3}", codigoBanco, codigoModeda, fixo, codigoCedente1)).ToString(CultureInfo.InvariantCulture);
-                //1
+                Common.Mod10(string.Format("{0}{1}{2}{3}", codigoBanco, codigoModeda, fixo, codigoCedente1))
+                    .ToString(CultureInfo.InvariantCulture); //1
+
             var grupo1 = string.Format("{0}{1}{2}.{3}{4}", codigoBanco, codigoModeda, fixo, codigoCedente1,
                 calculoDv1);
 
@@ -221,8 +219,11 @@ namespace BoletoBr.Bancos.Santander
 
             var codigoCedente2 = codigoCedente.Substring(4, 3); //3
             var nossoNumero1 = nossoNumero.Substring(0, 7); //7
-            var calculoDv2 = Common.Mod10(string.Format("{0}{1}", codigoCedente2, nossoNumero1)).ToString(CultureInfo.InvariantCulture);
+            var calculoDv2 =
+                Common.Mod10(string.Format("{0}{1}", codigoCedente2, nossoNumero1))
+                    .ToString(CultureInfo.InvariantCulture);
             var grupo2 = string.Format("{0}{1}{2}", codigoCedente2, nossoNumero1, calculoDv2);
+
             grupo2 = " " + grupo2.Substring(0, 5) + "." + grupo2.Substring(5, 6);
 
             #endregion
@@ -230,9 +231,11 @@ namespace BoletoBr.Bancos.Santander
             #region Grupo3
 
             var nossoNumero2 = nossoNumero.Substring(7, 6); //6
-
             var tipoCarteira = boleto.CarteiraCobranca.Codigo; //3
-            var calculoDv3 = Common.Mod10(string.Format("{0}{1}{2}", nossoNumero2, ios, tipoCarteira)).ToString(CultureInfo.InvariantCulture); //1
+            var calculoDv3 =
+                Common.Mod10(string.Format("{0}{1}{2}", nossoNumero2, ios, tipoCarteira))
+                    .ToString(CultureInfo.InvariantCulture); //1
+
             var grupo3 = string.Format("{0}{1}{2}{3}", nossoNumero2, ios, tipoCarteira, calculoDv3);
             grupo3 = " " + grupo3.Substring(0, 5) + "." + grupo3.Substring(5, 6) + " ";
 
@@ -243,14 +246,13 @@ namespace BoletoBr.Bancos.Santander
             var dVcodigoBanco = CodigoBanco.PadLeft(3, '0'); //3
             var dVcodigoMoeda = MoedaBanco; //1
             var dVvalorNominal = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "").PadLeft(10, '0');
-                //10
+            //10
             const string dVfixo = "9"; //1
             var dVcodigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'); //7
-            var dVnossoNumero = boleto.IdentificadorInternoBoleto + Mod11Santander(boleto.IdentificadorInternoBoleto);
             var dVtipoCarteira = boleto.CarteiraCobranca.Codigo; //3;
 
             var calculoDVcodigo = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}",
-                dVcodigoBanco, dVcodigoMoeda, fatorVencimento, dVvalorNominal, dVfixo, dVcodigoCedente, dVnossoNumero,
+                dVcodigoBanco, dVcodigoMoeda, fatorVencimento, dVvalorNominal, dVfixo, dVcodigoCedente, nossoNumero,
                 ios, dVtipoCarteira);
 
             var grupo4 = Mod10Mod11Santander(calculoDVcodigo, 9) + " ";
@@ -259,7 +261,6 @@ namespace BoletoBr.Bancos.Santander
 
             #region Grupo5
 
-            //4
             var valorNominal = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "").PadLeft(10, '0'); //10
 
             var grupo5 = string.Format("{0}{1}", fatorVencimento, valorNominal);
@@ -267,14 +268,12 @@ namespace BoletoBr.Bancos.Santander
             #endregion
 
             boleto.LinhaDigitavelBoleto = string.Format("{0}{1}{2}{3}{4}", grupo1, grupo2, grupo3, grupo4, grupo5);
-
-            //Usado somente no Santander
-            //boleto.CedenteBoleto.ContaBancariaCedente.Conta = boleto.CedenteBoleto.CodigoCedente;
         }
 
         public void FormataNossoNumero(Boleto boleto)
         {
-            if (String.IsNullOrEmpty(boleto.IdentificadorInternoBoleto) || String.IsNullOrEmpty(boleto.IdentificadorInternoBoleto.TrimStart('0')))
+            if (String.IsNullOrEmpty(boleto.IdentificadorInternoBoleto) ||
+                String.IsNullOrEmpty(boleto.IdentificadorInternoBoleto.TrimStart('0')))
                 throw new Exception("Sequencial Nosso Número não foi informado.");
 
             boleto.SetNossoNumeroFormatado(String.Format("{0}{1}",
@@ -283,7 +282,8 @@ namespace BoletoBr.Bancos.Santander
 
         public void FormataNumeroDocumento(Boleto boleto)
         {
-            if (String.IsNullOrEmpty(boleto.NumeroDocumento) || String.IsNullOrEmpty(boleto.NumeroDocumento.TrimStart('0')))
+            if (String.IsNullOrEmpty(boleto.NumeroDocumento) ||
+                String.IsNullOrEmpty(boleto.NumeroDocumento.TrimStart('0')))
                 throw new Exception("Número do Documento não foi informado.");
 
             boleto.NumeroDocumento = boleto.NumeroDocumento.PadLeft(10, '0');
@@ -326,7 +326,7 @@ namespace BoletoBr.Bancos.Santander
                         Sigla = "DS"
                     };
                 }
-                    // Somente para banco 353
+                // Somente para banco 353
                 case EnumEspecieDocumento.LetraCambio353:
                 {
                     return new EspecieDocumento((int) especie)
@@ -372,7 +372,7 @@ namespace BoletoBr.Bancos.Santander
                         Sigla = "AP"
                     };
                 }
-                    // Somente para banco 008
+                // Somente para banco 008
                 case EnumEspecieDocumento.LetraCambio008:
                 {
                     return new EspecieDocumento((int) especie)
@@ -1006,7 +1006,7 @@ namespace BoletoBr.Bancos.Santander
             while (sequencia.Length > 0)
             {
                 int valorPosicao = Convert.ToInt32(sequencia.Substring(0, 1));
-                total += valorPosicao * multiplicador;
+                total += valorPosicao*multiplicador;
                 multiplicador++;
 
                 if (multiplicador == 10)

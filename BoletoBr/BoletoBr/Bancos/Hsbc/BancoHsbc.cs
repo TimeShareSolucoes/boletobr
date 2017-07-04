@@ -39,7 +39,7 @@ namespace BoletoBr.Bancos.Hsbc
             CodigoBanco = "399";
             DigitoBanco = "9";
             NomeBanco = "HSBC";
-            LocalDePagamento = "Pagável em qualquer banco até o vencimento.";
+            LocalDePagamento = "PAGAR EM QUALQUER AG BANCARIA ATÉ O VENCIMENTO OU CANAIS ELETRONICOS DO HSBC";
             MoedaBanco = "9";
         }
 
@@ -59,25 +59,25 @@ namespace BoletoBr.Bancos.Hsbc
             //Verifica as carteiras implementadas
             if (!boleto.CarteiraCobranca.Codigo.Equals("CSB") &
                 !boleto.CarteiraCobranca.Codigo.Equals("CNR"))
-                throw new NotImplementedException("Carteira n�o implementada. Utilize a carteira 'CSB' ou 'CNR'.");
+                throw new NotImplementedException("Carteira não implementada. Utilize a carteira 'CSB' ou 'CNR'.");
 
-            //Verifica se o nosso n�mero � v�lido
+            //Verifica se o nosso número é invalido
             if (boleto.NossoNumeroFormatado.BoletoBrToStringSafe() == string.Empty)
                 throw new NotImplementedException("Nosso número inválido");
 
-            //Verifica se o nosso n�mero � v�lido
+            //Verifica se o nosso número é válido
             if (boleto.NossoNumeroFormatado.BoletoBrToStringSafe().BoletoBrToLong() == 0)
                 throw new NotImplementedException("Nosso número inválido");
 
-            //Verifica se o tamanho para o NossoNumero s�o 10 d�gitos (5 range + 5 numero sequencial) - Válido para carteira CSB
+            //Verifica se o tamanho para o NossoNumero são 11 dígitos (5 range + 5 numero sequencial + DAC) - Válido para carteira CSB
             if (boleto.CarteiraCobranca.Codigo.Equals("CSB"))
-            if (Convert.ToInt32(boleto.NossoNumeroFormatado).ToString(CultureInfo.InvariantCulture).Length > 10)
-                throw new NotImplementedException("A quantidade de dígitos do nosso número para a carteira " +
-                                                  boleto.CarteiraCobranca.Codigo + ", são 10 números.");
-            else if (Convert.ToInt32(boleto.NossoNumeroFormatado).ToString(CultureInfo.InvariantCulture).Length < 10)
-                boleto.SetNossoNumeroFormatado(boleto.NossoNumeroFormatado.PadLeft(10, '0'));
+            {
+                if (boleto.NossoNumeroFormatado.BoletoBrToStringSafe().Length != 11)
+                    throw new NotImplementedException("A quantidade de dígitos do nosso número para a carteira " +
+                                                      boleto.CarteiraCobranca.Codigo + ", são 11 números.");
+            }
 
-            //Verifica se data do documento � valida
+            //Verifica se data do documento invalida
             //if (boleto.DataDocumento.ToString("dd/MM/yyyy") == "01/01/0001")
             if (boleto.DataDocumento == DateTime.MinValue)
                 boleto.DataDocumento = DateTime.Now;
@@ -112,23 +112,209 @@ namespace BoletoBr.Bancos.Hsbc
         {
             switch (numeroOcorrencia)
             {
+                case 02:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 02,
+                        Descricao = "Entrada confirmada".ToUpper()
+                    };
+                case 03:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 03,
+                        Descricao = "Entrada rejeitada ou Instrução rejeitada".ToUpper()
+                    };
                 case 06:
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 06,
-                        Descricao = "LIQUIDAÇÃO"
+                        Descricao = "Liquidação normal em dinheiro".ToUpper()
                     };
                 case 07:
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 07,
-                        Descricao = "EMISSÃO CONFIRMADA"
+                        Descricao = "Liquidação por conta em dinheiro".ToUpper()
                     };
-                case 08:
+                case 09:
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 08,
-                        Descricao = "PARCELA REJEITADA"
+                        Descricao = "Baixa automática".ToUpper()
+                    };
+                case 10:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 10,
+                        Descricao = "Baixado conforme instruções".ToUpper()
+                    };
+                case 11:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 11,
+                        Descricao = "Títulos em ser (Conciliação Mensal)".ToUpper()
+                    };
+                case 12:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 12,
+                        Descricao = "Abatimento concedido".ToUpper()
+                    };
+                case 13:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 13,
+                        Descricao = "Abatimento cancelado".ToUpper()
+                    };
+                case 14:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 14,
+                        Descricao = "Vencimento prorrogado".ToUpper()
+                    };
+                case 15:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 15,
+                        Descricao = "Liquidação em cartório em dinheiro".ToUpper()
+                    };
+                case 16:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 16,
+                        Descricao = "Liquidação - baixado/devolvido em data anterior dinheiro".ToUpper()
+                    };
+                case 17:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 17,
+                        Descricao = "Entregue em cartório".ToUpper()
+                    };
+                case 18:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 18,
+                        Descricao = "Instrução automática de protesto".ToUpper()
+                    };
+                case 21:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 21,
+                        Descricao = "Instrução de alteração de mora".ToUpper()
+                    };
+                case 22:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 22,
+                        Descricao = "Instrução de protesto processada/reemitida".ToUpper()
+                    };
+                case 23:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 23,
+                        Descricao = "Cancelamento de protesto processado".ToUpper()
+                    };
+                case 27:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 27,
+                        Descricao = "Número do beneficiário ou controle do participante alterado".ToUpper()
+                    };
+                case 31:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 31,
+                        Descricao = "Liquidação normal em cheque/compensação/banco correspondente".ToUpper()
+                    };
+                case 32:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 32,
+                        Descricao = "Liquidação em cartório em cheque".ToUpper()
+                    };
+                case 33:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 33,
+                        Descricao = "Liquidação por conta em cheque".ToUpper()
+                    };
+                case 36:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 36,
+                        Descricao = "Liquidação - baixado/devolvido em data anterior em cheque".ToUpper()
+                    };
+                case 37:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 37,
+                        Descricao = "Baixa de título protestado".ToUpper()
+                    };
+                case 38:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 38,
+                        Descricao = "Liquidação de título não registrado - em dinheiro (Cobrança Expressa ou Cobrança Diretiva)".ToUpper()
+                    };
+                case 39:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 39,
+                        Descricao = "Liquidação de título não registrado - em cheque (Cobrança Expressa ou Cobrança Diretiva)".ToUpper()
+                    };
+                case 49:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 49,
+                        Descricao = "Vencimento alterado".ToUpper()
+                    };
+                case 51:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 51,
+                        Descricao = "Título DDA aceito pelo pagador".ToUpper()
+                    };
+                case 52:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 52,
+                        Descricao = "Título DDA não reconhecido pelo pagador".ToUpper()
+                    };
+                case 69:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 69,
+                        Descricao = "Despesas/custas de cartório (complemento posições 176 a 188)".ToUpper()
+                    };
+                case 70:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 70,
+                        Descricao = "Ressarcimento sobre títulos".ToUpper()
+                    };
+                case 71:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 71,
+                        Descricao = "Ocorrência/Instrução não permitida para título em garantia de operação".ToUpper()
+                    };
+                case 72:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 72,
+                        Descricao = "Concessão de Desconto Aceito".ToUpper()
+                    };
+                case 73:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 73,
+                        Descricao = "Cancelamento Condição de Desconto Fixo Aceito".ToUpper()
+                    };
+                case 74:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 74,
+                        Descricao = "Cancelamento de Desconto Diário Aceito".ToUpper()
                     };
             }
             throw new Exception(
@@ -178,50 +364,77 @@ namespace BoletoBr.Bancos.Hsbc
             switch (especie)
             {
                 case EnumEspecieDocumento.DuplicataMercantil:
-                {
-                    return new EspecieDocumento((int) especie)
                     {
-                        Codigo = 01,
-                        Descricao = "Duplicata Mercantil",
-                        Sigla = "DP"
-                    };
-                }
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 01,
+                            Descricao = "Duplicata Mercantil",
+                            Sigla = "DP"
+                        };
+                    }
                 case EnumEspecieDocumento.NotaPromissoria:
-                {
-                    return new EspecieDocumento((int) especie)
                     {
-                        Codigo = 02,
-                        Descricao = "Nota Promissória",
-                        Sigla = "NP"
-                    };
-                }
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 02,
+                            Descricao = "Nota Promissória",
+                            Sigla = "NP"
+                        };
+                    }
                 case EnumEspecieDocumento.NotaSeguro:
-                {
-                    return new EspecieDocumento((int) especie)
                     {
-                        Codigo = 03,
-                        Descricao = "Nota de Seguro",
-                        Sigla = "NS"
-                    };
-                }
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 03,
+                            Descricao = "Nota de Seguro",
+                            Sigla = "NS"
+                        };
+                    }
                 case EnumEspecieDocumento.Recibo:
-                {
-                    return new EspecieDocumento((int) especie)
                     {
-                        Codigo = 05,
-                        Descricao = "Recibo",
-                        Sigla = "RC"
-                    };
-                }
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 05,
+                            Descricao = "Recibo",
+                            Sigla = "RC"
+                        };
+                    }
                 case EnumEspecieDocumento.DuplicataServico:
-                {
-                    return new EspecieDocumento((int) especie)
                     {
-                        Codigo = 10,
-                        Descricao = "Duplicata de Serviços",
-                        Sigla = "DS"
-                    };
-                }
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 10,
+                            Descricao = "Duplicata de Serviços",
+                            Sigla = "DS"
+                        };
+                    }
+                case EnumEspecieDocumento.ComplementacaoBoletoPeloCliente:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 08,
+                            Descricao = "Com complementação do Boleto pelo cliente",
+                            Sigla = "SD"
+                        };
+                    }
+                case EnumEspecieDocumento.CobrancaComEmissaoTotalBoletoPeloBanco:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 09,
+                            Descricao = "Cobrança com emissão total do Boleto pelo Banco",
+                            Sigla = "CE"
+                        };
+                    }
+                case EnumEspecieDocumento.CobrancaComEmissaoTotalBoletoPeloCliente:
+                    {
+                        return new EspecieDocumento((int)especie)
+                        {
+                            Codigo = 98,
+                            Descricao = "Cobrança com emissão total do Boleto pelo cliente",
+                            Sigla = "PD"
+                        };
+                    }
             }
             throw new Exception(
                 String.Format("Não foi possível obter espécie. Banco: {0} Código Espécie: {1}",
@@ -710,16 +923,6 @@ namespace BoletoBr.Bancos.Hsbc
             throw new Exception("Arquivo de RETORNO com " + linhasArquivo.First().Length + " posições, não é suportado.");
         }
 
-        public RemessaCnab240 GerarArquivoRemessaCnab240(RemessaCnab240 remessaCnab240, List<Boleto> boletos)
-        {
-            throw new NotImplementedException();
-        }
-
-        public RemessaCnab400 GerarArquivoRemessaCnab400(RemessaCnab400 remessaCnab400, List<Boleto> boletos)
-        {
-            throw new NotImplementedException();
-        }
-
         public RemessaCnab240 GerarArquivoRemessaCnab240(List<Boleto> boletos)
         {
             throw new NotImplementedException();
@@ -740,14 +943,13 @@ namespace BoletoBr.Bancos.Hsbc
                 if (boleto.CarteiraCobranca.Codigo == "CSB")
                 {
                     string nossoNumeroComposto =
-                        boleto.CedenteBoleto.CodigoCedente.PadLeft(5, '0')
-                        +
+                        boleto.CedenteBoleto.CodigoCedente.PadLeft(5, '0') +
                         boleto.IdentificadorInternoBoleto.PadLeft(5, '0');
 
-                    string digitoAutoConferenciaNossoNumero = Common.Mod11(nossoNumeroComposto, 7).ToString(CultureInfo.InvariantCulture);
+                    string digitoAutoConferenciaNossoNumero = Common.Mod11Base7Hsbc(nossoNumeroComposto).ToString(CultureInfo.InvariantCulture);
+                    _digitoAutoConferenciaNossoNumero = digitoAutoConferenciaNossoNumero;
 
-                    string nossoNumeroFormatado =
-                        nossoNumeroComposto + digitoAutoConferenciaNossoNumero;
+                    string nossoNumeroFormatado = nossoNumeroComposto + digitoAutoConferenciaNossoNumero;
 
                     boleto.SetNossoNumeroFormatado(nossoNumeroFormatado);
                     return;
@@ -793,7 +995,6 @@ namespace BoletoBr.Bancos.Hsbc
 
             var nossoNumeroLinhaDigitavel = boleto.NossoNumeroFormatado.PadLeft(13, '0');
             var codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0');
-            var digitoAutoConferenciaNossoNumero = Common.Mod11(boleto.NossoNumeroFormatado, 7).ToString(CultureInfo.InvariantCulture);
 
             var C1 = string.Empty;
             var C2 = string.Empty;
@@ -833,9 +1034,7 @@ namespace BoletoBr.Bancos.Hsbc
 
                 #region DDDDD.DEEEEY
 
-                // ReSharper disable once InconsistentNaming
-                DDDDDD = boleto.NossoNumeroFormatado.Substring(5, 5) + digitoAutoConferenciaNossoNumero;
-                // ReSharper disable once InconsistentNaming
+                DDDDDD = boleto.NossoNumeroFormatado.Substring(5, 6);
                 EEEE = boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0');
                 Y = Common.Mod10(DDDDDD + EEEE).ToString(CultureInfo.InvariantCulture);
 
@@ -846,8 +1045,7 @@ namespace BoletoBr.Bancos.Hsbc
 
                 #region FFFFF.FF001Z
 
-                // ReSharper disable once InconsistentNaming
-                FFFFFFF = boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(7, '0');
+                FFFFFFF = (boleto.CedenteBoleto.ContaBancariaCedente.Conta + boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta).PadLeft(7, '0');
                 Z = Common.Mod10(FFFFFFF + "001").ToString(CultureInfo.InvariantCulture);
 
                 C3 = String.Format("{0}.", FFFFFFF.Substring(0, 5));
@@ -898,14 +1096,11 @@ namespace BoletoBr.Bancos.Hsbc
                 #endregion FFFFF.GGGGGZ
             }
 
-            // ReSharper disable once InconsistentNaming
-            W = String.Format(" {0} ", _digitoAutoConferenciaCodigoBarras);
+            W = String.Format("{0}", _digitoAutoConferenciaCodigoBarras);
 
             #region HHHHIIIIIIIIII
 
-            // ReSharper disable once InconsistentNaming
             HHHH = Common.FatorVencimento(boleto.DataVencimento).ToString(CultureInfo.InvariantCulture);
-            // ReSharper disable once InconsistentNaming
             IIIIIIIIII = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "");
 
             IIIIIIIIII = IIIIIIIIII.PadLeft(10, '0');
@@ -913,7 +1108,7 @@ namespace BoletoBr.Bancos.Hsbc
 
             #endregion HHHHHHHHHHHHHH
 
-            boleto.LinhaDigitavelBoleto = C1 + C2 + C3 + W + C5;
+            boleto.LinhaDigitavelBoleto = C1 + C2 + C3 + " " + W + " " + C5;
         }
 
         public void FormataCodigoBarra(Boleto boleto)
@@ -935,16 +1130,17 @@ namespace BoletoBr.Bancos.Hsbc
 
                 if (boleto.CarteiraCobranca.Codigo == "CSB")
                 {
+                    var contaCedente = boleto.CedenteBoleto.ContaBancariaCedente.Conta + boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta;
+
                     codigoBarraSemDigitoVerificador =
                         String.Format("{0}{1}{2}{3}{4}{5}{6}001",
                             CodigoBanco,
                             boleto.Moeda,
-                            //9999 --> 21/02/2025
                             Common.FatorVencimento(boleto.DataVencimento),
                             valorBoletoTexto,
-                            boleto.NossoNumeroFormatado + boleto.DigitoNossoNumero,
+                            boleto.NossoNumeroFormatado,
                             boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'),
-                            boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(7, '0')
+                            contaCedente.PadLeft(7, '0')
                             );
                 }
                 if (boleto.CarteiraCobranca.Codigo == "CNR")
@@ -992,19 +1188,16 @@ namespace BoletoBr.Bancos.Hsbc
 
             FormataNumeroDocumento(boleto);
             FormataNossoNumero(boleto);
-            // Calcula o DAC do Nosso N�mero
-            // Nosso N�mero = Range(5) + Numero Sequencial(5)
-            _digitoAutoConferenciaNossoNumero =
-                Common.Mod11(boleto.NossoNumeroFormatado, 7).ToString(CultureInfo.InvariantCulture);
             FormataCodigoBarra(boleto);
             FormataLinhaDigitavel(boleto);
             FormataMoeda(boleto);
 
             ValidaBoletoComNormasBanco(boleto);
 
-            boleto.CedenteBoleto.CodigoCedenteFormatado = String.Format("{0}/{1}",
+            boleto.CedenteBoleto.CodigoCedenteFormatado = String.Format("{0}/{1}{2}",
                 boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(4, '0'),
-                boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'));
+                boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(5, '0'),
+                boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta.PadLeft(2, '0'));
         }
 
         /// <summary>

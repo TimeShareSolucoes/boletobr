@@ -14,12 +14,13 @@ namespace BoletoBr.Arquivo.Generico.Retorno
             RegistrosDetalhe = new List<RetornoDetalheGenerico>();
             Trailer = new RetornoTrailerGenerico();
         }
+
         public RetornoGenerico(RetornoCnab240 retornoCnab240)
         {
             Inicializa();
             RetornoCnab240Especifico = retornoCnab240;
             /* Transformar de CNAB240 para formato genérico */
-                
+
             foreach (var loteAtual in retornoCnab240.Lotes)
             {
                 foreach (var d in loteAtual.RegistrosDetalheSegmentos)
@@ -58,7 +59,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     detalheGenericoAdd.ValorRecebido = valorRecebido;
 
                     #endregion
-                    
+
                     //detalheGenericoAdd.ValorIof = d.SegmentoU.ValorIofRecolhido / 100;
                     //detalheGenericoAdd.ValorOutrasDespesas = d.SegmentoU.ValorOutrasDespesas / 100;
                     //detalheGenericoAdd.ValorOutrosCreditos = d.SegmentoU.ValorOutrosCreditos / 100;
@@ -66,9 +67,15 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     //detalheGenericoAdd.DataOcorrencia = d.SegmentoU.DataOcorrenciaPagador;
                     //detalheGenericoAdd.ValorOcorrencia = d.SegmentoU.ValorOcorrenciaPagador / 100;
                     //detalheGenericoAdd.DataDebitoTarifaCustas = Convert.ToDateTime(d.SegmentoU.DataDebitoTarifa.ToString());
+
+                    //DATA LIQUIDAÇÃO E DATA OCORRENCIA
+                    if (detalheGenericoAdd.Pago && detalheGenericoAdd.DataLiquidacao == DateTime.MinValue)
+                        detalheGenericoAdd.DataLiquidacao = d.SegmentoU.DataOcorrencia;
+
                     RegistrosDetalhe.Add(detalheGenericoAdd);
                 }
             }
+
             Trailer.QtdRegistrosArquivo = retornoCnab240.Trailer.QtdRegistrosArquivo.ToString(CultureInfo.InvariantCulture);
         }
 
@@ -76,7 +83,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
         {
             Inicializa();
             RetornoCnab400Especifico = retornoCnab400;
-            
+
             /* Transformar de CNAB400 para formato genérico */
             Header.CodigoDoBanco = retornoCnab400.Header.CodigoDoBanco;
             Header.Convenio = retornoCnab400.Header.NumeroConvenio.ToString(CultureInfo.InvariantCulture);
@@ -100,11 +107,11 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     PercentualDesconto = registroAtual.TaxaDesconto,
                     PercentualIof = registroAtual.TaxaIof,
                     Especie = registroAtual.Especie,
-                    //DataPagamento = registroAtual.DataPagamento.ToString("ddMMyy").Equals("0") ? new DateTime(0001, 01, 01) : Convert.ToDateTime(registroAtual.DataPagamento.ToString("ddMMyy")),
                     DataCredito = registroAtual.DataDeCredito,
                     DataVencimento = registroAtual.DataDeVencimento,
-                    //DataOcorrencia = registroAtual.DataEmissao.ToString("ddMMyy").Equals(null) ? new DateTime(0001, 01, 01) : Convert.ToDateTime(registroAtual.DataEmissao.ToString("ddMMyy")),
+                    DataLiquidacao = registroAtual.DataLiquidacao,
                     NumeroDocumento = registroAtual.NumeroDocumento,
+                    SeuNumero = registroAtual.SeuNumero,
                     ValorDocumento = registroAtual.ValorDoTituloParcela,
                     ValorTarifaCustas = registroAtual.ValorTarifa,
                     ValorOutrasDespesas = registroAtual.ValorOutrasDespesas,
@@ -113,21 +120,27 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     ValorAbatimento = registroAtual.ValorAbatimento,
                     ValorDesconto = registroAtual.ValorDesconto,
                     ValorRecebido = registroAtual.ValorLiquidoRecebido + registroAtual.ValorDoDebitoCredito,
-                    ValorAcrescimos = registroAtual.ValorJurosDeMora + registroAtual.ValorMulta,
+                    ValorAcrescimos = registroAtual.ValorJurosDeMora + registroAtual.ValorMulta + registroAtual.ValorTarifa,
+                    ValorJuros = registroAtual.ValorJurosDeMora,
+                    ValorMulta = registroAtual.ValorMulta,
                     ValorOutrosRecebimentos = registroAtual.ValorOutrosRecebimentos,
                     ValorAbatimentoNaoAproveitadoPeloSacado = registroAtual.ValorAbatimentosNaoAproveitado,
                     ValorLancamento = registroAtual.ValorLancamento,
-                    //DataLiquidacao = registroAtual.DataLiquidacao.ToString("ddMMyy").Equals(null) ? new DateTime(0001, 01, 01) : Convert.ToDateTime(registroAtual.DataLiquidacao.ToString("ddMMyy")),
                     InscricaoSacado = registroAtual.NumeroInscricaoSacado.ToString(CultureInfo.InvariantCulture),
                     NomeSacado = registroAtual.NomeSacado,
-                    //CodigoMovimento = registroAtual.MotivoCodigoRejeicao.Equals(null) ? "0" : registroAtual.MotivoCodigoRejeicao,
                     CodigoOcorrencia = String.IsNullOrEmpty(registroAtual.MotivoCodigoOcorrencia) ? "00" : registroAtual.MotivoCodigoOcorrencia,
-                    MensagemOcorrenciaRetornoBancario = ocorrencia.Descricao
+                    MensagemOcorrenciaRetornoBancario = ocorrencia.Descricao,
+                    Ocorrencia = ocorrencia
                 };
+
+                //DATA LIQUIDAÇÃO E DATA OCORRENCIA
+                if (detalheGenericoAdd.Pago && detalheGenericoAdd.DataLiquidacao == DateTime.MinValue)
+                    detalheGenericoAdd.DataLiquidacao = registroAtual.DataDaOcorrencia;
 
                 RegistrosDetalhe.Add(detalheGenericoAdd);
             }
         }
+        
         public RetornoHeaderGenerico Header { get; set; }
         public List<RetornoDetalheGenerico> RegistrosDetalhe { get; set; } 
         public RetornoTrailerGenerico Trailer { get; set; }

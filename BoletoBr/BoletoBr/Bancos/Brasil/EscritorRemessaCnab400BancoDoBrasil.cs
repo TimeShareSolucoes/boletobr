@@ -232,7 +232,15 @@ namespace BoletoBr.Bancos.Brasil
                 #region JUROS DE MORA POR DIA DE ATRASO
 
                 var jurosPorDia = string.Empty;
-                
+
+                //161 a 173 9(011)v99 Juros de Mora por Dia de Atraso 10
+                /* Banco do Brasil não passa % para juros e sim o valor calculado a ser cobrado por dia */
+                if (infoDetalhe.ValorMoraDia > 0)
+                {
+                    var valorCobrarJuroDia = infoDetalhe.ValorBoleto*((infoDetalhe.ValorMoraDia/30)/100);
+                    infoDetalhe.ValorMoraDia = Math.Round(valorCobrarJuroDia, 2);
+                }
+
                 if (infoDetalhe.ValorMoraDia.ToString().Contains('.') &&
                     infoDetalhe.ValorMoraDia.ToString().Contains(','))
                 {
@@ -341,12 +349,27 @@ namespace BoletoBr.Bancos.Brasil
                     ? infoDetalhe.NomePagador.ExtrairValorDaLinha(1, 37)
                     : infoDetalhe.NomePagador;
 
-                detalhe = detalhe.PreencherValorNaLinha(219, 220,
-                    infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").Length == 11
-                        ? "01"
-                        : "02");
-                detalhe = detalhe.PreencherValorNaLinha(221, 234,
-                    infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(14, '0'));
+                /* CPF/CNPJ em branco 
+                 * 00 - ISENTO
+                 * 01 - CPF
+                 * 02 - CNPJ
+                 */
+                if (infoDetalhe.InscricaoPagador.BoletoBrToStringSafe().Trim().Length == 0)
+                {
+                    detalhe = detalhe.PreencherValorNaLinha(219, 220, "00");
+                    detalhe = detalhe.PreencherValorNaLinha(221, 234, string.Empty.PadLeft(14, '0'));
+                }
+                else
+                {
+                    detalhe = detalhe.PreencherValorNaLinha(219, 220,
+                           infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").Length == 11
+                               ? "01"
+                               : "02");
+
+                    detalhe = detalhe.PreencherValorNaLinha(221, 234,
+                        infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(14, '0'));
+                }
+
                 detalhe = detalhe.PreencherValorNaLinha(235, 271, nomePagador.ToUpper().PadRight(37, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(272, 274, string.Empty.PadRight(3, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(275, 314, enderecoSacado.PadRight(40, ' '));
@@ -442,20 +465,66 @@ namespace BoletoBr.Bancos.Brasil
             }
         }
 
+        /// <summary>
+        /// Registro Detalhe Tipo 5 – Multa - Opcional - Remessa
+        /// </summary>
+        /// <returns></returns>
+        private string EscreverDetalheTipo5(DetalheRemessaCnab400 infoDetalhe, int numeroRegistro)
+        {
+            var detalhe = new string(' ', 400);
+
+            try
+            {
+                detalhe = detalhe.PreencherValorNaLinha(1, 1, "5");
+                detalhe = detalhe.PreencherValorNaLinha(2, 3, "99");
+
+                /* '1' = Valor | '2' = Percentual | '9' = Dispensar Cobrança de Multa */
+                detalhe = detalhe.PreencherValorNaLinha(4, 4, "2");
+                detalhe = detalhe.PreencherValorNaLinha(5, 10, infoDetalhe.DataVencimento.AddDays(1).ToString("ddMMyy"));
+                detalhe = detalhe.PreencherValorNaLinha(11, 22,
+                    infoDetalhe.PercentualMulta.ToString().Replace(".", "").Replace(",", "").PadLeft(12, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(23, 394, string.Empty.PadRight(372, ' '));
+                detalhe = detalhe.PreencherValorNaLinha(395, 400,
+                    numeroRegistro.ToString(CultureInfo.InvariantCulture).PadLeft(6, '0'));
+
+                return detalhe;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(
+                    string.Format("<BoletoBr>{0}Falha na geração do Detalhe Tipo 5 do arquivo de REMESSA.",
+                        Environment.NewLine), e);
+            }
+        }
+
         public List<string> EscreverTexto(RemessaCnab400 remessaEscrever)
         {
-            var listaRetornar = new List<string>();
+            var numeroSequencialRegistro = 1;
 
-            listaRetornar.Add(EscreverHeader(remessaEscrever.Header, remessaEscrever.Header.NumeroSequencialRemessa,
-                remessaEscrever.Header.NumeroSequencialRegistro));
+            var listaRetornar = new List<string>
+            {
+                EscreverHeader(remessaEscrever.Header, remessaEscrever.Header.NumeroSequencialRemessa,
+                    numeroSequencialRegistro)
+            };
 
+            numeroSequencialRegistro++;
             foreach (var detalheAdicionar in remessaEscrever.RegistrosDetalhe)
             {
                 listaRetornar.AddRange(new[]
-                {EscreverDetalhe(detalheAdicionar, detalheAdicionar.NumeroSequencialRegistro)});
+                {EscreverDetalhe(detalheAdicionar, numeroSequencialRegistro)});
+
+                /* VERIFICAR SE POSSUI MULTA */
+                if (detalheAdicionar.PercentualMulta > 0)
+                {
+                    numeroSequencialRegistro++;
+
+                    listaRetornar.AddRange(new[] {EscreverDetalheTipo5(detalheAdicionar, numeroSequencialRegistro)});
+                }
+
+                numeroSequencialRegistro++;
             }
 
-            listaRetornar.Add(EscreverTrailer(remessaEscrever.Trailer, remessaEscrever.Trailer.NumeroSequencialRegistro));
+            listaRetornar.Add(EscreverTrailer(remessaEscrever.Trailer, numeroSequencialRegistro));
 
             return listaRetornar;
         }
