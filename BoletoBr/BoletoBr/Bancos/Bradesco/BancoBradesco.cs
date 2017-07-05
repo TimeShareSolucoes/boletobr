@@ -43,10 +43,10 @@ namespace BoletoBr.Bancos.Bradesco
         public void ValidaBoletoComNormasBanco(Boleto boleto)
         {
             if (boleto.CarteiraCobranca.Codigo != "02" && boleto.CarteiraCobranca.Codigo != "03" &&
-                boleto.CarteiraCobranca.Codigo != "06" && boleto.CarteiraCobranca.Codigo != "09" &&
-                boleto.CarteiraCobranca.Codigo != "19")
+                boleto.CarteiraCobranca.Codigo != "04" && boleto.CarteiraCobranca.Codigo != "06" && 
+                boleto.CarteiraCobranca.Codigo != "09" && boleto.CarteiraCobranca.Codigo != "19")
                 throw new ValidacaoBoletoException(
-                    "Carteira não implementada. Carteiras implementadas 02, 03, 06, 09, 19.");
+                    "Carteira não implementada. Carteiras implementadas 02, 03, 04, 06, 09, 19.");
 
             //O valor � obrigat�rio para a carteira 03
             if (boleto.CarteiraCobranca.Codigo == "03")
@@ -180,7 +180,8 @@ namespace BoletoBr.Bancos.Bradesco
             valorBoleto = valorBoleto.PadLeft(10, '0');
 
             if (boleto.CarteiraCobranca.Codigo == "02" || boleto.CarteiraCobranca.Codigo == "03" ||
-                boleto.CarteiraCobranca.Codigo == "09" || boleto.CarteiraCobranca.Codigo == "19")
+                boleto.CarteiraCobranca.Codigo == "04" || boleto.CarteiraCobranca.Codigo == "09" ||
+                boleto.CarteiraCobranca.Codigo == "19")
             {
                 boleto.CodigoBarraBoleto = string.Format("{0}{1}{2}{3}{4}", CodigoBanco, boleto.Moeda,
                     Common.FatorVencimento(boleto.DataVencimento), valorBoleto, FormataCampoLivre(boleto));
