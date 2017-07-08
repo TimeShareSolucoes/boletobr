@@ -35,6 +35,8 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             this.ValorDesconto = Convert.ToDecimal(boleto.ValorDesconto).Equals(null)
                 ? 0
                 : Convert.ToDecimal(boleto.ValorDesconto);
+            if(boleto.DataLimitDesconto != null && boleto.DataLimitDesconto.GetValueOrDefault() > DateTime.MinValue)
+                this.DataLimiteConcessaoDesconto = boleto.DataLimitDesconto.GetValueOrDefault();
             this.ValorIof = Convert.ToDecimal(boleto.Iof).Equals(null) ? 0 : Convert.ToDecimal(boleto.Iof);
             this.ValorAbatimento = Convert.ToDecimal(boleto.ValorAbatimento).Equals(null)
                 ? 0

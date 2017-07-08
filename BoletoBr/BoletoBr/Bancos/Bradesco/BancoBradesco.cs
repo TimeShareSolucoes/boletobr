@@ -486,11 +486,18 @@ namespace BoletoBr.Bancos.Bradesco
                         Codigo = 69,
                         Descricao = "Cancelamento dos dados do rateio".ToUpper()
                     };
+                default:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "Código de ocorrência não encontrado, n° ".ToUpper() + numeroOcorrencia
+                    };
             }
+            /* Impede que um titulo comprometa a leitura de todos os titulos
             throw new Exception(
                 String.Format(
                     "Não foi possível obter Código de Comando/Movimento/Ocorrência. Banco: {0} Código: {1}",
-                    CodigoBanco, numeroOcorrencia.ToString()));
+                    CodigoBanco, numeroOcorrencia.ToString()));*/
         }
 
         public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRetorno ocorrenciaRetorno)

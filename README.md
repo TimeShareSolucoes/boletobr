@@ -52,7 +52,7 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 			- Carteiras
 				- [x] Carteira 02
 				- [ ] Carteira 03
-				- [x] Carteira 04
+				- [x] Carteira 04 (*Implementado em 07/07/2017 by @kalleyaoliveira*)
 				- [x] Carteira 06 - Sem Registro
 				- [x] Carteira 09 (*Homologado com Banco - 02/12/2015 by @kalleyaoliveira**)
 				- [ ] Carteira 19
