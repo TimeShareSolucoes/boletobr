@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Mime;
+using System.Security;
+using System.Security.Permissions;
 using System.Text;
 using BoletoBr.Arquivo;
 using BoletoBr.Arquivo.CNAB400.Remessa;
@@ -119,15 +122,16 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             });
 
             var carteira = new CarteiraCobranca {Codigo = "06"};
-
             var boleto = new Boleto(carteira, cedente, sacado, dadosRemessa)
             {
                 NumeroDocumento = "3242",
                 ValorBoleto = Convert.ToDecimal(275),
                 IdentificadorInternoBoleto = "3242",
                 DataVencimento = new DateTime(2014, 08, 04),
-                Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil)
-            };
+                Especie = banco.ObtemEspecieDocumento(EnumEspecieDocumento.DuplicataMercantil),
+                BancoBoleto = banco
+                
+        };
 
             banco.FormatarBoleto(boleto);
 
@@ -160,7 +164,10 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
                 sb.AppendLine(linha);
             }
 
-            File.WriteAllLines(path, linhasEscrever.ToArray());
+            Assert.AreEqual(linhasEscrever[0], "01REMESSA01COBRANCA       00000000000000099999RAZAO SOCIAL X                237BRADESCO       300517        MX0000001                                                                                                                                                                                                                                                                                     000001");
+            Assert.AreEqual(linhasEscrever[1], "1000000000000000000000060123400123456DOC06/00000003242-7      0000    00000003242700000000002S           2  01000000324204081400000000275000000000001N300517000000000000000000000000000000000000000000000000000000000000000299999999999999SACADO FULANO DE TAL                    1,9,COMP X                                          12345000                                                            000002");
+            Assert.AreEqual(linhasEscrever[2], "9                                                                                                                                                                                                                                                                                                                                                                                                         000003");
+
         }
 
         [TestMethod]
