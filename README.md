@@ -85,3 +85,7 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 		- Implementação / Testes
 			- Carteiras
 				- [x] 1/01 - Simples com Registro (*Homologado com o Banco - 04/08/2016 by @kalleyaoliveira**)
+	- <b>422-7 | Banco Safra</b>
+		- Implementação / Testes
+			- Carteiras
+				- [x] 1 - COBRANÇA SIMPLES (*Em homologação com o Banco - by @kalleyaoliveira**)

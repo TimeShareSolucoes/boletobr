@@ -194,7 +194,10 @@ namespace BoletoBr.Bancos.Bradesco
                 detalhe = detalhe.PreencherValorNaLinha(105, 105, " ");
                 detalhe = detalhe.PreencherValorNaLinha(106, 106, "2");
                 detalhe = detalhe.PreencherValorNaLinha(107, 108, string.Empty.PadLeft(2, ' '));
-                detalhe = detalhe.PreencherValorNaLinha(109, 110, "01");
+
+                detalhe = detalhe.PreencherValorNaLinha(109, 110,
+                    infoDetalhe.CodigoOcorrencia.Codigo.BoletoBrToStringSafe().PadLeft(2, '0'));
+
                 detalhe = detalhe.PreencherValorNaLinha(111, 120, infoDetalhe.NumeroDocumento.PadLeft(10, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(121, 126, infoDetalhe.DataVencimento.ToString("ddMMyy"));
 

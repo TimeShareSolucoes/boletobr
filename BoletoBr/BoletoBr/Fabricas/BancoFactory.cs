@@ -50,6 +50,9 @@ namespace BoletoBr.Fabricas
                     case "756":
                         return new Bancos.Sicoob.BancoSicoob();
                         break;
+                    /* 422 - Safra*/
+                    case "422":
+                        return new Bancos.Safra.BancoSafra();
                     default:
                         throw new NotImplementedException("Banco " + codigoBanco +
                                                           " ainda não foi implementado.");
