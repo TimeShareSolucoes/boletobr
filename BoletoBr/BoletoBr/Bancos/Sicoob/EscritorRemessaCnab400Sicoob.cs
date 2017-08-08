@@ -187,10 +187,10 @@ namespace BoletoBr.Bancos.Sicoob
                 #endregion
 
                 detalhe = detalhe.PreencherValorNaLinha(161, 166,
-                    infoDetalhe.ValorMoraDia.ToString("f").Replace(",", "").PadLeft(6, '0'));
+                    infoDetalhe.ValorMoraDia.ToString("f4").Replace(",", "").PadLeft(6, '0'));
 
                 detalhe = detalhe.PreencherValorNaLinha(167, 172,
-                    infoDetalhe.PercentualMulta.ToString("f").Replace(",", "").PadLeft(6, '0'));
+                    infoDetalhe.PercentualMulta.ToString("f4").Replace(",", "").PadLeft(6, '0'));
 
                 if (infoDetalhe.BancoEmiteBoleto)
                     detalhe = detalhe.PreencherValorNaLinha(173, 173, "1");
