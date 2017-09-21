@@ -123,7 +123,17 @@ namespace BoletoBr.Enums
         CancelamentoDescontoFixo,
         CancelamentoDescontoDiario,
         AlteracaoDeVencimentoComData,
-       
+
+        #endregion
+
+        #region CÓDIGO DE MOVIMENTO REMESSA - 422|SAFRA
+
+        CobrarJurosdeMora,
+        AlteracaoValorTitulo,
+        Negativar,
+        BaixaNegativacao,
+        NaoNegativarAutomaticamente,
+
         #endregion
     }
 }

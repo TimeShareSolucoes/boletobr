@@ -74,6 +74,7 @@
     <Compile Include="TestsBancos\BancoBradescoTests.cs" />
     <Compile Include="TestsBancos\BancoBrasilTests.cs" />
     <Compile Include="TestsBancos\BancoCefTests.cs" />
+    <Compile Include="TestsBancos\BancoSafraTests.cs" />
     <Compile Include="TestsBancos\BancoSantanderTests.cs" />
     <Compile Include="TestsBancos\BancoItauTests.cs" />
     <Compile Include="TestsBancos\BancoBRBTests.cs" />

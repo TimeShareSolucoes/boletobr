@@ -425,6 +425,39 @@ namespace BoletoBr
             return digito;
         }
 
+        public static int Mod11Base9Safra(string seq)
+        {
+            int digito;
+            int resto;
+            int soma = 0;
+            int peso = 2;
+            int basecalculo = 9;
+            string n;
+
+            for (int i = seq.Length; i > 0; i--)
+            {
+                n = Common.Mid(seq, i, 1);
+
+                soma = soma + (Convert.ToInt32(n)*peso);
+
+                if (peso < basecalculo)
+                    peso = peso + 1;
+                else
+                    peso = 2;
+            }
+
+            resto = (soma%11);
+
+            if (resto == 0)
+                digito = 1;
+            else if (resto == 1)
+                digito = 0;
+            else
+                digito = 11 - resto;
+
+            return digito;
+        }
+
         #endregion Mod
 
         #region Funções para strings
