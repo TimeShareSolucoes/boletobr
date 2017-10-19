@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using BoletoBr.Arquivo.CNAB240.Retorno;
 using BoletoBr.Fabricas;
 
@@ -93,12 +94,13 @@ namespace BoletoBr.Arquivo.Generico.Retorno
             Header.DvConta = retornoCnab400.Header.DvContaCorrente;
             Header.NomeEmpresa = retornoCnab400.Header.NomeDoBeneficiario;
             Header.NomeDoBanco = retornoCnab400.Header.NomeDoBanco;
+            Header.NumeroInscricaoEmpresa =
+                retornoCnab400.RegistrosDetalhe.FirstOrDefault()?.IdentificacaoEmpresaNoBanco;
 
             foreach (var registroAtual in retornoCnab400.RegistrosDetalhe)
             {
                 var banco = BancoFactory.ObterBanco(Header.CodigoDoBanco);
                 var ocorrencia = banco.ObtemCodigoOcorrenciaByInt(registroAtual.CodigoDeOcorrencia);
-
                 var detalheGenericoAdd = new RetornoDetalheGenerico
                 {
                     NossoNumero = registroAtual.NossoNumero,
