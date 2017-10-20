@@ -60,6 +60,7 @@
     <Compile Include="TestsBancosRemessa\TestRemessaBancoBrasil.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaBradesco.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaCef.cs" />
+    <Compile Include="TestsBancosRemessa\TestRemessaDaycoval.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaItau.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaSantander.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaBRB.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="TestsBancosRetorno\TestRetornoBancoItau.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBradesco.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoCef.cs" />
+    <Compile Include="TestsBancosRetorno\TestRetornoDaycoval.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoHsbcCnr.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBancoBRB.cs" />
     <Compile Include="TestsBancos\BancoAmazoniaTests.cs" />
