@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BoletoBr.Bancos;
 using BoletoBr.Bancos.Brasil;
+using BoletoBr.Bancos.Daycoval;
 using BoletoBr.Interfaces;
 
 namespace BoletoBr.Fabricas
@@ -53,6 +54,9 @@ namespace BoletoBr.Fabricas
                     /* 422 - Safra*/
                     case "422":
                         return new Bancos.Safra.BancoSafra();
+                    /* 707 - BANCO DAYCOVAL */
+                    case "707":
+                        return new Bancos.Daycoval.BancoDaycoval();
                     default:
                         throw new NotImplementedException("Banco " + codigoBanco +
                                                           " ainda não foi implementado.");

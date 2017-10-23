@@ -42,7 +42,8 @@ namespace BoletoBr.Fabricas
             return objReturn;
         }
 
-        public RemessaCnab400 GerarRemessa(HeaderRemessaCnab400 header, List<Boleto> boletos, List<DetalheRemessaCnab400> detalhes, TrailerRemessaCnab400 trailer)
+        public RemessaCnab400 GerarRemessa(HeaderRemessaCnab400 header, List<Boleto> boletos,
+            List<DetalheRemessaCnab400> detalhes, TrailerRemessaCnab400 trailer)
         {
             //var contadorSequencialRegistro = 1;
             var objReturn = new RemessaCnab400();

@@ -89,3 +89,9 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 		- Implementação / Testes
 			- Carteiras
 				- [x] 1 - COBRANÇA SIMPLES (*Em homologação com o Banco - by @kalleyaoliveira**)
+	- <b>707-2 | Banco Daycoval</b>
+		- Implementação / Testes
+			- Carteiras
+				- [x] 3 - COBRANÇA (*Homologado com o Banco 10/2017 - by @kalleyaoliveira**)
+				- [x] 4 - COBRANÇA (*Homologado com o Banco 10/2017 - by @kalleyaoliveira**)
+				

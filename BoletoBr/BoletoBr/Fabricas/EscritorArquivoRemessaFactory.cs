@@ -92,8 +92,12 @@ namespace BoletoBr.Fabricas
                     case "756":
                         return new Bancos.Sicoob.EscritorRemessaCnab400Sicoob(remessaEscrever);
                         break;
+                    /* 422 - SAFRA */
                     case "422":
                         return new Bancos.Safra.EscritorRemessaCnab400Safra(remessaEscrever);
+                    /* 707 - BANCO DAYCOVAL */
+                    case "707":
+                        return new Bancos.Daycoval.EscritorRemessaCnab400Daycoval(remessaEscrever);
                     default:
                         throw new NotImplementedException("Banco " + remessaEscrever.Header.CodigoBanco +
                                                           " ainda não foi implementado.");

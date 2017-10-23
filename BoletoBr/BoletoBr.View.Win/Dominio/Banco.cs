@@ -27,7 +27,8 @@ namespace BoletoBr.View.Win.Dominio
                 new Banco() {Codigo = "341", Descricao = "Itau"},
                 new Banco() {Codigo = "399", Descricao = "HSBC"},
                 new Banco() {Codigo = "422", Descricao = "Banco Safra"},
-                new Banco() {Codigo = "756", Descricao = "Banco Cooperativo do Brasil"}
+                new Banco() {Codigo = "756", Descricao = "Banco Cooperativo do Brasil"},
+                new Banco() {Codigo = "707", Descricao = "Banco Daycoval"}
             };
 
             return listaBanco;
