@@ -60,6 +60,20 @@ namespace BoletoBr.Bancos.Bradesco
                         //ultimoLoteIdentificado.RegistrosDetalheSegmentoU.Add(objDetalhe);
                         ultimoRegistroIdentificado.SegmentoU = ObterRegistrosDetalheU(linhaAtual);
                     }
+                    if (linhaAtual.ExtrairValorDaLinha(14, 14) == "E")
+                    {
+                        if (ultimoLoteIdentificado == null)
+                            throw new Exception("Não foi encontrado header de lote para o segmento atual.");
+
+                        //ultimoLoteIdentificado.RegistrosDetalheSegmentoU.Add(objDetalhe);
+                        ultimoRegistroIdentificado.SegmentoE = ObterRegistrosDetalheE(linhaAtual);
+                        DetalheSegmentoERetornoCnab240 detalheSegmentoE = new DetalheSegmentoERetornoCnab240();
+                        detalheSegmentoE = ultimoRegistroIdentificado.SegmentoE;
+                        DetalheRetornoCnab240 registro = new DetalheRetornoCnab240();
+                        registro.SegmentoE = detalheSegmentoE;
+                        ultimoLoteIdentificado.RegistrosDetalheSegmentos.Add(registro);
+
+                    }
                 }
                 /* Trailer de Lote */
                 if (linhaAtual.ExtrairValorDaLinha(8, 8) == "5")
@@ -95,12 +109,20 @@ namespace BoletoBr.Bancos.Bradesco
 
             var qtdLinhasHeaderLote = _linhasArquivo.Count(wh => wh.ExtrairValorDaLinha(8, 8) == "1");
 
+            /*
             if (qtdLinhasHeaderLote <= 0)
                 throw new Exception("Não foi encontrado HEADER do arquivo de retorno.");
 
             if (qtdLinhasHeaderLote > 1)
                 throw new Exception("Não é permitido mais de um HEADER no arquivo de retorno.");
+            */
 
+            var qtdLinhasDetalheSegmentoE = _linhasArquivo.Count(wh => wh.ExtrairValorDaLinha(14, 14) == "E");
+
+            if (qtdLinhasDetalheSegmentoE <= 0)
+                throw new Exception("Não foi encontrado DETALHE para o Segmento E no arquivo de retorno.");
+
+            /*
             var qtdLinhasDetalheSegmentoT = _linhasArquivo.Count(wh => wh.ExtrairValorDaLinha(14, 14) == "T");
 
             if (qtdLinhasDetalheSegmentoT <= 0)
@@ -110,7 +132,7 @@ namespace BoletoBr.Bancos.Bradesco
 
             if (qtdLinhasDetalheSegmentoU <= 0)
                 throw new Exception("Não foi encontrado DETALHE para o Segmento U no arquivo de retorno.");
-
+            
             var qtdLinhasTrailerLote = _linhasArquivo.Count(wh => wh.ExtrairValorDaLinha(8, 8) == "5");
 
             if (qtdLinhasTrailerLote <= 0)
@@ -118,6 +140,8 @@ namespace BoletoBr.Bancos.Bradesco
 
             if (qtdLinhasTrailerLote > 1)
                 throw new Exception("Não é permitido mais de um TRAILER no arquivo de retorno.");
+
+            */
 
             var qtdLinhasTrailer = _linhasArquivo.Count(wh => wh.ExtrairValorDaLinha(8, 8) == "9");
 
@@ -146,7 +170,7 @@ namespace BoletoBr.Bancos.Bradesco
                 NomeDoBeneficiario = linha.ExtrairValorDaLinha(73, 102),
                 NomeDoBanco = linha.ExtrairValorDaLinha(103, 132),
                 CodigoRemessaRetorno = linha.ExtrairValorDaLinha(143, 143).BoletoBrToInt(),
-                DataGeracaoGravacao = Convert.ToDateTime(linha.ExtrairValorDaLinha(144, 151).ToDateTimeFromDdMmAa()),
+                DataGeracaoGravacao = Convert.ToDateTime(linha.ExtrairValorDaLinha(144, 151).ToDateTimeFromDdMmAaaa()),
                 HoraGeracaoGravacao = linha.ExtrairValorDaLinha(152, 157).BoletoBrToInt(),
                 NumeroSequencial = linha.ExtrairValorDaLinha(158, 163).BoletoBrToInt(),
                 VersaoLayout = linha.ExtrairValorDaLinha(164, 166),
@@ -255,6 +279,18 @@ namespace BoletoBr.Bancos.Bradesco
 
             return objRetornar;
         }
+
+        //novo
+        public DetalheSegmentoERetornoCnab240 ObterRegistrosDetalheE(string linha)
+        {
+            DetalheSegmentoERetornoCnab240 objRetornar = new DetalheSegmentoERetornoCnab240();
+            
+            objRetornar.LerDetalheSegmentoERetornoCnab240(linha);
+
+            return objRetornar;
+        }
+
+
 
         public TrailerLoteRetornoCnab240 ObterTrailerLote(string linha)
         {

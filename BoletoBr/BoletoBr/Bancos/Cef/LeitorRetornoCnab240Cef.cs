@@ -324,5 +324,10 @@ namespace BoletoBr.Bancos.Cef
 
             return objRetornar;
         }
+
+        public DetalheSegmentoERetornoCnab240 ObterRegistrosDetalheE(string linha)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -63,7 +63,8 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
         /// <summary>
         /// N�mero de inscri��o da Empresa ou Pessoa F�sica perante uma Institui��o governamental.
         /// </summary>
-        public long NumeroInscricaoCliente { get; private set; }
+        /// era long 
+        public string NumeroInscricaoCliente { get; private set; }
 
         /// <summary>
         /// C�digo adotado pelo Banco para identificar o Contrato entre este e a Empresa Cliente.
@@ -73,7 +74,8 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
         /// <summary>
         /// C�digo adotado pelo Banco respons�vel pela conta, para identificar a qual unidade est� vinculada a conta corrente.
         /// </summary>
-        public int AgenciaMantenedoraConta { get; private set; }
+        /// era int
+        public string AgenciaMantenedoraConta { get; private set; }
 
         /// <summary>
         /// C�digo adotado pelo Banco respons�vel pela conta corrente, para verifica��o da autenticidade do C�digo da Ag�ncia.
@@ -83,7 +85,8 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
         /// <summary>
         /// N�mero adotado pelo Banco, para identificar univocamente a conta corrente utilizada pelo Cliente.
         /// </summary>
-        public long NumeroContaCorrente { get; private set; }
+        /// era long
+        public string NumeroContaCorrente { get; private set; }
 
         /// <summary>
         /// C�digo adotado pelo respons�vel pela conta corrente, para verifica��o da autenticidade do N�mero da Conta Corrente.
@@ -262,11 +265,11 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
                 Segmento = registro.ExtrairValorDaLinha(14, 14);
                 UsoExclusivoFebrabanCnab = registro.ExtrairValorDaLinha(15, 17);
                 TipoInscricaoCliente = (TipoInscricao) registro.ExtrairValorDaLinha(18, 18)[0];
-                NumeroInscricaoCliente = Convert.ToInt32(registro.ExtrairValorDaLinha(19, 32));
+                NumeroInscricaoCliente = registro.ExtrairValorDaLinha(19, 32);
                 CodigoConvenioBanco = registro.ExtrairValorDaLinha(33, 52);
-                AgenciaMantenedoraConta = Convert.ToInt32(registro.ExtrairValorDaLinha(53, 57));
+                AgenciaMantenedoraConta = registro.ExtrairValorDaLinha(53, 57);
                 DigitoVerificadorAgencia = registro.ExtrairValorDaLinha(58, 58);
-                NumeroContaCorrente = Convert.ToInt32(registro.ExtrairValorDaLinha(59, 70));
+                NumeroContaCorrente = registro.ExtrairValorDaLinha(59, 70);
                 DigitoVerificadorConta = registro.ExtrairValorDaLinha(71, 71);
                 DigitoVerificadorAgenciaConta = registro.ExtrairValorDaLinha(72, 72);
                 NomeEmpresa = registro.ExtrairValorDaLinha(73, 102);
@@ -275,8 +278,8 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
                 TipoComplementoLancamento = (TipoComplementoLancamento) registro.ExtrairValorDaLinha(112, 113)[0];
                 ComplementoLancamento = registro.ExtrairValorDaLinha(114, 133);
                 IdentificacaoIsencaoCpmf = (IsencaoCpmf)registro.ExtrairValorDaLinha(134, 134)[0];
-                DataContabil = Convert.ToDateTime(registro.ExtrairValorDaLinha(135, 142));
-                DataLancamento = Convert.ToDateTime(registro.ExtrairValorDaLinha(143, 150));
+                DataContabil = Convert.ToDateTime(registro.ExtrairValorDaLinha(135, 142).ToDateTimeFromDdMmAaaa());
+                DataLancamento = Convert.ToDateTime(registro.ExtrairValorDaLinha(143, 150).ToDateTimeFromDdMmAaaa());
                 ValorLancamento = decimal.Parse(registro.ExtrairValorDaLinha(151, 168)) / 100m;
                 TipoLancamento = (TipoLancamento)registro.ExtrairValorDaLinha(169, 169)[0];
                 CategoriaLancamento = (CategoriaLancamento)registro.ExtrairValorDaLinha(170, 172)[0];
