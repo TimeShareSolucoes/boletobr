@@ -304,17 +304,37 @@ namespace BoletoBr.Bancos.Bradesco
             {
                 CodigoBanco = linha.ExtrairValorDaLinha(1, 3).BoletoBrToInt(),
                 LoteServico = linha.ExtrairValorDaLinha(4, 7),
-                CodigoRegistro = linha.ExtrairValorDaLinha(8, 8).BoletoBrToInt(),
-                QtdRegistrosLote = linha.ExtrairValorDaLinha(18, 23).BoletoBrToLong(),
-                QtdTitulosCobrancaSimples = linha.ExtrairValorDaLinha(24, 29).BoletoBrToLong(),
-                ValorTitulosCobrancaSimples = linha.ExtrairValorDaLinha(30, 46).BoletoBrToDecimal()/100,
-                QtdTitulosCobrancaVinculada = linha.ExtrairValorDaLinha(47, 52).BoletoBrToLong(),
-                ValorTitulosCobrancaVinculada = linha.ExtrairValorDaLinha(53, 69).BoletoBrToDecimal()/100,
-                QtdTitulosCobrancaCaucionada = linha.ExtrairValorDaLinha(70, 75).BoletoBrToLong(),
-                ValorTitulosCobrancaCaucionada = linha.ExtrairValorDaLinha(76, 92).BoletoBrToDecimal()/100,
-                QtdTitulosCobrancaDescontada = linha.ExtrairValorDaLinha(93, 98).BoletoBrToLong(),
-                ValorTitulosCobrancaDescontada = linha.ExtrairValorDaLinha(99, 115).BoletoBrToDecimal()/100,
+                TipoRegistro = linha.ExtrairValorDaLinha(8, 8).BoletoBrToInt(),
+                TipoIncricaoEmpresa = linha.ExtrairValorDaLinha(18, 18).BoletoBrToInt(),
+                NumeroIncricaoEmpresa = linha.ExtrairValorDaLinha(19, 32),
+                ConvenioBanco = linha.ExtrairValorDaLinha(33, 52),
+                AgenciaConta = linha.ExtrairValorDaLinha(53, 57),
+                DigitoAgencia = linha.ExtrairValorDaLinha(58, 58),
+                NumeroContaCorrente = linha.ExtrairValorDaLinha(59, 70),
+                DigitoContaCorrente = linha.ExtrairValorDaLinha(71, 71),
+                DigitoAgenciaConta = linha.ExtrairValorDaLinha(72, 72),
+                ValorVinculadoDiaAnterior = linha.ExtrairValorDaLinha(89, 106).BoletoBrToDecimal() / 100m,
+                ValorLimiteConta = linha.ExtrairValorDaLinha(107, 124).BoletoBrToDecimal() / 100m,
+                ValorVinculadoDia = linha.ExtrairValorDaLinha(125, 142).BoletoBrToDecimal() / 100m,
+                DataSaldoFinal = Convert.ToDateTime(linha.ExtrairValorDaLinha(143, 150).ToDateTimeFromDdMmAaaa()),
+                ValorSaldoFinal = linha.ExtrairValorDaLinha(151, 168).BoletoBrToDecimal() / 100m,
+                SituacaoSaldoFinal = linha.ExtrairValorDaLinha(169, 169),
+                PosicaoSaldoFinal = linha.ExtrairValorDaLinha(170, 170),
+                QtdRegistrosLote = linha.ExtrairValorDaLinha(171, 176).BoletoBrToInt(),
+                SomaValoresaDebito = linha.ExtrairValorDaLinha(177, 194).BoletoBrToDecimal() / 100m,
+                SomaValoresaCredito = linha.ExtrairValorDaLinha(195, 212).BoletoBrToDecimal() / 100m,
+
+                /*
+                QtdTitulosCobrancaSimples = linha.ExtrairValorDaLinha(24, 29).BoletoBrToInt(),
+                ValorTitulosCobrancaSimples = linha.ExtrairValorDaLinha(30, 46).BoletoBrToDecimal()/100m,
+                QtdTitulosCobrancaVinculada = linha.ExtrairValorDaLinha(47, 52).BoletoBrToInt(),
+                ValorTitulosCobrancaVinculada = linha.ExtrairValorDaLinha(53, 69).BoletoBrToDecimal()/100m,
+                QtdTitulosCobrancaCaucionada = linha.ExtrairValorDaLinha(70, 75).BoletoBrToInt(),
+                ValorTitulosCobrancaCaucionada = linha.ExtrairValorDaLinha(76, 92).BoletoBrToDecimal()/100m,
+                QtdTitulosCobrancaDescontada = linha.ExtrairValorDaLinha(93, 98).BoletoBrToInt(),
+                ValorTitulosCobrancaDescontada = linha.ExtrairValorDaLinha(99, 115).BoletoBrToDecimal()/100m,
                 NumeroAvisoLancamento = linha.ExtrairValorDaLinha(116, 123)
+                */
             };
 
             return objRetornar;
