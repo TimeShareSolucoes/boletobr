@@ -216,7 +216,7 @@ namespace BoletoBr.Bancos.Cef
             #endregion
 
             var CCNNNNNNNNNNNNNNN = infoSegmentoP.NossoNumero.Substring(0, 17);
-
+            var CCNNNNNNNNNNNNNNNComEmisaoPeloBanco = "00000000000000000";
             var segmentoP = new string(' ', 240);
             try
             {
@@ -233,7 +233,8 @@ namespace BoletoBr.Bancos.Cef
                 segmentoP = segmentoP.PreencherValorNaLinha(24, 29, infoSegmentoP.CodigoCedente.PadLeft(6, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(30, 37, string.Empty.PadLeft(8, '0')); // Uso Exclusivo CAIXA
                 segmentoP = segmentoP.PreencherValorNaLinha(38, 40, string.Empty.PadLeft(3, '0')); // Uso Exclusivo CAIXA
-                segmentoP = segmentoP.PreencherValorNaLinha(41, 57, CCNNNNNNNNNNNNNNN);
+
+                segmentoP = segmentoP.PreencherValorNaLinha(41, 57, infoSegmentoP.BancoEmiteBoleto ? CCNNNNNNNNNNNNNNNComEmisaoPeloBanco : CCNNNNNNNNNNNNNNN);
 
                 /* Código da Carteira
                  * '1' = Cobrança Simples
@@ -246,9 +247,11 @@ namespace BoletoBr.Bancos.Cef
                 // Fixo 2 - Escritural
                 segmentoP = segmentoP.PreencherValorNaLinha(60, 60, "2"); // Tipo de Documento
                 // '1' = Banco Emite
-                segmentoP = segmentoP.PreencherValorNaLinha(61, 61, "2"); // Identificação da Emissão do Bloqueto
+                // '2' = Emissão pelo beneficiario
+                segmentoP = segmentoP.PreencherValorNaLinha(61, 61, infoSegmentoP.BancoEmiteBoleto? "1": "2"); // Identificação da Emissão do Bloqueto
+                // '0' = Envio pelo beneficiario
                 // '1' = Sacado Via Correios
-                segmentoP = segmentoP.PreencherValorNaLinha(62, 62, "0"); // Identificação da Entrega do Bloqueto
+                segmentoP = segmentoP.PreencherValorNaLinha(62, 62, infoSegmentoP.BancoEmiteBoleto ? "1" : "0"); // Identificação da Entrega do Bloqueto
                 segmentoP = segmentoP.PreencherValorNaLinha(63, 73, infoSegmentoP.NumeroDocumento.PadLeft(11, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(74, 77, string.Empty.PadLeft(4, ' '));
                 segmentoP = segmentoP.PreencherValorNaLinha(78, 85, infoSegmentoP.DataVencimento.ToString("ddMMyyyy"));
