@@ -26,6 +26,7 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
             this.ValorIof = boleto.Iof.HasValue ? boleto.Iof : 0;
             this.ValorAbatimento = boleto.ValorAbatimento.HasValue ? boleto.ValorAbatimento : 0;
             this.CodigoMoeda = boleto.Moeda;
+            BancoEmiteBoleto = boleto.CarteiraCobranca.BancoEmiteBoleto;
         }
 
         public string CodigoBanco { get; set; }
@@ -66,5 +67,6 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
         public int CodigoBaixaDevolucao { get; set; }
         public int PrazoBaixaDevolucao { get; set; }
         public string CodigoMoeda { get; set; }
+        public bool BancoEmiteBoleto { get; set; }
     }
 }
