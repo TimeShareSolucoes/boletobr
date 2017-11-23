@@ -71,6 +71,7 @@
     <Compile Include="Bancos\Daycoval\EscritorRemessaCnab400Daycoval.cs" />
     <Compile Include="Bancos\Daycoval\LeitorRetornoCnab400Daycoval.cs" />
     <Compile Include="Bancos\Hsbc\EscritorRemessaCnab400Hsbc.cs" />
+    <Compile Include="Bancos\Itau\LeitorRetornoCnab240Itau.cs" />
     <Compile Include="Bancos\Safra\BancoSafra.cs" />
     <Compile Include="Bancos\Safra\EscritorRemessaCnab400Safra.cs" />
     <Compile Include="Bancos\Safra\LeitorRetornoCnab400Safra.cs" />

@@ -291,7 +291,7 @@ namespace BoletoBr.Bancos.Bradesco
         {
             DetalheSegmentoERetornoCnab240 objRetornar = new DetalheSegmentoERetornoCnab240();
             
-            objRetornar.LerDetalheSegmentoERetornoCnab240(linha);
+            objRetornar.LerDetalheSegmentoERetornoBrandescoCnab240(linha);
 
             return objRetornar;
         }

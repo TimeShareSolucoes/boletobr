@@ -21,21 +21,25 @@ namespace BoletoBr.UnitTests.TestsBancosRetorno
         {
             string[] lines = File.ReadAllLines("C:\\Users\\antun\\Downloads\\BL30097A.RET", Encoding.UTF8);
             List<string> lstFile = lines.ToList<string>();
-            LeitorRetornoCnab240Bradesco leitor = new LeitorRetornoCnab240Bradesco(lstFile);
 
-            var resultado = leitor.ProcessarRetorno();
+            var bank = BoletoBr.Fabricas.BancoFactory.ObterBanco("341");
+            var cnabRetFile = bank.LerArquivoRetorno(lstFile);
+
+            //LeitorRetornoCnab240Bradesco leitor = new LeitorRetornoCnab240Bradesco(lstFile);
+
+            //var resultado = leitor.ProcessarRetorno();
             string conteudo = "";
 
-            foreach (LoteRetornoCnab240 loteRetorno in resultado.Lotes)
+            foreach (LoteRetornoCnab240 loteRetorno in cnabRetFile.RetornoCnab240Especifico.Lotes)
             {
                 conteudo += "Conta Corrente: " + loteRetorno.HeaderLote.ContaCorrente + Environment.NewLine;
                 foreach (DetalheRetornoCnab240 retorno in loteRetorno.RegistrosDetalheSegmentos)
                 {
-                    conteudo += " SegmentoE Data Lançamento " + retorno.SegmentoE.DataLancamento + "   HistoricoLancamento:" + retorno.SegmentoE.HistoricoLancamento + "  TipoLancamento:" + retorno.SegmentoE.TipoLancamento + "  NumeroDocumentoComplemento:" + retorno.SegmentoE.NumeroDocumentoComplemento + "  ValorLancamento:" + retorno.SegmentoE.ValorLancamento + Environment.NewLine; ;
+                    conteudo += "SegmentoE NumeroInscricaoCliente " + retorno.SegmentoE.NumeroInscricaoCliente  + " Agência Conta:" + retorno.SegmentoE.AgenciaMantenedoraConta + " Conta corrente:" + retorno.SegmentoE.NumeroContaCorrente  +" Data Lançamento " + retorno.SegmentoE.DataLancamento + "   HistoricoLancamento:" + retorno.SegmentoE.HistoricoLancamento + "  TipoLancamento:" + retorno.SegmentoE.TipoLancamento + "  NumeroDocumentoComplemento:" + retorno.SegmentoE.NumeroDocumentoComplemento + "  ValorLancamento:" + retorno.SegmentoE.ValorLancamento + Environment.NewLine; ;
                 }
             }
             File.WriteAllText("C:\\Users\\antun\\Downloads\\RETAnaliseItau.txt", conteudo);
-            Assert.AreNotEqual(resultado.Header, null);
+            Assert.AreNotEqual(cnabRetFile.Header, null);
         }
 
         #endregion

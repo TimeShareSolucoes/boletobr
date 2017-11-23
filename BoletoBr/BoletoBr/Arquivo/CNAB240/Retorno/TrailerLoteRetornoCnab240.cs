@@ -32,6 +32,7 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
         public decimal ValorTitulosCobrancaCaucionada { get; set; }
         public int QtdTitulosCobrancaDescontada { get; set; }
         public decimal ValorTitulosCobrancaDescontada { get; set; }
+        public decimal TotalValoresNaoContabeis { get; set; }
 
         #region Bradesco
 

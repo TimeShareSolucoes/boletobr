@@ -26,13 +26,13 @@ namespace BoletoBr.UnitTests.TestsBancosRetorno
 
             foreach (LoteRetornoCnab240 loteRetorno in resultado.Lotes)
             {
-                conteudo += "Conta Corrente: "+ loteRetorno.HeaderLote.ContaCorrente + Environment.NewLine;
+                conteudo += "Empresa: "+ loteRetorno.HeaderLote.NumeroInscricaoEmpresa  + " Agência: " +  loteRetorno.HeaderLote.CodigoAgencia +" Conta Corrente: " + loteRetorno.HeaderLote.ContaCorrente + Environment.NewLine;
                 foreach (DetalheRetornoCnab240 retorno in loteRetorno.RegistrosDetalheSegmentos)
                 {
-                    conteudo += " SegmentoE Data Lançamento "+ retorno.SegmentoE.DataLancamento + "   HistoricoLancamento:" + retorno.SegmentoE.HistoricoLancamento + "  TipoLancamento:" + retorno.SegmentoE.TipoLancamento + "  NumeroDocumentoComplemento:" + retorno.SegmentoE.NumeroDocumentoComplemento +  "  ValorLancamento:" + retorno.SegmentoE.ValorLancamento + Environment.NewLine; ;
+                    conteudo += " SegmentoE "+ "Agência: " + retorno.SegmentoE.AgenciaMantenedoraConta + " Conta Corrente: " + retorno.SegmentoE.NumeroContaCorrente + " Digito Conta: " + retorno.SegmentoE.DigitoVerificadorConta + " Data Lançamento:  " + retorno.SegmentoE.DataLancamento + "   HistoricoLancamento:" + retorno.SegmentoE.HistoricoLancamento + "  TipoLancamento:" + retorno.SegmentoE.TipoLancamento + "  NumeroDocumentoComplemento:" + retorno.SegmentoE.NumeroDocumentoComplemento +  "  ValorLancamento:" + retorno.SegmentoE.ValorLancamento + Environment.NewLine; ;
                 }
             }
-            File.WriteAllText("C:\\Users\\antun\\Downloads\\RETAnalise.txt", conteudo);
+            File.WriteAllText("C:\\Users\\antun\\Downloads\\RETAnaliseBradesco.txt", conteudo);
             Assert.AreNotEqual(resultado.Header, null);
         }
 

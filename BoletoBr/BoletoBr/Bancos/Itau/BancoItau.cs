@@ -1315,11 +1315,11 @@ namespace BoletoBr.Bancos.Itau
             /* Identifica o layout: 240 ou 400 */
             if (linhasArquivo.First().Length == 240)
             {
-                //var leitor = new LeitorRetornoCnab240Itau(linhasArquivo);
-                //var retornoProcessado = leitor.ProcessarRetorno();
+                var leitor = new LeitorRetornoCnab240Itau(linhasArquivo);
+                var retornoProcessado = leitor.ProcessarRetorno();
 
-                //var objRetornar = new RetornoGenerico(retornoProcessado);
-                //return objRetornar;
+                var objRetornar = new RetornoGenerico(retornoProcessado);
+                return objRetornar;
             }
             if (linhasArquivo.First().Length == 400)
             {
