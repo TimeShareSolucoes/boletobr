@@ -388,7 +388,7 @@ namespace BoletoBr.Bancos.Cef
             {
                 boleto.SetNossoNumeroFormatado(
                     IdentificadorTipoCobrancaCarteiraSicgbRg +
-                    IdentificadorEmissaoCedente +
+                    (boleto.CarteiraCobranca.BancoEmiteBoleto? "1" : IdentificadorEmissaoCedente) +
                     boleto.NossoNumeroFormatado);
 
                 // Permite 0 (zero) no DV do Nosso Número
@@ -400,7 +400,7 @@ namespace BoletoBr.Bancos.Cef
             {
                 boleto.SetNossoNumeroFormatado(
                     IdentificadorTipoCobrancaCarteiraSicgbSr +
-                    IdentificadorEmissaoCedente +
+                    (boleto.CarteiraCobranca.BancoEmiteBoleto ? "1" : IdentificadorEmissaoCedente) +
                     boleto.NossoNumeroFormatado);
 
                 // Permite 0 (zero) no DV do Nosso Número
