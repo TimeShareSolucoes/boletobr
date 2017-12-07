@@ -216,7 +216,7 @@ namespace BoletoBr.Bancos.Cef
             #endregion
 
             var CCNNNNNNNNNNNNNNN = infoSegmentoP.NossoNumero.Substring(0, 17);
-            var CCNNNNNNNNNNNNNNNComEmisaoPeloBanco = "00000000000000000";
+            var CCNNNNNNNNNNNNNNNComEmisaoPeloBanco = $"{infoSegmentoP.NossoNumero.Substring(0, 2)}000000000000000";
             var segmentoP = new string(' ', 240);
             try
             {
@@ -298,7 +298,11 @@ namespace BoletoBr.Bancos.Cef
                  * 2 - Percentual até a data informada
                  * Obs.: Para os códigos '1' e '2' será obrigatório a informação da data.
                  */
-                segmentoP = segmentoP.PreencherValorNaLinha(142, 142, "0"); // Código do Desconto 1
+                if (infoSegmentoP.ValorDesconto1 > 0)
+                    segmentoP = segmentoP.PreencherValorNaLinha(142, 142, "1"); // Código do Desconto 1
+                else
+                    segmentoP = segmentoP.PreencherValorNaLinha(142, 142, "0"); // Código do Desconto 0
+                /*segmentoP = segmentoP.PreencherValorNaLinha(142, 142, "0"); // Código do Desconto 1*/
 
                 if (infoSegmentoP.DataDesconto1 == DateTime.MinValue)
                     segmentoP = segmentoP.PreencherValorNaLinha(143, 150, string.Empty.PadLeft(8, '0'));
