@@ -27,6 +27,10 @@ namespace BoletoBr.Fabricas
                     case "104":
                         return new Bancos.Cef.EscritorRemessaCnab240CefSicgb(remessaEscrever);
                         break;
+                    /* 756 - SICOOB */
+                    case "756":
+                        return new Bancos.Sicoob.EscritorRemessaCnab240Sicoob(remessaEscrever);
+                        break;
                     /* 237 - Bradesco */
                     case "237":
                         throw new NotImplementedException("Banco " + remessaEscrever.Header.CodigoBanco + " ainda não foi implementado.");

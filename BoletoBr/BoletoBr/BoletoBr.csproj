@@ -75,7 +75,9 @@
     <Compile Include="Bancos\Safra\EscritorRemessaCnab400Safra.cs" />
     <Compile Include="Bancos\Safra\LeitorRetornoCnab400Safra.cs" />
     <Compile Include="Bancos\Sicoob\BancoSicoob.cs" />
+    <Compile Include="Bancos\Sicoob\EscritorRemessaCnab240Sicoob.cs" />
     <Compile Include="Bancos\Sicoob\EscritorRemessaCnab400Sicoob.cs" />
+    <Compile Include="Bancos\Sicoob\LeitorRetornoCnab240Sicoob.cs" />
     <Compile Include="Bancos\Sicoob\LeitorRetornoCnab400Sicoob.cs" />
     <Compile Include="Dominio\InformacoesAdicionais.cs" />
     <Compile Include="Enums\TipoCobrancaJuro.cs" />
