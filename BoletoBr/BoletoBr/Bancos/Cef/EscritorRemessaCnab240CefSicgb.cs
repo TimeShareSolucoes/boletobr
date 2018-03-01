@@ -164,8 +164,11 @@ namespace BoletoBr.Bancos.Cef
                 headerLote = headerLote.PreencherValorNaLinha(4, 7, infoHeaderLote.LoteServico.ToString().PadLeft(4, '0')); // Lote de Serviço
                 headerLote = headerLote.PreencherValorNaLinha(8, 8, "1"); // Tipo de Registro
                 headerLote = headerLote.PreencherValorNaLinha(9, 9, "R");
+                /*
                 // Padronizado para 02 - COBRANÇA SEM REGISTRO
                 headerLote = headerLote.PreencherValorNaLinha(10, 11, "02"); // Tipo de Serviço
+                */
+                headerLote = headerLote.PreencherValorNaLinha(10, 11, infoHeaderLote.TipoRegistro.ToString("n0").PadLeft(2,'0')); // Tipo de Serviço
                 headerLote = headerLote.PreencherValorNaLinha(12, 13, "00"); // Uso Exclusivo FREBRABAN/CNAB
                 headerLote = headerLote.PreencherValorNaLinha(14, 16, "030"); // Nº da versão do Layout do Lote
                 headerLote = headerLote.PreencherValorNaLinha(17, 17, " "); // Uso Exclusivo FREBRABAN/CNAB

@@ -64,6 +64,11 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     //detalheGenericoAdd.ValorIof = d.SegmentoU.ValorIofRecolhido / 100;
                     //detalheGenericoAdd.ValorOutrasDespesas = d.SegmentoU.ValorOutrasDespesas / 100;
                     //detalheGenericoAdd.ValorOutrosCreditos = d.SegmentoU.ValorOutrosCreditos / 100;
+                    var banco = BancoFactory.ObterBanco(d.SegmentoU?.CodigoBanco.ToString());
+                    var ocorrencia = banco.ObtemCodigoOcorrenciaByInt(d.SegmentoU.BoletoBrToBind().CodigoMovimento);
+                    detalheGenericoAdd.CodigoOcorrencia = ocorrencia?.Codigo.ToString();
+                    detalheGenericoAdd.MensagemOcorrenciaRetornoBancario = ocorrencia?.Descricao;
+                    detalheGenericoAdd.Ocorrencia = ocorrencia;
                     //detalheGenericoAdd.CodigoOcorrencia = d.SegmentoU.CodigoOcorrenciaPagador;
                     //detalheGenericoAdd.DataOcorrencia = d.SegmentoU.DataOcorrenciaPagador;
                     //detalheGenericoAdd.ValorOcorrencia = d.SegmentoU.ValorOcorrenciaPagador / 100;

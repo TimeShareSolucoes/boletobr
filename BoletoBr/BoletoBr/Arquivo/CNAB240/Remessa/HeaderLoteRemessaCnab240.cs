@@ -11,9 +11,11 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
             this.Agencia = boleto.CedenteBoleto.ContaBancariaCedente.Agencia;
             this.DigitoAgencia = boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia;
             this.CodigoCedente = boleto.CedenteBoleto.CodigoCedente;
+            this.DigitoCedente = boleto.CedenteBoleto.DigitoCedente;
             this.Convenio = boleto.CedenteBoleto.Convenio;
             this.NomeEmpresa = boleto.CedenteBoleto.Nome;
             this.NumeroRemessaRetorno = sequencialRemessa.ToString();
+            this.TipoRegistro = boleto.CarteiraCobranca.BoletoBrToBind().Codigo == "RG" ? 1 : 2;
         }
 
         public string CodigoBanco { get; set; }
@@ -28,6 +30,7 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
         public string Agencia { get; set; }
         public string DigitoAgencia { get; set; }
         public string CodigoCedente { get; set; }
+        public int DigitoCedente { get; set; }
         public string CodigoModeloPersonalizado { get; set; }
         public string NomeEmpresa { get; set; }
         public string Mensagem1 { get; set; }

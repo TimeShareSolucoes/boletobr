@@ -13,6 +13,7 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
             this.AgenciaMantenedora = boleto.CedenteBoleto.ContaBancariaCedente.Agencia;
             this.DvAgenciaMantenedora = boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia;
             this.CodigoCedente = boleto.CedenteBoleto.CodigoCedente;
+            this.DigitoCedente = boleto.CedenteBoleto.DigitoCedente;
             this.ModalidadeCarteira = boleto.CarteiraCobranca.Codigo;
             this.NossoNumero = boleto.NossoNumeroFormatado;
             this.NumeroDocumento = boleto.NumeroDocumento;
@@ -38,6 +39,7 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
         public string AgenciaMantenedora { get; set; }
         public string DvAgenciaMantenedora { get; set; }
         public string CodigoCedente { get; set; }
+        public int DigitoCedente { get; set; }
         public string ModalidadeCarteira { get; set; }
         public string NossoNumero { get; set; }
         public int CodigoCarteira { get; set; }
