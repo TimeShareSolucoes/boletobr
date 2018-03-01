@@ -1,4 +1,4 @@
-BoletoBr
+﻿BoletoBr
 ==========
 
 Geração de Boletos, Remessa, Leitura de Retorno para Bancos Brasileiros, no padrão CNAB 240 e CNAB 400.
@@ -46,6 +46,7 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 		- Implementação / Testes 
 			- Carteiras
 				- [x] RG - Carteira Registrada
+				- [x] RG - Carteira Registrada com emissão pelo banco
 				- [x] SR - Carteira Sem Registro
 	- <b>237-2 | Banco Bradesco</b>
 		- Implementação / Testes
