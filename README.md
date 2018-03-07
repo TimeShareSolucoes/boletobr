@@ -45,9 +45,9 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 	- <b>104-0 | Caixa Econômica Federal</b>
 		- Implementação / Testes 
 			- Carteiras
-				- [x] RG - Carteira Registrada
-				- [x] RG - Carteira Registrada com emissão pelo banco
-				- [x] SR - Carteira Sem Registro
+				- [x] RG - Carteira Registrada (CNAB 240)
+				- [x] RG - Carteira Registrada com emissão pelo banco (CNAB 240)
+				- [x] SR - Carteira Sem Registro (CNAB 240)
 	- <b>237-2 | Banco Bradesco</b>
 		- Implementação / Testes
 			- Carteiras

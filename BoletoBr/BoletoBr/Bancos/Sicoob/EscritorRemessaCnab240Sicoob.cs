@@ -127,7 +127,7 @@ namespace BoletoBr.Bancos.Sicoob
                 segmentoP = segmentoP.PreencherValorNaLinha(37, 37, string.Empty.PadLeft(1, ' '));
 
                 var NossoNumero = new string(' ', 20);
-                NossoNumero = NossoNumero.PreencherValorNaLinha(1, 10, infoSegmentoP.BancoEmiteBoleto ? string.Empty.PadLeft(10,'0') : infoSegmentoP.NossoNumero.PadLeft(10,'0'));
+                NossoNumero = NossoNumero.PreencherValorNaLinha(1, 10, infoSegmentoP.BancoEmiteBoleto ? string.Empty.PadLeft(10,'0') : infoSegmentoP.NossoNumero.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(10,'0'));
                 NossoNumero = NossoNumero.PreencherValorNaLinha(11, 12, "01");
                 NossoNumero = NossoNumero.PreencherValorNaLinha(13, 14, "01");
                 NossoNumero = NossoNumero.PreencherValorNaLinha(15, 15, "4");

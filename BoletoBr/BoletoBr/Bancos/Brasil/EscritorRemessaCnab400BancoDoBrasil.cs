@@ -91,8 +91,8 @@ namespace BoletoBr.Bancos.Brasil
             #endregion
 
             var detalhe = new string(' ', 400);
-            try
-            {
+            /*try
+            {*/
                 detalhe = detalhe.PreencherValorNaLinha(1, 1, "7");
                 detalhe = detalhe.PreencherValorNaLinha(2, 3,
                     infoDetalhe.InscricaoCedente.Replace(".", "").Replace("/", "").Replace("-", "").Length == 11
@@ -433,14 +433,17 @@ namespace BoletoBr.Bancos.Brasil
                     numeroRegistro.ToString(CultureInfo.InvariantCulture).PadLeft(6, '0'));
 
                 return detalhe;
-            }
-            catch (Exception e)
-            {
-                throw new Exception(
+                /*
+                 * Não oculta o erros nem as tratativas ex:
+                 * <<Não são aceitas mais que 2 instruções padronizadas para remessa de boletos no Banco do Brasil.>>
+                 * }
+                catch (Exception e)
+                {
+                    throw new Exception(
                     string.Format("<BoletoBr>{0}Falha na geração do DETALHE do arquivo de REMESSA.",
                         Environment.NewLine), e);
+                }*/
             }
-        }
 
         public string EscreverTrailer(TrailerRemessaCnab400 infoTrailer, int numeroRegistro)
         {
