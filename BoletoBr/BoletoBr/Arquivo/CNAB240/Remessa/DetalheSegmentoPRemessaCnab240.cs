@@ -27,7 +27,9 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
             this.ValorIof = boleto.Iof.HasValue ? boleto.Iof : 0;
             this.ValorAbatimento = boleto.ValorAbatimento.HasValue ? boleto.ValorAbatimento : 0;
             this.CodigoMoeda = boleto.Moeda;
-            BancoEmiteBoleto = boleto.CarteiraCobranca.BancoEmiteBoleto;
+            this.BancoEmiteBoleto = boleto.CarteiraCobranca.BancoEmiteBoleto;
+            this.NumeroContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.Conta;
+            this.DigitoContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta;
         }
 
         public string CodigoBanco { get; set; }
@@ -70,5 +72,7 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
         public int PrazoBaixaDevolucao { get; set; }
         public string CodigoMoeda { get; set; }
         public bool BancoEmiteBoleto { get; set; }
+        public string NumeroContaCorrente { get; set; }
+        public string DigitoContaCorrente { get; set; }
     }
 }

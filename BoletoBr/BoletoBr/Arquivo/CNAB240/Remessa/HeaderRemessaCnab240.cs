@@ -15,7 +15,14 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
             this.DigitoCedente = boleto.CedenteBoleto.DigitoCedente;
             this.NomeEmpresa = boleto.CedenteBoleto.Nome;
             this.SequencialNsa = sequencialArquivo;
+
+            this.NumeroContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.Conta;
+            this.DigitoContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta;
         }
+
+        public string DigitoContaCorrente { get; set; }
+
+        public string NumeroContaCorrente { get; set; }
 
         public string CodigoBanco { get; set; }
         public int LoteServico { get; set; }

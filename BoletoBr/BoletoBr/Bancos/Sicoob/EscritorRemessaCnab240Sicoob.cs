@@ -36,8 +36,8 @@ namespace BoletoBr.Bancos.Sicoob
                 header = header.PreencherValorNaLinha(33, 52, string.Empty.PadLeft(20, ' '));
                 header = header.PreencherValorNaLinha(53, 57,infoHeader.AgenciaMantenedora.PadLeft(5, '0'));
                 header = header.PreencherValorNaLinha(58, 58, infoHeader.DigitoAgenciaMantenedora);
-                header = header.PreencherValorNaLinha(59, 70, infoHeader.CodigoCedente.PadLeft(12, '0'));
-                header = header.PreencherValorNaLinha(71, 71, infoHeader.DigitoCedente.BoletoBrToStringSafe().PadLeft(1,'0'));
+                header = header.PreencherValorNaLinha(59, 70, infoHeader.NumeroContaCorrente.PadLeft(12, '0'));
+                header = header.PreencherValorNaLinha(71, 71, infoHeader.DigitoContaCorrente.BoletoBrToStringSafe().PadLeft(1,'0'));
                 header = header.PreencherValorNaLinha(72, 72, " ");
                 header = header.PreencherValorNaLinha(73, 102, nomeEmpresa.PadRight(30, ' '));
                 header = header.PreencherValorNaLinha(103, 132, "SICOOB".PadRight(30, ' '));
@@ -87,8 +87,8 @@ namespace BoletoBr.Bancos.Sicoob
                 headerLote = headerLote.PreencherValorNaLinha(34, 53, string.Empty.PadLeft(20, ' '));
                 headerLote = headerLote.PreencherValorNaLinha(54, 58, infoHeaderLote.Agencia.PadLeft(5, '0'));
                 headerLote = headerLote.PreencherValorNaLinha(59, 59, infoHeaderLote.DigitoAgencia);
-                headerLote = headerLote.PreencherValorNaLinha(60, 71, infoHeaderLote.CodigoCedente.PadLeft(12, '0'));
-                headerLote = headerLote.PreencherValorNaLinha(72, 72, infoHeaderLote.DigitoCedente.BoletoBrToStringSafe().PadLeft(1,' ')); 
+                headerLote = headerLote.PreencherValorNaLinha(60, 71, infoHeaderLote.NumeroContaCorrente.PadLeft(12, '0'));
+                headerLote = headerLote.PreencherValorNaLinha(72, 72, infoHeaderLote.DigitoContaCorrente.BoletoBrToStringSafe().PadLeft(1,' ')); 
                 headerLote = headerLote.PreencherValorNaLinha(73, 73, " "); // Uso Exclusivo
                 headerLote = headerLote.PreencherValorNaLinha(74, 103, nomeCedente.PadRight(30, ' ')); // Nome Empresa
                 headerLote = headerLote.PreencherValorNaLinha(104, 143, string.Empty.PadRight(40, ' ')); // Mensagem 1
@@ -122,8 +122,8 @@ namespace BoletoBr.Bancos.Sicoob
                 segmentoP = segmentoP.PreencherValorNaLinha(16, 17, "01"); // Código de Movimento Remessa
                 segmentoP = segmentoP.PreencherValorNaLinha(18, 22, infoSegmentoP.AgenciaMantenedora.PadLeft(5, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(23, 23, infoSegmentoP.DvAgenciaMantenedora);
-                segmentoP = segmentoP.PreencherValorNaLinha(24, 35, infoSegmentoP.CodigoCedente.PadLeft(12, '0'));
-                segmentoP = segmentoP.PreencherValorNaLinha(36, 36, infoSegmentoP.DigitoCedente.BoletoBrToStringSafe().PadLeft(1,' ')); 
+                segmentoP = segmentoP.PreencherValorNaLinha(24, 35, infoSegmentoP.NumeroContaCorrente.PadLeft(12, '0'));
+                segmentoP = segmentoP.PreencherValorNaLinha(36, 36, infoSegmentoP.DigitoContaCorrente.BoletoBrToStringSafe().PadLeft(1,' ')); 
                 segmentoP = segmentoP.PreencherValorNaLinha(37, 37, string.Empty.PadLeft(1, ' '));
 
                 var NossoNumero = new string(' ', 20);

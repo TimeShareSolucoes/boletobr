@@ -16,7 +16,13 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
             this.NomeEmpresa = boleto.CedenteBoleto.Nome;
             this.NumeroRemessaRetorno = sequencialRemessa.ToString();
             this.TipoRegistro = boleto.CarteiraCobranca.BoletoBrToBind().Codigo == "RG" ? 1 : 2;
+            this.NumeroContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.Conta;
+            this.DigitoContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta;
         }
+
+        public string DigitoContaCorrente { get; set; }
+
+        public string NumeroContaCorrente { get; set; }
 
         public string CodigoBanco { get; set; }
         public int LoteServico { get; set; }

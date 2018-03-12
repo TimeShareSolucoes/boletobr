@@ -17,7 +17,7 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 	- [x] Classes base
 	- [x] Common methods
 - <b>Bancos Brasileiros</b>
-	- <b>001-9 | Banco do Brasil</b>
+	- <b>001-9 | Banco do Brasil - (CNAB 400)</b>
 		- Implementação / Testes
 			- Carteiras
 				- [x] Carteira 11 		(*Envio de remessa homologado com o banco em: 27-08-2015*)
@@ -32,23 +32,23 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 				- [ ] Carteira 18-035
 				- [ ] Carteira 18-140
 				- [ ] Carteira 31
-	- <b>003-5 | Banco da Amazônia</b>
+	- <b>003-5 | Banco da Amazônia - (CNAB 400)</b>
 		- Implementação / Testes
 			- Carteiras
 				- [x] CNR - Cobrança Não Registrada
-	- <b>033-7 | Banco Santander</b>
+	- <b>033-7 | Banco Santander - (CNAB 400)</b>
 		- Implementação / Testes
 			- Carteiras
 				- [x] 101 - Cobrança Simples COM Registro	(*Homologado com o Banco - 04/03/2016 by @kalleyaoliveira*)
 				- [x] 102 - Cobrança Simples SEM Registro
 				- [ ] 201 - Penhor Rápida COM Registro
-	- <b>104-0 | Caixa Econômica Federal</b>
+	- <b>104-0 | Caixa Econômica Federal - (CNAB 240)</b>
 		- Implementação / Testes 
 			- Carteiras
-				- [x] RG - Carteira Registrada (CNAB 240)
-				- [x] RG - Carteira Registrada com emissão pelo banco (CNAB 240)
-				- [x] SR - Carteira Sem Registro (CNAB 240)
-	- <b>237-2 | Banco Bradesco</b>
+				- [x] RG - Carteira Registrada 
+				- [x] RG - Carteira Registrada com emissão pelo banco 
+				- [x] SR - Carteira Sem Registro 
+	- <b>237-2 | Banco Bradesco - (CNAB 400)</b>
 		- Implementação / Testes
 			- Carteiras
 				- [x] Carteira 02
@@ -57,7 +57,7 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 				- [x] Carteira 06 - Sem Registro
 				- [x] Carteira 09 (*Homologado com Banco - 02/12/2015 by @kalleyaoliveira**)
 				- [x] Carteira 19
-	- <b>341-7 | Banco Itaú</b>
+	- <b>341-7 | Banco Itaú - (CNAB 400)</b>
 		- Implementação / Testes 
 			- Carteira Direta
 				- [ ] 108 - Direta Eletrônica (Carnê) 
@@ -72,25 +72,25 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 				- [ ] 196 - Sem Registro (15 Posições)
 			- Carteira COM Registro
 				- [x] 109 - Com Registro (*Homologado com Banco - 02/12/2015 by @kalleyaoliveira**)
-	- <b>399-9 | Banco Hsbc</b>
+	- <b>399-9 | Banco Hsbc - (CNAB 400)</b>
 		- Implementação / Testes
 			- Carteiras
 				- [x] CNR - Cobrança Não Registrada
 				- [x] CSB - Cobrança Registrada (*Homologado com Banco - 03/06/2016 by @kalleyaoliveira**)
-	- <b>070-1 | Banco BRB</b>
+	- <b>070-1 | Banco BRB - (CNAB 400)</b>
 		- Implementação / Testes
 			- Carteiras
 				- [x] TIPO 1 - COBRANÇA DIRETA SEM REGISTRO				
 				- [x] TIPO 2 - COBRANÇA DIRETA COM REGISTRO
-	- <b>756-0 | Banco Cooperativo do Brasil - SICOOB</b>
+	- <b>756-0 | Banco Cooperativo do Brasil - SICOOB - (CNAB 240/400)</b>
 		- Implementação / Testes
 			- Carteiras
 				- [x] 1/01 - Simples com Registro (*Homologado com o Banco - 04/08/2016 by @kalleyaoliveira**)
-	- <b>422-7 | Banco Safra</b>
+	- <b>422-7 | Banco Safra - (CNAB 400)</b>
 		- Implementação / Testes
 			- Carteiras
 				- [x] 1 - COBRANÇA SIMPLES (*Em homologação com o Banco - by @kalleyaoliveira**)
-	- <b>707-2 | Banco Daycoval</b>
+	- <b>707-2 | Banco Daycoval - (CNAB 400)</b>
 		- Implementação / Testes
 			- Carteiras
 				- [x] 3 - COBRANÇA (*Homologado com o Banco 10/2017 - by @kalleyaoliveira**)
