@@ -437,7 +437,7 @@ namespace BoletoBr.Bancos.Cef
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 03,
-                        Descricao = "Entrada Rejeitada"
+                        Descricao = "Entrada Rejeitada."
                     };
                 case 04:
                     return new CodigoOcorrencia(numeroOcorrencia)

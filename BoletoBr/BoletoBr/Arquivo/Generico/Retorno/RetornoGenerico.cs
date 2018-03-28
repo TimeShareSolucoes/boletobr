@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using BoletoBr.Arquivo.CNAB240.Retorno;
+using BoletoBr.Dominio;
 using BoletoBr.Fabricas;
 
 namespace BoletoBr.Arquivo.Generico.Retorno
@@ -66,6 +67,8 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     //detalheGenericoAdd.ValorOutrosCreditos = d.SegmentoU.ValorOutrosCreditos / 100;
                     var banco = BancoFactory.ObterBanco(d.SegmentoU?.CodigoBanco.ToString());
                     var ocorrencia = banco.ObtemCodigoOcorrenciaByInt(d.SegmentoU.BoletoBrToBind().CodigoMovimento);
+                    if (ocorrencia.Descricao == "Entrada Rejeitada.")
+                        ocorrencia = new CodigoOcorrencia(ocorrencia.Codigo) {Descricao = $@"{ocorrencia.Descricao}. Motivo: {d.SegmentoT.MotivoOcorrencia}"};
                     detalheGenericoAdd.CodigoOcorrencia = ocorrencia?.Codigo.ToString();
                     detalheGenericoAdd.MensagemOcorrenciaRetornoBancario = ocorrencia?.Descricao;
                     detalheGenericoAdd.Ocorrencia = ocorrencia;
