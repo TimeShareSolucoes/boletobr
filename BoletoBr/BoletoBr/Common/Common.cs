@@ -43,7 +43,7 @@ namespace BoletoBr
 
             for (int i = 0; i < seq.Length; i++)
             {
-                soma = soma + (Convert.ToInt32(seq[i]) * peso);
+                soma = soma + (Convert.ToInt32(Convert.ToString(seq[i])) * peso);
                 if (peso < baseCalculo)
                     peso = peso + 1;
                 else
