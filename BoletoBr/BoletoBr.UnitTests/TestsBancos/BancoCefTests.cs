@@ -394,12 +394,13 @@ namespace BoletoBr.UnitTests.TestsBancos
         [TestMethod]
         public void Mod11TestesCef()
         {
-            var teste = "11000000100256504";
-            int dv =  Convert.ToInt32(Common.Mod11(teste).ToString(CultureInfo.InvariantCulture));
-            //var dv2 = Common.Mod11Base7BRB(teste).ToString(CultureInfo.InvariantCulture);
-            //var dv3 = Common.Mod11Base7Hsbc(teste).ToString(CultureInfo.InvariantCulture);
-            //var dv4 = Common.Mod11Base9Safra(teste).ToString(CultureInfo.InvariantCulture);
-            Assert.IsTrue(6 == dv);
+            var NossoNumero = "11000000100418936";// numero aleatório
+            var CodigoBarras = "11000000099990604";// numero aleatório
+            
+            var DVCodigoBarras = Common.Mod11(CodigoBarras, 9).ToString(CultureInfo.InvariantCulture);
+            var dvNossoNumero = Common.Mod11Base9Caixa(NossoNumero).ToString(CultureInfo.InvariantCulture);
+            
+            Assert.IsTrue("6" == DVCodigoBarras && dvNossoNumero == "0");
     }
     #endregion Carteira SR - SEM REGISTRO
 }

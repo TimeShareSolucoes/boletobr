@@ -197,8 +197,9 @@ namespace BoletoBr.Bancos.Cef
             string segundaParteNossoNumeroSemDigito = nossoNumeroFormatadoSemDigito.Substring(5, 3);
 
             // Posi��o 34
-            const string segundaConstante = "4"; // 4 => emiss�o do boleto pelo cedente
-
+            string segundaConstante = "4"; // 4 => emiss�o do boleto pelo cedente
+            if(boleto.CarteiraCobranca.BancoEmiteBoleto)
+                segundaConstante = "1"; // 1=> emissão do boleto pelo banco
             //Posi��o 35 - 43
             //De acordo com documenta�ao, posi��o 9 a 17 do nosso numero
             string terceiraParteNossoNumeroSemDigito = nossoNumeroFormatadoSemDigito.Substring(8, 9);
@@ -392,7 +393,7 @@ namespace BoletoBr.Bancos.Cef
                     boleto.NossoNumeroFormatado);
 
                 // Permite 0 (zero) no DV do Nosso Número
-                dvNossoNumero = Common.Mod11(boleto.NossoNumeroFormatado).ToString(CultureInfo.InvariantCulture);
+                dvNossoNumero = Common.Mod11Base9Caixa(boleto.NossoNumeroFormatado).ToString(CultureInfo.InvariantCulture);
 
                 boleto.SetNossoNumeroFormatado(string.Format("{0}-{1}", boleto.NossoNumeroFormatado, dvNossoNumero));
             }
@@ -404,7 +405,7 @@ namespace BoletoBr.Bancos.Cef
                     boleto.NossoNumeroFormatado);
 
                 // Permite 0 (zero) no DV do Nosso Número
-                dvNossoNumero = Common.Mod11(boleto.NossoNumeroFormatado).ToString(CultureInfo.InvariantCulture);
+                dvNossoNumero = Common.Mod11Base9Caixa(boleto.NossoNumeroFormatado).ToString(CultureInfo.InvariantCulture);
 
                 boleto.SetNossoNumeroFormatado(string.Format("{0}-{1}", boleto.NossoNumeroFormatado, dvNossoNumero));
             }

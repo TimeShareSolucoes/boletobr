@@ -255,7 +255,7 @@ namespace BoletoBr.Bancos.Cef
                 // '0' = Envio pelo beneficiario
                 // '1' = Sacado Via Correios
                 segmentoP = segmentoP.PreencherValorNaLinha(62, 62, infoSegmentoP.BancoEmiteBoleto ? "1" : "0"); // Identificação da Entrega do Bloqueto
-                segmentoP = segmentoP.PreencherValorNaLinha(63, 73, infoSegmentoP.NumeroDocumento.PadLeft(11, '0'));
+                segmentoP = segmentoP.PreencherValorNaLinha(63, 73, (infoSegmentoP.NumeroDocumento.Length > 11? infoSegmentoP.NumeroDocumento.Substring(infoSegmentoP.NumeroDocumento.Length - 11, 11): infoSegmentoP.NumeroDocumento).PadLeft(11, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(74, 77, string.Empty.PadLeft(4, ' '));
                 segmentoP = segmentoP.PreencherValorNaLinha(78, 85, infoSegmentoP.DataVencimento.ToString("ddMMyyyy"));
 
