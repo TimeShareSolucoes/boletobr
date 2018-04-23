@@ -1005,7 +1005,7 @@ namespace BoletoBr.Bancos.Santander
 
             while (sequencia.Length > 0)
             {
-                int valorPosicao = Convert.ToInt32(sequencia.Substring(0, 1));
+                int valorPosicao = Convert.ToInt32(sequencia.Substring(sequencia.Length - 1, 1));
                 total += valorPosicao*multiplicador;
                 multiplicador++;
 
@@ -1014,7 +1014,7 @@ namespace BoletoBr.Bancos.Santander
                     multiplicador = 2;
                 }
 
-                sequencia = sequencia.Remove(0, 1);
+                sequencia = sequencia.Remove(sequencia.Length - 1, 1);
             }
 
             nresto = total - ((total/11)*11);
