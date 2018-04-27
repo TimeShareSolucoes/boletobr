@@ -316,7 +316,7 @@ namespace BoletoBr.Bancos.Bradesco
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 03,
-                        Descricao = "Entrada Rejeitada".ToUpper()
+                        Descricao = "ENTRADA REJEITADA".ToUpper()
                     };
                 case 06:
                     return new CodigoOcorrencia(numeroOcorrencia)

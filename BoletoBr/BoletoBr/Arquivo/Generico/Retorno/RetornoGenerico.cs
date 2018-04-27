@@ -67,7 +67,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     //detalheGenericoAdd.ValorOutrosCreditos = d.SegmentoU.ValorOutrosCreditos / 100;
                     var banco = BancoFactory.ObterBanco(d.SegmentoU?.CodigoBanco.ToString());
                     var ocorrencia = banco.ObtemCodigoOcorrenciaByInt(d.SegmentoU.BoletoBrToBind().CodigoMovimento);
-                    if (ocorrencia.Descricao == "Entrada Rejeitada.")
+                    if (ocorrencia.Descricao == "ENTRADA REJEITADA")
                         ocorrencia = new CodigoOcorrencia(ocorrencia.Codigo) {Descricao = $@"{ocorrencia.Descricao}. Motivo: {d.SegmentoT.MotivoOcorrencia}"};
                     detalheGenericoAdd.CodigoOcorrencia = ocorrencia?.Codigo.ToString();
                     detalheGenericoAdd.MensagemOcorrenciaRetornoBancario = ocorrencia?.Descricao;

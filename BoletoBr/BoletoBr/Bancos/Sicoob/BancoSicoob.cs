@@ -205,7 +205,7 @@ namespace BoletoBr.Bancos.Sicoob
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 03,
-                        Descricao = "Entrada Rejeitada"
+                        Descricao = "ENTRADA REJEITADA"
                     };
                 case 04:
                     return new CodigoOcorrencia(numeroOcorrencia)

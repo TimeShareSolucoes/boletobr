@@ -1175,7 +1175,7 @@ namespace BoletoBr.Bancos.Brasil
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 03,
-                        Descricao = "Comando recusado (Motivo indicado na posição 087/088)".ToUpper()
+                        Descricao = "ENTRADA REJEITADA".ToUpper()
                     };
                 }
                 case 05:
