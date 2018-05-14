@@ -872,5 +872,9 @@ namespace BoletoBr.Bancos.Bradesco
                     "Não foi possível obter Código de Comando/Movimento/Ocorrência. Banco: {0} Código: {1}",
                     CodigoBanco, ocorrencia.ToString()));
         }
+        public int CodigoJurosMora(CodigoJurosMora codigoJurosMora)
+        {
+            return 0;
+        }
     }
 }

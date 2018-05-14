@@ -81,6 +81,7 @@
     <Compile Include="Bancos\Sicoob\LeitorRetornoCnab400Sicoob.cs" />
     <Compile Include="Dominio\InformacoesAdicionais.cs" />
     <Compile Include="Enums\TipoCobrancaJuro.cs" />
+    <Compile Include="Enums\CodigoJurosMora.cs" />
     <Compile Include="Fabricas\EscritorArquivoRemessaFactory.cs" />
     <Compile Include="Fabricas\RemessaFactory.cs" />
     <Compile Include="Interfaces\IArquivoRemessa.cs" />

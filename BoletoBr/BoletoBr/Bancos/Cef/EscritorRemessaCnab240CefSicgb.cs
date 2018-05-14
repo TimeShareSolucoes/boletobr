@@ -287,14 +287,14 @@ namespace BoletoBr.Bancos.Cef
                  * 2 - Taxa Mensal
                  * 3 - Isento
                  */
-                segmentoP = segmentoP.PreencherValorNaLinha(118, 118, "3"); // Código do Juros de Mora
+                 segmentoP = segmentoP.PreencherValorNaLinha(118, 118, infoSegmentoP.CodigoJurosMora.ToString().Length > 1 ? infoSegmentoP.CodigoJurosMora.ToString().Substring(infoSegmentoP.NumeroDocumento.Length - 1, 1) : infoSegmentoP.CodigoJurosMora.ToString().PadLeft(1, '0')); // Código do Juros de Mora
 
                 if (infoSegmentoP.DataJurosMora == DateTime.MinValue)
                     segmentoP = segmentoP.PreencherValorNaLinha(119, 126, string.Empty.PadLeft(8, '0'));
                 else
                     segmentoP = segmentoP.PreencherValorNaLinha(119, 126, infoSegmentoP.DataJurosMora.ToString("ddMMyyyy"));
 
-                segmentoP = segmentoP.PreencherValorNaLinha(127, 141, infoSegmentoP.ValorJurosMora.ToString().Replace(".", "").Replace(",", "").PadLeft(15, '0'));
+                segmentoP = segmentoP.PreencherValorNaLinha(127, 141, infoSegmentoP.ValorJurosMora.GetValueOrDefault().ToString("##.00").Replace(".", "").Replace(",", "").PadLeft(15, '0'));
                 /* Código do Desconto
                  * 0 - Sem desconto
                  * 1 - Valor fixo até a data informada
@@ -336,7 +336,7 @@ namespace BoletoBr.Bancos.Cef
                 segmentoP = segmentoP.PreencherValorNaLinha(221, 221, "3"); // Código para Protesto
                 segmentoP = segmentoP.PreencherValorNaLinha(222, 223, "00"); // Número de Dias para Protesto
                 segmentoP = segmentoP.PreencherValorNaLinha(224, 224, "1"); // Código para Baixa/Devolução
-                segmentoP = segmentoP.PreencherValorNaLinha(225, 227, "010"); // Número de Dias para Baixa/Devolução
+                segmentoP = segmentoP.PreencherValorNaLinha(225, 227, infoSegmentoP.PrazoBaixaDevolucao > 0 && infoSegmentoP.PrazoBaixaDevolucao < 999 ? infoSegmentoP.PrazoBaixaDevolucao.ToString("000") : "010"); // Número de Dias para Baixa/Devolução
                 
                 // Fixo 09 - REAL
                 segmentoP = segmentoP.PreencherValorNaLinha(228, 229, "09"); // Código da Moeda
@@ -465,6 +465,44 @@ namespace BoletoBr.Bancos.Cef
             }
         }
 
+        public string EscreverDetalheSegmentoR(DetalheSegmentoRRemessaCnab240 infoSegmentoR)
+        {
+            var segmentoR = new string(' ', 240);
+            try
+            {
+                segmentoR = segmentoR.PreencherValorNaLinha(1, 3, "104"); // Código do Banco na Compensação
+                segmentoR = segmentoR.PreencherValorNaLinha(4, 7, infoSegmentoR.LoteServico.ToString().PadLeft(4, '0')); // Lote De Serviço
+                segmentoR = segmentoR.PreencherValorNaLinha(8, 8, "3"); // Tipo de Registro
+                segmentoR = segmentoR.PreencherValorNaLinha(9, 13, infoSegmentoR.NumeroRegistro.ToString().PadLeft(5, '0'));
+                segmentoR = segmentoR.PreencherValorNaLinha(14, 14, "R"); // Cód. Segmento do Registro Detalhe
+                segmentoR = segmentoR.PreencherValorNaLinha(15, 15, " ");
+                // Padronizado para 01 - Entrada de Título
+                segmentoR = segmentoR.PreencherValorNaLinha(16, 17, "01"); // Código de Movimento Remessa
+                segmentoR = segmentoR.PreencherValorNaLinha(18, 41, string.Empty.PadLeft(24, '0'));//Espaço para segunda instrução de desconto
+                segmentoR = segmentoR.PreencherValorNaLinha(42, 65, string.Empty.PadLeft(24, '0'));//Espaço para terceira instrução de desconto
+                /*
+                 *'0' = Sem Multa
+                 *'1' = Valor Fixo
+                 *'2' = Percentual
+                 */
+                var tipoInstrucaoMulta = infoSegmentoR.ValorMulta > 0 ? "1" : infoSegmentoR.PercentualMulta > 0 ? "2" : "0";
+                segmentoR = segmentoR.PreencherValorNaLinha(66, 66, tipoInstrucaoMulta);
+                segmentoR = segmentoR.PreencherValorNaLinha(67, 74, infoSegmentoR.DataAplicarMulta.ToString("ddMMyyyy"));
+                segmentoR = segmentoR.PreencherValorNaLinha(75, 89, (infoSegmentoR.ValorMulta > 0 ? infoSegmentoR.ValorMulta : infoSegmentoR.PercentualMulta > 0 ? infoSegmentoR.PercentualMulta : 0M).ToString("##.00").Replace(".", "").Replace(",", "").PadLeft(15, '0')); // Valor/Percentual multa
+                segmentoR = segmentoR.PreencherValorNaLinha(90, 99, String.Empty.PadLeft(10,' '));
+                segmentoR = segmentoR.PreencherValorNaLinha(100, 139, String.Empty.PadLeft(40, ' '));
+                segmentoR = segmentoR.PreencherValorNaLinha(140, 179, String.Empty.PadLeft(40, ' '));
+                segmentoR = segmentoR.PreencherValorNaLinha(180, 229, string.Empty.PadLeft(50, ' ')); // Uso Exclusivo CAIXA
+                segmentoR = segmentoR.PreencherValorNaLinha(230, 240, string.Empty.PadLeft(11, ' '));
+
+                return segmentoR;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(String.Format("<BoletoBr>{0}Falha na geração do DETALHE - Segmento P do arquivo de REMESSA.",
+                    Environment.NewLine), e);
+            }
+        }
         public string EscreverTrailerDeLote(TrailerLoteRemessaCnab240 infoTrailerLote)
         {
             if (infoTrailerLote.QtdRegistrosLote == 0)
@@ -594,8 +632,12 @@ namespace BoletoBr.Bancos.Cef
                 if (detalhe.SegmentoQ.LoteServico.BoletoBrToStringSafe().BoletoBrToInt() == 0)
                     detalhe.SegmentoQ.LoteServico = loteEscrever.HeaderLote.LoteServico;
 
+                if (detalhe.SegmentoR.LoteServico.BoletoBrToStringSafe().BoletoBrToInt() == 0)
+                    detalhe.SegmentoR.LoteServico = loteEscrever.HeaderLote.LoteServico;
+
                 listaRet.Add(EscreverDetalheSegmentoP(detalhe.SegmentoP));
                 listaRet.Add(EscreverDetalheSegmentoQ(detalhe.SegmentoQ));
+                listaRet.Add(EscreverDetalheSegmentoR(detalhe.SegmentoR));
             }
 
             listaRet.Add(EscreverTrailerDeLote(loteEscrever.TrailerLote));

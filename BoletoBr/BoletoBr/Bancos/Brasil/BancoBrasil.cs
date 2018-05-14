@@ -2039,5 +2039,9 @@ namespace BoletoBr.Bancos.Brasil
         {
             throw new NotImplementedException();
         }
+        public int CodigoJurosMora(CodigoJurosMora codigoJurosMora)
+        {
+            return 0;
+        }
     }
 }

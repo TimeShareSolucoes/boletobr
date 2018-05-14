@@ -608,5 +608,9 @@ namespace BoletoBr.Bancos.BRB
         {
             throw new NotImplementedException();
         }
+        public int CodigoJurosMora(CodigoJurosMora codigoJurosMora)
+        {
+            return 0;
+        }
     }
 }

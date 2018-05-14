@@ -100,5 +100,6 @@ namespace BoletoBr.Interfaces
         RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo);
         RemessaCnab240 GerarArquivoRemessaCnab240(List<Boleto> boletos);
         RemessaCnab400 GerarArquivoRemessaCnab400(List<Boleto> boletos);
+        int CodigoJurosMora(CodigoJurosMora codigoJurosMora);
     }
 }

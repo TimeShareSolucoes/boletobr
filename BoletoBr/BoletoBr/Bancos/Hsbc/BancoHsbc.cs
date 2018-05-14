@@ -1225,5 +1225,9 @@ namespace BoletoBr.Bancos.Hsbc
         }
 
         #endregion
+        public int CodigoJurosMora(CodigoJurosMora codigoJurosMora)
+        {
+            return 0;
+        }
     }
 }

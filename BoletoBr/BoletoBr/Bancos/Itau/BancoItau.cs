@@ -1352,5 +1352,9 @@ namespace BoletoBr.Bancos.Itau
         {
             throw new NotImplementedException();
         }
+        public int CodigoJurosMora(CodigoJurosMora codigoJurosMora)
+        {
+            return 0;
+        }
     }
 }

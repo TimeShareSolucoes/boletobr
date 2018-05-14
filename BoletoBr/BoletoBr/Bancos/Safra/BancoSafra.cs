@@ -662,5 +662,9 @@ namespace BoletoBr.Bancos.Safra
         {
             throw new NotImplementedException();
         }
+        public int CodigoJurosMora(CodigoJurosMora codigoJurosMora)
+        {
+            return 0;
+        }
     }
 }

@@ -739,5 +739,18 @@ namespace BoletoBr.Bancos.Sicoob
 
             return ndig;
         }
+        public int CodigoJurosMora(CodigoJurosMora codigoJurosMora)
+        {
+            switch (codigoJurosMora)
+            {
+                case Enums.CodigoJurosMora.Isento:
+                    return 0;
+                case Enums.CodigoJurosMora.Valor:
+                    return 1;
+                case Enums.CodigoJurosMora.Percentual:
+                    return 2;
+                default: return 0;
+            }
+        }
     }
 }

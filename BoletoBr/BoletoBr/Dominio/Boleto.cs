@@ -45,6 +45,7 @@ namespace BoletoBr
         public DateTime? DataProcessamento { get; set; }
         public int QtdParcelas { get; set; }
         public int NumeroParcela { get; set; }
+        public int PrazoBaixaDevolucao { get; set; }
 
         public string NumeroParcelaFormatado
         {

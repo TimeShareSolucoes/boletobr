@@ -178,14 +178,14 @@ namespace BoletoBr.Bancos.Sicoob
                  * * 1 - Valor por dia
                  * 2 - Taxa Mensal
                  */
-                segmentoP = segmentoP.PreencherValorNaLinha(118, 118, infoSegmentoP.ValorJurosMora > 0 ? "2": "0"); // Código do Juros de Mora
+                segmentoP = segmentoP.PreencherValorNaLinha(118, 118, infoSegmentoP.CodigoJurosMora.ToString().Length > 1 ? infoSegmentoP.CodigoJurosMora.ToString().Substring(infoSegmentoP.NumeroDocumento.Length - 1, 1) : infoSegmentoP.CodigoJurosMora.ToString().PadLeft(1, '0')); // Código do Juros de Mora
 
                 if (infoSegmentoP.DataJurosMora == DateTime.MinValue)
-                    segmentoP = segmentoP.PreencherValorNaLinha(119, 126, infoSegmentoP.DataVencimento.ToString("ddMMyyyy"));
+                    segmentoP = segmentoP.PreencherValorNaLinha(119, 126, infoSegmentoP.DataVencimento.AddDays(1).ToString("ddMMyyyy"));
                 else
                     segmentoP = segmentoP.PreencherValorNaLinha(119, 126, infoSegmentoP.DataJurosMora.ToString("ddMMyyyy"));
 
-                segmentoP = segmentoP.PreencherValorNaLinha(127, 141, infoSegmentoP.ValorJurosMora.ToString().Replace(".", "").Replace(",", "").PadLeft(15, '0'));
+                segmentoP = segmentoP.PreencherValorNaLinha(127, 141, infoSegmentoP.ValorJurosMora.GetValueOrDefault().ToString("##.00").Replace(".", "").Replace(",", "").PadLeft(15, '0'));
                 /* Código do Desconto
                  * 0 - Sem desconto
                  * 1 - Valor fixo até a data informada
@@ -339,7 +339,7 @@ namespace BoletoBr.Bancos.Sicoob
                         Environment.NewLine), e);
             }
         }
-        
+
         public string EscreverTrailerDeLote(TrailerLoteRemessaCnab240 infoTrailerLote)
         {
             if (infoTrailerLote.QtdRegistrosLote == 0)

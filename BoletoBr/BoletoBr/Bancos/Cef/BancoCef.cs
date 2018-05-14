@@ -1139,5 +1139,19 @@ namespace BoletoBr.Bancos.Cef
         {
             throw new NotImplementedException();
         }
+
+        public int CodigoJurosMora(CodigoJurosMora codigoJurosMora)
+        {
+            switch (codigoJurosMora)
+            {
+                case Enums.CodigoJurosMora.Valor:
+                    return 1;
+                case Enums.CodigoJurosMora.Percentual:
+                    return 2;
+                case Enums.CodigoJurosMora.Isento:
+                    return 3;
+                default: return 0;
+            }
+        }
     }
 }

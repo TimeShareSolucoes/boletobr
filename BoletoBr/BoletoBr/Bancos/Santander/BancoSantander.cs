@@ -1106,5 +1106,9 @@ namespace BoletoBr.Bancos.Santander
                 return ndig;
             }
         }
+        public int CodigoJurosMora(CodigoJurosMora codigoJurosMora)
+        {
+            return 0;
+        }
     }
 }

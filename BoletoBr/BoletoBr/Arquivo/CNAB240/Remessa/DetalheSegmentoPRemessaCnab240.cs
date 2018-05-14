@@ -22,7 +22,11 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
             this.Especie = boleto.Especie;
             this.Aceite = boleto.Aceite;
             this.DataEmissao = boleto.DataDocumento;
-            this.ValorJurosMora = boleto.JurosMora.HasValue ? boleto.JurosMora : 0;
+            /*Juros Mora*/
+            this.ValorJurosMora = boleto.JurosMora > 0 ? boleto.JurosMora : boleto.PercentualJurosMora > 0 ? boleto.PercentualJurosMora : 0;
+            this.CodigoJurosMora = boleto.JurosMora > 0 ? boleto.BancoBoleto.CodigoJurosMora(Enums.CodigoJurosMora.Valor) : boleto.PercentualJurosMora > 0 ? boleto.BancoBoleto.CodigoJurosMora(Enums.CodigoJurosMora.Percentual) : boleto.BancoBoleto.CodigoJurosMora(Enums.CodigoJurosMora.Isento);
+            this.DataJurosMora = boleto.DataJurosMora;
+            /*-------------------------------------*/
             this.ValorDesconto1 = boleto.ValorDesconto.HasValue ? boleto.ValorDesconto : 0;
             this.ValorIof = boleto.Iof.HasValue ? boleto.Iof : 0;
             this.ValorAbatimento = boleto.ValorAbatimento.HasValue ? boleto.ValorAbatimento : 0;
@@ -30,6 +34,7 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
             this.BancoEmiteBoleto = boleto.CarteiraCobranca.BancoEmiteBoleto;
             this.NumeroContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.Conta;
             this.DigitoContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta;
+            this.PrazoBaixaDevolucao = boleto.PrazoBaixaDevolucao;
         }
 
         public string CodigoBanco { get; set; }
