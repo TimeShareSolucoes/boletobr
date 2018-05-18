@@ -11,11 +11,12 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 - Eliminei dependências de VB.NET (Microsoft.VisualBasic) para utilização da função Strings.Mid no cálculo do módulo 11.
 - Renderização de boletos em projetos separados, eliminando dependências. Ex: Aplicativo Windows Forms utilizando biblioteca System.Web.
 
-## Tarefas/Implementações
+## Como utilizar
 
-- <b>Arquitetura</b>
-	- [x] Classes base
-	- [x] Common methods
+> Consulte nosso [Wiki](https://github.com/TimeShareSolucoes/boletobr/wiki)
+
+## Compatibilidade
+
 - <b>Bancos Brasileiros</b>
 	- <b>001-9 | Banco do Brasil - (CNAB 400)</b>
 		- Implementação / Testes
@@ -97,3 +98,12 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 				- [x] 3 - COBRANÇA (*Homologado com o Banco 10/2017 - by @kalleyaoliveira**)
 				- [x] 4 - COBRANÇA (*Homologado com o Banco 10/2017 - by @kalleyaoliveira**)
 				
+## Como contribuir
+
+Para compilar o projeto Nuget, utilizamos a extensão (NuGet Package Project for Visual Studio 2017)[
+https://marketplace.visualstudio.com/items?itemName=NuProjTeam.NuProj2017#review-details]
+
+## Instalação
+O BoletoBr também é distribuído através de um pacote Nuget. Dessa forma não é necessário baixar o código fonte atualizado e compilar sempre que desejar uma versão mais recente.  
+Na sua aplicação .NET, instale o seguinte pacote:  
+> PM> Install-Package BoletoBr

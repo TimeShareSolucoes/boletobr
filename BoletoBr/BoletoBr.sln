@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoletoBr", "BoletoBr\BoletoBr.csproj", "{EA3EBD2B-932E-42E1-9914-20C13185EBE2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoletoBrUnitTests", "BoletoBr.UnitTests\BoletoBrUnitTests.csproj", "{D99DF35D-54A4-46F7-9B41-61F3029B104A}"
-EndProject
-Project("{FF286327-C783-4F7A-AB73-9BCBAD0D4460}") = "BoletoBr.NuGet", "BoletoBr.NuGet\BoletoBr.NuGet.nuproj", "{598BC53F-6B67-4007-B5A5-6411571430D6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3DBC0B66-2B74-4C0B-AD32-8255690D5A0D}"
 	ProjectSection(SolutionItems) = preProject
@@ -32,10 +30,6 @@ Global
 		{D99DF35D-54A4-46F7-9B41-61F3029B104A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D99DF35D-54A4-46F7-9B41-61F3029B104A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D99DF35D-54A4-46F7-9B41-61F3029B104A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{598BC53F-6B67-4007-B5A5-6411571430D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{598BC53F-6B67-4007-B5A5-6411571430D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{598BC53F-6B67-4007-B5A5-6411571430D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{598BC53F-6B67-4007-B5A5-6411571430D6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EE4B4B58-6D8F-4FE8-9B19-4314A25B07AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EE4B4B58-6D8F-4FE8-9B19-4314A25B07AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE4B4B58-6D8F-4FE8-9B19-4314A25B07AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -47,5 +41,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A13CA4C9-FD13-40F6-92BB-1C8087BC5F9D}
 	EndGlobalSection
 EndGlobal
