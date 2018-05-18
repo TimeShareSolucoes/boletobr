@@ -102,3 +102,8 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 
 Para compilar o projeto Nuget, utilizamos a extensão (NuGet Package Project for Visual Studio 2017)[
 https://marketplace.visualstudio.com/items?itemName=NuProjTeam.NuProj2017#review-details]
+
+## Instalação
+O BoletoBr também é distribuído através de um pacote Nuget. Dessa forma não é necessário baixar o código fonte atualizado e compilar sempre que desejar uma versão mais recente.  
+Na sua aplicação .NET, instale o seguinte pacote:  
+> PM> Install-Package BoletoBr
