@@ -98,3 +98,7 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 				- [x] 3 - COBRANÇA (*Homologado com o Banco 10/2017 - by @kalleyaoliveira**)
 				- [x] 4 - COBRANÇA (*Homologado com o Banco 10/2017 - by @kalleyaoliveira**)
 				
+## Como contribuir
+
+Para compilar o projeto Nuget, utilizamos a extensão (NuGet Package Project for Visual Studio 2017)[
+https://marketplace.visualstudio.com/items?itemName=NuProjTeam.NuProj2017#review-details]
