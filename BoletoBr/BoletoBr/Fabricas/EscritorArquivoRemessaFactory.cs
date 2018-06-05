@@ -1,6 +1,7 @@
 ﻿using System;
 using BoletoBr.Arquivo.CNAB240.Remessa;
 using BoletoBr.Arquivo.CNAB400.Remessa;
+using BoletoBr.Bancos.Itau;
 using BoletoBr.Interfaces;
 
 namespace BoletoBr.Fabricas
@@ -30,6 +31,10 @@ namespace BoletoBr.Fabricas
                     /* 756 - SICOOB */
                     case "756":
                         return new Bancos.Sicoob.EscritorRemessaCnab240Sicoob(remessaEscrever);
+                        break;
+                    /* 041 - BANRISUL */
+                    case "041":
+                        throw new NotImplementedException("Banco " + remessaEscrever.Header.CodigoBanco + " ainda não foi implementado.");
                         break;
                     /* 237 - Bradesco */
                     case "237":
@@ -82,7 +87,7 @@ namespace BoletoBr.Fabricas
                         break;
                     /* 341 - Itaú */
                     case "341":
-                        return new Bancos.Itau.EscritorRemessaCnab400Itau(remessaEscrever);
+                        return new EscritorRemessaCnab400Itau(remessaEscrever);
                         break;
                     /* 399 - HSBC */
                     case "399":
@@ -102,6 +107,9 @@ namespace BoletoBr.Fabricas
                     /* 707 - BANCO DAYCOVAL */
                     case "707":
                         return new Bancos.Daycoval.EscritorRemessaCnab400Daycoval(remessaEscrever);
+                    /* 041 - BANCO BANRISUL */
+                    case "041":
+                        return new EscritorRemessaCnab400Banrisul(remessaEscrever);
                     default:
                         throw new NotImplementedException("Banco " + remessaEscrever.Header.CodigoBanco +
                                                           " ainda não foi implementado.");

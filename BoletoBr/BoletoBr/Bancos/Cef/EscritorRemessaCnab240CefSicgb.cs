@@ -422,10 +422,11 @@ namespace BoletoBr.Bancos.Cef
                     Cep = Cep.Replace(".", "");
                 if (Cep.Contains("-"))
                     Cep = Cep.Replace("-", "");
-
+                if (infoSegmentoQ.UfSacado.Length > 2)
+                    throw new Exception("Unidade federativa com mais de dois dígitos ");
                 segmentoQ = segmentoQ.PreencherValorNaLinha(129, 136, Cep.PadLeft(8, '0'));
                 segmentoQ = segmentoQ.PreencherValorNaLinha(137, 151, cidadeSacado.PadRight(15, '0'));
-                segmentoQ = segmentoQ.PreencherValorNaLinha(152, 153, infoSegmentoQ.UfSacado.PadRight(2, ' '));
+                segmentoQ = segmentoQ.PreencherValorNaLinha(152, 153, infoSegmentoQ.UfSacado.BoletoBrToStringSafe().PadRight(2, ' '));
 
                 if (String.IsNullOrEmpty(infoSegmentoQ.NumeroInscricaoAvalista))
                 {

@@ -83,6 +83,11 @@ namespace BoletoBr
         public string LinhaDigitavelBoleto { get; set; }      
         public TipoArquivo TipoArquivo { get; set; }
         public string CodigoDoProduto { get; set; }
+        /// <summary>
+        /// Propriedade utilizada armazenar numero de dias para protesto,
+        /// Essa informação deve ser armazenda em CarteiraCobrança QtdDiasProtesto 
+        /// </summary>
+        [Obsolete]
         public int QtdDias { get; set; }
         public dynamic InformacoesAdicionaisDynamic { get; set; }
         public List<InformacoesAdicionais> InformacoesAdicionais { get; set; }
@@ -195,6 +200,7 @@ namespace BoletoBr
 
             if (String.IsNullOrEmpty(this.IdentificadorInternoBoleto))
                 throw new ApplicationException("Nosso número não foi informado.");
+            
         }
 
         public void SetNossoNumeroFormatado(string valor)

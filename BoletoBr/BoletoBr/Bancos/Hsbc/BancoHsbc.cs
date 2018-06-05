@@ -1229,5 +1229,10 @@ namespace BoletoBr.Bancos.Hsbc
         {
             return 0;
         }
+
+        public int CodigoProteso(bool protestar = true)
+        {
+            return 0;
+        }
     }
 }

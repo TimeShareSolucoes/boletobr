@@ -35,6 +35,9 @@ namespace BoletoBr
             }
         }
 
+        #region #041 Banrisul
+        public string CodigoClienteOfficeBanking { get; set; }
+        #endregion
         public Cedente(string codigoCedente, int digitoCedente, string cpfCnpj, string nome, ContaBancaria contaBancaria, Endereco enderecoCedente)
         {
             this.CodigoCedente = codigoCedente;

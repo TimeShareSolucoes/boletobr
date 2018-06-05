@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BoletoBr.Bancos;
+using BoletoBr.Bancos.Banrisul;
 using BoletoBr.Bancos.Brasil;
 using BoletoBr.Bancos.Daycoval;
 using BoletoBr.Interfaces;
@@ -57,6 +58,9 @@ namespace BoletoBr.Fabricas
                     /* 707 - BANCO DAYCOVAL */
                     case "707":
                         return new Bancos.Daycoval.BancoDaycoval();
+                    /* 041 - BANCO BANRISUL */
+                    case "041":
+                        return new BancoBanrisul();
                     default:
                         throw new NotImplementedException("Banco " + codigoBanco +
                                                           " ainda não foi implementado.");

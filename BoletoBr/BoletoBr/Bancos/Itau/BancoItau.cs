@@ -1356,5 +1356,10 @@ namespace BoletoBr.Bancos.Itau
         {
             return 0;
         }
+
+        public int CodigoProteso(bool protestar = true)
+        {
+            return 0;
+        }
     }
 }

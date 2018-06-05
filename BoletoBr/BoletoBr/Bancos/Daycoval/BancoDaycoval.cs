@@ -521,5 +521,10 @@ namespace BoletoBr.Bancos.Daycoval
         {
             return 0;
         }
+
+        public int CodigoProteso(bool protestar = true)
+        {
+            return 0;
+        }
     }
 }

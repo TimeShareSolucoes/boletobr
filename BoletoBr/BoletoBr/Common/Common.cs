@@ -9,7 +9,7 @@ namespace BoletoBr
     public static class Common
     {
         #region Cálculo de Módulo
-        internal static int Mod10(string seq)
+        public static int Mod10(string seq)
         {
             int digito;
             int soma = 0;
@@ -87,6 +87,52 @@ namespace BoletoBr
             return digito;
 
         }
+
+        public static int Mod11BanrisulPeso7(string seq)
+        {
+            int digito;
+            int soma = 0;
+            int peso = 2;
+
+            for (int i = seq.Length; i > 0; i--)
+            {
+                soma = soma + (Convert.ToInt32(Common.Mid(seq, i, 1)) * peso);
+                if (peso == 7)
+                    peso = 2;
+                else
+                    peso = peso + 1;
+            }
+            digito = 11 - (soma < 11 ? soma : soma % 11);
+            return digito;
+        }
+
+        public static int DigitoVerificadorBanrisulNC(string seq, int? digitoNAdd = null )
+        {
+            int digitoN;
+            int digitoC;
+            int soma = 0;
+            int peso = 2;
+            if (digitoNAdd == null)
+                digitoN = Mod10(seq);
+            else
+                digitoN = digitoNAdd.GetValueOrDefault();
+            digitoC = Mod11BanrisulPeso7($@"{seq}{digitoN}");
+
+            if (digitoC == 11)
+                digitoC = 0;
+
+            if (digitoC > 9 || digitoC == 1)
+            {
+                digitoN++;
+                digitoC = DigitoVerificadorBanrisulNC(seq, (digitoN > 9 ? 0 : digitoN));
+                return digitoC;
+            }
+            
+
+            var ret = $@"{digitoN}{digitoC}";
+            return Convert.ToInt32(ret);
+        }
+
 
         public static int Mod11(string seq, int b)
         {

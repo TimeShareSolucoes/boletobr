@@ -67,13 +67,25 @@ namespace BoletoBr.Bancos.Santander
             if (infoDetalhe.PercentualMulta > 0)
                 identificadorMulta = 4;
 
-            /* Códigos de Carteira
-             * 1 - Eletrônica com registro
-             * 3 - Caucionada eletrônica
-             * 4 - Cobrança sem registro
-             * 5 - Rápida com registro
-             * 6 - Caucionada rápida
-             * 7 - Descontada eletrônica
+            /* 
+             *  Códigos de Carteira
+             *  101 - Banco Emite - 1 - Eletrônica com registro
+             *  101 - Beneficiário Emite - 5 - Rápida com registro
+             *  201 - Banco Emite - 3 - Caucionada eletrônica
+             *  201 - Beneficiário Emite - 6 - Caucionada rápida
+             *  102 -  4 - Cobrança sem registro
+             *  104 - 7 - Descontada eletrônica
+             */
+
+            /*
+             * 033 - Banco Santander
+             * Carteira 101 - Cobrança Simples Rápida com Registro - RCR
+             * Carteira 102 - Cobrança Simples sem Registro - CSR
+             * Carteira 104 - Cobrança Simples Rápida com Registro - RCR - Banco emite
+             * Carteira 201 - Cobrança Penhor Rápida com Registro - RCR
+             * Carteira COB - Cobrança simples, sem registro (antiga)
+             * Carteira CSR - Cobrança Simples sem Registro (antiga)
+             * Carteira ECR - Cobrança Simples com Registro (antiga)
              */
 
             var codigoCarteira = string.Empty;
@@ -87,8 +99,18 @@ namespace BoletoBr.Bancos.Santander
             }
             if (infoDetalhe.CarteiraCobranca == "102")
                 codigoCarteira = "4";
+            if (infoDetalhe.CarteiraCobranca == "104")
+                codigoCarteira = "7";
+            if (infoDetalhe.CarteiraCobranca == "201")
+            {
+                if (infoDetalhe.BancoEmiteBoleto)
+                    codigoCarteira = "3";
+                else
+                    codigoCarteira = "6";
+                
+            }
 
-            string enderecoSacado = string.Empty;
+        string enderecoSacado = string.Empty;
             string bairroSacado = string.Empty;
             string cidadeSacado = string.Empty;
 
@@ -188,18 +210,29 @@ namespace BoletoBr.Bancos.Santander
                 #region INSTRUÇÕES REMESSA
 
                 var primeiraInstrucao = infoDetalhe.Instrucao1;
-                var segundaInstrucao = infoDetalhe.Instrucao2;
-
                 if (primeiraInstrucao != null)
                     detalhe = detalhe.PreencherValorNaLinha(157, 158, primeiraInstrucao);
                 else
                     detalhe = detalhe.PreencherValorNaLinha(157, 158, "00");
-
-                if (segundaInstrucao != null)
-                    detalhe = detalhe.PreencherValorNaLinha(159, 160, segundaInstrucao);
+                /*
+                 *  00 = NÃO HÁ INSTRUÇÕES
+                 *  02 = BAIXAR APÓS QUINZE DIAS DO VENCIMENTO
+                 *  03 = BAIXAR APÓS 30 DIAS DO VENCIMENTO
+                 *  04 = NÃO BAIXAR
+                 *  06 = PROTESTAR(VIDE POSIÇÃO392 / 393)
+                 *  07 = NÃO PROTESTAR
+                 *  08 = NÃO COBRAR JUROS DE MORA
+                 */
+                if (infoDetalhe.NroDiasParaProtesto > 0)
+                    detalhe = detalhe.PreencherValorNaLinha(159, 160, infoDetalhe.CodigoProtesto.ToString().PadLeft(2,'0'));
+                else
+                if (infoDetalhe.PrazoBaixaDevolucao == 15)
+                    detalhe = detalhe.PreencherValorNaLinha(159, 160, "02");
+                else
+                if (infoDetalhe.PrazoBaixaDevolucao == 30)
+                    detalhe = detalhe.PreencherValorNaLinha(159, 160, "03");
                 else
                     detalhe = detalhe.PreencherValorNaLinha(159, 160, "00");
-
                 #endregion
 
                 #region JUROS

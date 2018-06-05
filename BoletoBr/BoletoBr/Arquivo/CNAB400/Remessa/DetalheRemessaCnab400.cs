@@ -22,7 +22,9 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             this.DvContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta;
             Convenio = boleto.CedenteBoleto.Convenio;
             this.CodigoCedente = boleto.CedenteBoleto.CodigoCedente;
+            this.DVCedente = boleto.CedenteBoleto.DigitoCedente.BoletoBrToStringSafe();
             this.RazaoContaCorrente = boleto.CedenteBoleto.Nome;
+
             this.NossoNumero = boleto.IdentificadorInternoBoleto;
             this.DvNossoNumero = boleto.DigitoNossoNumero;
             this.NossoNumeroFormatado = boleto.NossoNumeroFormatado;
@@ -60,7 +62,11 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             ValorMoraDia = boleto.PercentualJurosMora.BoletoBrToStringSafe().BoletoBrToDecimal();
             TipoCarteiraCobranca = boleto.CarteiraCobranca.Tipo;
             BancoEmiteBoleto = boleto.CarteiraCobranca.BancoEmiteBoleto;
-
+            /*Instruções Protesto*/
+            this.NroDiasParaProtesto = boleto.CarteiraCobranca.QtdDiasProtesto;
+            this.CodigoProtesto = NroDiasParaProtesto > 0 ? boleto.BancoBoleto.CodigoProteso() : boleto.BancoBoleto.CodigoProteso(false);
+            /*Instrução de Baixa/Devolução*/
+            this.PrazoBaixaDevolucao = boleto.PrazoBaixaDevolucao;
             //this.MensagemLinha1 = boleto.InstrucoesDoBoleto.ElementAt(0).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(0).TextoInstrucao;
             //this.MensagemLinha2 = boleto.InstrucoesDoBoleto.ElementAt(1).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(1).TextoInstrucao;
             //this.MensagemLinha3 = boleto.InstrucoesDoBoleto.ElementAt(2).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(2).TextoInstrucao;
@@ -69,12 +75,9 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             //this.MensagemLinha6 = boleto.InstrucoesDoBoleto.ElementAt(5).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(5).TextoInstrucao;
 
             #region #033|SANTADER
-
             // Informação cedida pelo banco que identifica o arquivo remessa do cliente
             this.CodigoDeTransmissao = boleto.CodigoDeTransmissao;
             this.DataDesconto = boleto.DataDesconto;
-            this.NroDiasParaProtesto = boleto.QtdDias;
-
             #endregion
         }
 
@@ -88,6 +91,8 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
         public string CodigoDeTransmissao { get; set; }
         public string NossoNumeroFormatado { get; set; }
         public int NroDiasParaProtesto { get; set; }
+        public int PrazoBaixaDevolucao { get; set; }
+        public int CodigoProtesto { get; set; }
         public string Moeda { get; set; }
         public decimal QuantidadeMoeda { get; set; }
 
@@ -112,6 +117,7 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
         public string DvContaCorrente { get; set; }
         public string Convenio { get; set; }
         public string CodigoCedente { get; set; }
+        public string DVCedente { get; set; }
         public string UsoEmpresa { get; set; }
         public string CodigoBanco { get; set; }
         public int CampoMulta { get; set; }

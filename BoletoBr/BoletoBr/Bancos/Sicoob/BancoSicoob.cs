@@ -173,7 +173,7 @@ namespace BoletoBr.Bancos.Sicoob
 
             if (boleto.CarteiraCobranca.Codigo == "1/01")
             {
-                var numeroAgencia = boleto.CedenteBoleto.ContaBancariaCedente.Agencia.BoletoBrToStringSafe().PadLeft(4, '0');
+                var numeroAgencia = boleto.CedenteBoleto.ContaBancariaCedente.Agencia.Replace(".", "").Replace("/", "").Replace("-", "").Replace(",", "").BoletoBrToStringSafe().PadLeft(4, '0');
                 var codigoCliente = (boleto.CedenteBoleto.CodigoCedente + boleto.CedenteBoleto.DigitoCedente).BoletoBrToStringSafe().PadLeft(10, '0');
                 var identificadorInternoBoleto = boleto.IdentificadorInternoBoleto.BoletoBrToStringSafe().PadLeft(7, '0');
 
@@ -750,6 +750,17 @@ namespace BoletoBr.Bancos.Sicoob
                 case Enums.CodigoJurosMora.Percentual:
                     return 2;
                 default: return 0;
+            }
+        }
+
+        public int CodigoProteso(bool protestar = true)
+        {
+            switch (protestar)
+            {
+                case true:
+                    return 1;
+                default:
+                    return 3;
             }
         }
     }

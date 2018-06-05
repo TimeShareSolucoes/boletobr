@@ -10,7 +10,7 @@ namespace BoletoBr
              for por responsabilidade do banco */
             this.BancoEmiteBoleto = false;
         }
-
+        public int QtdDiasProtesto { get; set; }
         public string Codigo { get; set; }
         public string Tipo { get; set; }
         public string Descricao { get; set; }

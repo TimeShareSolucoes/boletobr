@@ -80,6 +80,7 @@
     <Compile Include="TestsBancos\BancoSantanderTests.cs" />
     <Compile Include="TestsBancos\BancoItauTests.cs" />
     <Compile Include="TestsBancos\BancoBRBTests.cs" />
+    <Compile Include="TestsBancos\BancoBanrisulTests.cs" />
     <Compile Include="TestsBancos\BancoSicoobTests.cs" />
     <Compile Include="TestsCommon\CommonTests.cs" />
     <Compile Include="TestsCommon\FatorVencimentoTests.cs" />

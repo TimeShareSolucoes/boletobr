@@ -40,9 +40,12 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 	- <b>033-7 | Banco Santander - (CNAB 400)</b>
 		- Implementação / Testes
 			- Carteiras
-				- [x] 101 - Cobrança Simples COM Registro	(*Homologado com o Banco - 04/03/2016 by @kalleyaoliveira*)
-				- [x] 102 - Cobrança Simples SEM Registro
-				- [ ] 201 - Penhor Rápida COM Registro
+				- [x] Carteira 101 - Banco Emite - cod. 1 - Eletrônica com registro
+                - [x] Carteira 101 - Beneficiário Emite - cod. 5 - Rápida com registro
+                - [x] Carteira 201 - Banco Emite - cod. 3 - Caucionada eletrônica
+                - [x] Carteira 201 - Beneficiário Emite - cod. 6 - Caucionada rápida
+                - [x] Carteira 102 - cod. 4 - Cobrança sem registro
+                - [x] Carteira 104 - cod. 7 - Descontada eletrônica
 	- <b>104-0 | Caixa Econômica Federal - (CNAB 240)</b>
 		- Implementação / Testes 
 			- Carteiras
@@ -63,10 +66,10 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 			- Carteira Direta
 				- [ ] 108 - Direta Eletrônica (Carnê) 
 			- Carteira Escritural
-				- [ ] 104 - Escritural Eletrônica (Carnê)
-				- [x] 112 - Escritural Eletrônica (Simples) (*Homologado com Banco - 30/06/2016 by @kalleyaoliveira**)
-				- [ ] 138 - Escritural Eletrônica (Mensagem Colorida)
-				- [ ] 147 - Escritural Eletrônica (Dólar)
+				- [ ] Carteira 104 - Escritural Eletrônica (Carnê)
+				- [x] Carteira 112 - Escritural Eletrônica (Simples) (*Homologado com Banco - 30/06/2016 by @kalleyaoliveira**)
+				- [ ] Carteira 138 - Escritural Eletrônica (Mensagem Colorida)
+				- [ ] Carteira 147 - Escritural Eletrônica (Dólar)
 			- Carteira Sem Registro
 				- [x] 103 - Sem Registro (Carnê)
 				- [x] 173 - Sem Registro

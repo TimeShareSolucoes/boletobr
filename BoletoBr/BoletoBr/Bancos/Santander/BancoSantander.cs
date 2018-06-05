@@ -1110,5 +1110,15 @@ namespace BoletoBr.Bancos.Santander
         {
             return 0;
         }
+
+        public int CodigoProteso(bool protestar = true)
+        {
+            var codProtesto = 0;
+            if (protestar)
+                codProtesto = 7;
+            else
+                codProtesto = 7;
+            return codProtesto;
+        }
     }
 }
