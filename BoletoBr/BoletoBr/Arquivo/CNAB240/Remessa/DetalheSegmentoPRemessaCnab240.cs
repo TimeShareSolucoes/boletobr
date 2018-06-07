@@ -33,6 +33,9 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
             this.PrazoBaixaDevolucao = boleto.PrazoBaixaDevolucao;
             /*-------------------------------------*/
             this.ValorDesconto1 = boleto.ValorDesconto.HasValue ? boleto.ValorDesconto : 0;
+
+            this.DataDesconto1 = ValorDesconto1 > 0 ? boleto.DataLimitDesconto.GetValueOrDefault() : DateTime.MinValue;
+
             this.ValorIof = boleto.Iof.HasValue ? boleto.Iof : 0;
             this.ValorAbatimento = boleto.ValorAbatimento.HasValue ? boleto.ValorAbatimento : 0;
             this.CodigoMoeda = boleto.Moeda;

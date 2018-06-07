@@ -237,8 +237,8 @@ namespace BoletoBr.Bancos.Itau
                     detalhe = detalhe.PreencherValorNaLinha(161, 173, string.Empty.PadLeft(13,' '));
                 #endregion
 
-                if (infoDetalhe.DataDesconto > DateTime.MinValue && infoDetalhe.ValorDesconto > 0)
-                    detalhe = detalhe.PreencherValorNaLinha(174, 179, infoDetalhe.DataDesconto.ToString("ddMMyy"));
+                if (infoDetalhe.DataLimiteConcessaoDesconto > DateTime.MinValue && infoDetalhe.ValorDesconto > 0)
+                    detalhe = detalhe.PreencherValorNaLinha(174, 179, infoDetalhe.DataLimiteConcessaoDesconto.ToString("ddMMyy"));
                 else
                     detalhe = detalhe.PreencherValorNaLinha(174, 179, string.Empty.PadLeft(6, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(180, 192, infoDetalhe.ValorDesconto.ToString("##.00").Replace(",", "").PadLeft(13, '0'));

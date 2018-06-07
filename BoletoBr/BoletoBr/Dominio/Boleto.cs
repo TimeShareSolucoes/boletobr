@@ -75,6 +75,7 @@ namespace BoletoBr
         public decimal? OutrosDescontos { get; set; }
         public DateTime DataJurosMora { get; set; }
         public DateTime DataMulta { get; set; }
+        [Obsolete]
         public DateTime DataDesconto { get; set; }
         public DateTime DataOutrosAcrescimos { get; set; }
         public DateTime DataOutrosDescontos { get; set; }

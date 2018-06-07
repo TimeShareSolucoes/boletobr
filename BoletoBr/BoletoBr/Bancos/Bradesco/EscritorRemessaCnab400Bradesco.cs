@@ -132,25 +132,15 @@ namespace BoletoBr.Bancos.Bradesco
                     detalhe = detalhe.PreencherValorNaLinha(66, 66, "0"); // 0 - Sem cobrança de multa
 
                 // Percentual de multa
+                /*
+                 * 067 a 070 – Percentual de 1 Multa por Atraso
+                 * Se campo 66 a 66 = 0, preencher com zeros.
+                 * Se campo 66 a 66 = 2, preencher com percentual da multa com 2 decimais.
+                 */
                 var multaBoleto = string.Empty;
 
-                if (infoDetalhe.PercentualMulta.ToString().Contains('.') &&
-                    infoDetalhe.PercentualMulta.ToString().Contains(','))
-                {
-                    multaBoleto = infoDetalhe.PercentualMulta.ToString().Replace(".", "").Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(67, 70, multaBoleto.PadLeft(4, '0'));
-                }
-                if (infoDetalhe.PercentualMulta.ToString().Contains('.'))
-                {
-                    multaBoleto = infoDetalhe.PercentualMulta.ToString().Replace(".", "");
-                    detalhe = detalhe.PreencherValorNaLinha(67, 70, multaBoleto.PadLeft(4, '0'));
-                }
-                if (infoDetalhe.PercentualMulta.ToString().Contains(','))
-                {
-                    multaBoleto = infoDetalhe.PercentualMulta.ToString().Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(67, 70, multaBoleto.PadLeft(4, '0'));
-                }
-
+                multaBoleto = infoDetalhe.PercentualMulta.ToString("##.00").Replace(".", "").Replace(",", "");
+                detalhe = detalhe.PreencherValorNaLinha(67, 70, multaBoleto.PadLeft(4, '0'));
                 #endregion
 
                 detalhe = detalhe.PreencherValorNaLinha(71, 81, infoDetalhe.NossoNumero.PadLeft(11, '0'));

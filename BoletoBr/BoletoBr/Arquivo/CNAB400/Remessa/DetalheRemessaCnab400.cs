@@ -143,6 +143,10 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
         public string Instrucao2 { get; set; }
         public decimal ValorCobradoDiaAtraso { get; set; }
         public DateTime DataLimiteConcessaoDesconto { get; set; }
+        /// <summary>
+        /// Propriedade duplicada
+        /// </summary>
+        [Obsolete]
         public DateTime DataDesconto { get; set; }
         public DateTime DataJurosMora { get; set; }
         public decimal ValorDesconto { get; set; }
