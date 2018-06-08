@@ -177,7 +177,7 @@ namespace BoletoBr.Bancos.Santander
                 if (String.IsNullOrEmpty(infoDetalhe.PercentualMulta.ToString()))
                     detalhe = detalhe.PreencherValorNaLinha(79, 82, string.Empty.PadLeft(4, '0'));
                 else
-                    detalhe = detalhe.PreencherValorNaLinha(79, 82, infoDetalhe.PercentualMulta.ToString("f").Replace(",", "").PadLeft(4, '0'));
+                    detalhe = detalhe.PreencherValorNaLinha(79, 82, infoDetalhe.PercentualMulta.ToStringParaVoloresDecimais().PadLeft(4, '0'));
 
                 detalhe = detalhe.PreencherValorNaLinha(83, 84, "00");
                 detalhe = detalhe.PreencherValorNaLinha(85, 97, string.Empty.PadLeft(13, '0')); /*Vl do título em outra unidade (consultar banco)*/
@@ -192,7 +192,7 @@ namespace BoletoBr.Bancos.Santander
 
                 #region VALOR TOTAL
 
-                detalhe = detalhe.PreencherValorNaLinha(127, 139, infoDetalhe.ValorBoleto.ToString("f").Replace(",", "").PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(127, 139, infoDetalhe.ValorBoleto.ToStringParaVoloresDecimais().PadLeft(13, '0'));
 
                 #endregion
 
@@ -248,7 +248,7 @@ namespace BoletoBr.Bancos.Santander
                 if (infoDetalhe.ValorMoraDia.ToString().Contains('.') &&
                     infoDetalhe.ValorMoraDia.ToString().Contains(','))
                 {
-                    jurosPorDia = infoDetalhe.ValorMoraDia.ToString().Replace(".", "").Replace(",", "");
+                    jurosPorDia = infoDetalhe.ValorMoraDia.ToStringParaVoloresDecimais();
                     detalhe = detalhe.PreencherValorNaLinha(161, 173, jurosPorDia.PadLeft(13, '0'));
                 }
                 if (infoDetalhe.ValorMoraDia.ToString().Contains('.'))
@@ -262,7 +262,7 @@ namespace BoletoBr.Bancos.Santander
                     detalhe = detalhe.PreencherValorNaLinha(161, 173, jurosPorDia.PadLeft(13, '0'));
                 }
 
-                detalhe = detalhe.PreencherValorNaLinha(161, 173, infoDetalhe.ValorMoraDia.ToString("f").Replace(",", "").PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(161, 173, infoDetalhe.ValorMoraDia.ToStringParaVoloresDecimais().PadLeft(13, '0'));
 
                 #endregion
 
@@ -273,19 +273,19 @@ namespace BoletoBr.Bancos.Santander
                 else
                     detalhe = detalhe.PreencherValorNaLinha(174, 179, infoDetalhe.DataLimiteConcessaoDesconto.ToString("ddMMyy"));
 
-                detalhe = detalhe.PreencherValorNaLinha(180, 192, infoDetalhe.ValorDesconto.ToString("f").Replace(",", "").PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(180, 192, infoDetalhe.ValorDesconto.ToStringParaVoloresDecimais().PadLeft(13, '0'));
 
                 #endregion
 
                 #region IOF
 
-                detalhe = detalhe.PreencherValorNaLinha(193, 205, infoDetalhe.ValorIof.ToString("f").Replace(",", "").PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(193, 205, infoDetalhe.ValorIof.ToStringParaVoloresDecimais().PadLeft(13, '0'));
 
                 #endregion
 
                 #region ABATIMENTO
 
-                detalhe = detalhe.PreencherValorNaLinha(206, 218, infoDetalhe.ValorAbatimento.ToString("f").Replace(",", "").PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(206, 218, infoDetalhe.ValorAbatimento.ToStringParaVoloresDecimais().PadLeft(13, '0'));
 
                 #endregion
 
@@ -464,7 +464,7 @@ namespace BoletoBr.Bancos.Santander
             {
                 trailer = trailer.PreencherValorNaLinha(1, 1, "9");
                 trailer = trailer.PreencherValorNaLinha(2, 7, numeroRegistro.ToString().PadLeft(6, '0'));
-                trailer = trailer.PreencherValorNaLinha(8, 20, infoTrailer.ValorTotalTitulos.ToString("f").Replace(",", "").PadLeft(13, '0') /*Valor total dos títulos*/);
+                trailer = trailer.PreencherValorNaLinha(8, 20, infoTrailer.ValorTotalTitulos.ToStringParaVoloresDecimais().PadLeft(13, '0') /*Valor total dos títulos*/);
                 trailer = trailer.PreencherValorNaLinha(21, 394, string.Empty.PadRight(374, '0'));
                 trailer = trailer.PreencherValorNaLinha(395, 400, numeroRegistro.ToString().PadLeft(6, '0'));
 

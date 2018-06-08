@@ -149,17 +149,8 @@ namespace BoletoBr.Bancos.Sicoob
                 segmentoP = segmentoP.PreencherValorNaLinha(62, 62, infoSegmentoP.BancoEmiteBoleto ? "1" : "2"); // Identificação da Entrega do Bloqueto
                 segmentoP = segmentoP.PreencherValorNaLinha(63, 77, infoSegmentoP.NumeroDocumento.PadLeft(15, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(78, 85, infoSegmentoP.DataVencimento.ToString("ddMMyyyy"));
-
-                var valorBoleto = string.Empty;
-
-                if (infoSegmentoP.ValorBoleto.ToString("f").Contains('.') && infoSegmentoP.ValorBoleto.ToString("f").Contains(','))
-                    valorBoleto = infoSegmentoP.ValorBoleto.ToString("f").Replace(".", "").Replace(",", "");
-                if (infoSegmentoP.ValorBoleto.ToString("f").Contains('.'))
-                    valorBoleto = infoSegmentoP.ValorBoleto.ToString("f").Replace(".", "");
-                if (infoSegmentoP.ValorBoleto.ToString("f").Contains(','))
-                    valorBoleto = infoSegmentoP.ValorBoleto.ToString("f").Replace(",", "");
-
-                segmentoP = segmentoP.PreencherValorNaLinha(86, 100, valorBoleto.PadLeft(15, '0'));
+                
+                segmentoP = segmentoP.PreencherValorNaLinha(86, 100, infoSegmentoP.ValorBoleto.ToStringParaVoloresDecimais().PadLeft(15, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(101, 105, string.Empty.PadLeft(5, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(106, 106, " "); // Dígito Verificador da Agência
                 segmentoP = segmentoP.PreencherValorNaLinha(107, 108, infoSegmentoP.Especie.Sigla.Equals("DM") ? "02" : infoSegmentoP.Especie.Codigo.ToString().PadLeft(2, '0')); // Espécia do Título
@@ -185,7 +176,7 @@ namespace BoletoBr.Bancos.Sicoob
                 else
                     segmentoP = segmentoP.PreencherValorNaLinha(119, 126, infoSegmentoP.DataJurosMora.ToString("ddMMyyyy"));
 
-                segmentoP = segmentoP.PreencherValorNaLinha(127, 141, infoSegmentoP.ValorJurosMora.GetValueOrDefault().ToString("##.00").Replace(".", "").Replace(",", "").PadLeft(15, '0'));
+                segmentoP = segmentoP.PreencherValorNaLinha(127, 141, infoSegmentoP.ValorJurosMora.GetValueOrDefault().ToStringParaVoloresDecimais().PadLeft(15, '0'));
                 /* Código do Desconto
                  * 0 - Sem desconto
                  * 1 - Valor fixo até a data informada
@@ -202,9 +193,9 @@ namespace BoletoBr.Bancos.Sicoob
                 else
                     segmentoP = segmentoP.PreencherValorNaLinha(143, 150, infoSegmentoP.DataDesconto1.ToString("ddMMyyyy"));
 
-                segmentoP = segmentoP.PreencherValorNaLinha(151, 165, infoSegmentoP.ValorDesconto1.ToString().Replace(".", "").Replace(",", "").PadLeft(15, '0'));
-                segmentoP = segmentoP.PreencherValorNaLinha(166, 180, infoSegmentoP.ValorIof.ToString().Replace(".", "").Replace(",", "").PadLeft(15, '0'));
-                segmentoP = segmentoP.PreencherValorNaLinha(181, 195, infoSegmentoP.ValorAbatimento.ToString().Replace(".", "").Replace(",", "").PadLeft(15, '0'));
+                segmentoP = segmentoP.PreencherValorNaLinha(151, 165, infoSegmentoP.ValorDesconto1.GetValueOrDefault().ToStringParaVoloresDecimais().PadLeft(15, '0'));
+                segmentoP = segmentoP.PreencherValorNaLinha(166, 180, infoSegmentoP.ValorIof.GetValueOrDefault().ToStringParaVoloresDecimais().PadLeft(15, '0'));
+                segmentoP = segmentoP.PreencherValorNaLinha(181, 195, infoSegmentoP.ValorAbatimento.GetValueOrDefault().ToStringParaVoloresDecimais().PadLeft(15, '0'));
 
 
                 const string doc = "DOC";
@@ -354,39 +345,14 @@ namespace BoletoBr.Bancos.Sicoob
                 trailerLote = trailerLote.PreencherValorNaLinha(9, 17, string.Empty.PadLeft(9, ' '));
                 trailerLote = trailerLote.PreencherValorNaLinha(18, 23, infoTrailerLote.QtdRegistrosLote.ToString().PadLeft(6, '0'));
 
-                var valorCobrancaSimples = string.Empty;
-                var valorCobrancaCaucionada = string.Empty;
-                var valorCobrancaDescontada = string.Empty;
-
-                if (infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Contains('.') && infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Contains(','))
-                    valorCobrancaSimples = infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Replace(".", "").Replace(",", "");
-                if (infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Contains('.'))
-                    valorCobrancaSimples = infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Replace(".", "");
-                if (infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Contains(','))
-                    valorCobrancaSimples = infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Replace(",", "");
-
-                if (infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Contains('.') && infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Contains(','))
-                    valorCobrancaCaucionada = infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Replace(".", "").Replace(",", "");
-                if (infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Contains('.'))
-                    valorCobrancaCaucionada = infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Replace(".", "");
-                if (infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Contains(','))
-                    valorCobrancaCaucionada = infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Replace(",", "");
-
-                if (infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Contains('.') && infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Contains(','))
-                    valorCobrancaDescontada = infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Replace(".", "").Replace(",", "");
-                if (infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Contains('.'))
-                    valorCobrancaDescontada = infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Replace(".", "");
-                if (infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Contains(','))
-                    valorCobrancaDescontada = infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Replace(",", "");
-
                 trailerLote = trailerLote.PreencherValorNaLinha(24, 29, infoTrailerLote.QtdTitulosCobrancaSimples.ToString().PadLeft(6, '0'));
-                trailerLote = trailerLote.PreencherValorNaLinha(30, 46, valorCobrancaSimples.PadLeft(17, '0'));
+                trailerLote = trailerLote.PreencherValorNaLinha(30, 46, infoTrailerLote.ValorTitulosCobrancaSimples.ToStringParaVoloresDecimais().PadLeft(17, '0'));
                 trailerLote = trailerLote.PreencherValorNaLinha(47, 52, string.Empty.PadLeft(6,'0'));
                 trailerLote = trailerLote.PreencherValorNaLinha(53, 69, string.Empty.PadLeft(17,'0'));
                 trailerLote = trailerLote.PreencherValorNaLinha(70, 75, infoTrailerLote.QtdTitulosCobrancaCaucionada.ToString().PadLeft(6, '0'));
-                trailerLote = trailerLote.PreencherValorNaLinha(76, 92, valorCobrancaCaucionada.PadLeft(17, '0'));
+                trailerLote = trailerLote.PreencherValorNaLinha(76, 92, infoTrailerLote.ValorTitulosCobrancaCaucionada.ToStringParaVoloresDecimais().PadLeft(17, '0'));
                 trailerLote = trailerLote.PreencherValorNaLinha(93, 98, infoTrailerLote.QtdTitulosCobrancaDescontada.ToString().PadLeft(6, '0'));
-                trailerLote = trailerLote.PreencherValorNaLinha(99, 115, valorCobrancaDescontada.PadLeft(17, '0'));
+                trailerLote = trailerLote.PreencherValorNaLinha(99, 115, infoTrailerLote.ValorTitulosCobrancaDescontada.ToStringParaVoloresDecimais().PadLeft(17, '0'));
                 trailerLote = trailerLote.PreencherValorNaLinha(116, 123, string.Empty.PadLeft(8, ' '));
                 trailerLote = trailerLote.PreencherValorNaLinha(124, 240, string.Empty.PadLeft(117, ' '));
 

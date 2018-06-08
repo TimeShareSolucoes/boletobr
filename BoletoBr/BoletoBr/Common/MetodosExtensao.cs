@@ -120,6 +120,24 @@ namespace BoletoBr
             return resultado;
         }
 
+        /// <summary>
+        /// garante 2 casas decimais e remove caracteres convertendo para string
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="qtdCasasDecimais"> Qtd casas decimais </param>
+        /// <returns></returns>
+        public static string ToStringParaVoloresDecimais(this decimal obj, int qtdCasasDecimais = 2)
+        {
+            var mascara = "";
+            for (int i = 0; i < qtdCasasDecimais; i++)
+            {
+                mascara += "0";
+            }
+            mascara = $@"##.{mascara}";
+            var resultado = obj.ToString(mascara).Replace(",", "").Replace(".", "");
+            return resultado;
+        }
+
         public static int BoletoBrToInt(this string s)
         {
             if (String.IsNullOrEmpty(s))

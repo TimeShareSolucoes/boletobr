@@ -7,7 +7,6 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
         {
             this.NumeroSequencialRegistro = numeroSequencialRegistro;
             this.ValorTotalTitulos = valorTotalTitulos;
-
             #region #033|SANTANDER
 
             // O número sequencial do registro dentro do arquivo de remessa é igual ao total de linhas do arquivo.
@@ -23,7 +22,6 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
 
         public int TotalLinhasArquivo { get; set; }
         public decimal ValorTotalTitulos { get; set; }
-
         #endregion
 
     }

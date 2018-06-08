@@ -17,6 +17,25 @@ namespace BoletoBr.UnitTests.TestsBancos
             Assert.IsTrue(dv == 22);
         }
         [TestMethod]
+        public void TestaDecimalToString()
+        {
+            decimal numero1 = 52.0005M;
+            decimal numero2 = 52.000M;
+            decimal numero3 = 52.0M;
+            decimal numero4 = 52;
+            decimal numero0 = 0.00000m;
+            var valor0 = numero0.ToStringParaVoloresDecimais();
+            var valor1 = numero1.ToStringParaVoloresDecimais();
+            var valor2 = numero2.ToStringParaVoloresDecimais();
+            var valor3 = numero3.ToStringParaVoloresDecimais();
+            var valor4 = numero4.ToStringParaVoloresDecimais(3);
+            Assert.IsTrue(valor0 == "00");
+            Assert.IsTrue(valor1 == "5200");
+            Assert.IsTrue(valor2 == "5200");
+            Assert.IsTrue(valor3 == "5200");
+            Assert.IsTrue(valor4 == "52000");
+        }
+        [TestMethod]
         public void FomatarNumeroCodigoBarrasBanrisul()
         {
             var NossoNumeroTeste = "21110290001502283256340";

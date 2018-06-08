@@ -24,7 +24,6 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             this.CodigoCedente = boleto.CedenteBoleto.CodigoCedente;
             this.DVCedente = boleto.CedenteBoleto.DigitoCedente.BoletoBrToStringSafe();
             this.RazaoContaCorrente = boleto.CedenteBoleto.Nome;
-
             this.NossoNumero = boleto.IdentificadorInternoBoleto;
             this.DvNossoNumero = boleto.DigitoNossoNumero;
             this.NossoNumeroFormatado = boleto.NossoNumeroFormatado;

@@ -489,7 +489,7 @@ namespace BoletoBr.Bancos.Cef
                 var tipoInstrucaoMulta = infoSegmentoR.ValorMulta > 0 ? "1" : infoSegmentoR.PercentualMulta > 0 ? "2" : "0";
                 segmentoR = segmentoR.PreencherValorNaLinha(66, 66, tipoInstrucaoMulta);
                 segmentoR = segmentoR.PreencherValorNaLinha(67, 74, infoSegmentoR.DataAplicarMulta.ToString("ddMMyyyy"));
-                segmentoR = segmentoR.PreencherValorNaLinha(75, 89, (infoSegmentoR.ValorMulta > 0 ? infoSegmentoR.ValorMulta : infoSegmentoR.PercentualMulta > 0 ? infoSegmentoR.PercentualMulta : 0M).ToString("##.00").Replace(".", "").Replace(",", "").PadLeft(15, '0')); // Valor/Percentual multa
+                segmentoR = segmentoR.PreencherValorNaLinha(75, 89, (infoSegmentoR.ValorMulta > 0 ? infoSegmentoR.ValorMulta : infoSegmentoR.PercentualMulta > 0 ? infoSegmentoR.PercentualMulta : 0M).ToStringParaVoloresDecimais().PadLeft(15, '0')); // Valor/Percentual multa
                 segmentoR = segmentoR.PreencherValorNaLinha(90, 99, String.Empty.PadLeft(10,' '));
                 segmentoR = segmentoR.PreencherValorNaLinha(100, 139, String.Empty.PadLeft(40, ' '));
                 segmentoR = segmentoR.PreencherValorNaLinha(140, 179, String.Empty.PadLeft(40, ' '));
@@ -518,37 +518,12 @@ namespace BoletoBr.Bancos.Cef
                 trailerLote = trailerLote.PreencherValorNaLinha(9, 17, string.Empty.PadLeft(9, ' '));
                 trailerLote = trailerLote.PreencherValorNaLinha(18, 23, infoTrailerLote.QtdRegistrosLote.ToString().PadLeft(6, '0'));
                 
-                var valorCobrancaSimples = string.Empty;
-                var valorCobrancaCaucionada = string.Empty;
-                var valorCobrancaDescontada = string.Empty;
-
-                if (infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Contains('.') && infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Contains(','))
-                    valorCobrancaSimples = infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Replace(".", "").Replace(",", "");
-                if (infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Contains('.'))
-                    valorCobrancaSimples = infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Replace(".", "");
-                if (infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Contains(','))
-                    valorCobrancaSimples = infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Replace(",", "");
-
-                if (infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Contains('.') && infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Contains(','))
-                    valorCobrancaCaucionada = infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Replace(".", "").Replace(",", "");
-                if (infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Contains('.'))
-                    valorCobrancaCaucionada = infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Replace(".", "");
-                if (infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Contains(','))
-                    valorCobrancaCaucionada = infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Replace(",", "");
-
-                if (infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Contains('.') && infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Contains(','))
-                    valorCobrancaDescontada = infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Replace(".", "").Replace(",", "");
-                if (infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Contains('.'))
-                    valorCobrancaDescontada = infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Replace(".", "");
-                if (infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Contains(','))
-                    valorCobrancaDescontada = infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Replace(",", "");
-
                 trailerLote = trailerLote.PreencherValorNaLinha(24, 29, infoTrailerLote.QtdTitulosCobrancaSimples.ToString().PadLeft(6, '0'));
-                trailerLote = trailerLote.PreencherValorNaLinha(30, 46, valorCobrancaSimples.PadLeft(17, '0'));
+                trailerLote = trailerLote.PreencherValorNaLinha(30, 46, infoTrailerLote.ValorTitulosCobrancaSimples.ToStringParaVoloresDecimais().PadLeft(17, '0'));
                 trailerLote = trailerLote.PreencherValorNaLinha(47, 52, infoTrailerLote.QtdTitulosCobrancaCaucionada.ToString().PadLeft(6, '0'));
-                trailerLote = trailerLote.PreencherValorNaLinha(53, 69, valorCobrancaCaucionada.PadLeft(17, '0'));
+                trailerLote = trailerLote.PreencherValorNaLinha(53, 69, infoTrailerLote.ValorTitulosCobrancaCaucionada.ToStringParaVoloresDecimais().PadLeft(17, '0'));
                 trailerLote = trailerLote.PreencherValorNaLinha(70, 75, infoTrailerLote.QtdTitulosCobrancaDescontada.ToString().PadLeft(6, '0'));
-                trailerLote = trailerLote.PreencherValorNaLinha(76, 92, valorCobrancaDescontada.PadLeft(17, '0'));
+                trailerLote = trailerLote.PreencherValorNaLinha(76, 92, infoTrailerLote.ValorTitulosCobrancaDescontada.ToStringParaVoloresDecimais().PadLeft(17, '0'));
 
                 trailerLote = trailerLote.PreencherValorNaLinha(93, 123, string.Empty.PadLeft(31, ' '));
                 trailerLote = trailerLote.PreencherValorNaLinha(124, 240, string.Empty.PadLeft(117, ' '));

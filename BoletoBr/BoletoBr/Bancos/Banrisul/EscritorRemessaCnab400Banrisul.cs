@@ -152,7 +152,7 @@ namespace BoletoBr.Bancos.Itau
                  */
                 detalhe = detalhe.PreencherValorNaLinha(111, 120, "VIDE038050");
                 detalhe = detalhe.PreencherValorNaLinha(121, 126, infoDetalhe.DataVencimento.ToString("ddMMyy"));
-                detalhe = detalhe.PreencherValorNaLinha(127, 139, infoDetalhe.ValorBoleto.ToString("f").Replace(".", "").Replace(",", "").PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(127, 139, infoDetalhe.ValorBoleto.ToStringParaVoloresDecimais().PadLeft(13, '0'));
                 // Valor Nominal do Título
                 detalhe = detalhe.PreencherValorNaLinha(140, 142, "041");
                 detalhe = detalhe.PreencherValorNaLinha(143, 147, string.Empty.PadLeft(5, '0'));
@@ -232,7 +232,7 @@ namespace BoletoBr.Bancos.Itau
                 if (infoDetalhe.ValorMoraDia > 0 && !carteiras.Contains(infoDetalhe.CarteiraCobranca.ToUpper()))
                 {
                     detalhe = detalhe.PreencherValorNaLinha(161, 161, "1");
-                    detalhe = detalhe.PreencherValorNaLinha(162, 173, infoDetalhe.ValorMoraDia.ToString("##.00").Replace(".","").Replace(",","").PadLeft(12,'0'));
+                    detalhe = detalhe.PreencherValorNaLinha(162, 173, infoDetalhe.ValorMoraDia.ToStringParaVoloresDecimais().PadLeft(12,'0'));
                 }else
                     detalhe = detalhe.PreencherValorNaLinha(161, 173, string.Empty.PadLeft(13,' '));
                 #endregion
@@ -241,9 +241,9 @@ namespace BoletoBr.Bancos.Itau
                     detalhe = detalhe.PreencherValorNaLinha(174, 179, infoDetalhe.DataLimiteConcessaoDesconto.ToString("ddMMyy"));
                 else
                     detalhe = detalhe.PreencherValorNaLinha(174, 179, string.Empty.PadLeft(6, '0'));
-                detalhe = detalhe.PreencherValorNaLinha(180, 192, infoDetalhe.ValorDesconto.ToString("##.00").Replace(",", "").PadLeft(13, '0'));
-                detalhe = detalhe.PreencherValorNaLinha(193, 205, infoDetalhe.ValorIof.ToString("##.00").Replace(",", "").PadLeft(13, '0'));
-                detalhe = detalhe.PreencherValorNaLinha(206, 218, infoDetalhe.ValorAbatimento.ToString("##.00").Replace(",", "").PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(180, 192, infoDetalhe.ValorDesconto.ToStringParaVoloresDecimais().PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(193, 205, infoDetalhe.ValorIof.ToStringParaVoloresDecimais().PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(206, 218, infoDetalhe.ValorAbatimento.ToStringParaVoloresDecimais().PadLeft(13, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(219, 220, infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").Length == 11 ? "01": "02"); 
                 detalhe = detalhe.PreencherValorNaLinha(221, 234, infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(14, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(235, 269, nomeSacado.PadRight(35, ' ')); 
@@ -253,7 +253,7 @@ namespace BoletoBr.Bancos.Itau
 
                 if (infoDetalhe.PercentualMulta > 0)
                 {
-                    detalhe = detalhe.PreencherValorNaLinha(322, 324, infoDetalhe.PercentualMulta.ToString("##.0").Replace(".", "").Replace(",", "").PadLeft(3,'0'));
+                    detalhe = detalhe.PreencherValorNaLinha(322, 324, infoDetalhe.PercentualMulta.ToStringParaVoloresDecimais(1).PadLeft(3,'0'));
                     detalhe = detalhe.PreencherValorNaLinha(325, 326, "01"); //caso informado percentual de multa será aplicado no primeiro dia de inadimplência
                 }
                 else
@@ -294,7 +294,7 @@ namespace BoletoBr.Bancos.Itau
             {
                 trailer = trailer.PreencherValorNaLinha(1, 1, "9");
                 trailer = trailer.PreencherValorNaLinha(2, 27, string.Empty.PadRight(26, ' '));
-                trailer = trailer.PreencherValorNaLinha(28, 40, infoTrailer.ValorTotalTitulos.ToString("##.00").Replace(".","").Replace(",", "").PadLeft(13,'0'));
+                trailer = trailer.PreencherValorNaLinha(28, 40, infoTrailer.ValorTotalTitulos.ToStringParaVoloresDecimais().PadLeft(13,'0'));
                 trailer = trailer.PreencherValorNaLinha(41, 394, string.Empty.PadRight(354, ' '));
                 trailer = trailer.PreencherValorNaLinha(395, 400, sequenciaTrailer.ToString().PadLeft(6, '0'));
 

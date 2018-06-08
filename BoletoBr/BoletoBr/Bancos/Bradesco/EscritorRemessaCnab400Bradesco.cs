@@ -147,27 +147,8 @@ namespace BoletoBr.Bancos.Bradesco
                 detalhe = detalhe.PreencherValorNaLinha(82, 82, infoDetalhe.DvNossoNumero);
 
                 #region VALOR DESCONTO POR DIA
-
-                var valorDescontoDia = string.Empty;
-
-                if (infoDetalhe.ValorDescontoDia.ToString().Contains('.') &&
-                    infoDetalhe.ValorDescontoDia.ToString().Contains(','))
-                {
-                    valorDescontoDia = infoDetalhe.ValorDescontoDia.ToString().Replace(".", "").Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(83, 92, valorDescontoDia.PadLeft(10, '0'));
-                }
-                if (infoDetalhe.ValorDesconto.ToString().Contains('.'))
-                {
-                    valorDescontoDia = infoDetalhe.ValorDescontoDia.ToString().Replace(".", "");
-                    detalhe = detalhe.PreencherValorNaLinha(83, 92, valorDescontoDia.PadLeft(10, '0'));
-                }
-                if (infoDetalhe.ValorDesconto.ToString().Contains(','))
-                {
-                    valorDescontoDia = infoDetalhe.ValorDescontoDia.ToString().Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(83, 92, valorDescontoDia.PadLeft(10, '0'));
-                }
-
-                detalhe = detalhe.PreencherValorNaLinha(83, 92, valorDescontoDia.PadLeft(10, '0'));
+                
+                detalhe = detalhe.PreencherValorNaLinha(83, 92, infoDetalhe.ValorDescontoDia.ToStringParaVoloresDecimais().PadLeft(10, '0'));
 
                 #endregion
 
@@ -228,32 +209,15 @@ namespace BoletoBr.Bancos.Bradesco
 
                 // Valor de Mora Por Dia de Atraso
                 /* Bradesco não passa % para juros e sim o valor calculado a ser cobrado por dia */
-                var jurosBoleto = string.Empty;
+                
 
                 if (infoDetalhe.ValorMoraDia > 0)
                 {
                     var valorCobrarJuroDia = infoDetalhe.ValorBoleto * ((infoDetalhe.ValorMoraDia / 30) / 100);
                     infoDetalhe.ValorCobradoDiaAtraso = Math.Round(valorCobrarJuroDia, 2);
                 }
-
-                if (infoDetalhe.ValorCobradoDiaAtraso.ToString().Contains('.') &&
-                    infoDetalhe.ValorCobradoDiaAtraso.ToString().Contains(','))
-                {
-                    jurosBoleto = infoDetalhe.ValorCobradoDiaAtraso.ToString().Replace(".", "").Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(161, 173, jurosBoleto.PadLeft(13, '0'));
-                }
-                if (infoDetalhe.ValorCobradoDiaAtraso.ToString().Contains('.'))
-                {
-                    jurosBoleto = infoDetalhe.ValorCobradoDiaAtraso.ToString().Replace(".", "");
-                    detalhe = detalhe.PreencherValorNaLinha(161, 173, jurosBoleto.PadLeft(13, '0'));
-                }
-                if (infoDetalhe.ValorCobradoDiaAtraso.ToString().Contains(','))
-                {
-                    jurosBoleto = infoDetalhe.ValorCobradoDiaAtraso.ToString().Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(161, 173, jurosBoleto.PadLeft(13, '0'));
-                }
-
-                detalhe = detalhe.PreencherValorNaLinha(161, 173, jurosBoleto.PadLeft(13, '0'));
+                
+                detalhe = detalhe.PreencherValorNaLinha(161, 173, infoDetalhe.ValorCobradoDiaAtraso.ToStringParaVoloresDecimais().PadLeft(13, '0'));
 
                 #endregion
 
@@ -266,59 +230,20 @@ namespace BoletoBr.Bancos.Bradesco
 
                 #region VALOR DESCONTO
 
-                detalhe = detalhe.PreencherValorNaLinha(180, 192,
-                    infoDetalhe.ValorDesconto.ToString("f").Replace(".", "").Replace(",", "").PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(180, 192, infoDetalhe.ValorDesconto.ToStringParaVoloresDecimais().PadLeft(13, '0'));
 
                 #endregion
 
                 #region VALOR IOF
-
-                string iofBoleto;
-
-                if (infoDetalhe.ValorIof.ToString().Contains('.') && infoDetalhe.ValorIof.ToString().Contains(','))
-                {
-                    iofBoleto = infoDetalhe.ValorIof.ToString().Replace(".", "").Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(193, 205, iofBoleto.PadLeft(13, '0'));
-                }
-                if (infoDetalhe.ValorIof.ToString().Contains('.'))
-                {
-                    iofBoleto = infoDetalhe.ValorIof.ToString().Replace(".", "");
-                    detalhe = detalhe.PreencherValorNaLinha(193, 205, iofBoleto.PadLeft(13, '0'));
-                }
-                if (infoDetalhe.ValorIof.ToString().Contains(','))
-                {
-                    iofBoleto = infoDetalhe.ValorIof.ToString().Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(193, 205, iofBoleto.PadLeft(13, '0'));
-                }
-
-                detalhe = detalhe.PreencherValorNaLinha(193, 205, infoDetalhe.ValorIof.ToString().PadLeft(13, '0'));
+                
+                detalhe = detalhe.PreencherValorNaLinha(193, 205, infoDetalhe.ValorIof.ToStringParaVoloresDecimais().PadLeft(13, '0'));
                 // Valor do I.O.F. recolhido p/ notas seguro
 
                 #endregion
 
                 #region VALOR ABATIMENTO
 
-                string abatimentoBoleto;
-
-                if (infoDetalhe.ValorAbatimento.ToString().Contains('.') &&
-                    infoDetalhe.ValorAbatimento.ToString().Contains(','))
-                {
-                    abatimentoBoleto = infoDetalhe.ValorAbatimento.ToString().Replace(".", "").Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(206, 218, abatimentoBoleto.PadLeft(13, '0'));
-                }
-                if (infoDetalhe.ValorAbatimento.ToString().Contains('.'))
-                {
-                    abatimentoBoleto = infoDetalhe.ValorAbatimento.ToString().Replace(".", "");
-                    detalhe = detalhe.PreencherValorNaLinha(206, 218, abatimentoBoleto.PadLeft(13, '0'));
-                }
-                if (infoDetalhe.ValorAbatimento.ToString().Contains(','))
-                {
-                    abatimentoBoleto = infoDetalhe.ValorAbatimento.ToString().Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(206, 218, abatimentoBoleto.PadLeft(13, '0'));
-                }
-
-                detalhe = detalhe.PreencherValorNaLinha(206, 218,
-                    infoDetalhe.ValorAbatimento.ToString().PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(206, 218, infoDetalhe.ValorAbatimento.ToStringParaVoloresDecimais().PadLeft(13, '0'));
 
                 #endregion
 
