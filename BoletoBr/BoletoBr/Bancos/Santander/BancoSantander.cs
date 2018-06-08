@@ -1000,7 +1000,7 @@ namespace BoletoBr.Bancos.Santander
             var multiplicador = 2;
 
             var posicaoAtual = 1;
-            while (posicaoAtual < seq.Length)
+            while (posicaoAtual <= seq.Length)
             {
                 int valorPosicao = Convert.ToInt32(seq.Substring(seq.Length - posicaoAtual, 1));
                 total += valorPosicao*multiplicador;
