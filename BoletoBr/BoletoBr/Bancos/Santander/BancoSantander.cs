@@ -999,22 +999,15 @@ namespace BoletoBr.Bancos.Santander
             var total = 0;
             var multiplicador = 2;
 
-            char[] posicaoSeq = seq.ToCharArray();
-            Array.Reverse(posicaoSeq);
-            var sequencia = new string(posicaoSeq);
-
-            while (sequencia.Length > 0)
+            var posicaoAtual = 1;
+            while (posicaoAtual < seq.Length)
             {
-                int valorPosicao = Convert.ToInt32(sequencia.Substring(sequencia.Length - 1, 1));
+                int valorPosicao = Convert.ToInt32(seq.Substring(seq.Length - posicaoAtual, 1));
                 total += valorPosicao*multiplicador;
+                posicaoAtual++;
                 multiplicador++;
-
                 if (multiplicador == 10)
-                {
                     multiplicador = 2;
-                }
-
-                sequencia = sequencia.Remove(sequencia.Length - 1, 1);
             }
 
             nresto = total - ((total/11)*11);
