@@ -100,7 +100,12 @@ namespace BoletoBr.Bancos.Santander
             if (infoDetalhe.CarteiraCobranca == "102")
                 codigoCarteira = "4";
             if (infoDetalhe.CarteiraCobranca == "104")
-                codigoCarteira = "7";
+            {
+                if (infoDetalhe.BancoEmiteBoleto)
+                    codigoCarteira = "1";
+                else
+                    codigoCarteira = "7";
+            }
             if (infoDetalhe.CarteiraCobranca == "201")
             {
                 if (infoDetalhe.BancoEmiteBoleto)

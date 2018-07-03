@@ -638,7 +638,7 @@ namespace BoletoBr.Bancos.Safra
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
         {
             if (linhasArquivo == null || linhasArquivo.Any() == false)
-                throw new ApplicationException("Arquivo informado é inválido.");
+                throw new ApplicationException("Arquivo informado é inválido/Não existem títulos no retorno.");
 
             /* Identifica o layout: 400 */
             if (linhasArquivo.First().Length == 400)

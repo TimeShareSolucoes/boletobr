@@ -477,7 +477,7 @@ namespace BoletoBr.Bancos.Itau
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 02,
-                        Descricao = "ENTRADA CONFIRMADA COM POSSIBILIDADE DE MENSAGEM"
+                        Descricao = "ENTRADA CONFIRMADA"/* COM POSSIBILIDADE DE MENSAGEM*/
                     };
                 case 03:
                     return new CodigoOcorrencia(numeroOcorrencia)
@@ -1310,7 +1310,7 @@ namespace BoletoBr.Bancos.Itau
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
         {
             if (linhasArquivo == null || linhasArquivo.Any() == false)
-                throw new ApplicationException("Arquivo informado é inválido.");
+                throw new ApplicationException("Arquivo informado é inválido/Não existem títulos no retorno.");
 
             /* Identifica o layout: 240 ou 400 */
             if (linhasArquivo.First().Length == 240)

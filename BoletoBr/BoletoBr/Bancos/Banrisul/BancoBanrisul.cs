@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using BoletoBr.Arquivo.CNAB240.Remessa;
 using BoletoBr.Arquivo.CNAB400.Remessa;
 using BoletoBr.Arquivo.Generico.Retorno;
+using BoletoBr.Bancos.Itau;
 using BoletoBr.Dominio;
 using BoletoBr.Enums;
 
@@ -225,7 +226,235 @@ namespace BoletoBr.Bancos.Banrisul
 
         public ICodigoOcorrencia ObtemCodigoOcorrenciaByInt(int numeroOcorrencia)
         {
-            throw new NotImplementedException();
+            switch (numeroOcorrencia)
+            {
+                case 02:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "CONFIRMAÇÃO DE ENTRADA"
+                    };
+                case 03:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "ENTRADA REJEITADA"
+                    };
+                case 04:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "BAIXA DE TÍTULO LIQUIDADO POR EDITAL"
+                    };
+                case 06:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "LIQUIDAÇÃO NORMAL"
+                    };
+                case 07:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "LIQUIDAÇÃO PARCIAL"
+                    };
+                case 08:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "BAIXA POR PAGAMENTO, LIQUIDAÇÃO PELO SALDO"
+                    };
+                case 09:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "DEVOLUÇÃO AUTOMÁTICA"
+                    };
+                case 10:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "BAIXADO CONFORME INSTRUÇÕES"
+                    };
+                case 11:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "ARQUIVO LEVANTAMENTO"
+                    };
+                case 12:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "CONCESSÃO DE ABATIMENTO"
+                    };
+                case 13:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "CANCELAMENTO DE ABATIMENTO"
+                    };
+                case 14:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "VENCIMENTO ALTERADO"
+                    };
+                case 15:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "PAGAMENTO EM CARTÓRIO"
+                    };
+                case 16:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "ALTERAÇÃO DE DADOS (*)"
+                    };
+                case 18:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "ALTERAÇÃO DE INSTRUÇÕES (*)"
+                    };
+                case 19:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "CONFIRMAÇÃO DE INSTRUÇÃO PROTESTO"
+                    };
+                case 20:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "CONFIRMAÇÃO DE INSTRUÇÃO PARA SUSTAR PROTESTO"
+                    };
+                case 21:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "AGUARDANDO AUTORIZAÇÃO PARA PROTESTO POR EDITAL"
+                    };
+                case 22:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "PROTESTO SUSTADO POR ALTERAÇÃO DE VENCIMENTO E PRAZO DE CARTÓRIO"
+                    };
+                case 23:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "CONFIRMAÇÃO DA ENTRADA EM CARTÓRIO"
+                    };
+                case 24:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "ALTERAÇÕES DE DADOS DO SACADOR"
+                    };
+                case 25:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "DEVOLUÇÃO, LIQUIDADO ANTERIORMENTE"
+                    };
+                case 26:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "DEVOLVIDO PELO CARTÓRIO – ERRO DE INFORMAÇÃO."
+                    };
+                case 30:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "COBRANÇA A CREDITAR (LIQUIDAÇÃO EM TRÂNSITO) (**)"
+                    };
+                case 31:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "TÍTULO EM TRÂNSITO PAGO EM CARTÓRIO (**)"
+                    };
+                case 32:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "REEMBOLSO E TRANSFERÊNCIA DESCONTO E VENDOR OU CARTEIRA EM GARANTIA"
+                    };
+                case 33:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "REEMBOLSO E DEVOLUÇÃO DESCONTO E VENDOR"
+                    };
+                case 34:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "REEMBOLSO NÃO EFETUADO POR FALTA DE SALDO"
+                    };
+                case 40:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "BAIXA DE TÍTULOS PROTESTADOS (**)"
+                    };
+                case 41:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "DESPESA DE APONTE. (**)"
+                    };
+                case 42:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "ALTERAÇÃO DE TÍTULO"
+                    };
+                case 43:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "RELAÇÃO DE TÍTULOS"
+                    };
+                case 44:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "MANUTENÇÃO MENSAL"
+                    };
+                case 45:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "SUSTAÇÃO DE CARTÓRIO E ENVIO DE TÍTULO A CARTÓRIO"
+                    };
+                case 46:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "FORNECIMENTO DE FORMULÁRIO PRÉ-IMPRESSO"
+                    };
+                case 47:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "CONFIRMAÇÃO DE ENTRADA – PAGADOR DDA (**)"
+                    };
+                case 68:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = numeroOcorrencia,
+                        Descricao = "ACERTO DOS DADOS DO RATEIO DE CRÉDITO"
+                    };
+            }
+            throw new Exception(
+                String.Format(
+                    "Não foi possível obter Código de Comando/Movimento/Ocorrência. Banco: {0} Código: {1}",
+                    CodigoBanco, numeroOcorrencia.ToString()));
         }
 
         public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRemessa ocorrencia, double valorOcorrencia,
@@ -356,7 +585,21 @@ namespace BoletoBr.Bancos.Banrisul
 
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
         {
-            throw new NotImplementedException();
+
+            if (linhasArquivo == null || linhasArquivo.Any() == false)
+                throw new ApplicationException("Arquivo informado é inválido/Não existem títulos no retorno.");
+            
+            if (linhasArquivo.First().Length == 400)
+            {
+                var leitor = new LeitorRetornoCnab400Banrisul(linhasArquivo);
+                var retornoProcessado = leitor.ProcessarRetorno();
+
+                var objRetornar = new RetornoGenerico(retornoProcessado);
+                return objRetornar;
+            }
+
+            throw new Exception("Arquivo de RETORNO com " + linhasArquivo.First().Length + " posições, não é suportado.");
+
         }
 
         public RemessaCnab240 GerarArquivoRemessaCnab240(List<Boleto> boletos)

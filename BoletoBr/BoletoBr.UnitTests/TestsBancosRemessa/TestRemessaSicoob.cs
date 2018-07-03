@@ -17,6 +17,14 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
         [TestMethod]
         public void TestGeracaoArquivoRemessaSicoob()
         {
+
+            var database = 2010;
+            var dataatual = 2012;
+            var periodo = 2;
+            var resultado = (dataatual- dataatual) % periodo;
+
+
+
             var dadosRemessa = new Remessa(Remessa.EnumTipoAmbiemte.Homologacao, EnumCodigoOcorrenciaRemessa.Registro, "2");
 
             var banco = Fabricas.BancoFactory.ObterBanco("756", "0");

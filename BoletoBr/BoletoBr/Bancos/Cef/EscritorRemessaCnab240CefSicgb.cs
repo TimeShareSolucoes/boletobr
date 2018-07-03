@@ -613,7 +613,8 @@ namespace BoletoBr.Bancos.Cef
 
                 listaRet.Add(EscreverDetalheSegmentoP(detalhe.SegmentoP));
                 listaRet.Add(EscreverDetalheSegmentoQ(detalhe.SegmentoQ));
-                listaRet.Add(EscreverDetalheSegmentoR(detalhe.SegmentoR));
+                if(detalhe.SegmentoP.BancoEmiteBoleto && detalhe.SegmentoR.ValorMulta > 0)
+                    listaRet.Add(EscreverDetalheSegmentoR(detalhe.SegmentoR));
             }
 
             listaRet.Add(EscreverTrailerDeLote(loteEscrever.TrailerLote));

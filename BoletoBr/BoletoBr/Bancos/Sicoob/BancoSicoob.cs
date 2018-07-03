@@ -666,7 +666,7 @@ namespace BoletoBr.Bancos.Sicoob
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
         {
             if (linhasArquivo == null || linhasArquivo.Any() == false)
-                throw new ApplicationException("Arquivo informado é inválido.");
+                throw new ApplicationException("Arquivo informado é inválido/Não existem títulos no retorno.");
 
             /* Identifica o layout: 240 ou 400 */
             if (linhasArquivo.First().Length == 240)
