@@ -10,12 +10,13 @@ namespace BoletoBr.Fabricas
 {
     /// <summary>
     /// Auxilia na criação de objetos de remessa
+    /// utilizaSegmentoR => utilizado para indformar ao banco instruções de multa
     /// </summary>
     public class RemessaFactory
     {
         public RemessaCnab240 GerarRemessa(HeaderRemessaCnab240 header, HeaderLoteRemessaCnab240 headerLote,
             List<Boleto> boletos, TrailerLoteRemessaCnab240 trailerLote,
-            TrailerRemessaCnab240 trailer)
+            TrailerRemessaCnab240 trailer, bool utilizaSegmentoR = false)
         {
             var objReturn = new RemessaCnab240();
 
@@ -28,13 +29,15 @@ namespace BoletoBr.Fabricas
             var contador = 1;
             var reg1 = 1;
             var reg2 = 2;
+            var reg3 = utilizaSegmentoR ? 3 : 0;
 
             foreach (var boletoAddRemessa in boletos)
             {
-                objReturn.AdicionarBoletoAoLote(ultimoLoteAdicionado, boletoAddRemessa, contador, reg1, reg2);
+                objReturn.AdicionarBoletoAoLote(ultimoLoteAdicionado, boletoAddRemessa, contador, reg1, reg2, reg3);
                 contador++;
-                reg1 = reg1 + 2;
-                reg2 = reg2 + 2;
+                reg1 += utilizaSegmentoR ? 3 :2;
+                reg2 += utilizaSegmentoR ? 3 : 2;
+                reg3 += utilizaSegmentoR ? 3 : 0;
             }
 
             objReturn.Trailer = trailer;
@@ -42,7 +45,8 @@ namespace BoletoBr.Fabricas
             return objReturn;
         }
 
-        public RemessaCnab400 GerarRemessa(HeaderRemessaCnab400 header, List<Boleto> boletos, List<DetalheRemessaCnab400> detalhes, TrailerRemessaCnab400 trailer)
+        public RemessaCnab400 GerarRemessa(HeaderRemessaCnab400 header, List<Boleto> boletos,
+            List<DetalheRemessaCnab400> detalhes, TrailerRemessaCnab400 trailer)
         {
             //var contadorSequencialRegistro = 1;
             var objReturn = new RemessaCnab400();

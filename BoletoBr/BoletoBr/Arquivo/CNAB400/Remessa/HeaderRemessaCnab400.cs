@@ -20,11 +20,12 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             this.NumeroSequencialRemessa = numeroSequencialRemessa;
             this.NumeroSequencialRegistro = numeroSequencialRegistro;
             this.Convenio = boleto.CedenteBoleto.Convenio;
-
+            this.CodigoCarteira = boleto.CarteiraCobranca.Codigo;
             if (dataHora == null)
                 this.DataDeGravacao = DateTime.Now;
             else
                 this.DataDeGravacao = (DateTime) dataHora;
+            this.CodigoClienteOfficeBanking = boleto.CedenteBoleto.CodigoClienteOfficeBanking;
 
             #region #033|SANTANDER
 
@@ -35,6 +36,7 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
         }
 
         public string CodigoBanco { get; set; }
+        public string CodigoCarteira { get; set; }
         public DateTime DataDeGravacao { get; set; }
         public int NumeroSequencialRegistro { get; set; }
         public int NumeroSequencialRemessa { get; set; }
@@ -61,6 +63,10 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
 
         public string Convenio { get; set; }
 
+        #endregion
+
+        #region #041|BANRISUL
+        public string CodigoClienteOfficeBanking { get; set; }
         #endregion
     }
 }

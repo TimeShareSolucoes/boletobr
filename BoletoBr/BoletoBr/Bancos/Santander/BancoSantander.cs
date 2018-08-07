@@ -14,6 +14,19 @@ using BoletoBr.Interfaces;
 
 namespace BoletoBr.Bancos.Santander
 {
+
+
+    /*
+        * 033 - Banco Santander
+        * Carteira 101 - Cobrança Simples Rápida com Registro - RCR
+        * Carteira 102 - Cobrança Simples sem Registro - CSR
+        * Carteira 104 - Cobrança Simples Rápida com Registro - RCR - Banco emite
+        * Carteira 201 - Cobrança Penhor Rápida com Registro - RCR
+        * Carteira COB - Cobrança simples, sem registro (antiga)
+        * Carteira CSR - Cobrança Simples sem Registro (antiga)
+        * Carteira ECR - Cobrança Simples com Registro (antiga)
+        */
+
     /* Códigos do Banco
      * 008-6 -> Banco Santander Meridional S.A.
      * 033-4 -> Banco do Estado de São Paulo S.A. - Banespa
@@ -46,7 +59,7 @@ namespace BoletoBr.Bancos.Santander
             //throw new NotImplementedException("Função não implementada.");
             if (
                 !((boleto.CarteiraCobranca.Codigo == "102") || (boleto.CarteiraCobranca.Codigo == "101") ||
-                  (boleto.CarteiraCobranca.Codigo == "201")))
+                  (boleto.CarteiraCobranca.Codigo == "201")|| (boleto.CarteiraCobranca.Codigo == "104")))
                 throw new NotImplementedException("Carteira não implementada.");
 
             //Banco 008  - Utilizar somente 09 posições do Nosso Numero (08 posições + DV), zerando os 04 primeiros dígitos
@@ -148,11 +161,11 @@ namespace BoletoBr.Bancos.Santander
         {
             var codigoBanco = CodigoBanco.PadLeft(3, '0'); //3
             var codigoMoeda = MoedaBanco; //1
-            var fatorVencimento = Common.FatorVencimento(boleto.DataVencimento).ToString(); //4
-            var valorNominal = boleto.ValorBoleto.ToString("f").Replace(",", "").Replace(".", "").PadLeft(10, '0'); //10
+            var fatorVencimento = Common.FatorVencimento(boleto.DataVencimento).ToString().PadLeft(4, '0'); //4
+            var valorNominal = boleto.ValorBoleto.ToStringParaVoloresDecimais().PadLeft(10, '0'); //10
             const string fixo = "9"; //1
             var codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'); //7
-            var nossoNumero = boleto.NossoNumeroFormatado.Replace("-", "").PadLeft(13, '0'); //13
+            var nossoNumero = boleto.NossoNumeroFormatado.Replace("-", "").Replace(",", "").Replace(".", "").PadLeft(13, '0'); //13
             var ios = boleto.PercentualIOS.ToString(); //1
             var tipoCarteira = boleto.CarteiraCobranca.Codigo; //3;
 
@@ -617,8 +630,8 @@ namespace BoletoBr.Bancos.Santander
                 case 03:
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
-                        Codigo = 02,
-                        Descricao = "ENTRADA TÍT. CONFIRMADA"
+                        Codigo = 03,
+                        Descricao = "ENTRADA REJEITADA"
                     };
                 case 06:
                     return new CodigoOcorrencia(numeroOcorrencia)
@@ -959,7 +972,7 @@ namespace BoletoBr.Bancos.Santander
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
         {
             if (linhasArquivo == null || linhasArquivo.Any() == false)
-                throw new ApplicationException("Arquivo informado é inválido.");
+                throw new ApplicationException("Arquivo informado é inválido/Não existem títulos no retorno.");
 
             /* Identifica o layout: 240 ou 400 */
             if (linhasArquivo.First().Length == 240)
@@ -999,22 +1012,15 @@ namespace BoletoBr.Bancos.Santander
             var total = 0;
             var multiplicador = 2;
 
-            char[] posicaoSeq = seq.ToCharArray();
-            Array.Reverse(posicaoSeq);
-            var sequencia = new string(posicaoSeq);
-
-            while (sequencia.Length > 0)
+            var posicaoAtual = 1;
+            while (posicaoAtual <= seq.Length)
             {
-                int valorPosicao = Convert.ToInt32(sequencia.Substring(0, 1));
+                int valorPosicao = Convert.ToInt32(seq.Substring(seq.Length - posicaoAtual, 1));
                 total += valorPosicao*multiplicador;
+                posicaoAtual++;
                 multiplicador++;
-
                 if (multiplicador == 10)
-                {
                     multiplicador = 2;
-                }
-
-                sequencia = sequencia.Remove(0, 1);
             }
 
             nresto = total - ((total/11)*11);
@@ -1105,6 +1111,20 @@ namespace BoletoBr.Bancos.Santander
 
                 return ndig;
             }
+        }
+        public int CodigoJurosMora(CodigoJurosMora codigoJurosMora)
+        {
+            return 0;
+        }
+
+        public int CodigoProteso(bool protestar = true)
+        {
+            var codProtesto = 0;
+            if (protestar)
+                codProtesto = 7;
+            else
+                codProtesto = 7;
+            return codProtesto;
         }
     }
 }

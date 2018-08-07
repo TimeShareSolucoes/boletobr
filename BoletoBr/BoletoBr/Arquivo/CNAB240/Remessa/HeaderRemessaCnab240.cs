@@ -12,9 +12,17 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
             this.AgenciaMantenedora = boleto.CedenteBoleto.ContaBancariaCedente.Agencia;
             this.DigitoAgenciaMantenedora = boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia;
             this.CodigoCedente = boleto.CedenteBoleto.CodigoCedente;
+            this.DigitoCedente = boleto.CedenteBoleto.DigitoCedente;
             this.NomeEmpresa = boleto.CedenteBoleto.Nome;
             this.SequencialNsa = sequencialArquivo;
+
+            this.NumeroContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.Conta;
+            this.DigitoContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta;
         }
+
+        public string DigitoContaCorrente { get; set; }
+
+        public string NumeroContaCorrente { get; set; }
 
         public string CodigoBanco { get; set; }
         public int LoteServico { get; set; }
@@ -24,6 +32,7 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
         public string AgenciaMantenedora { get; set; }
         public string DigitoAgenciaMantenedora { get; set; }
         public string CodigoCedente { get; set; }
+        public int DigitoCedente { get; set; }
         public string NomeEmpresa { get; set; }
         public string NomeBanco { get; set; }
         public string CodigoRemessa { get; set; }

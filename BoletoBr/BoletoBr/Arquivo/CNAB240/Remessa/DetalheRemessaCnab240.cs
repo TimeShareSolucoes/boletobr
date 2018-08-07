@@ -11,7 +11,7 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
         {
             SegmentoP = new DetalheSegmentoPRemessaCnab240(boleto, numeroRegistroNoLote);
             SegmentoQ = new DetalheSegmentoQRemessaCnab240(boleto, numeroRegistroNoLote);
-            SegmentoR = new DetalheSegmentoRRemessaCnab240();
+            SegmentoR = new DetalheSegmentoRRemessaCnab240(boleto, numeroRegistroNoLote);
             SegmentoS = new DetalheSegmentoSRemessaCnab240();
             SegmentoY = new DetalheSegmentoYRemessaCnab240();
             SegmentoY08 = new DetalheSegmentoY08RemessaCnab240();

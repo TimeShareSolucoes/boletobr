@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using BoletoBr.Arquivo.CNAB240.Retorno;
+using BoletoBr.Dominio;
 using BoletoBr.Fabricas;
 
 namespace BoletoBr.Arquivo.Generico.Retorno
@@ -63,6 +65,13 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     //detalheGenericoAdd.ValorIof = d.SegmentoU.ValorIofRecolhido / 100;
                     //detalheGenericoAdd.ValorOutrasDespesas = d.SegmentoU.ValorOutrasDespesas / 100;
                     //detalheGenericoAdd.ValorOutrosCreditos = d.SegmentoU.ValorOutrosCreditos / 100;
+                    var banco = BancoFactory.ObterBanco(d.SegmentoU?.CodigoBanco.ToString());
+                    var ocorrencia = banco.ObtemCodigoOcorrenciaByInt(d.SegmentoU.BoletoBrToBind().CodigoMovimento);
+                    if (ocorrencia.Descricao == "ENTRADA REJEITADA")
+                        ocorrencia = new CodigoOcorrencia(ocorrencia.Codigo) {Descricao = $@"{ocorrencia.Descricao}. Motivo: {d.SegmentoT.MotivoOcorrencia}"};
+                    detalheGenericoAdd.CodigoOcorrencia = ocorrencia?.Codigo.ToString();
+                    detalheGenericoAdd.MensagemOcorrenciaRetornoBancario = ocorrencia?.Descricao;
+                    detalheGenericoAdd.Ocorrencia = ocorrencia;
                     //detalheGenericoAdd.CodigoOcorrencia = d.SegmentoU.CodigoOcorrenciaPagador;
                     //detalheGenericoAdd.DataOcorrencia = d.SegmentoU.DataOcorrenciaPagador;
                     //detalheGenericoAdd.ValorOcorrencia = d.SegmentoU.ValorOcorrenciaPagador / 100;
@@ -93,12 +102,13 @@ namespace BoletoBr.Arquivo.Generico.Retorno
             Header.DvConta = retornoCnab400.Header.DvContaCorrente;
             Header.NomeEmpresa = retornoCnab400.Header.NomeDoBeneficiario;
             Header.NomeDoBanco = retornoCnab400.Header.NomeDoBanco;
+            Header.NumeroInscricaoEmpresa =
+                retornoCnab400.RegistrosDetalhe.FirstOrDefault()?.IdentificacaoEmpresaNoBanco;
 
             foreach (var registroAtual in retornoCnab400.RegistrosDetalhe)
             {
                 var banco = BancoFactory.ObterBanco(Header.CodigoDoBanco);
                 var ocorrencia = banco.ObtemCodigoOcorrenciaByInt(registroAtual.CodigoDeOcorrencia);
-
                 var detalheGenericoAdd = new RetornoDetalheGenerico
                 {
                     NossoNumero = registroAtual.NossoNumero,

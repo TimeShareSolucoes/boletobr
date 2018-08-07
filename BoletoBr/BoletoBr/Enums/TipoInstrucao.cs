@@ -99,7 +99,15 @@ namespace BoletoBr.Enums
         MultaDeVPorCentoSobreValorTitulo,
         MultaDeVPorCentoSobreValorTituloMaisEncargos,
         MultaDeVPorCentoAposNDiasCorridosValorTituloMaisEncargos,
-        CobrarJurosMaisVariacaoIDTR50
+        CobrarJurosMaisVariacaoIDTR50,
+
+        #endregion
+
+        #region Safra
+
+        NaoReceberPrincipalSemJurosdeMora,
+        DevolverSenaoPagoAte15DiasAposVencimento,
+        DevolverSenaoPagoAte30DiasAposVencimento,
 
         #endregion
     }

@@ -202,7 +202,7 @@ namespace BoletoBr.Bancos.Sicoob
                 if (infoDetalhe.DataLimiteConcessaoDesconto == DateTime.MinValue)
                     detalhe = detalhe.PreencherValorNaLinha(174, 179, string.Empty.PadLeft(6, '0'));
                 else
-                    detalhe = detalhe.PreencherValorNaLinha(174, 179, infoDetalhe.DataDesconto.ToString("ddMMyy"));
+                    detalhe = detalhe.PreencherValorNaLinha(174, 179, infoDetalhe.DataLimiteConcessaoDesconto.ToString("ddMMyy"));
 
                 detalhe = detalhe.PreencherValorNaLinha(180, 192,
                     infoDetalhe.ValorDesconto.ToString().Replace(",", "").PadLeft(13, '0'));

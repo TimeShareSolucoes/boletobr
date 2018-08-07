@@ -584,7 +584,7 @@ namespace BoletoBr.Bancos.BRB
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
         {
             if (linhasArquivo == null || linhasArquivo.Any() == false)
-                throw new ApplicationException("Arquivo informado é inválido.");
+                throw new ApplicationException("Arquivo informado é inválido/Não existem títulos no retorno.");
 
             /* Identifica o layout: 400 */
             if (linhasArquivo.First().Length == 400)
@@ -607,6 +607,15 @@ namespace BoletoBr.Bancos.BRB
         public RemessaCnab400 GerarArquivoRemessaCnab400(List<Boleto> boletos)
         {
             throw new NotImplementedException();
+        }
+        public int CodigoJurosMora(CodigoJurosMora codigoJurosMora)
+        {
+            return 0;
+        }
+
+        public int CodigoProteso(bool protestar = true)
+        {
+            return 0;
         }
     }
 }

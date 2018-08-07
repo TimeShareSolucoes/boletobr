@@ -214,6 +214,9 @@ namespace BoletoBr.View.Win
                     layoutControlItemCodigoCedente.Visibility = LayoutVisibility.Always;
                     layoutControlItemDigitoCedente.Visibility = LayoutVisibility.Always;
                     break;
+                case "707":
+                    layoutControlItemConvenio.Visibility = LayoutVisibility.Always;
+                    break;
             }
         }
 

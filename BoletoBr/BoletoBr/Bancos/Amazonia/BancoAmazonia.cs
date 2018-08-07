@@ -203,6 +203,16 @@ namespace BoletoBr.Bancos.Amazonia
             throw new NotImplementedException();
         }
 
+        public int CodigoJurosMora(CodigoJurosMora codigoJurosMora)
+        {
+            return 0;
+        }
+
+        public int CodigoProteso(bool protestar = true)
+        {
+            return 0;
+        }
+
         public void FormataNossoNumero(Boleto boleto)
         {
             boleto.SetNossoNumeroFormatado(string.Format("{0}", boleto.IdentificadorInternoBoleto.PadLeft(16, '0')));

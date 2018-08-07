@@ -114,8 +114,8 @@ namespace BoletoBr.UnitTests.TestsBancosRemessa
             {
                 sb.AppendLine(linha);
             }
-
-            File.WriteAllLines("C:\\REMESSA.TXT", linhasEscrever.ToArray());
+            //Assert.Equals(1, 1);
+            //File.WriteAllLines("C:\\REMESSA.TXT", linhasEscrever.ToArray());
         }
 
         [TestMethod]

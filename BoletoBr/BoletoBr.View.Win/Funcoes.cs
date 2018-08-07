@@ -344,7 +344,8 @@ namespace BoletoBr.View.Win
                 * Conta a quantidade de itens na lista multiplica por 2 ( cada boleto terá um detalhe segmento P e um detalhe segmento Q ) e adiciona + 2 (Header do Lote e Trailer do Lote)
                 */
                 // TODO: Atualmente só considera 1 lote de informações no arquivo.
-                var qtdRegistrosNoLote = (listaBoletoBrRemessa.Count*2) + 2;
+                var qtdSegmantos = carteiraBoleto.ValorMulta > 0 && carteiraBoleto.BancoGeraBoleto ? 3 : 2;
+                var qtdRegistrosNoLote = (listaBoletoBrRemessa.Count * qtdSegmantos) + 2;
 
                 /* Usado no Trailer do Arquivo */
                 // TODO: Atualmente só gera 1 lote de informações no arquivo.

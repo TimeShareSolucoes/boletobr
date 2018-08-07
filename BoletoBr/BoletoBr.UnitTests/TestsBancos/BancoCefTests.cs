@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using BoletoBr.Arquivo;
 using BoletoBr.Dominio;
@@ -390,6 +391,17 @@ namespace BoletoBr.UnitTests.TestsBancos
             Assert.AreEqual("0799/000245-3", boleto.CedenteBoleto.CodigoCedenteFormatado);
         }
 
-        #endregion Carteira SR - SEM REGISTRO
+        [TestMethod]
+        public void Mod11TestesCef()
+        {
+            var NossoNumero = "11000000100418936";// numero aleatório
+            var CodigoBarras = "11000000099990604";// numero aleatório
+            
+            var DVCodigoBarras = Common.Mod11(CodigoBarras, 9).ToString(CultureInfo.InvariantCulture);
+            var dvNossoNumero = Common.Mod11Base9Caixa(NossoNumero).ToString(CultureInfo.InvariantCulture);
+            
+            Assert.IsTrue("6" == DVCodigoBarras && dvNossoNumero == "0");
     }
+    #endregion Carteira SR - SEM REGISTRO
+}
 }

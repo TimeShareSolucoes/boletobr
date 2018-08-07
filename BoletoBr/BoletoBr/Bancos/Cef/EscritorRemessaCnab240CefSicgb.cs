@@ -164,8 +164,11 @@ namespace BoletoBr.Bancos.Cef
                 headerLote = headerLote.PreencherValorNaLinha(4, 7, infoHeaderLote.LoteServico.ToString().PadLeft(4, '0')); // Lote de Serviço
                 headerLote = headerLote.PreencherValorNaLinha(8, 8, "1"); // Tipo de Registro
                 headerLote = headerLote.PreencherValorNaLinha(9, 9, "R");
+                /*
                 // Padronizado para 02 - COBRANÇA SEM REGISTRO
                 headerLote = headerLote.PreencherValorNaLinha(10, 11, "02"); // Tipo de Serviço
+                */
+                headerLote = headerLote.PreencherValorNaLinha(10, 11, infoHeaderLote.TipoRegistro.ToString("n0").PadLeft(2,'0')); // Tipo de Serviço
                 headerLote = headerLote.PreencherValorNaLinha(12, 13, "00"); // Uso Exclusivo FREBRABAN/CNAB
                 headerLote = headerLote.PreencherValorNaLinha(14, 16, "030"); // Nº da versão do Layout do Lote
                 headerLote = headerLote.PreencherValorNaLinha(17, 17, " "); // Uso Exclusivo FREBRABAN/CNAB
@@ -216,7 +219,7 @@ namespace BoletoBr.Bancos.Cef
             #endregion
 
             var CCNNNNNNNNNNNNNNN = infoSegmentoP.NossoNumero.Substring(0, 17);
-
+            var CCNNNNNNNNNNNNNNNComEmisaoPeloBanco = $"{infoSegmentoP.NossoNumero.Substring(0, 2)}000000000000000";
             var segmentoP = new string(' ', 240);
             try
             {
@@ -233,7 +236,8 @@ namespace BoletoBr.Bancos.Cef
                 segmentoP = segmentoP.PreencherValorNaLinha(24, 29, infoSegmentoP.CodigoCedente.PadLeft(6, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(30, 37, string.Empty.PadLeft(8, '0')); // Uso Exclusivo CAIXA
                 segmentoP = segmentoP.PreencherValorNaLinha(38, 40, string.Empty.PadLeft(3, '0')); // Uso Exclusivo CAIXA
-                segmentoP = segmentoP.PreencherValorNaLinha(41, 57, CCNNNNNNNNNNNNNNN);
+
+                segmentoP = segmentoP.PreencherValorNaLinha(41, 57, infoSegmentoP.BancoEmiteBoleto ? CCNNNNNNNNNNNNNNNComEmisaoPeloBanco : CCNNNNNNNNNNNNNNN);
 
                 /* Código da Carteira
                  * '1' = Cobrança Simples
@@ -246,10 +250,12 @@ namespace BoletoBr.Bancos.Cef
                 // Fixo 2 - Escritural
                 segmentoP = segmentoP.PreencherValorNaLinha(60, 60, "2"); // Tipo de Documento
                 // '1' = Banco Emite
-                segmentoP = segmentoP.PreencherValorNaLinha(61, 61, "2"); // Identificação da Emissão do Bloqueto
+                // '2' = Emissão pelo beneficiario
+                segmentoP = segmentoP.PreencherValorNaLinha(61, 61, infoSegmentoP.BancoEmiteBoleto? "1": "2"); // Identificação da Emissão do Bloqueto
+                // '0' = Envio pelo beneficiario
                 // '1' = Sacado Via Correios
-                segmentoP = segmentoP.PreencherValorNaLinha(62, 62, "0"); // Identificação da Entrega do Bloqueto
-                segmentoP = segmentoP.PreencherValorNaLinha(63, 73, infoSegmentoP.NumeroDocumento.PadLeft(11, '0'));
+                segmentoP = segmentoP.PreencherValorNaLinha(62, 62, infoSegmentoP.BancoEmiteBoleto ? "1" : "0"); // Identificação da Entrega do Bloqueto
+                segmentoP = segmentoP.PreencherValorNaLinha(63, 73, (infoSegmentoP.NumeroDocumento.Length > 11? infoSegmentoP.NumeroDocumento.Substring(infoSegmentoP.NumeroDocumento.Length - 11, 11): infoSegmentoP.NumeroDocumento).PadLeft(11, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(74, 77, string.Empty.PadLeft(4, ' '));
                 segmentoP = segmentoP.PreencherValorNaLinha(78, 85, infoSegmentoP.DataVencimento.ToString("ddMMyyyy"));
 
@@ -281,21 +287,25 @@ namespace BoletoBr.Bancos.Cef
                  * 2 - Taxa Mensal
                  * 3 - Isento
                  */
-                segmentoP = segmentoP.PreencherValorNaLinha(118, 118, "3"); // Código do Juros de Mora
+                 segmentoP = segmentoP.PreencherValorNaLinha(118, 118, infoSegmentoP.CodigoJurosMora.ToString().Length > 1 ? infoSegmentoP.CodigoJurosMora.ToString().Substring(infoSegmentoP.NumeroDocumento.Length - 1, 1) : infoSegmentoP.CodigoJurosMora.ToString().PadLeft(1, '0')); // Código do Juros de Mora
 
                 if (infoSegmentoP.DataJurosMora == DateTime.MinValue)
                     segmentoP = segmentoP.PreencherValorNaLinha(119, 126, string.Empty.PadLeft(8, '0'));
                 else
                     segmentoP = segmentoP.PreencherValorNaLinha(119, 126, infoSegmentoP.DataJurosMora.ToString("ddMMyyyy"));
 
-                segmentoP = segmentoP.PreencherValorNaLinha(127, 141, infoSegmentoP.ValorJurosMora.ToString().Replace(".", "").Replace(",", "").PadLeft(15, '0'));
+                segmentoP = segmentoP.PreencherValorNaLinha(127, 141, infoSegmentoP.ValorJurosMora.GetValueOrDefault().ToString("##.00").Replace(".", "").Replace(",", "").PadLeft(15, '0'));
                 /* Código do Desconto
                  * 0 - Sem desconto
                  * 1 - Valor fixo até a data informada
                  * 2 - Percentual até a data informada
                  * Obs.: Para os códigos '1' e '2' será obrigatório a informação da data.
                  */
-                segmentoP = segmentoP.PreencherValorNaLinha(142, 142, "0"); // Código do Desconto 1
+                if (infoSegmentoP.ValorDesconto1 > 0)
+                    segmentoP = segmentoP.PreencherValorNaLinha(142, 142, "1"); // Código do Desconto 1
+                else
+                    segmentoP = segmentoP.PreencherValorNaLinha(142, 142, "0"); // Código do Desconto 0
+                /*segmentoP = segmentoP.PreencherValorNaLinha(142, 142, "0"); // Código do Desconto 1*/
 
                 if (infoSegmentoP.DataDesconto1 == DateTime.MinValue)
                     segmentoP = segmentoP.PreencherValorNaLinha(143, 150, string.Empty.PadLeft(8, '0'));
@@ -326,7 +336,7 @@ namespace BoletoBr.Bancos.Cef
                 segmentoP = segmentoP.PreencherValorNaLinha(221, 221, "3"); // Código para Protesto
                 segmentoP = segmentoP.PreencherValorNaLinha(222, 223, "00"); // Número de Dias para Protesto
                 segmentoP = segmentoP.PreencherValorNaLinha(224, 224, "1"); // Código para Baixa/Devolução
-                segmentoP = segmentoP.PreencherValorNaLinha(225, 227, "010"); // Número de Dias para Baixa/Devolução
+                segmentoP = segmentoP.PreencherValorNaLinha(225, 227, infoSegmentoP.PrazoBaixaDevolucao > 0 && infoSegmentoP.PrazoBaixaDevolucao < 999 ? infoSegmentoP.PrazoBaixaDevolucao.ToString("000") : "010"); // Número de Dias para Baixa/Devolução
                 
                 // Fixo 09 - REAL
                 segmentoP = segmentoP.PreencherValorNaLinha(228, 229, "09"); // Código da Moeda
@@ -412,10 +422,11 @@ namespace BoletoBr.Bancos.Cef
                     Cep = Cep.Replace(".", "");
                 if (Cep.Contains("-"))
                     Cep = Cep.Replace("-", "");
-
+                if (infoSegmentoQ.UfSacado.Length > 2)
+                    throw new Exception("Unidade federativa com mais de dois dígitos ");
                 segmentoQ = segmentoQ.PreencherValorNaLinha(129, 136, Cep.PadLeft(8, '0'));
                 segmentoQ = segmentoQ.PreencherValorNaLinha(137, 151, cidadeSacado.PadRight(15, '0'));
-                segmentoQ = segmentoQ.PreencherValorNaLinha(152, 153, infoSegmentoQ.UfSacado.PadRight(2, ' '));
+                segmentoQ = segmentoQ.PreencherValorNaLinha(152, 153, infoSegmentoQ.UfSacado.BoletoBrToStringSafe().PadRight(2, ' '));
 
                 if (String.IsNullOrEmpty(infoSegmentoQ.NumeroInscricaoAvalista))
                 {
@@ -455,6 +466,44 @@ namespace BoletoBr.Bancos.Cef
             }
         }
 
+        public string EscreverDetalheSegmentoR(DetalheSegmentoRRemessaCnab240 infoSegmentoR)
+        {
+            var segmentoR = new string(' ', 240);
+            try
+            {
+                segmentoR = segmentoR.PreencherValorNaLinha(1, 3, "104"); // Código do Banco na Compensação
+                segmentoR = segmentoR.PreencherValorNaLinha(4, 7, infoSegmentoR.LoteServico.ToString().PadLeft(4, '0')); // Lote De Serviço
+                segmentoR = segmentoR.PreencherValorNaLinha(8, 8, "3"); // Tipo de Registro
+                segmentoR = segmentoR.PreencherValorNaLinha(9, 13, infoSegmentoR.NumeroRegistro.ToString().PadLeft(5, '0'));
+                segmentoR = segmentoR.PreencherValorNaLinha(14, 14, "R"); // Cód. Segmento do Registro Detalhe
+                segmentoR = segmentoR.PreencherValorNaLinha(15, 15, " ");
+                // Padronizado para 01 - Entrada de Título
+                segmentoR = segmentoR.PreencherValorNaLinha(16, 17, "01"); // Código de Movimento Remessa
+                segmentoR = segmentoR.PreencherValorNaLinha(18, 41, string.Empty.PadLeft(24, '0'));//Espaço para segunda instrução de desconto
+                segmentoR = segmentoR.PreencherValorNaLinha(42, 65, string.Empty.PadLeft(24, '0'));//Espaço para terceira instrução de desconto
+                /*
+                 *'0' = Sem Multa
+                 *'1' = Valor Fixo
+                 *'2' = Percentual
+                 */
+                var tipoInstrucaoMulta = infoSegmentoR.ValorMulta > 0 ? "1" : infoSegmentoR.PercentualMulta > 0 ? "2" : "0";
+                segmentoR = segmentoR.PreencherValorNaLinha(66, 66, tipoInstrucaoMulta);
+                segmentoR = segmentoR.PreencherValorNaLinha(67, 74, infoSegmentoR.DataAplicarMulta.ToString("ddMMyyyy"));
+                segmentoR = segmentoR.PreencherValorNaLinha(75, 89, (infoSegmentoR.ValorMulta > 0 ? infoSegmentoR.ValorMulta : infoSegmentoR.PercentualMulta > 0 ? infoSegmentoR.PercentualMulta : 0M).ToStringParaVoloresDecimais().PadLeft(15, '0')); // Valor/Percentual multa
+                segmentoR = segmentoR.PreencherValorNaLinha(90, 99, String.Empty.PadLeft(10,' '));
+                segmentoR = segmentoR.PreencherValorNaLinha(100, 139, String.Empty.PadLeft(40, ' '));
+                segmentoR = segmentoR.PreencherValorNaLinha(140, 179, String.Empty.PadLeft(40, ' '));
+                segmentoR = segmentoR.PreencherValorNaLinha(180, 229, string.Empty.PadLeft(50, ' ')); // Uso Exclusivo CAIXA
+                segmentoR = segmentoR.PreencherValorNaLinha(230, 240, string.Empty.PadLeft(11, ' '));
+
+                return segmentoR;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(String.Format("<BoletoBr>{0}Falha na geração do DETALHE - Segmento P do arquivo de REMESSA.",
+                    Environment.NewLine), e);
+            }
+        }
         public string EscreverTrailerDeLote(TrailerLoteRemessaCnab240 infoTrailerLote)
         {
             if (infoTrailerLote.QtdRegistrosLote == 0)
@@ -469,37 +518,12 @@ namespace BoletoBr.Bancos.Cef
                 trailerLote = trailerLote.PreencherValorNaLinha(9, 17, string.Empty.PadLeft(9, ' '));
                 trailerLote = trailerLote.PreencherValorNaLinha(18, 23, infoTrailerLote.QtdRegistrosLote.ToString().PadLeft(6, '0'));
                 
-                var valorCobrancaSimples = string.Empty;
-                var valorCobrancaCaucionada = string.Empty;
-                var valorCobrancaDescontada = string.Empty;
-
-                if (infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Contains('.') && infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Contains(','))
-                    valorCobrancaSimples = infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Replace(".", "").Replace(",", "");
-                if (infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Contains('.'))
-                    valorCobrancaSimples = infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Replace(".", "");
-                if (infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Contains(','))
-                    valorCobrancaSimples = infoTrailerLote.ValorTitulosCobrancaSimples.ToString("f").Replace(",", "");
-
-                if (infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Contains('.') && infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Contains(','))
-                    valorCobrancaCaucionada = infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Replace(".", "").Replace(",", "");
-                if (infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Contains('.'))
-                    valorCobrancaCaucionada = infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Replace(".", "");
-                if (infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Contains(','))
-                    valorCobrancaCaucionada = infoTrailerLote.ValorTitulosCobrancaCaucionada.ToString("f").Replace(",", "");
-
-                if (infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Contains('.') && infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Contains(','))
-                    valorCobrancaDescontada = infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Replace(".", "").Replace(",", "");
-                if (infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Contains('.'))
-                    valorCobrancaDescontada = infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Replace(".", "");
-                if (infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Contains(','))
-                    valorCobrancaDescontada = infoTrailerLote.ValorTitulosCobrancaDescontada.ToString("f").Replace(",", "");
-
                 trailerLote = trailerLote.PreencherValorNaLinha(24, 29, infoTrailerLote.QtdTitulosCobrancaSimples.ToString().PadLeft(6, '0'));
-                trailerLote = trailerLote.PreencherValorNaLinha(30, 46, valorCobrancaSimples.PadLeft(17, '0'));
+                trailerLote = trailerLote.PreencherValorNaLinha(30, 46, infoTrailerLote.ValorTitulosCobrancaSimples.ToStringParaVoloresDecimais().PadLeft(17, '0'));
                 trailerLote = trailerLote.PreencherValorNaLinha(47, 52, infoTrailerLote.QtdTitulosCobrancaCaucionada.ToString().PadLeft(6, '0'));
-                trailerLote = trailerLote.PreencherValorNaLinha(53, 69, valorCobrancaCaucionada.PadLeft(17, '0'));
+                trailerLote = trailerLote.PreencherValorNaLinha(53, 69, infoTrailerLote.ValorTitulosCobrancaCaucionada.ToStringParaVoloresDecimais().PadLeft(17, '0'));
                 trailerLote = trailerLote.PreencherValorNaLinha(70, 75, infoTrailerLote.QtdTitulosCobrancaDescontada.ToString().PadLeft(6, '0'));
-                trailerLote = trailerLote.PreencherValorNaLinha(76, 92, valorCobrancaDescontada.PadLeft(17, '0'));
+                trailerLote = trailerLote.PreencherValorNaLinha(76, 92, infoTrailerLote.ValorTitulosCobrancaDescontada.ToStringParaVoloresDecimais().PadLeft(17, '0'));
 
                 trailerLote = trailerLote.PreencherValorNaLinha(93, 123, string.Empty.PadLeft(31, ' '));
                 trailerLote = trailerLote.PreencherValorNaLinha(124, 240, string.Empty.PadLeft(117, ' '));
@@ -584,8 +608,13 @@ namespace BoletoBr.Bancos.Cef
                 if (detalhe.SegmentoQ.LoteServico.BoletoBrToStringSafe().BoletoBrToInt() == 0)
                     detalhe.SegmentoQ.LoteServico = loteEscrever.HeaderLote.LoteServico;
 
+                if (detalhe.SegmentoR.LoteServico.BoletoBrToStringSafe().BoletoBrToInt() == 0)
+                    detalhe.SegmentoR.LoteServico = loteEscrever.HeaderLote.LoteServico;
+
                 listaRet.Add(EscreverDetalheSegmentoP(detalhe.SegmentoP));
                 listaRet.Add(EscreverDetalheSegmentoQ(detalhe.SegmentoQ));
+                if(detalhe.SegmentoP.BancoEmiteBoleto && detalhe.SegmentoR.ValorMulta > 0)
+                    listaRet.Add(EscreverDetalheSegmentoR(detalhe.SegmentoR));
             }
 
             listaRet.Add(EscreverTrailerDeLote(loteEscrever.TrailerLote));

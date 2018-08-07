@@ -57,10 +57,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="TestsBancosRemessa\TestRemessaBancoSicoob.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaBancoBrasil.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaBradesco.cs" />
+    <Compile Include="TestsBancosRemessa\TestRemessaSicoob.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaCef.cs" />
+    <Compile Include="TestsBancosRemessa\TestRemessaDaycoval.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaItau.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaSantander.cs" />
     <Compile Include="TestsBancosRemessa\TestRemessaBRB.cs" />
@@ -68,15 +69,18 @@
     <Compile Include="TestsBancosRetorno\TestRetornoBancoItau.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBradesco.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoCef.cs" />
+    <Compile Include="TestsBancosRetorno\TestRetornoDaycoval.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoHsbcCnr.cs" />
     <Compile Include="TestsBancosRetorno\TestRetornoBancoBRB.cs" />
     <Compile Include="TestsBancos\BancoAmazoniaTests.cs" />
     <Compile Include="TestsBancos\BancoBradescoTests.cs" />
     <Compile Include="TestsBancos\BancoBrasilTests.cs" />
     <Compile Include="TestsBancos\BancoCefTests.cs" />
+    <Compile Include="TestsBancos\BancoSafraTests.cs" />
     <Compile Include="TestsBancos\BancoSantanderTests.cs" />
     <Compile Include="TestsBancos\BancoItauTests.cs" />
     <Compile Include="TestsBancos\BancoBRBTests.cs" />
+    <Compile Include="TestsBancos\BancoBanrisulTests.cs" />
     <Compile Include="TestsBancos\BancoSicoobTests.cs" />
     <Compile Include="TestsCommon\CommonTests.cs" />
     <Compile Include="TestsCommon\FatorVencimentoTests.cs" />

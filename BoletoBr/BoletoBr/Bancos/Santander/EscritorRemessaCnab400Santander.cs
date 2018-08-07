@@ -67,13 +67,25 @@ namespace BoletoBr.Bancos.Santander
             if (infoDetalhe.PercentualMulta > 0)
                 identificadorMulta = 4;
 
-            /* Códigos de Carteira
-             * 1 - Eletrônica com registro
-             * 3 - Caucionada eletrônica
-             * 4 - Cobrança sem registro
-             * 5 - Rápida com registro
-             * 6 - Caucionada rápida
-             * 7 - Descontada eletrônica
+            /* 
+             *  Códigos de Carteira
+             *  101 - Banco Emite - 1 - Eletrônica com registro
+             *  101 - Beneficiário Emite - 5 - Rápida com registro
+             *  201 - Banco Emite - 3 - Caucionada eletrônica
+             *  201 - Beneficiário Emite - 6 - Caucionada rápida
+             *  102 -  4 - Cobrança sem registro
+             *  104 - 7 - Descontada eletrônica
+             */
+
+            /*
+             * 033 - Banco Santander
+             * Carteira 101 - Cobrança Simples Rápida com Registro - RCR
+             * Carteira 102 - Cobrança Simples sem Registro - CSR
+             * Carteira 104 - Cobrança Simples Rápida com Registro - RCR - Banco emite
+             * Carteira 201 - Cobrança Penhor Rápida com Registro - RCR
+             * Carteira COB - Cobrança simples, sem registro (antiga)
+             * Carteira CSR - Cobrança Simples sem Registro (antiga)
+             * Carteira ECR - Cobrança Simples com Registro (antiga)
              */
 
             var codigoCarteira = string.Empty;
@@ -87,8 +99,23 @@ namespace BoletoBr.Bancos.Santander
             }
             if (infoDetalhe.CarteiraCobranca == "102")
                 codigoCarteira = "4";
+            if (infoDetalhe.CarteiraCobranca == "104")
+            {
+                if (infoDetalhe.BancoEmiteBoleto)
+                    codigoCarteira = "1";
+                else
+                    codigoCarteira = "7";
+            }
+            if (infoDetalhe.CarteiraCobranca == "201")
+            {
+                if (infoDetalhe.BancoEmiteBoleto)
+                    codigoCarteira = "3";
+                else
+                    codigoCarteira = "6";
+                
+            }
 
-            string enderecoSacado = string.Empty;
+        string enderecoSacado = string.Empty;
             string bairroSacado = string.Empty;
             string cidadeSacado = string.Empty;
 
@@ -155,7 +182,7 @@ namespace BoletoBr.Bancos.Santander
                 if (String.IsNullOrEmpty(infoDetalhe.PercentualMulta.ToString()))
                     detalhe = detalhe.PreencherValorNaLinha(79, 82, string.Empty.PadLeft(4, '0'));
                 else
-                    detalhe = detalhe.PreencherValorNaLinha(79, 82, infoDetalhe.PercentualMulta.ToString("f").Replace(",", "").PadLeft(4, '0'));
+                    detalhe = detalhe.PreencherValorNaLinha(79, 82, infoDetalhe.PercentualMulta.ToStringParaVoloresDecimais().PadLeft(4, '0'));
 
                 detalhe = detalhe.PreencherValorNaLinha(83, 84, "00");
                 detalhe = detalhe.PreencherValorNaLinha(85, 97, string.Empty.PadLeft(13, '0')); /*Vl do título em outra unidade (consultar banco)*/
@@ -170,7 +197,7 @@ namespace BoletoBr.Bancos.Santander
 
                 #region VALOR TOTAL
 
-                detalhe = detalhe.PreencherValorNaLinha(127, 139, infoDetalhe.ValorBoleto.ToString("f").Replace(",", "").PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(127, 139, infoDetalhe.ValorBoleto.ToStringParaVoloresDecimais().PadLeft(13, '0'));
 
                 #endregion
 
@@ -188,18 +215,29 @@ namespace BoletoBr.Bancos.Santander
                 #region INSTRUÇÕES REMESSA
 
                 var primeiraInstrucao = infoDetalhe.Instrucao1;
-                var segundaInstrucao = infoDetalhe.Instrucao2;
-
                 if (primeiraInstrucao != null)
                     detalhe = detalhe.PreencherValorNaLinha(157, 158, primeiraInstrucao);
                 else
                     detalhe = detalhe.PreencherValorNaLinha(157, 158, "00");
-
-                if (segundaInstrucao != null)
-                    detalhe = detalhe.PreencherValorNaLinha(159, 160, segundaInstrucao);
+                /*
+                 *  00 = NÃO HÁ INSTRUÇÕES
+                 *  02 = BAIXAR APÓS QUINZE DIAS DO VENCIMENTO
+                 *  03 = BAIXAR APÓS 30 DIAS DO VENCIMENTO
+                 *  04 = NÃO BAIXAR
+                 *  06 = PROTESTAR(VIDE POSIÇÃO392 / 393)
+                 *  07 = NÃO PROTESTAR
+                 *  08 = NÃO COBRAR JUROS DE MORA
+                 */
+                if (infoDetalhe.NroDiasParaProtesto > 0)
+                    detalhe = detalhe.PreencherValorNaLinha(159, 160, infoDetalhe.CodigoProtesto.ToString().PadLeft(2,'0'));
+                else
+                if (infoDetalhe.PrazoBaixaDevolucao == 15)
+                    detalhe = detalhe.PreencherValorNaLinha(159, 160, "02");
+                else
+                if (infoDetalhe.PrazoBaixaDevolucao == 30)
+                    detalhe = detalhe.PreencherValorNaLinha(159, 160, "03");
                 else
                     detalhe = detalhe.PreencherValorNaLinha(159, 160, "00");
-
                 #endregion
 
                 #region JUROS
@@ -215,7 +253,7 @@ namespace BoletoBr.Bancos.Santander
                 if (infoDetalhe.ValorMoraDia.ToString().Contains('.') &&
                     infoDetalhe.ValorMoraDia.ToString().Contains(','))
                 {
-                    jurosPorDia = infoDetalhe.ValorMoraDia.ToString().Replace(".", "").Replace(",", "");
+                    jurosPorDia = infoDetalhe.ValorMoraDia.ToStringParaVoloresDecimais();
                     detalhe = detalhe.PreencherValorNaLinha(161, 173, jurosPorDia.PadLeft(13, '0'));
                 }
                 if (infoDetalhe.ValorMoraDia.ToString().Contains('.'))
@@ -229,30 +267,30 @@ namespace BoletoBr.Bancos.Santander
                     detalhe = detalhe.PreencherValorNaLinha(161, 173, jurosPorDia.PadLeft(13, '0'));
                 }
 
-                detalhe = detalhe.PreencherValorNaLinha(161, 173, infoDetalhe.ValorMoraDia.ToString("f").Replace(",", "").PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(161, 173, infoDetalhe.ValorMoraDia.ToStringParaVoloresDecimais().PadLeft(13, '0'));
 
                 #endregion
 
                 #region DESCONTO
 
-                if (infoDetalhe.DataDesconto == DateTime.MinValue)
+                if (infoDetalhe.DataLimiteConcessaoDesconto == DateTime.MinValue)
                     detalhe = detalhe.PreencherValorNaLinha(174, 179, string.Empty.PadLeft(6, '0'));
                 else
-                    detalhe = detalhe.PreencherValorNaLinha(174, 179, infoDetalhe.DataDesconto.ToString("ddMMyy"));
+                    detalhe = detalhe.PreencherValorNaLinha(174, 179, infoDetalhe.DataLimiteConcessaoDesconto.ToString("ddMMyy"));
 
-                detalhe = detalhe.PreencherValorNaLinha(180, 192, infoDetalhe.ValorDesconto.ToString("f").Replace(",", "").PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(180, 192, infoDetalhe.ValorDesconto.ToStringParaVoloresDecimais().PadLeft(13, '0'));
 
                 #endregion
 
                 #region IOF
 
-                detalhe = detalhe.PreencherValorNaLinha(193, 205, infoDetalhe.ValorIof.ToString("f").Replace(",", "").PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(193, 205, infoDetalhe.ValorIof.ToStringParaVoloresDecimais().PadLeft(13, '0'));
 
                 #endregion
 
                 #region ABATIMENTO
 
-                detalhe = detalhe.PreencherValorNaLinha(206, 218, infoDetalhe.ValorAbatimento.ToString("f").Replace(",", "").PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(206, 218, infoDetalhe.ValorAbatimento.ToStringParaVoloresDecimais().PadLeft(13, '0'));
 
                 #endregion
 
@@ -431,7 +469,7 @@ namespace BoletoBr.Bancos.Santander
             {
                 trailer = trailer.PreencherValorNaLinha(1, 1, "9");
                 trailer = trailer.PreencherValorNaLinha(2, 7, numeroRegistro.ToString().PadLeft(6, '0'));
-                trailer = trailer.PreencherValorNaLinha(8, 20, infoTrailer.ValorTotalTitulos.ToString("f").Replace(",", "").PadLeft(13, '0') /*Valor total dos títulos*/);
+                trailer = trailer.PreencherValorNaLinha(8, 20, infoTrailer.ValorTotalTitulos.ToStringParaVoloresDecimais().PadLeft(13, '0') /*Valor total dos títulos*/);
                 trailer = trailer.PreencherValorNaLinha(21, 394, string.Empty.PadRight(374, '0'));
                 trailer = trailer.PreencherValorNaLinha(395, 400, numeroRegistro.ToString().PadLeft(6, '0'));
 

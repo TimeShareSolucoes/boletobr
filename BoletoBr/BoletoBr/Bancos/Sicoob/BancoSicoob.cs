@@ -173,7 +173,7 @@ namespace BoletoBr.Bancos.Sicoob
 
             if (boleto.CarteiraCobranca.Codigo == "1/01")
             {
-                var numeroAgencia = boleto.CedenteBoleto.ContaBancariaCedente.Agencia.BoletoBrToStringSafe().PadLeft(4, '0');
+                var numeroAgencia = boleto.CedenteBoleto.ContaBancariaCedente.Agencia.Replace(".", "").Replace("/", "").Replace("-", "").Replace(",", "").BoletoBrToStringSafe().PadLeft(4, '0');
                 var codigoCliente = (boleto.CedenteBoleto.CodigoCedente + boleto.CedenteBoleto.DigitoCedente).BoletoBrToStringSafe().PadLeft(10, '0');
                 var identificadorInternoBoleto = boleto.IdentificadorInternoBoleto.BoletoBrToStringSafe().PadLeft(7, '0');
 
@@ -201,11 +201,23 @@ namespace BoletoBr.Bancos.Sicoob
                         Codigo = 02,
                         Descricao = "CONFIRMAÇÃO ENTRADA DE TITULO"
                     };
+                case 03:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 03,
+                        Descricao = "ENTRADA REJEITADA"
+                    };
+                case 04:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 04,
+                        Descricao = "Transferência de Carteira/Entrada"
+                    };
                 case 05:
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 05,
-                        Descricao = "LIQUIDAÇÃO SEM REGISTRO"
+                        Descricao = "Transferência de Carteira/Baixa"
                     };
                 case 06:
                     return new CodigoOcorrencia(numeroOcorrencia)
@@ -213,17 +225,23 @@ namespace BoletoBr.Bancos.Sicoob
                         Codigo = 06,
                         Descricao = "LIQUIDAÇÃO NORMAL"
                     };
+                case 07:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 07,
+                        Descricao = "CONFIRMAÇÃO DO RECEBIMENTO DA INSTRUÇÃO DE DESCONTO"
+                    };
+                case 08:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 08,
+                        Descricao = "CONFIRMAÇÃO DO RECEBIMENTO DO CANCELAMENTO DO DESCONTO"
+                    };
                 case 09:
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 09,
                         Descricao = "BAIXA SIMPLES"
-                    };
-                case 10:
-                    return new CodigoOcorrencia(numeroOcorrencia)
-                    {
-                        Codigo = 10,
-                        Descricao = "BAIXA SOLICITADA"
                     };
                 case 11:
                     return new CodigoOcorrencia(numeroOcorrencia)
@@ -237,17 +255,17 @@ namespace BoletoBr.Bancos.Sicoob
                         Codigo = 12,
                         Descricao = "ABATIMENTO CONCEDIDO"
                     };
+                case 13:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 13,
+                        Descricao = "CANCELAMENTO ABATIMENTO"
+                    };
                 case 14:
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 14,
                         Descricao = "ALTERAÇÃO DE VENCIMENTO"
-                    };
-                case 15:
-                    return new CodigoOcorrencia(numeroOcorrencia)
-                    {
-                        Codigo = 15,
-                        Descricao = "LIQUIDAÇÃO EM CARTÓRIO"
                     };
                 case 23:
                     return new CodigoOcorrencia(numeroOcorrencia)
@@ -648,9 +666,18 @@ namespace BoletoBr.Bancos.Sicoob
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
         {
             if (linhasArquivo == null || linhasArquivo.Any() == false)
-                throw new ApplicationException("Arquivo informado é inválido.");
+                throw new ApplicationException("Arquivo informado é inválido/Não existem títulos no retorno.");
 
             /* Identifica o layout: 240 ou 400 */
+            if (linhasArquivo.First().Length == 240)
+            {
+                var leitor = new LeitorRetornoCnab240Sicoob(linhasArquivo);
+                var retornoProcessado = leitor.ProcessarRetorno();
+
+                var objRetornar = new RetornoGenerico(retornoProcessado);
+                return objRetornar;
+            }
+
             if (linhasArquivo.First().Length == 400)
             {
                 var leitor = new LeitorRetornoCnab400Sicoob(linhasArquivo);
@@ -711,6 +738,30 @@ namespace BoletoBr.Bancos.Sicoob
                 ndig = (11 - nresto);
 
             return ndig;
+        }
+        public int CodigoJurosMora(CodigoJurosMora codigoJurosMora)
+        {
+            switch (codigoJurosMora)
+            {
+                case Enums.CodigoJurosMora.Isento:
+                    return 0;
+                case Enums.CodigoJurosMora.Valor:
+                    return 1;
+                case Enums.CodigoJurosMora.Percentual:
+                    return 2;
+                default: return 0;
+            }
+        }
+
+        public int CodigoProteso(bool protestar = true)
+        {
+            switch (protestar)
+            {
+                case true:
+                    return 1;
+                default:
+                    return 3;
+            }
         }
     }
 }

@@ -197,8 +197,9 @@ namespace BoletoBr.Bancos.Cef
             string segundaParteNossoNumeroSemDigito = nossoNumeroFormatadoSemDigito.Substring(5, 3);
 
             // Posi��o 34
-            const string segundaConstante = "4"; // 4 => emiss�o do boleto pelo cedente
-
+            string segundaConstante = "4"; // 4 => emiss�o do boleto pelo cedente
+            if(boleto.CarteiraCobranca.BancoEmiteBoleto)
+                segundaConstante = "1"; // 1=> emissão do boleto pelo banco
             //Posi��o 35 - 43
             //De acordo com documenta�ao, posi��o 9 a 17 do nosso numero
             string terceiraParteNossoNumeroSemDigito = nossoNumeroFormatadoSemDigito.Substring(8, 9);
@@ -388,11 +389,11 @@ namespace BoletoBr.Bancos.Cef
             {
                 boleto.SetNossoNumeroFormatado(
                     IdentificadorTipoCobrancaCarteiraSicgbRg +
-                    IdentificadorEmissaoCedente +
+                    (boleto.CarteiraCobranca.BancoEmiteBoleto? "1" : IdentificadorEmissaoCedente) +
                     boleto.NossoNumeroFormatado);
 
                 // Permite 0 (zero) no DV do Nosso Número
-                dvNossoNumero = Common.Mod11(boleto.NossoNumeroFormatado).ToString(CultureInfo.InvariantCulture);
+                dvNossoNumero = Common.Mod11Base9Caixa(boleto.NossoNumeroFormatado).ToString(CultureInfo.InvariantCulture);
 
                 boleto.SetNossoNumeroFormatado(string.Format("{0}-{1}", boleto.NossoNumeroFormatado, dvNossoNumero));
             }
@@ -400,11 +401,11 @@ namespace BoletoBr.Bancos.Cef
             {
                 boleto.SetNossoNumeroFormatado(
                     IdentificadorTipoCobrancaCarteiraSicgbSr +
-                    IdentificadorEmissaoCedente +
+                    (boleto.CarteiraCobranca.BancoEmiteBoleto ? "1" : IdentificadorEmissaoCedente) +
                     boleto.NossoNumeroFormatado);
 
                 // Permite 0 (zero) no DV do Nosso Número
-                dvNossoNumero = Common.Mod11(boleto.NossoNumeroFormatado).ToString(CultureInfo.InvariantCulture);
+                dvNossoNumero = Common.Mod11Base9Caixa(boleto.NossoNumeroFormatado).ToString(CultureInfo.InvariantCulture);
 
                 boleto.SetNossoNumeroFormatado(string.Format("{0}-{1}", boleto.NossoNumeroFormatado, dvNossoNumero));
             }
@@ -425,7 +426,93 @@ namespace BoletoBr.Bancos.Cef
 
         public ICodigoOcorrencia ObtemCodigoOcorrenciaByInt(int numeroOcorrencia)
         {
-            throw new NotImplementedException();
+            switch (numeroOcorrencia)
+            {
+                case 02:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 02,
+                        Descricao = "CONFIRMAÇÃO ENTRADA DE TITULO"
+                    };
+                case 03:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 03,
+                        Descricao = "ENTRADA REJEITADA"
+                    };
+                case 04:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 04,
+                        Descricao = "Transferência de Carteira/Entrada"
+                    };
+                case 05:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 05,
+                        Descricao = "Transferência de Carteira/Baixa"
+                    };
+                case 06:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 06,
+                        Descricao = "LIQUIDAÇÃO NORMAL"
+                    };
+                case 07:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 07,
+                        Descricao = "CONFIRMAÇÃO DO RECEBIMENTO DA INSTRUÇÃO DE DESCONTO"
+                    };
+                case 08:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 08,
+                        Descricao = "CONFIRMAÇÃO DO RECEBIMENTO DO CANCELAMENTO DO DESCONTO"
+                    };
+                case 09:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 09,
+                        Descricao = "BAIXA SIMPLES"
+                    };
+                case 12:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 12,
+                        Descricao = "ABATIMENTO CONCEDIDO"
+                    };
+                case 13:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 13,
+                        Descricao = "CANCELAMENTO ABATIMENTO"
+                    };
+                case 14:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 14,
+                        Descricao = "ALTERAÇÃO DE VENCIMENTO"
+                    };
+                case 23:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 23,
+                        Descricao = "ENCAMINHADO A PROTESTO"
+                    };
+                case 27:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 27,
+                        Descricao = "CONFIRMAÇÃO DE ALTERAÇÃO DE DADOS"
+                    };
+                    default:
+                        return new CodigoOcorrencia(numeroOcorrencia)
+                        {
+                            Codigo = numeroOcorrencia,
+                            Descricao = $@"ocorrencia - {numeroOcorrencia}"
+                        };
+            }
         }
 
         public ICodigoOcorrencia ObtemCodigoOcorrencia(EnumCodigoOcorrenciaRetorno ocorrenciaRetorno)
@@ -1011,7 +1098,7 @@ namespace BoletoBr.Bancos.Cef
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
         {
             if (linhasArquivo == null || linhasArquivo.Any() == false)
-                throw new ApplicationException("Arquivo informado é inválido.");
+                throw new ApplicationException("Arquivo informado é inválido/Não existem títulos no retorno.");
 
             /* Identifica o layout: 240 ou 400 */
             if (linhasArquivo.First().Length == 240)
@@ -1051,6 +1138,25 @@ namespace BoletoBr.Bancos.Cef
         public RemessaCnab400 GerarArquivoRemessaCnab400(List<Boleto> boletos)
         {
             throw new NotImplementedException();
+        }
+
+        public int CodigoJurosMora(CodigoJurosMora codigoJurosMora)
+        {
+            switch (codigoJurosMora)
+            {
+                case Enums.CodigoJurosMora.Valor:
+                    return 1;
+                case Enums.CodigoJurosMora.Percentual:
+                    return 2;
+                case Enums.CodigoJurosMora.Isento:
+                    return 3;
+                default: return 0;
+            }
+        }
+
+        public int CodigoProteso(bool protestar = true)
+        {
+            return 0;
         }
     }
 }

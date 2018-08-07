@@ -316,7 +316,7 @@ namespace BoletoBr.Bancos.Bradesco
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 03,
-                        Descricao = "Entrada Rejeitada".ToUpper()
+                        Descricao = "ENTRADA REJEITADA".ToUpper()
                     };
                 case 06:
                     return new CodigoOcorrencia(numeroOcorrencia)
@@ -692,7 +692,7 @@ namespace BoletoBr.Bancos.Bradesco
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
         {
             if (linhasArquivo == null || linhasArquivo.Any() == false)
-                throw new ApplicationException("Arquivo informado é inválido.");
+                throw new ApplicationException("Arquivo informado é inválido/Não existem títulos no retorno.");
 
             /* Identifica o layout: 240 ou 400 */
             if (linhasArquivo.First().Length == 240)
@@ -871,6 +871,15 @@ namespace BoletoBr.Bancos.Bradesco
                 String.Format(
                     "Não foi possível obter Código de Comando/Movimento/Ocorrência. Banco: {0} Código: {1}",
                     CodigoBanco, ocorrencia.ToString()));
+        }
+        public int CodigoJurosMora(CodigoJurosMora codigoJurosMora)
+        {
+            return 0;
+        }
+
+        public int CodigoProteso(bool protestar = true)
+        {
+            return 0;
         }
     }
 }

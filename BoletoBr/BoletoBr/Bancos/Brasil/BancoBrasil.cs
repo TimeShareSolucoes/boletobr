@@ -1175,7 +1175,7 @@ namespace BoletoBr.Bancos.Brasil
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 03,
-                        Descricao = "Comando recusado (Motivo indicado na posição 087/088)".ToUpper()
+                        Descricao = "ENTRADA REJEITADA".ToUpper()
                     };
                 }
                 case 05:
@@ -1996,7 +1996,7 @@ namespace BoletoBr.Bancos.Brasil
         public RetornoGenerico LerArquivoRetorno(List<string> linhasArquivo)
         {
             if (linhasArquivo == null || linhasArquivo.Any() == false)
-                throw new ApplicationException("Arquivo informado é inválido.");
+                throw new ApplicationException("Arquivo informado é inválido/Não existem títulos no retorno.");
 
             /* Identifica o layout: 240 */
             if (linhasArquivo.First().Length == 240)
@@ -2038,6 +2038,15 @@ namespace BoletoBr.Bancos.Brasil
         public RemessaCnab400 GerarArquivoRemessaCnab400(RemessaCnab400 remessaCnab400, List<Boleto> boletos)
         {
             throw new NotImplementedException();
+        }
+        public int CodigoJurosMora(CodigoJurosMora codigoJurosMora)
+        {
+            return 0;
+        }
+
+        public int CodigoProteso(bool protestar = true)
+        {
+            return 0;
         }
     }
 }

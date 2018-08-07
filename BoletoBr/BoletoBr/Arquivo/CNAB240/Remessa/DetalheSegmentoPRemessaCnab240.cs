@@ -13,6 +13,7 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
             this.AgenciaMantenedora = boleto.CedenteBoleto.ContaBancariaCedente.Agencia;
             this.DvAgenciaMantenedora = boleto.CedenteBoleto.ContaBancariaCedente.DigitoAgencia;
             this.CodigoCedente = boleto.CedenteBoleto.CodigoCedente;
+            this.DigitoCedente = boleto.CedenteBoleto.DigitoCedente;
             this.ModalidadeCarteira = boleto.CarteiraCobranca.Codigo;
             this.NossoNumero = boleto.NossoNumeroFormatado;
             this.NumeroDocumento = boleto.NumeroDocumento;
@@ -21,11 +22,26 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
             this.Especie = boleto.Especie;
             this.Aceite = boleto.Aceite;
             this.DataEmissao = boleto.DataDocumento;
-            this.ValorJurosMora = boleto.JurosMora.HasValue ? boleto.JurosMora : 0;
+            /*Juros Mora*/
+            this.ValorJurosMora = boleto.JurosMora > 0 ? boleto.JurosMora : boleto.PercentualJurosMora > 0 ? boleto.PercentualJurosMora : 0;
+            this.CodigoJurosMora = boleto.JurosMora > 0 ? boleto.BancoBoleto.CodigoJurosMora(Enums.CodigoJurosMora.Valor) : boleto.PercentualJurosMora > 0 ? boleto.BancoBoleto.CodigoJurosMora(Enums.CodigoJurosMora.Percentual) : boleto.BancoBoleto.CodigoJurosMora(Enums.CodigoJurosMora.Isento);
+            this.DataJurosMora = boleto.DataJurosMora;
+            /*Instruções para protesto*/
+            this.PrazoProtesto = boleto.CarteiraCobranca.QtdDiasProtesto;
+            this.CodigoProtesto = PrazoProtesto > 0 ? boleto.BancoBoleto.CodigoProteso() : boleto.BancoBoleto.CodigoProteso(false);
+            /*Periodo devolução baixa*/
+            this.PrazoBaixaDevolucao = boleto.PrazoBaixaDevolucao;
+            /*-------------------------------------*/
             this.ValorDesconto1 = boleto.ValorDesconto.HasValue ? boleto.ValorDesconto : 0;
+
+            this.DataDesconto1 = ValorDesconto1 > 0 ? boleto.DataLimitDesconto.GetValueOrDefault() : DateTime.MinValue;
+
             this.ValorIof = boleto.Iof.HasValue ? boleto.Iof : 0;
             this.ValorAbatimento = boleto.ValorAbatimento.HasValue ? boleto.ValorAbatimento : 0;
             this.CodigoMoeda = boleto.Moeda;
+            this.BancoEmiteBoleto = boleto.CarteiraCobranca.BancoEmiteBoleto;
+            this.NumeroContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.Conta;
+            this.DigitoContaCorrente = boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta;
         }
 
         public string CodigoBanco { get; set; }
@@ -37,6 +53,7 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
         public string AgenciaMantenedora { get; set; }
         public string DvAgenciaMantenedora { get; set; }
         public string CodigoCedente { get; set; }
+        public int DigitoCedente { get; set; }
         public string ModalidadeCarteira { get; set; }
         public string NossoNumero { get; set; }
         public int CodigoCarteira { get; set; }
@@ -66,5 +83,8 @@ namespace BoletoBr.Arquivo.CNAB240.Remessa
         public int CodigoBaixaDevolucao { get; set; }
         public int PrazoBaixaDevolucao { get; set; }
         public string CodigoMoeda { get; set; }
+        public bool BancoEmiteBoleto { get; set; }
+        public string NumeroContaCorrente { get; set; }
+        public string DigitoContaCorrente { get; set; }
     }
 }
