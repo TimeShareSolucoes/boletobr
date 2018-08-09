@@ -135,5 +135,12 @@ namespace BoletoBr.Enums
         NaoNegativarAutomaticamente,
 
         #endregion
+
+        #region CÓDIGO DE MOVIMENTO REMESSA - 021|BANESTES
+        AlteracaoDoUsoDaEmpresa,
+        AlterarDadosSacado,
+        AlterarDadosSacadorAvalista,
+        #endregion
+
     }
 }
