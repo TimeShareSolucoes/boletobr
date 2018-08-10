@@ -74,6 +74,9 @@ namespace BoletoBr.Fabricas
                         throw new NotImplementedException("Banco " + remessaEscrever.Header.CodigoBanco +
                                                           " ainda não foi implementado.");
                         break;
+                    case "021":
+                        return new Bancos.Banestes.EscritorRemessaCnab400Banestes(remessaEscrever);
+                        break;
                     case "033":
                         return new Bancos.Santander.EscritorRemessaCnab400Santander(remessaEscrever);
                     /* 104 - Caixa */
