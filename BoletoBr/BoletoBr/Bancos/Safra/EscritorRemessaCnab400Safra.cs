@@ -33,8 +33,8 @@ namespace BoletoBr.Bancos.Safra
 
             var agencia = infoHeader.Agencia;
             if (agencia.Length > 5) agencia = agencia.ExtrairValorDaLinha(1, 5);
-            else agencia = agencia.PadLeft(5, '0');
-            var contaCorrente = infoHeader.ContaCorrente;
+            else agencia = agencia.PadRight(5, '0');
+            var contaCorrente = infoHeader.ContaCorrente + infoHeader.DvContaCorrente;
             if (contaCorrente.Length > 9) contaCorrente = contaCorrente.ExtrairValorDaLinha(1, 9);
             else contaCorrente = contaCorrente.PadLeft(9, '0');
 
@@ -45,7 +45,7 @@ namespace BoletoBr.Bancos.Safra
                 header = header.PreencherValorNaLinha(2, 2, "1");
                 header = header.PreencherValorNaLinha(3, 9, "REMESSA".PadRight(7, ' '));
                 header = header.PreencherValorNaLinha(10, 11, "01");
-                header = header.PreencherValorNaLinha(12, 19, "Cobrança");
+                header = header.PreencherValorNaLinha(12, 19, "COBRANCA");
                 header = header.PreencherValorNaLinha(20, 26, string.Empty.PadRight(7, ' '));
                 header = header.PreencherValorNaLinha(27, 40, agencia + contaCorrente);
                 header = header.PreencherValorNaLinha(41, 46, string.Empty.PadRight(6, ' '));
@@ -112,6 +112,9 @@ namespace BoletoBr.Bancos.Safra
             var detalhe = new string(' ', 400);
             try
             {
+                var primeiraInstrucao = infoDetalhe.Instrucoes.FirstOrDefault();
+                var segundaInstrucao = infoDetalhe.Instrucoes.LastOrDefault();
+
                 detalhe = detalhe.PreencherValorNaLinha(1, 1, "1");
 
                 if (infoDetalhe.InscricaoCedente.ToString().Replace(".", "").Replace("-", "").Length == 11)
@@ -123,8 +126,9 @@ namespace BoletoBr.Bancos.Safra
                     infoDetalhe.InscricaoCedente.Replace(".", "").Replace("/", "").Replace("-", "").PadRight(14, ' '));
 
                 var identificadorCedente = "";
-                identificadorCedente += infoDetalhe.Agencia.PadLeft(5, '0');
-                identificadorCedente += infoDetalhe.ContaCorrente.PadLeft(9, '0');
+                identificadorCedente += infoDetalhe.Agencia.PadRight(5, '0');
+                identificadorCedente += infoDetalhe.ContaCorrente.PadLeft(8, '0');
+                identificadorCedente += infoDetalhe.DvContaCorrente;
                 detalhe = detalhe.PreencherValorNaLinha(18, 31, identificadorCedente);
 
                 detalhe = detalhe.PreencherValorNaLinha(32, 37, string.Empty.PadLeft(6, ' '));
@@ -144,9 +148,10 @@ namespace BoletoBr.Bancos.Safra
                 detalhe = detalhe.PreencherValorNaLinha(103, 104, "00");
                 detalhe = detalhe.PreencherValorNaLinha(105, 105, string.Empty.PadLeft(1, ' '));
 
-                if (infoDetalhe.NroDiasParaProtesto > 0)
-                    detalhe = detalhe.PreencherValorNaLinha(106, 107,
-                        infoDetalhe.NroDiasParaProtesto.BoletoBrToStringSafe().PadLeft(2, '0'));
+                if (infoDetalhe.NroDiasParaProtesto > 0 && segundaInstrucao?.Codigo == 10)
+                    detalhe = detalhe.PreencherValorNaLinha(106, 107, infoDetalhe.NroDiasParaProtesto.BoletoBrToStringSafe().PadLeft(2, '0'));
+                else
+                    detalhe = detalhe.PreencherValorNaLinha(106, 107, "00");
 
                 detalhe = detalhe.PreencherValorNaLinha(108, 108, infoDetalhe.CarteiraCobranca);
 
@@ -165,7 +170,7 @@ namespace BoletoBr.Bancos.Safra
                 #endregion
 
                 detalhe = detalhe.PreencherValorNaLinha(140, 142, "422");
-                detalhe = detalhe.PreencherValorNaLinha(143, 147, infoDetalhe.Agencia.PadLeft(5, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(143, 147, infoDetalhe.Agencia.PadRight(5, '0'));
 
                 detalhe = detalhe.PreencherValorNaLinha(148, 149,
                     infoDetalhe.Especie.Sigla.Equals("DM") ? "01" : infoDetalhe.Especie.Codigo.ToString());
@@ -176,15 +181,13 @@ namespace BoletoBr.Bancos.Safra
 
                 #region INSTRUÇÕES REMESSA
 
-                var primeiraInstrucao = infoDetalhe.Instrucoes.FirstOrDefault();
-                var segundaInstrucao = infoDetalhe.Instrucoes.LastOrDefault();
-
                 if (primeiraInstrucao != null && primeiraInstrucao.Codigo > 0)
-                    detalhe = detalhe.PreencherValorNaLinha(157, 158, primeiraInstrucao.Codigo.BoletoBrToStringSafe());
+                    detalhe = detalhe.PreencherValorNaLinha(157, 158, primeiraInstrucao.Codigo.BoletoBrToStringSafe().PadLeft(2, '0'));
                 else
                     detalhe = detalhe.PreencherValorNaLinha(157, 158, "00");
+
                 if (segundaInstrucao != null && segundaInstrucao.Codigo > 0)
-                    detalhe = detalhe.PreencherValorNaLinha(159, 160, segundaInstrucao.Codigo.BoletoBrToStringSafe());
+                    detalhe = detalhe.PreencherValorNaLinha(159, 160, segundaInstrucao.Codigo.BoletoBrToStringSafe().PadLeft(2, '0'));
                 else
                     detalhe = detalhe.PreencherValorNaLinha(159, 160, "00");
 
@@ -196,7 +199,7 @@ namespace BoletoBr.Bancos.Safra
 
                 if (infoDetalhe.ValorMoraDia > 0)
                 {
-                    var valorCobrarJuroDia = infoDetalhe.ValorBoleto*((infoDetalhe.ValorMoraDia/30)/100);
+                    var valorCobrarJuroDia = infoDetalhe.ValorBoleto * ((infoDetalhe.ValorMoraDia / 30) / 100);
                     infoDetalhe.ValorCobradoDiaAtraso = Math.Round(valorCobrarJuroDia, 2);
                 }
 
@@ -364,7 +367,7 @@ namespace BoletoBr.Bancos.Safra
 
                 detalhe = detalhe.PreencherValorNaLinha(382, 388, string.Empty.PadRight(7, ' '));
 
-                detalhe = detalhe.PreencherValorNaLinha(389, 391, string.Empty.PadRight(3, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(389, 391, "422");
 
                 detalhe = detalhe.PreencherValorNaLinha(392, 394,
                     sequenciaNumeroRemessa.BoletoBrToStringSafe().PadLeft(3, '0'));
