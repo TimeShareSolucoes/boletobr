@@ -27,6 +27,9 @@ namespace BoletoBr.Fabricas
                     case "003":
                         return new Bancos.Amazonia.BancoAmazonia();
                         break;
+                    case "021":
+                        return new Bancos.Banestes.BancoBanestes();
+                        break;
                     case "033":
                         return new Bancos.Santander.BancoSantander();
                     /* 104 - Caixa */
