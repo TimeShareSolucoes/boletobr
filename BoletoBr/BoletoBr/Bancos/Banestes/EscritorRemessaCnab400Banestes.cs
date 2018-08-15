@@ -190,7 +190,7 @@ namespace BoletoBr.Bancos.Banestes
                         instrucao += $@" {inst.TextoInstrucao}";
                 }
                 if (instrucao.Length > 40)
-                    instrucao = infoDetalhe.CidadePagador.Substring(0, 40);
+                    instrucao = instrucao.Substring(0, 40);
 
                 detalhe = detalhe.PreencherValorNaLinha(352, 391, instrucao.PadRight(40, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(392, 393, "00");
