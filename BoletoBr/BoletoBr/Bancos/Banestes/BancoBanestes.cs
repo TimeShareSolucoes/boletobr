@@ -192,7 +192,7 @@ namespace BoletoBr.Bancos.Banestes
 
                 string NNNNNNNN = boleto.NossoNumeroFormatado.Substring(0, 8).PadLeft(8, '0');
                 string CCCCCCCCCCC = boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(11,'0');
-                string R = "2"; /*Tipo Cobrança*/
+                string R = "4"; /*Tipo Cobrança*/ /*4-Com Registro*/
 
                 string NNNNNNNNCCCCCCCCCCCR021 = string.Concat(NNNNNNNN, CCCCCCCCCCC, R, "021");
 
