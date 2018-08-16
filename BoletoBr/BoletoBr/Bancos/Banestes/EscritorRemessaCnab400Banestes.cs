@@ -142,7 +142,7 @@ namespace BoletoBr.Bancos.Banestes
                 detalhe = detalhe.PreencherValorNaLinha(91, 92, string.Empty.PadLeft(2, '0'));
 
                 detalhe = detalhe.PreencherValorNaLinha(93, 93, infoDetalhe.InscricaoPagador.BoletoBrToStringSafe().Replace(".", "").Replace("-", "").Length == 11 ? "1" : "2");
-                detalhe = detalhe.PreencherValorNaLinha(94, 107, infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").PadRight(14, ' '));
+                detalhe = detalhe.PreencherValorNaLinha(94, 107, infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(14, '0'));
 
                 detalhe = detalhe.PreencherValorNaLinha(108, 108, infoDetalhe.CarteiraCobranca == "11" ? "1" : "3");/*1 - simples | 3- Caucionada*/
                 detalhe = detalhe.PreencherValorNaLinha(109, 110, infoDetalhe.CodigoOcorrencia.Codigo.BoletoBrToStringSafe().PadLeft(2, '0'));
@@ -166,14 +166,18 @@ namespace BoletoBr.Bancos.Banestes
                 detalhe = detalhe.PreencherValorNaLinha(159, 160, infoDetalhe.NroDiasParaProtesto > 0 ? infoDetalhe.NroDiasParaProtesto.BoletoBrToStringSafe().PadLeft(2, '0') : "00");
                 detalhe = detalhe.PreencherValorNaLinha(161, 161, "0");
                 detalhe = detalhe.PreencherValorNaLinha(162, 173, infoDetalhe.ValorMoraDia.ToStringParaVoloresDecimais().PadLeft(12, '0'));
-                detalhe = detalhe.PreencherValorNaLinha(174, 179, infoDetalhe.DataLimiteConcessaoDesconto.ToString("ddMMyy"));
+
+                var dataLimiteDesconto = infoDetalhe.DataLimiteConcessaoDesconto == DateTime.MinValue ? "000000": infoDetalhe
+                    .DataLimiteConcessaoDesconto.ToString("ddMMyy");
+
+                detalhe = detalhe.PreencherValorNaLinha(174, 179, dataLimiteDesconto);
                 detalhe = detalhe.PreencherValorNaLinha(180, 192, infoDetalhe.ValorDesconto.ToStringParaVoloresDecimais().PadLeft(13, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(193, 205, infoDetalhe.ValorIof.ToStringParaVoloresDecimais().PadLeft(13, '0')); /*!---!*/
                 detalhe = detalhe.PreencherValorNaLinha(206, 218, infoDetalhe.ValorAbatimento.ToStringParaVoloresDecimais().PadLeft(13, '0'));
 
 
                 detalhe = detalhe.PreencherValorNaLinha(219, 220, infoDetalhe.InscricaoPagador.BoletoBrToStringSafe().Replace(".", "").Replace("-", "").Length == 11 ? "01" : "02");
-                detalhe = detalhe.PreencherValorNaLinha(221, 234, infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").PadRight(14, ' '));
+                detalhe = detalhe.PreencherValorNaLinha(221, 234, infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(14, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(235, 274, nomeSacado);
                 detalhe = detalhe.PreencherValorNaLinha(275, 314, enderecoSacado);
                 detalhe = detalhe.PreencherValorNaLinha(315, 326, bairroSacado);
@@ -195,7 +199,7 @@ namespace BoletoBr.Bancos.Banestes
                 detalhe = detalhe.PreencherValorNaLinha(352, 391, instrucao.PadRight(40, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(392, 393, "00");
                 detalhe = detalhe.PreencherValorNaLinha(394, 394, "0");
-                detalhe = detalhe.PreencherValorNaLinha(395, 400, sequenciaRegistro.BoletoBrToStringSafe().PadRight(6, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(395, 400, sequenciaRegistro.BoletoBrToStringSafe().PadLeft(6, '0'));
 
                 return detalhe;
             }
