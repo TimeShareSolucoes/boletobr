@@ -31,7 +31,7 @@ namespace BoletoBr.Bancos.Banestes
             else
                 nomeEmpresa = infoHeader.NomeEmpresa.PadRight(30, ' ');
 
-            var contaCorrente = infoHeader.ContaCorrente;
+            var contaCorrente = $"{infoHeader.ContaCorrente}{infoHeader.DvContaCorrente}";
             if (contaCorrente.Length > 11) contaCorrente = contaCorrente.ExtrairValorDaLinha(1, 9);
             else contaCorrente = contaCorrente.PadLeft(11, '0');
 
@@ -115,8 +115,11 @@ namespace BoletoBr.Bancos.Banestes
                 detalhe = detalhe.PreencherValorNaLinha(4, 17,
                     infoDetalhe.InscricaoCedente.Replace(".", "").Replace("/", "").Replace("-", "").PadRight(14, ' '));
 
-                var identificadorCedente = "";
-                identificadorCedente += infoDetalhe.ContaCorrente.PadLeft(11, '0');
+                 
+                var identificadorCedente = $"{infoDetalhe.ContaCorrente}{infoDetalhe.DvContaCorrente}";
+                if (identificadorCedente.Length > 11) identificadorCedente = identificadorCedente.ExtrairValorDaLinha(1, 9);
+                else identificadorCedente = identificadorCedente.PadLeft(11, '0');
+
                 detalhe = detalhe.PreencherValorNaLinha(18, 28, identificadorCedente);
 
                 detalhe = detalhe.PreencherValorNaLinha(29, 37, string.Empty.PadLeft(9, ' '));
