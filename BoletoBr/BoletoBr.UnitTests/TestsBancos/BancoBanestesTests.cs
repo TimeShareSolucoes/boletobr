@@ -161,7 +161,7 @@ namespace BoletoBr.UnitTests.TestsBancos
 
             banco.FormatarBoleto(boleto);
 
-            const string linhaDigitavel = "02192.14871 80500.001229 23332.021072 1 59470000295295";
+            const string linhaDigitavel = "02192.14871 80500.001229 23334.021815 7 59470000295295";
             Assert.AreEqual(boleto.LinhaDigitavelBoleto.Length, linhaDigitavel.Length);
             Assert.AreEqual(linhaDigitavel, boleto.LinhaDigitavelBoleto);
         }
@@ -199,7 +199,7 @@ namespace BoletoBr.UnitTests.TestsBancos
 
             banco.FormatarBoleto(boleto);
 
-            const string codigoBarras = "02191594700002952952148780500001222333202107";
+            const string codigoBarras = "02197594700002952952148780500001222333402181";
             Assert.AreEqual(boleto.CodigoBarraBoleto.Length, codigoBarras.Length);
             Assert.AreEqual(codigoBarras, boleto.CodigoBarraBoleto);
         }

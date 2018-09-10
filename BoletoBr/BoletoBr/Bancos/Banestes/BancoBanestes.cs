@@ -21,8 +21,9 @@ namespace BoletoBr.Bancos.Banestes
         public Image LogotipoBancoParaExibicao { get; set; }
         public string LocalDePagamento { get; }
         public string MoedaBanco { get; }
+        private int D1 { get; set; }
 
-         
+
         private int _digitoAutoConferenciaBoleto;
         public BancoBanestes()
         {
@@ -30,7 +31,7 @@ namespace BoletoBr.Bancos.Banestes
             DigitoBanco = "3";
             NomeBanco = "Banestes";
             LocalDePagamento = "PAGÁVEL PREFERENCIALMENTE NA REDE BANESTES";
-            MoedaBanco = "0";
+            MoedaBanco = "R$";
         }
 
         public void ValidaBoletoComNormasBanco(Boleto boleto)
@@ -138,13 +139,13 @@ namespace BoletoBr.Bancos.Banestes
             return D1;
         }
 
-        private int CalculaD2(string chave, int D1)
+        private int CalculaD2(string chave)
         {
             int D2 = 0;
             short peso = 7;
             int P = 0;
             int S = 0;
-
+            
             string chaveD1 = string.Concat(chave, D1);
 
             for (int i = 0; i < chaveD1.Length; i++)
@@ -169,7 +170,7 @@ namespace BoletoBr.Bancos.Banestes
                 D1++;
                 if (D1 == 10)
                     D1 = 0;
-                return CalculaD2(chave, D1);
+                return CalculaD2(chave);
             }
 
             if (resto > 1)
@@ -182,22 +183,24 @@ namespace BoletoBr.Bancos.Banestes
         {
             try
             {
-                boleto.CedenteBoleto.ContaBancariaCedente.Conta = boleto.CedenteBoleto.ContaBancariaCedente.Conta.Replace(".", "").Replace("-", "");
+                boleto.CedenteBoleto.ContaBancariaCedente.Conta = boleto.CedenteBoleto.ContaBancariaCedente.Conta
+                    .Replace(".", "").Replace("-", "");
 
                 if (boleto.CedenteBoleto.ContaBancariaCedente.Conta.BoletoBrToInt() < 1)
                     throw new Exception("Conta Corrente inválida");
-
+                if (boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta.BoletoBrToStringSafe().BoletoBrToInt() > 9)
+                    throw new Exception("Digito Conta Corrente inválida");
                 if (string.IsNullOrEmpty(boleto.CarteiraCobranca.Codigo))
                     throw new Exception("Carteira não informada");
 
                 string NNNNNNNN = boleto.NossoNumeroFormatado.Substring(0, 8).PadLeft(8, '0');
-                string CCCCCCCCCCC = boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(11,'0');
-                string R = "2"; /*Tipo Cobrança*/
+                string CCCCCCCCCCD = $@"{boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(10, '0')}{boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta.PadLeft(1, '0')}";
+                string R = "4"; /*Tipo Cobrança*/ /*4-Com Registro*/
 
-                string NNNNNNNNCCCCCCCCCCCR021 = string.Concat(NNNNNNNN, CCCCCCCCCCC, R, "021");
+                string NNNNNNNNCCCCCCCCCCCR021 = string.Concat(NNNNNNNN, CCCCCCCCCCD, R, "021");
 
-                int D1 = CalculaD1(NNNNNNNNCCCCCCCCCCCR021);
-                int D2 = CalculaD2(NNNNNNNNCCCCCCCCCCCR021, D1);
+                D1 = CalculaD1(NNNNNNNNCCCCCCCCCCCR021);
+                int D2 = CalculaD2(NNNNNNNNCCCCCCCCCCCR021);
 
                 return string.Concat(NNNNNNNNCCCCCCCCCCCR021, D1, D2);
             }
