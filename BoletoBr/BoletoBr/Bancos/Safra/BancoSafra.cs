@@ -90,7 +90,7 @@ namespace BoletoBr.Bancos.Safra
 
             boleto.CedenteBoleto.CodigoCedenteFormatado = string.Format("{0}/{1}-{2}",
                 boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(5, '0'),
-                boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(9, '0'),
+                boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(8, '0'),
                 boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta);
         }
 
