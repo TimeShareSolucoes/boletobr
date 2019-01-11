@@ -88,8 +88,8 @@ namespace BoletoBr.Bancos.Safra
 
             ValidaBoletoComNormasBanco(boleto);
 
-            boleto.CedenteBoleto.CodigoCedenteFormatado = string.Format("{0}/{1}-{2}",
-                boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(5, '0'),
+            boleto.CedenteBoleto.CodigoCedenteFormatado = string.Format("{0}/{1}{2}",
+                boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadRight(5, '0'),
                 boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(8, '0'),
                 boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta);
         }
