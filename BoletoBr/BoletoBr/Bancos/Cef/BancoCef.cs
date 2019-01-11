@@ -380,7 +380,7 @@ namespace BoletoBr.Bancos.Cef
              * Informação reservada para arquivo de remessa
              * O tipo de modalidade são os 2 primeiros dígitos do Nosso Número
              */
-            boleto.TipoModalidade = boleto.IdentificadorInternoBoleto.Substring(0, 2);
+            boleto.TipoModalidade = boleto.IdentificadorInternoBoleto.Length > 1 ? ("00" + boleto.IdentificadorInternoBoleto).Substring(0, 2) : boleto.IdentificadorInternoBoleto.Substring(0, 2);
 
             boleto.SetNossoNumeroFormatado(boleto.IdentificadorInternoBoleto.PadLeft(15, '0'));
 
