@@ -129,7 +129,7 @@ namespace BoletoBr.Bancos.Banestes
                 objRetornar.MotivoDaOcorrencia = linha.ExtrairValorDaLinha(319, 320).BoletoBrToInt();
                 objRetornar.CodigoOriginalRemessa = linha.ExtrairValorDaLinha(377, 382);
                 objRetornar.DataDeCredito =
-                    Convert.ToDateTime(linha.ExtrairValorDaLinha(383, 390).ToDateTimeFromDdMmAa());
+                    Convert.ToDateTime(linha.ExtrairValorDaLinha(111, 116).ToDateTimeFromDdMmAa());
                 objRetornar.Moeda = linha.ExtrairValorDaLinha(394, 394).BoletoBrToInt();
                 objRetornar.NumeroSequencial = linha.ExtrairValorDaLinha(395, 400).BoletoBrToInt();
 
