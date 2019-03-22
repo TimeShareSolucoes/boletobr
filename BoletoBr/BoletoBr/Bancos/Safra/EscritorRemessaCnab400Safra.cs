@@ -334,7 +334,7 @@ namespace BoletoBr.Bancos.Safra
                 #region Sacador Avalista / Mensagem
 
                 // Caso não tenha sacador/avalista informar mensagem no campo
-                if (infoDetalhe.NomeAvalistaOuMensagem2.BoletoBrToStringSafe().Trim().Length == 0)
+                if (infoDetalhe.NomeAvalistaOuMensagem2.BoletoBrToStringSafe().Trim().Length > 0)
                 {
                     // Mensagem
                     if (primeiraInstrucao != null &&
@@ -359,8 +359,7 @@ namespace BoletoBr.Bancos.Safra
                 else
                 {
                     // Nome do Sacador ou Avalista
-                    detalhe = detalhe.PreencherValorNaLinha(352, 381,
-                        infoDetalhe.NomeAvalistaOuMensagem2.BoletoBrToStringSafe().PadRight(30, ' '));
+                    detalhe = detalhe.PreencherValorNaLinha(352, 381,string.Empty.PadLeft(30, ' '));/* SE HOUVER MENSAGENS ESPECÍFICAS, TÍTULO A TÍTULO, UTILIZAR CAMPO "SACADOR / AVALISTA" COMO MENSAGEM (SOMENTE AS 28 PRIMEIRAS POSIÇÕES). CASO DESEJE */
                 }
 
                 #endregion

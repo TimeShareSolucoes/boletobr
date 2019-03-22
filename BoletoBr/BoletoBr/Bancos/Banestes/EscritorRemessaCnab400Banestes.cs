@@ -51,7 +51,7 @@ namespace BoletoBr.Bancos.Banestes
                 header = header.PreencherValorNaLinha(88, 94, string.Empty.PadRight(7, ' '));
                 header = header.PreencherValorNaLinha(95, 100, DateTime.Now.ToString("ddMMyy"));
                 header = header.PreencherValorNaLinha(101, 394, string.Empty.PadRight(294, ' '));
-                header = header.PreencherValorNaLinha(395, 400, infoHeader.NumeroSequencialRemessa.ToString().PadLeft(6, '0'));
+                header = header.PreencherValorNaLinha(395, 400, "000001");
 
 
                 return header;

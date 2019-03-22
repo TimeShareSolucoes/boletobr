@@ -91,7 +91,7 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 			- Carteiras
 				- [x] 1/01 - CNAB 400 - Simples com Registro (*Homologado com o Banco - 04/08/2016 by @kalleyaoliveira**)
 				- [x] 1/01 - CNAB 240 -Simples com Registro (*Homologado com o Banco - 20/03/2018 by @marcelodossantosaraujo**)
-	- <b>422-7 | Banco Safra - (CNAB 400)</b>
+	- <b>422-7 | Banco (Solicitação de remoção do nome pelo Banco) - (CNAB 400)</b>
 		- Implementação / Testes
 			- Carteiras
 				- [x] 1 - COBRANÇA SIMPLES (*Em homologação com o Banco - by @kalleyaoliveira**)

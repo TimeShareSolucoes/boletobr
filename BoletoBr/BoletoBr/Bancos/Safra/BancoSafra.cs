@@ -88,9 +88,9 @@ namespace BoletoBr.Bancos.Safra
 
             ValidaBoletoComNormasBanco(boleto);
 
-            boleto.CedenteBoleto.CodigoCedenteFormatado = string.Format("{0}/{1}-{2}",
-                boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(5, '0'),
-                boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(9, '0'),
+            boleto.CedenteBoleto.CodigoCedenteFormatado = string.Format("{0}/{1}{2}",
+                boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadRight(5, '0'),
+                boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(8, '0'),
                 boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta);
         }
 
@@ -111,9 +111,9 @@ namespace BoletoBr.Bancos.Safra
         public string FormataCampoLivre(Boleto boleto)
         {
             string formataCampoLivre = string.Format("{0}{1}{2}{3}{4}",
-                DigitoBanco, boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadLeft(5, '0'),
-                boleto.CedenteBoleto.ContaBancariaCedente.Conta.PadLeft(9, '0'),
-                boleto.IdentificadorInternoBoleto.PadLeft(9, '0'),
+                DigitoBanco, boleto.CedenteBoleto.ContaBancariaCedente.Agencia.PadRight(5, '0'),
+                (boleto.CedenteBoleto.ContaBancariaCedente.Conta+ boleto.CedenteBoleto.ContaBancariaCedente.DigitoConta).PadLeft(9, '0'),
+                boleto.NossoNumeroFormatado.PadLeft(9, '0'),
                 "2");
 
             return formataCampoLivre;

@@ -1,5 +1,6 @@
 ﻿using System;
 using BoletoBr.Arquivo;
+using BoletoBr.Bancos.Santander;
 using BoletoBr.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -326,6 +327,15 @@ namespace BoletoBr.UnitTests.TestsBancos
         [TestMethod]
         public void CalcularLinhaDigitavelCarteira102Santander()
         {
+
+            var bancoParaNossoNumero = new BancoSantander();
+            var nossoNumero = "705638";
+
+            var digito1 = bancoParaNossoNumero.Mod11SantanderObsolet(nossoNumero);
+            var digito2 = bancoParaNossoNumero.Mod11Santander(nossoNumero);
+
+
+
             /* 
              * Teste baseado em um boleto apresentado na documentação oficial do Banco Santander
              */

@@ -1005,7 +1005,46 @@ namespace BoletoBr.Bancos.Santander
             throw new NotImplementedException();
         }
 
-        protected static int Mod11Santander(string seq)
+
+
+        public int Mod11SantanderObsolet(string seq)
+        {
+            var ndig = 0;
+            var nresto = 0;
+            var total = 0;
+            var multiplicador = 2;
+
+            char[] posicaoSeq = seq.ToCharArray();
+            Array.Reverse(posicaoSeq);
+            var sequencia = new string(posicaoSeq);
+
+            while (sequencia.Length > 0)
+            {
+                int valorPosicao = Convert.ToInt32(sequencia.Substring(sequencia.Length - 1, 1));
+                total += valorPosicao * multiplicador;
+                multiplicador++;
+
+                if (multiplicador == 10)
+                {
+                    multiplicador = 2;
+                }
+
+                sequencia = sequencia.Remove(sequencia.Length - 1, 1);
+            }
+
+            nresto = total - ((total / 11) * 11);
+
+            if (nresto == 0 || nresto == 1)
+                ndig = 0;
+            else if (nresto == 10)
+                ndig = 1;
+            else
+                ndig = (11 - nresto);
+
+            return ndig;
+        }
+
+        public int Mod11Santander(string seq)
         {
             var ndig = 0;
             var nresto = 0;

@@ -243,6 +243,12 @@ namespace BoletoBr.Bancos.Sicoob
                         Codigo = 09,
                         Descricao = "BAIXA SIMPLES"
                     };
+                case 10:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 10,
+                        Descricao = "BAIXADO CONFORME INSTRUÇÕES DA AGÊNCIA"
+                    };
                 case 11:
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
