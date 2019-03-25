@@ -140,7 +140,8 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     NomeSacado = registroAtual.NomeSacado,
                     CodigoOcorrencia = String.IsNullOrEmpty(registroAtual.MotivoCodigoOcorrencia) ? "00" : registroAtual.MotivoCodigoOcorrencia,
                     MensagemOcorrenciaRetornoBancario = ocorrencia.Descricao,
-                    Ocorrencia = ocorrencia
+                    Ocorrencia = ocorrencia,
+                    NumeroConvenio = registroAtual.NumeroConvenio
                 };
 
                 //DATA LIQUIDAÇÃO E DATA OCORRENCIA

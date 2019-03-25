@@ -81,6 +81,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
         /// -> etc.
         /// </summary>
         public string StatusProcessamentoRegistro { get; set; }
+        public int NumeroConvenio { get; set; }
         #endregion
 
         public bool Pago
