@@ -633,6 +633,18 @@ namespace BoletoBr.Bancos.Santander
                         Codigo = 03,
                         Descricao = "ENTRADA REJEITADA"
                     };
+                case 04:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 04,
+                        Descricao = "4 - NÃO IDENTIFICADO"
+                    };
+                case 05:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 05,
+                        Descricao = "5 - NÃO IDENTIFICADO"
+                    };
                 case 06:
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
