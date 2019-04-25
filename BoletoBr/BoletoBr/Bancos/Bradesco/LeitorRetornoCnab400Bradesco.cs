@@ -156,6 +156,7 @@ namespace BoletoBr.Bancos.Bradesco
                 objRetornar.MotivoCodigoRejeicao = linha.ExtrairValorDaLinha(319, 328);
                 objRetornar.NumeroCartorio = linha.ExtrairValorDaLinha(369, 370).BoletoBrToInt();
                 objRetornar.NumeroProtocolo = linha.ExtrairValorDaLinha(371, 380);
+                objRetornar.NumeroConvenio = linha.ExtrairValorDaLinha(381, 394).Trim().BoletoBrToInt();
                 objRetornar.NumeroSequencial = linha.ExtrairValorDaLinha(395, 400).BoletoBrToInt();
             }
 
