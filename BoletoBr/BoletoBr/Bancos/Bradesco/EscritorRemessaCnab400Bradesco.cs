@@ -166,8 +166,9 @@ namespace BoletoBr.Bancos.Bradesco
                 detalhe = detalhe.PreencherValorNaLinha(106, 106, "2");
                 detalhe = detalhe.PreencherValorNaLinha(107, 108, string.Empty.PadLeft(2, ' '));
 
+                var codigo = infoDetalhe.CodigoOcorrencia?.Codigo??0;
                 detalhe = detalhe.PreencherValorNaLinha(109, 110,
-                    infoDetalhe.CodigoOcorrencia.Codigo.BoletoBrToStringSafe().PadLeft(2, '0'));
+                    codigo.BoletoBrToStringSafe().PadLeft(2, '0'));
 
                 detalhe = detalhe.PreencherValorNaLinha(111, 120, infoDetalhe.NumeroDocumento.PadLeft(10, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(121, 126, infoDetalhe.DataVencimento.ToString("ddMMyy"));
@@ -182,10 +183,12 @@ namespace BoletoBr.Bancos.Bradesco
                 detalhe = detalhe.PreencherValorNaLinha(140, 142, string.Empty.PadLeft(3, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(143, 147, string.Empty.PadLeft(5, '0'));
 
+                var sigla = infoDetalhe.Especie?.Sigla??"";
+                var codigoEspecie = infoDetalhe.Especie?.Codigo ?? 0;
                 detalhe = detalhe.PreencherValorNaLinha(148, 149,
-                    infoDetalhe.Especie.Sigla.Equals("DM")
+                    sigla.Equals("DM")
                         ? "01"
-                        : infoDetalhe.Especie.Codigo.ToString());
+                        : codigoEspecie.ToString());
                 detalhe = detalhe.PreencherValorNaLinha(150, 150, infoDetalhe.Aceite.Equals("A") ? "A" : "N");
                 detalhe = detalhe.PreencherValorNaLinha(151, 156, infoDetalhe.DataEmissao.ToString("ddMMyy"));
 
