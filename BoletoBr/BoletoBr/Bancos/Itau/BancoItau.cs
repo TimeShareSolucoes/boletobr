@@ -852,6 +852,12 @@ namespace BoletoBr.Bancos.Itau
                         Codigo = 76,
                         Descricao = "CHEQUE COMPENSADO"
                     };
+                case 82:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 82,
+                        Descricao = "Código de ocorrência não documentado - Cod.82 "
+                    };
             }
             throw new Exception(
                 String.Format(
