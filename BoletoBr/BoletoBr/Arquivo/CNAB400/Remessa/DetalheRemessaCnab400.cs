@@ -73,6 +73,9 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             //this.MensagemLinha5 = boleto.InstrucoesDoBoleto.ElementAt(4).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(4).TextoInstrucao;
             //this.MensagemLinha6 = boleto.InstrucoesDoBoleto.ElementAt(5).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(5).TextoInstrucao;
 
+            this.Instrucao1 = boleto.Instrucao1;
+            this.Instrucao2 = boleto.Instrucao2;
+
             #region #033|SANTADER
             // Informação cedida pelo banco que identifica o arquivo remessa do cliente
             this.CodigoDeTransmissao = boleto.CodigoDeTransmissao;
