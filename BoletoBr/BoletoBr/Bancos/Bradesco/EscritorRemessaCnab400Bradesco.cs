@@ -401,7 +401,7 @@ namespace BoletoBr.Bancos.Bradesco
                 tipo2 = tipo2.PreencherValorNaLinha(82, 161, mensagem2.PadRight(80, ' '));
                 tipo2 = tipo2.PreencherValorNaLinha(162, 241, mensagem3.PadRight(80, ' '));
                 tipo2 = tipo2.PreencherValorNaLinha(242, 321, mensagem4.PadRight(80, ' '));
-                tipo2 = tipo2.PreencherValorNaLinha(322, 366, string.Empty.PadRight(45, ' '));
+                tipo2 = tipo2.PreencherValorNaLinha(322, 366, string.Empty.PadRight(45, '0'));
                 tipo2 = tipo2.PreencherValorNaLinha(367, 369, infoDetalhe.CarteiraCobranca.PadLeft(3, '0'));
                 tipo2 = tipo2.PreencherValorNaLinha(370, 374, infoDetalhe.Agencia.PadLeft(5, '0'));
                 tipo2 = tipo2.PreencherValorNaLinha(375, 381, infoDetalhe.ContaCorrente.PadLeft(7, '0'));

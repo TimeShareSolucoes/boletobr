@@ -375,12 +375,12 @@ namespace BoletoBr.Bancos.Cef
                 throw new Exception("Sequencial nosso número não pode exceder 15 dígitos.");
 
             string dvNossoNumero;
-
             /* 
              * Informação reservada para arquivo de remessa
              * O tipo de modalidade são os 2 primeiros dígitos do Nosso Número
              */
-            boleto.TipoModalidade = boleto.IdentificadorInternoBoleto.Length > 1 ? ("00" + boleto.IdentificadorInternoBoleto).Substring(0, 2) : boleto.IdentificadorInternoBoleto.Substring(0, 2);
+            boleto.IdentificadorInternoBoleto= boleto.IdentificadorInternoBoleto.Length == 1? "0" + boleto.IdentificadorInternoBoleto: boleto.IdentificadorInternoBoleto;
+            boleto.TipoModalidade = boleto.IdentificadorInternoBoleto.Length > 1 ? ("00" + boleto.IdentificadorInternoBoleto).Substring(0, 2) : boleto.IdentificadorInternoBoleto.Substring(0, boleto.IdentificadorInternoBoleto.Length-1);
 
             boleto.SetNossoNumeroFormatado(boleto.IdentificadorInternoBoleto.PadLeft(15, '0'));
 
