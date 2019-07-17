@@ -253,7 +253,7 @@ namespace BoletoBr.Bancos.Safra
 
                     var multaBoleto = string.Empty;
 
-                    multaBoleto = infoDetalhe.PercentualMulta.BoletoBrToStringSafe().Replace(".", "").Replace(",", "");
+                    multaBoleto = $"{decimal.Round(infoDetalhe.PercentualMulta, 2):0.00}".BoletoBrToStringSafe().Replace(".", "").Replace(",", "");
                     detalhe = detalhe.PreencherValorNaLinha(212, 215, multaBoleto.PadLeft(4, '0'));
 
                     //Informar instrução de Multa
