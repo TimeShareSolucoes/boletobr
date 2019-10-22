@@ -135,7 +135,7 @@ namespace BoletoBr.Bancos.Santander
             objRetornar.CodigoOcorrencia2 = linha.ExtrairValorDaLinha(140, 142);
             objRetornar.CodigoOcorrencia3 = linha.ExtrairValorDaLinha(143, 145);
             // Brancos (146-146)
-            objRetornar.DataDeVencimento = (DateTime)linha.ExtrairValorDaLinha(147, 152).ToString().ToDateTimeFromDdMmAa();
+            objRetornar.DataDeVencimento = (DateTime)linha.ExtrairValorDaLinha(147, 152).ToString().ToDateTimeFromDdMmAa().GetValueOrDefault();
             objRetornar.ValorDoTituloParcela = linha.ExtrairValorDaLinha(153, 165).BoletoBrToDecimal()/100;
             objRetornar.BancoCobrador = linha.ExtrairValorDaLinha(166, 168).BoletoBrToInt();
             objRetornar.AgenciaCobradora = linha.ExtrairValorDaLinha(169, 173).BoletoBrToInt();
