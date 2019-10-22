@@ -36,7 +36,7 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             this.ValorDesconto = Convert.ToDecimal(boleto.ValorDesconto).Equals(null)
                 ? 0
                 : Convert.ToDecimal(boleto.ValorDesconto);
-            if(boleto.DataLimitDesconto != null && boleto.DataLimitDesconto.GetValueOrDefault() > DateTime.MinValue)
+            if (boleto.DataLimitDesconto != null && boleto.DataLimitDesconto.GetValueOrDefault() > DateTime.MinValue)
                 this.DataLimiteConcessaoDesconto = boleto.DataLimitDesconto.GetValueOrDefault();
             this.ValorIof = Convert.ToDecimal(boleto.Iof).Equals(null) ? 0 : Convert.ToDecimal(boleto.Iof);
             this.ValorAbatimento = Convert.ToDecimal(boleto.ValorAbatimento).Equals(null)
@@ -73,11 +73,15 @@ namespace BoletoBr.Arquivo.CNAB400.Remessa
             //this.MensagemLinha5 = boleto.InstrucoesDoBoleto.ElementAt(4).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(4).TextoInstrucao;
             //this.MensagemLinha6 = boleto.InstrucoesDoBoleto.ElementAt(5).TextoInstrucao.Equals(null) ? "" : boleto.InstrucoesDoBoleto.ElementAt(5).TextoInstrucao;
 
+            this.Instrucao1 = boleto.Instrucao1;
+            this.Instrucao2 = boleto.Instrucao2;
+
             #region #033|SANTADER
             // Informação cedida pelo banco que identifica o arquivo remessa do cliente
             this.CodigoDeTransmissao = boleto.CodigoDeTransmissao;
             this.DataDesconto = boleto.DataDesconto;
             #endregion
+ 
         }
 
         #region #INFORMAÇÕES DE USO EXCLUSIVO NA REMESSA

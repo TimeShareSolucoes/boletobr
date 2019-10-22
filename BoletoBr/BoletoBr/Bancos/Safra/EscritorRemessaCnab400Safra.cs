@@ -186,10 +186,6 @@ namespace BoletoBr.Bancos.Safra
                 else
                     detalhe = detalhe.PreencherValorNaLinha(157, 158, "00");
 
-                if (segundaInstrucao != null && segundaInstrucao.Codigo > 0)
-                    detalhe = detalhe.PreencherValorNaLinha(159, 160, segundaInstrucao.Codigo.BoletoBrToStringSafe().PadLeft(2, '0'));
-                else
-                    detalhe = detalhe.PreencherValorNaLinha(159, 160, "00");
 
                 #endregion
 
@@ -203,23 +199,9 @@ namespace BoletoBr.Bancos.Safra
                     infoDetalhe.ValorCobradoDiaAtraso = Math.Round(valorCobrarJuroDia, 2);
                 }
 
-                if (infoDetalhe.ValorCobradoDiaAtraso.ToString().Contains('.') &&
-                    infoDetalhe.ValorCobradoDiaAtraso.ToString().Contains(','))
-                {
-                    jurosBoleto = infoDetalhe.ValorCobradoDiaAtraso.ToString().Replace(".", "").Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(161, 173, jurosBoleto.PadLeft(13, '0'));
-                }
-                if (infoDetalhe.ValorCobradoDiaAtraso.ToString().Contains('.'))
-                {
-                    jurosBoleto = infoDetalhe.ValorCobradoDiaAtraso.ToString().Replace(".", "");
-                    detalhe = detalhe.PreencherValorNaLinha(161, 173, jurosBoleto.PadLeft(13, '0'));
-                }
-                if (infoDetalhe.ValorCobradoDiaAtraso.ToString().Contains(','))
-                {
-                    jurosBoleto = infoDetalhe.ValorCobradoDiaAtraso.ToString().Replace(",", "");
-                    detalhe = detalhe.PreencherValorNaLinha(161, 173, jurosBoleto.PadLeft(13, '0'));
-                }
+                detalhe = detalhe.PreencherValorNaLinha(159, 160, infoDetalhe.ValorCobradoDiaAtraso > 0 ? "01" : "00");
 
+                jurosBoleto = infoDetalhe.ValorCobradoDiaAtraso.BoletoBrToStringSafe().Replace(".", "").Replace(",", "");
                 detalhe = detalhe.PreencherValorNaLinha(161, 173, jurosBoleto.PadLeft(13, '0'));
 
                 #endregion
@@ -271,22 +253,8 @@ namespace BoletoBr.Bancos.Safra
 
                     var multaBoleto = string.Empty;
 
-                    if (infoDetalhe.PercentualMulta.ToString().Contains('.') &&
-                        infoDetalhe.PercentualMulta.ToString().Contains(','))
-                    {
-                        multaBoleto = infoDetalhe.PercentualMulta.ToString().Replace(".", "").Replace(",", "");
-                        detalhe = detalhe.PreencherValorNaLinha(212, 215, multaBoleto.PadLeft(4, '0'));
-                    }
-                    else if (infoDetalhe.PercentualMulta.ToString().Contains('.'))
-                    {
-                        multaBoleto = infoDetalhe.PercentualMulta.ToString().Replace(".", "");
-                        detalhe = detalhe.PreencherValorNaLinha(212, 215, multaBoleto.PadLeft(4, '0'));
-                    }
-                    else if (infoDetalhe.PercentualMulta.ToString().Contains(','))
-                    {
-                        multaBoleto = infoDetalhe.PercentualMulta.ToString().Replace(",", "");
-                        detalhe = detalhe.PreencherValorNaLinha(212, 215, multaBoleto.PadLeft(4, '0'));
-                    }
+                    multaBoleto = $"{decimal.Round(infoDetalhe.PercentualMulta, 2):0.00}".BoletoBrToStringSafe().Replace(".", "").Replace(",", "");
+                    detalhe = detalhe.PreencherValorNaLinha(212, 215, multaBoleto.PadLeft(4, '0'));
 
                     //Informar instrução de Multa
                     if (infoDetalhe.PercentualMulta > 0)
@@ -359,7 +327,7 @@ namespace BoletoBr.Bancos.Safra
                 else
                 {
                     // Nome do Sacador ou Avalista
-                    detalhe = detalhe.PreencherValorNaLinha(352, 381,string.Empty.PadLeft(30, ' '));/* SE HOUVER MENSAGENS ESPECÍFICAS, TÍTULO A TÍTULO, UTILIZAR CAMPO "SACADOR / AVALISTA" COMO MENSAGEM (SOMENTE AS 28 PRIMEIRAS POSIÇÕES). CASO DESEJE */
+                    detalhe = detalhe.PreencherValorNaLinha(352, 381, string.Empty.PadLeft(30, ' '));/* SE HOUVER MENSAGENS ESPECÍFICAS, TÍTULO A TÍTULO, UTILIZAR CAMPO "SACADOR / AVALISTA" COMO MENSAGEM (SOMENTE AS 28 PRIMEIRAS POSIÇÕES). CASO DESEJE */
                 }
 
                 #endregion

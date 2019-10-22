@@ -84,6 +84,8 @@ namespace BoletoBr
         public string LinhaDigitavelBoleto { get; set; }      
         public TipoArquivo TipoArquivo { get; set; }
         public string CodigoDoProduto { get; set; }
+        public string Instrucao1 { get; set; }
+        public string Instrucao2 { get; set; }
         /// <summary>
         /// Propriedade utilizada armazenar numero de dias para protesto,
         /// Essa informação deve ser armazenda em CarteiraCobrança QtdDiasProtesto 
