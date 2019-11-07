@@ -21,6 +21,8 @@ namespace BoletoBr.Arquivo.Generico.Retorno
         public decimal ValorTarifaCustas { get; set; }
         public DateTime DataVencimento { get; set; }
 
+        public int ModalidadeNossoNumero { get; set; }
+
         #endregion
 
         #region Segmento U

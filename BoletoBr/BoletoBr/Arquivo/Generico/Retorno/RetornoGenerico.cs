@@ -38,6 +38,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     var valorDoc = d.SegmentoT.ValorTitulo;
                     detalheGenericoAdd.ValorDocumento = valorDoc;
                     detalheGenericoAdd.DataVencimento = Convert.ToDateTime(d.SegmentoT.DataVencimento);
+                    detalheGenericoAdd.ModalidadeNossoNumero = d.SegmentoT.ModalidadeNossoNumero;
                     //detalheGenericoAdd.ValorDocumento = Math.Round(d.SegmentoT.ValorTitulo, 2);
                     //detalheGenericoAdd.ValorTarifaCustas = d.SegmentoT.ValorTarifas / 100;
                     //detalheGenericoAdd.CodigoMovimento = d.SegmentoT.CodigoMovimento.ToString();
@@ -73,7 +74,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     detalheGenericoAdd.MensagemOcorrenciaRetornoBancario = ocorrencia?.Descricao;
                     detalheGenericoAdd.Ocorrencia = ocorrencia;
                     //detalheGenericoAdd.CodigoOcorrencia = d.SegmentoU.CodigoOcorrenciaPagador;
-                    //detalheGenericoAdd.DataOcorrencia = d.SegmentoU.DataOcorrenciaPagador;
+                    detalheGenericoAdd.DataOcorrencia = d.SegmentoU.DataOcorrencia.GetValueOrDefault();
                     //detalheGenericoAdd.ValorOcorrencia = d.SegmentoU.ValorOcorrenciaPagador / 100;
                     //detalheGenericoAdd.DataDebitoTarifaCustas = Convert.ToDateTime(d.SegmentoU.DataDebitoTarifa.ToString());
 
