@@ -39,7 +39,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
         public decimal ValorOutrosCreditos { get; set; }
         public DateTime? DataLiquidacao { get; set; }
         public DateTime? DataCredito { get; set; }
-        public DateTime DataOcorrencia { get; set; }
+        public DateTime? DataOcorrencia { get; set; }
         public decimal ValorOcorrencia { get; set; }
         public DateTime DataDebitoTarifaCustas { get; set; }
 

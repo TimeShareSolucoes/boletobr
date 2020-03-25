@@ -119,6 +119,7 @@ namespace BoletoBr.Arquivo.Generico.Retorno
                     PercentualIof = registroAtual.TaxaIof,
                     Especie = registroAtual.Especie,
                     DataCredito = registroAtual.DataDeCredito,
+                    DataOcorrencia = registroAtual.DataDaOcorrencia,
                     DataVencimento = registroAtual.DataDeVencimento,
                     DataLiquidacao = registroAtual.DataLiquidacao,
                     NumeroDocumento = registroAtual.NumeroDocumento,
