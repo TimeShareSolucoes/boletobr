@@ -316,10 +316,9 @@ namespace BoletoBr.Bancos.Cef
                 segmentoP = segmentoP.PreencherValorNaLinha(166, 180, infoSegmentoP.ValorIof.ToString().Replace(".", "").Replace(",", "").PadLeft(15, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(181, 195, infoSegmentoP.ValorAbatimento.ToString().Replace(".", "").Replace(",", "").PadLeft(15, '0'));
 
-                const string doc = "DOC";
-                var seuNumero = doc + infoSegmentoP.NossoNumero.PadRight(25 - doc.Length, ' ');
+                
 
-                segmentoP = segmentoP.PreencherValorNaLinha(196, 220, seuNumero.PadRight(25, ' '));
+                segmentoP = segmentoP.PreencherValorNaLinha(196, 220, ((infoSegmentoP.NumeroDocumento.Length > 11 ? infoSegmentoP.NumeroDocumento.Substring(infoSegmentoP.NumeroDocumento.Length - 11, 11) : infoSegmentoP.NumeroDocumento).PadLeft(11, '0')).PadRight(25, ' '));
 
                 #region CÓDIGO PROTESTO
 
@@ -613,7 +612,9 @@ namespace BoletoBr.Bancos.Cef
 
                 listaRet.Add(EscreverDetalheSegmentoP(detalhe.SegmentoP));
                 listaRet.Add(EscreverDetalheSegmentoQ(detalhe.SegmentoQ));
-                if(detalhe.SegmentoP.BancoEmiteBoleto && detalhe.SegmentoR.ValorMulta > 0)
+                if(
+                    //detalhe.SegmentoP.BancoEmiteBoleto && 
+                    detalhe.SegmentoR.ValorMulta > 0)
                     listaRet.Add(EscreverDetalheSegmentoR(detalhe.SegmentoR));
             }
 

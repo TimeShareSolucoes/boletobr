@@ -489,7 +489,7 @@ namespace BoletoBr.Bancos.Brasil
                 detalhe = detalhe.PreencherValorNaLinha(4, 4, "2");
                 detalhe = detalhe.PreencherValorNaLinha(5, 10, infoDetalhe.DataVencimento.AddDays(1).ToString("ddMMyy"));
                 detalhe = detalhe.PreencherValorNaLinha(11, 22,
-                    infoDetalhe.PercentualMulta.ToString().Replace(".", "").Replace(",", "").PadLeft(12, '0'));
+                    infoDetalhe.PercentualMulta.ToString("N2").Replace(".", "").Replace(",", "").PadLeft(12, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(23, 394, string.Empty.PadRight(372, ' '));
                 detalhe = detalhe.PreencherValorNaLinha(395, 400,
                     numeroRegistro.ToString(CultureInfo.InvariantCulture).PadLeft(6, '0'));

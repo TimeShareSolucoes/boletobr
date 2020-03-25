@@ -144,8 +144,8 @@ namespace BoletoBr.Bancos.Banestes
                 detalhe = detalhe.PreencherValorNaLinha(89, 90, string.Empty.PadLeft(2, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(91, 92, string.Empty.PadLeft(2, '0'));
 
-                detalhe = detalhe.PreencherValorNaLinha(93, 93, infoDetalhe.InscricaoPagador.BoletoBrToStringSafe().Replace(".", "").Replace("-", "").Length == 11 ? "1" : "2");
-                detalhe = detalhe.PreencherValorNaLinha(94, 107, infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").PadLeft(14, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(93, 93, /*infoDetalhe.InscricaoPagador.BoletoBrToStringSafe().Replace(".", "").Replace("-", "").Length == 11 ? "1" : "2"*/ string.Empty.PadLeft(1, ' '));
+                detalhe = detalhe.PreencherValorNaLinha(94, 107, /*infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "")*/string.Empty.PadLeft(14, ' '));
 
                 detalhe = detalhe.PreencherValorNaLinha(108, 108, infoDetalhe.CarteiraCobranca == "11" ? "1" : "3");/*1 - simples | 3- Caucionada*/
                 detalhe = detalhe.PreencherValorNaLinha(109, 110, infoDetalhe.CodigoOcorrencia.Codigo.BoletoBrToStringSafe().PadLeft(2, '0'));
