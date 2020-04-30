@@ -401,7 +401,27 @@ namespace BoletoBr.Bancos.Bradesco
                 tipo2 = tipo2.PreencherValorNaLinha(82, 161, mensagem2.PadRight(80, ' '));
                 tipo2 = tipo2.PreencherValorNaLinha(162, 241, mensagem3.PadRight(80, ' '));
                 tipo2 = tipo2.PreencherValorNaLinha(242, 321, mensagem4.PadRight(80, ' '));
-                tipo2 = tipo2.PreencherValorNaLinha(322, 366, string.Empty.PadRight(45, ' '));
+
+                /*Nota 2.: Implementamos o Leiaute Registro Tipo 2, para permitir aos clientes beneficiários
+                conceder mais dois (2) novos descontos podendo ser informados nas posições 322 à 359. A
+                concessão do desconto disponível no Leiaute Registro Transação Tipo 1, permanece
+                inalterada. -- Campos numéricos. Se não houver desconto informar zeros*/
+
+                if (infoDetalhe.DataLimiteConcessaoDesconto2 == DateTime.MinValue)
+                    tipo2 = tipo2.PreencherValorNaLinha(322, 327, string.Empty.PadLeft(6, '0'));
+                else
+                    tipo2 = tipo2.PreencherValorNaLinha(322, 327,infoDetalhe.DataLimiteConcessaoDesconto2.ToString("ddMMyy"));
+                 
+                tipo2 = tipo2.PreencherValorNaLinha(328, 340, infoDetalhe.ValorDesconto2.ToStringParaVoloresDecimais().PadLeft(13, '0'));
+
+                if (infoDetalhe.DataLimiteConcessaoDesconto3 == DateTime.MinValue)
+                    tipo2 = tipo2.PreencherValorNaLinha(341, 346, string.Empty.PadLeft(6, '0'));
+                else
+                    tipo2 = tipo2.PreencherValorNaLinha(341, 346, infoDetalhe.DataLimiteConcessaoDesconto3.ToString("ddMMyy"));
+                 
+                tipo2 = tipo2.PreencherValorNaLinha(347, 359, infoDetalhe.ValorDesconto3.ToStringParaVoloresDecimais().PadLeft(13, '0'));
+
+                tipo2 = tipo2.PreencherValorNaLinha(360, 366, string.Empty.PadRight(7, ' '));
                 tipo2 = tipo2.PreencherValorNaLinha(367, 369, infoDetalhe.CarteiraCobranca.PadLeft(3, '0'));
                 tipo2 = tipo2.PreencherValorNaLinha(370, 374, infoDetalhe.Agencia.PadLeft(5, '0'));
                 tipo2 = tipo2.PreencherValorNaLinha(375, 381, infoDetalhe.ContaCorrente.PadLeft(7, '0'));
