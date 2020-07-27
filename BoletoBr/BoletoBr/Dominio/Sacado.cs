@@ -29,5 +29,7 @@ namespace BoletoBr
             this.CpfCnpj = cpfCnpj;
             this.EnderecoSacado = endereco;
         }
+
+        public string IdentificacaoClienteBanco { get; set; }
     }
 }

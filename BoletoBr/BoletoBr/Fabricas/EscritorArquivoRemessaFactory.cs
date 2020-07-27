@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Linq;
 using BoletoBr.Arquivo.CNAB240.Remessa;
 using BoletoBr.Arquivo.CNAB400.Remessa;
+using BoletoBr.Arquivo.DebitoAutomatico.Remessa;
+using BoletoBr.Bancos.DebitoAutomatico;
 using BoletoBr.Bancos.Itau;
 using BoletoBr.Interfaces;
 
@@ -121,6 +124,23 @@ namespace BoletoBr.Fabricas
             catch (Exception ex)
             {
                 throw new Exception("Erro durante a execução da transação.", ex);
+            }
+        }
+
+        public static IEscritorArquivoRemessaDebitoAutomatico ObterEscritorRemessa(RemessaDebitoAutomatico remessaEscrever)
+        {
+            if (   remessaEscrever.RegistrosDetalheC != null && remessaEscrever.RegistrosDetalheC.Any()
+                || remessaEscrever.RegistrosDetalheD != null && remessaEscrever.RegistrosDetalheD.Any()
+                || remessaEscrever.RegistrosDetalheE != null && remessaEscrever.RegistrosDetalheE.Any()
+                || remessaEscrever.RegistrosDetalheI != null && remessaEscrever.RegistrosDetalheI.Any()
+                || remessaEscrever.RegistrosDetalheL != null && remessaEscrever.RegistrosDetalheL.Any()
+                || remessaEscrever.RegistrosDetalheJ != null && remessaEscrever.RegistrosDetalheJ.Any())
+            {
+                return new EscritorRemessaDebitoAutomatico(remessaEscrever);
+            }
+            else
+            {
+                throw new Exception("Não foi identificado registro de DETALHE");
             }
         }
     }

@@ -126,7 +126,7 @@ namespace BoletoBr
         /// <param name="obj"></param>
         /// <param name="qtdCasasDecimais"> Qtd casas decimais </param>
         /// <returns></returns>
-        public static string ToStringParaVoloresDecimais(this decimal obj, int qtdCasasDecimais = 2)
+        public static string ToStringParaValoresDecimais(this decimal obj, int qtdCasasDecimais = 2)
         {
             var mascara = "";
             for (int i = 0; i < qtdCasasDecimais; i++)
@@ -375,6 +375,20 @@ namespace BoletoBr
                 return null;
 
             if (DateTime.TryParseExact(s, "ddMMyy", null, DateTimeStyles.None, out result))
+            {
+                return result;
+            }
+            return null;
+        }
+
+        public static DateTime? ToDateTimeFromAaaaMmDd(this string s)
+        {
+            DateTime result;
+
+            if (String.IsNullOrEmpty(s))
+                return null;
+
+            if (DateTime.TryParseExact(s, "yyyyMMdd", null, DateTimeStyles.None, out result))
             {
                 return result;
             }

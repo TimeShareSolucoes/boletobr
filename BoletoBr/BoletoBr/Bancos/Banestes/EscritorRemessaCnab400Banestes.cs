@@ -155,7 +155,7 @@ namespace BoletoBr.Bancos.Banestes
 
 
                 detalhe = detalhe.PreencherValorNaLinha(127, 129, string.Empty.PadLeft(3, '0'));
-                detalhe = detalhe.PreencherValorNaLinha(130, 139, infoDetalhe.ValorBoleto.ToStringParaVoloresDecimais().PadLeft(10, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(130, 139, infoDetalhe.ValorBoleto.ToStringParaValoresDecimais().PadLeft(10, '0'));
                 detalhe = detalhe.PreencherValorNaLinha(140, 142, "021");
 
                 detalhe = detalhe.PreencherValorNaLinha(143, 147, infoDetalhe.BancoEmiteBoleto ? string.Empty.PadLeft(5, '0') : "00501"); /*00501 - envio pelo cliente | 00000 - envio pelo banco*/
@@ -168,15 +168,15 @@ namespace BoletoBr.Bancos.Banestes
                 detalhe = detalhe.PreencherValorNaLinha(157, 158, infoDetalhe.NroDiasParaProtesto > 0 ? "P6" : "P7");
                 detalhe = detalhe.PreencherValorNaLinha(159, 160, infoDetalhe.NroDiasParaProtesto > 0 ? infoDetalhe.NroDiasParaProtesto.BoletoBrToStringSafe().PadLeft(2, '0') : "00");
                 detalhe = detalhe.PreencherValorNaLinha(161, 161, "0");
-                detalhe = detalhe.PreencherValorNaLinha(162, 173, infoDetalhe.ValorMoraDia.ToStringParaVoloresDecimais().PadLeft(12, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(162, 173, infoDetalhe.ValorMoraDia.ToStringParaValoresDecimais().PadLeft(12, '0'));
 
                 var dataLimiteDesconto = infoDetalhe.DataLimiteConcessaoDesconto == DateTime.MinValue ? "000000": infoDetalhe
                     .DataLimiteConcessaoDesconto.ToString("ddMMyy");
 
                 detalhe = detalhe.PreencherValorNaLinha(174, 179, dataLimiteDesconto);
-                detalhe = detalhe.PreencherValorNaLinha(180, 192, infoDetalhe.ValorDesconto.ToStringParaVoloresDecimais().PadLeft(13, '0'));
-                detalhe = detalhe.PreencherValorNaLinha(193, 205, infoDetalhe.ValorIof.ToStringParaVoloresDecimais().PadLeft(13, '0')); /*!---!*/
-                detalhe = detalhe.PreencherValorNaLinha(206, 218, infoDetalhe.ValorAbatimento.ToStringParaVoloresDecimais().PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(180, 192, infoDetalhe.ValorDesconto.ToStringParaValoresDecimais().PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(193, 205, infoDetalhe.ValorIof.ToStringParaValoresDecimais().PadLeft(13, '0')); /*!---!*/
+                detalhe = detalhe.PreencherValorNaLinha(206, 218, infoDetalhe.ValorAbatimento.ToStringParaValoresDecimais().PadLeft(13, '0'));
 
 
                 detalhe = detalhe.PreencherValorNaLinha(219, 220, infoDetalhe.InscricaoPagador.BoletoBrToStringSafe().Replace(".", "").Replace("-", "").Length == 11 ? "01" : "02");

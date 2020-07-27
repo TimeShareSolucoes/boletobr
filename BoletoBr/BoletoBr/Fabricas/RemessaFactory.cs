@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BoletoBr.Arquivo.CNAB240.Remessa;
 using BoletoBr.Arquivo.CNAB400.Remessa;
+using BoletoBr.Arquivo.DebitoAutomatico.Remessa;
 
 namespace BoletoBr.Fabricas
 {
@@ -64,6 +65,6 @@ namespace BoletoBr.Fabricas
             objReturn.Trailer = trailer;
 
             return objReturn;
-        }
+        }  
     }
 }

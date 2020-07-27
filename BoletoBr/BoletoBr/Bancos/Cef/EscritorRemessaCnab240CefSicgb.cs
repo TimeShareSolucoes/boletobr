@@ -488,7 +488,7 @@ namespace BoletoBr.Bancos.Cef
                 var tipoInstrucaoMulta = infoSegmentoR.ValorMulta > 0 ? "1" : infoSegmentoR.PercentualMulta > 0 ? "2" : "0";
                 segmentoR = segmentoR.PreencherValorNaLinha(66, 66, tipoInstrucaoMulta);
                 segmentoR = segmentoR.PreencherValorNaLinha(67, 74, infoSegmentoR.DataAplicarMulta.ToString("ddMMyyyy"));
-                segmentoR = segmentoR.PreencherValorNaLinha(75, 89, (infoSegmentoR.ValorMulta > 0 ? infoSegmentoR.ValorMulta : infoSegmentoR.PercentualMulta > 0 ? infoSegmentoR.PercentualMulta : 0M).ToStringParaVoloresDecimais().PadLeft(15, '0')); // Valor/Percentual multa
+                segmentoR = segmentoR.PreencherValorNaLinha(75, 89, (infoSegmentoR.ValorMulta > 0 ? infoSegmentoR.ValorMulta : infoSegmentoR.PercentualMulta > 0 ? infoSegmentoR.PercentualMulta : 0M).ToStringParaValoresDecimais().PadLeft(15, '0')); // Valor/Percentual multa
                 segmentoR = segmentoR.PreencherValorNaLinha(90, 99, String.Empty.PadLeft(10,' '));
                 segmentoR = segmentoR.PreencherValorNaLinha(100, 139, String.Empty.PadLeft(40, ' '));
                 segmentoR = segmentoR.PreencherValorNaLinha(140, 179, String.Empty.PadLeft(40, ' '));
@@ -518,11 +518,11 @@ namespace BoletoBr.Bancos.Cef
                 trailerLote = trailerLote.PreencherValorNaLinha(18, 23, infoTrailerLote.QtdRegistrosLote.ToString().PadLeft(6, '0'));
                 
                 trailerLote = trailerLote.PreencherValorNaLinha(24, 29, infoTrailerLote.QtdTitulosCobrancaSimples.ToString().PadLeft(6, '0'));
-                trailerLote = trailerLote.PreencherValorNaLinha(30, 46, infoTrailerLote.ValorTitulosCobrancaSimples.ToStringParaVoloresDecimais().PadLeft(17, '0'));
+                trailerLote = trailerLote.PreencherValorNaLinha(30, 46, infoTrailerLote.ValorTitulosCobrancaSimples.ToStringParaValoresDecimais().PadLeft(17, '0'));
                 trailerLote = trailerLote.PreencherValorNaLinha(47, 52, infoTrailerLote.QtdTitulosCobrancaCaucionada.ToString().PadLeft(6, '0'));
-                trailerLote = trailerLote.PreencherValorNaLinha(53, 69, infoTrailerLote.ValorTitulosCobrancaCaucionada.ToStringParaVoloresDecimais().PadLeft(17, '0'));
+                trailerLote = trailerLote.PreencherValorNaLinha(53, 69, infoTrailerLote.ValorTitulosCobrancaCaucionada.ToStringParaValoresDecimais().PadLeft(17, '0'));
                 trailerLote = trailerLote.PreencherValorNaLinha(70, 75, infoTrailerLote.QtdTitulosCobrancaDescontada.ToString().PadLeft(6, '0'));
-                trailerLote = trailerLote.PreencherValorNaLinha(76, 92, infoTrailerLote.ValorTitulosCobrancaDescontada.ToStringParaVoloresDecimais().PadLeft(17, '0'));
+                trailerLote = trailerLote.PreencherValorNaLinha(76, 92, infoTrailerLote.ValorTitulosCobrancaDescontada.ToStringParaValoresDecimais().PadLeft(17, '0'));
 
                 trailerLote = trailerLote.PreencherValorNaLinha(93, 123, string.Empty.PadLeft(31, ' '));
                 trailerLote = trailerLote.PreencherValorNaLinha(124, 240, string.Empty.PadLeft(117, ' '));

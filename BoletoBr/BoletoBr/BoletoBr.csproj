@@ -58,6 +58,24 @@
     <Compile Include="Arquivo\CNAB240\Retorno\TrailerLoteRetornoCnab240.cs" />
     <Compile Include="Arquivo\CNAB400\Remessa\DetalheFrenteRemessaCnab400.cs" />
     <Compile Include="Arquivo\CNAB400\Retorno\DetalheRateioRetornoCnab400.cs" />
+    <Compile Include="Arquivo\DebitoAutomatico\Remessa\DetalheRemessaRegistroC.cs" />
+    <Compile Include="Arquivo\DebitoAutomatico\Remessa\DetalheRemessaRegistroD.cs" />
+    <Compile Include="Arquivo\DebitoAutomatico\Remessa\DetalheRemessaRegistroI.cs" />
+    <Compile Include="Arquivo\DebitoAutomatico\Remessa\DetalheRemessaRegistroL.cs" />
+    <Compile Include="Arquivo\DebitoAutomatico\Remessa\DetalheRemessaRegistroE.cs" />
+    <Compile Include="Arquivo\DebitoAutomatico\Remessa\DetalheRemessaRegistroJ.cs" />
+    <Compile Include="Arquivo\DebitoAutomatico\Remessa\HeaderRemessaDebitoAutomatico.cs" />
+    <Compile Include="Arquivo\DebitoAutomatico\Remessa\RemessaDebitoAutomatico.cs" />
+    <Compile Include="Arquivo\DebitoAutomatico\Remessa\TrailerRemessaDebitoAutomatico.cs" />
+    <Compile Include="Arquivo\DebitoAutomatico\Retorno\DetalheRetornoRegistroB.cs" />
+    <Compile Include="Arquivo\DebitoAutomatico\Retorno\DetalheRetornoRegistroF.cs" />
+    <Compile Include="Arquivo\DebitoAutomatico\Retorno\DetalheRetornoRegistroH.cs" />
+    <Compile Include="Arquivo\DebitoAutomatico\Retorno\DetalheRetornoRegistroJ.cs" />
+    <Compile Include="Arquivo\DebitoAutomatico\Retorno\DetalheRetornoRegistroT.cs" />
+    <Compile Include="Arquivo\DebitoAutomatico\Retorno\DetalheRetornoRegistroX.cs" />
+    <Compile Include="Arquivo\DebitoAutomatico\Retorno\HeaderRetornoDebitoAutomatico.cs" />
+    <Compile Include="Arquivo\DebitoAutomatico\Retorno\RetornoDebitoAutomatico.cs" />
+    <Compile Include="Arquivo\DebitoAutomatico\Retorno\TrailerRetornoDebitoAutomatico.cs" />
     <Compile Include="Arquivo\Generico\Retorno\RetornoDetalheGenerico.cs" />
     <Compile Include="Arquivo\Generico\Retorno\RetornoTrailerGenerico.cs" />
     <Compile Include="Arquivo\Generico\Retorno\RetornoGenerico.cs" />
@@ -75,6 +93,8 @@
     <Compile Include="Bancos\Daycoval\BancoDaycoval.cs" />
     <Compile Include="Bancos\Daycoval\EscritorRemessaCnab400Daycoval.cs" />
     <Compile Include="Bancos\Daycoval\LeitorRetornoCnab400Daycoval.cs" />
+    <Compile Include="Bancos\DebitoAutomatico\EscritorRemessaDebitoAutomatico.cs" />
+    <Compile Include="Bancos\DebitoAutomatico\LeitorRetornoDebitoAutomatico.cs" />
     <Compile Include="Bancos\Hsbc\EscritorRemessaCnab400Hsbc.cs" />
     <Compile Include="Bancos\Safra\BancoSafra.cs" />
     <Compile Include="Bancos\Safra\EscritorRemessaCnab400Safra.cs" />
@@ -84,6 +104,7 @@
     <Compile Include="Bancos\Sicoob\EscritorRemessaCnab400Sicoob.cs" />
     <Compile Include="Bancos\Sicoob\LeitorRetornoCnab240Sicoob.cs" />
     <Compile Include="Bancos\Sicoob\LeitorRetornoCnab400Sicoob.cs" />
+    <Compile Include="Dominio\Banco.cs" />
     <Compile Include="Dominio\InformacoesAdicionais.cs" />
     <Compile Include="Enums\TipoCobrancaJuro.cs" />
     <Compile Include="Enums\CodigoJurosMora.cs" />
@@ -108,6 +129,7 @@
     <Compile Include="Interfaces\IBanco.cs" />
     <Compile Include="Interfaces\IEscritorArquivoRemessaCnab240.cs" />
     <Compile Include="Interfaces\IEscritorArquivoRemessaCnab400.cs" />
+    <Compile Include="Interfaces\IEscritorArquivoRemessaDebitoAutomatico.cs" />
     <Compile Include="Interfaces\ILeitorArquivoRetornoCnab240.cs" />
     <Compile Include="Interfaces\ILeitorArquivoRetornoCnab400.cs" />
     <Compile Include="Bancos\Itau\BancoItau.cs" />
@@ -195,6 +217,7 @@
     <Compile Include="CalculoModulo\CalculadoraMod11Generica.cs" />
     <Compile Include="CalculoModulo\ICalculadoraModulo10.cs" />
     <Compile Include="CalculoModulo\ICalculadoraModulo11.cs" />
+    <Compile Include="Interfaces\ILeitorArquivoRetornoDebitoAutomatico.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

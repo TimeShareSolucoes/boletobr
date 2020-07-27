@@ -162,7 +162,7 @@ namespace BoletoBr.Bancos.Santander
             var codigoBanco = CodigoBanco.PadLeft(3, '0'); //3
             var codigoMoeda = MoedaBanco; //1
             var fatorVencimento = Common.FatorVencimento(boleto.DataVencimento).ToString().PadLeft(4, '0'); //4
-            var valorNominal = boleto.ValorBoleto.ToStringParaVoloresDecimais().PadLeft(10, '0'); //10
+            var valorNominal = boleto.ValorBoleto.ToStringParaValoresDecimais().PadLeft(10, '0'); //10
             const string fixo = "9"; //1
             var codigoCedente = boleto.CedenteBoleto.CodigoCedente.PadLeft(7, '0'); //7
             var nossoNumero = boleto.NossoNumeroFormatado.Replace("-", "").Replace(",", "").Replace(".", "").PadLeft(13, '0'); //13
