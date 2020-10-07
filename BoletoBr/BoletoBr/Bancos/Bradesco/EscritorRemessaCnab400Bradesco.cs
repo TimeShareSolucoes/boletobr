@@ -148,7 +148,7 @@ namespace BoletoBr.Bancos.Bradesco
 
                 #region VALOR DESCONTO POR DIA
                 
-                detalhe = detalhe.PreencherValorNaLinha(83, 92, infoDetalhe.ValorDescontoDia.ToStringParaVoloresDecimais().PadLeft(10, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(83, 92, infoDetalhe.ValorDescontoDia.ToStringParaValoresDecimais().PadLeft(10, '0'));
 
                 #endregion
 
@@ -220,7 +220,7 @@ namespace BoletoBr.Bancos.Bradesco
                     infoDetalhe.ValorCobradoDiaAtraso = Math.Round(valorCobrarJuroDia, 2);
                 }
                 
-                detalhe = detalhe.PreencherValorNaLinha(161, 173, infoDetalhe.ValorCobradoDiaAtraso.ToStringParaVoloresDecimais().PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(161, 173, infoDetalhe.ValorCobradoDiaAtraso.ToStringParaValoresDecimais().PadLeft(13, '0'));
 
                 #endregion
 
@@ -233,20 +233,20 @@ namespace BoletoBr.Bancos.Bradesco
 
                 #region VALOR DESCONTO
 
-                detalhe = detalhe.PreencherValorNaLinha(180, 192, infoDetalhe.ValorDesconto.ToStringParaVoloresDecimais().PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(180, 192, infoDetalhe.ValorDesconto.ToStringParaValoresDecimais().PadLeft(13, '0'));
 
                 #endregion
 
                 #region VALOR IOF
                 
-                detalhe = detalhe.PreencherValorNaLinha(193, 205, infoDetalhe.ValorIof.ToStringParaVoloresDecimais().PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(193, 205, infoDetalhe.ValorIof.ToStringParaValoresDecimais().PadLeft(13, '0'));
                 // Valor do I.O.F. recolhido p/ notas seguro
 
                 #endregion
 
                 #region VALOR ABATIMENTO
 
-                detalhe = detalhe.PreencherValorNaLinha(206, 218, infoDetalhe.ValorAbatimento.ToStringParaVoloresDecimais().PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(206, 218, infoDetalhe.ValorAbatimento.ToStringParaValoresDecimais().PadLeft(13, '0'));
 
                 #endregion
 
@@ -412,14 +412,14 @@ namespace BoletoBr.Bancos.Bradesco
                 else
                     tipo2 = tipo2.PreencherValorNaLinha(322, 327,infoDetalhe.DataLimiteConcessaoDesconto2.ToString("ddMMyy"));
                  
-                tipo2 = tipo2.PreencherValorNaLinha(328, 340, infoDetalhe.ValorDesconto2.ToStringParaVoloresDecimais().PadLeft(13, '0'));
+                tipo2 = tipo2.PreencherValorNaLinha(328, 340, infoDetalhe.ValorDesconto2.ToStringParaValoresDecimais().PadLeft(13, '0'));
 
                 if (infoDetalhe.DataLimiteConcessaoDesconto3 == DateTime.MinValue)
                     tipo2 = tipo2.PreencherValorNaLinha(341, 346, string.Empty.PadLeft(6, '0'));
                 else
                     tipo2 = tipo2.PreencherValorNaLinha(341, 346, infoDetalhe.DataLimiteConcessaoDesconto3.ToString("ddMMyy"));
                  
-                tipo2 = tipo2.PreencherValorNaLinha(347, 359, infoDetalhe.ValorDesconto3.ToStringParaVoloresDecimais().PadLeft(13, '0'));
+                tipo2 = tipo2.PreencherValorNaLinha(347, 359, infoDetalhe.ValorDesconto3.ToStringParaValoresDecimais().PadLeft(13, '0'));
 
                 tipo2 = tipo2.PreencherValorNaLinha(360, 366, string.Empty.PadRight(7, ' '));
                 tipo2 = tipo2.PreencherValorNaLinha(367, 369, infoDetalhe.CarteiraCobranca.PadLeft(3, '0'));

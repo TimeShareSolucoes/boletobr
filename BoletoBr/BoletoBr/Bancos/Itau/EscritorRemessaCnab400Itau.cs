@@ -229,7 +229,7 @@ namespace BoletoBr.Bancos.Itau
                     infoDetalhe.ValorCobradoDiaAtraso = Math.Round(valorCobrarJuroDia, 2);
                 }
 
-                detalhe = detalhe.PreencherValorNaLinha(161, 173, infoDetalhe.ValorCobradoDiaAtraso.ToStringParaVoloresDecimais().PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(161, 173, infoDetalhe.ValorCobradoDiaAtraso.ToStringParaValoresDecimais().PadLeft(13, '0'));
 
                 #endregion
 
@@ -239,11 +239,11 @@ namespace BoletoBr.Bancos.Itau
                     detalhe = detalhe.PreencherValorNaLinha(174, 179, infoDetalhe.DataLimiteConcessaoDesconto.ToString("ddMMyy"));
                 // Data Limite para Concesão de Desconto
 
-                detalhe = detalhe.PreencherValorNaLinha(180, 192, infoDetalhe.ValorDesconto.ToStringParaVoloresDecimais().PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(180, 192, infoDetalhe.ValorDesconto.ToStringParaValoresDecimais().PadLeft(13, '0'));
                 // Valor do Desconto a ser Concedido
-                detalhe = detalhe.PreencherValorNaLinha(193, 205,infoDetalhe.ValorIof.ToStringParaVoloresDecimais().PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(193, 205,infoDetalhe.ValorIof.ToStringParaValoresDecimais().PadLeft(13, '0'));
                 // Valor do I.O.F. recolhido p/ notas seguro
-                detalhe = detalhe.PreencherValorNaLinha(206, 218, infoDetalhe.ValorAbatimento.ToStringParaVoloresDecimais().PadLeft(13, '0'));
+                detalhe = detalhe.PreencherValorNaLinha(206, 218, infoDetalhe.ValorAbatimento.ToStringParaValoresDecimais().PadLeft(13, '0'));
                 // Valor do Abatimento a ser concedido
                 detalhe = detalhe.PreencherValorNaLinha(219, 220, infoDetalhe.InscricaoPagador.Replace(".", "").Replace("/", "").Replace("-", "").Length == 11
                         ? "01"
@@ -367,7 +367,7 @@ namespace BoletoBr.Bancos.Itau
                 registroMulta = registroMulta.PreencherValorNaLinha(1, 1, "2");
                 registroMulta = registroMulta.PreencherValorNaLinha(2, 2, "2"); //CODIGO DA MULTA 2 - %
                 registroMulta = registroMulta.PreencherValorNaLinha(3, 10, infoDetalhe.DataVencimento.AddDays(1).ToString("ddMMyyyy")); //DATA DA MULTA
-                registroMulta = registroMulta.PreencherValorNaLinha(11, 23, infoDetalhe.PercentualMulta.ToStringParaVoloresDecimais().PadLeft(13, '0')); //VALOR/PERCENTUAL A SER APLICADO
+                registroMulta = registroMulta.PreencherValorNaLinha(11, 23, infoDetalhe.PercentualMulta.ToStringParaValoresDecimais().PadLeft(13, '0')); //VALOR/PERCENTUAL A SER APLICADO
 
                 registroMulta = registroMulta.PreencherValorNaLinha(24, 394, string.Empty.PadRight(371, ' '));
                 registroMulta = registroMulta.PreencherValorNaLinha(395, 400, sequencial.ToString().PadLeft(6, '0'));

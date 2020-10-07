@@ -32,6 +32,6 @@ namespace BoletoBr
 
                 return resultado;
             }
-        }
+        } 
     }
 }

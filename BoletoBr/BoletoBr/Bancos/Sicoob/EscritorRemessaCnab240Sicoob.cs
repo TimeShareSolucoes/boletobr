@@ -150,7 +150,7 @@ namespace BoletoBr.Bancos.Sicoob
                 segmentoP = segmentoP.PreencherValorNaLinha(63, 77, infoSegmentoP.NumeroDocumento.PadLeft(15, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(78, 85, infoSegmentoP.DataVencimento.ToString("ddMMyyyy"));
                 
-                segmentoP = segmentoP.PreencherValorNaLinha(86, 100, infoSegmentoP.ValorBoleto.ToStringParaVoloresDecimais().PadLeft(15, '0'));
+                segmentoP = segmentoP.PreencherValorNaLinha(86, 100, infoSegmentoP.ValorBoleto.ToStringParaValoresDecimais().PadLeft(15, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(101, 105, string.Empty.PadLeft(5, '0'));
                 segmentoP = segmentoP.PreencherValorNaLinha(106, 106, " "); // Dígito Verificador da Agência
                 segmentoP = segmentoP.PreencherValorNaLinha(107, 108, infoSegmentoP.Especie.Sigla.Equals("DM") ? "02" : infoSegmentoP.Especie.Codigo.ToString().PadLeft(2, '0')); // Espécia do Título
@@ -176,7 +176,7 @@ namespace BoletoBr.Bancos.Sicoob
                 else
                     segmentoP = segmentoP.PreencherValorNaLinha(119, 126, infoSegmentoP.DataJurosMora.ToString("ddMMyyyy"));
 
-                segmentoP = segmentoP.PreencherValorNaLinha(127, 141, infoSegmentoP.ValorJurosMora.GetValueOrDefault().ToStringParaVoloresDecimais().PadLeft(15, '0'));
+                segmentoP = segmentoP.PreencherValorNaLinha(127, 141, infoSegmentoP.ValorJurosMora.GetValueOrDefault().ToStringParaValoresDecimais().PadLeft(15, '0'));
                 /* Código do Desconto
                  * 0 - Sem desconto
                  * 1 - Valor fixo até a data informada
@@ -193,9 +193,9 @@ namespace BoletoBr.Bancos.Sicoob
                 else
                     segmentoP = segmentoP.PreencherValorNaLinha(143, 150, infoSegmentoP.DataDesconto1.ToString("ddMMyyyy"));
 
-                segmentoP = segmentoP.PreencherValorNaLinha(151, 165, infoSegmentoP.ValorDesconto1.GetValueOrDefault().ToStringParaVoloresDecimais().PadLeft(15, '0'));
-                segmentoP = segmentoP.PreencherValorNaLinha(166, 180, infoSegmentoP.ValorIof.GetValueOrDefault().ToStringParaVoloresDecimais().PadLeft(15, '0'));
-                segmentoP = segmentoP.PreencherValorNaLinha(181, 195, infoSegmentoP.ValorAbatimento.GetValueOrDefault().ToStringParaVoloresDecimais().PadLeft(15, '0'));
+                segmentoP = segmentoP.PreencherValorNaLinha(151, 165, infoSegmentoP.ValorDesconto1.GetValueOrDefault().ToStringParaValoresDecimais().PadLeft(15, '0'));
+                segmentoP = segmentoP.PreencherValorNaLinha(166, 180, infoSegmentoP.ValorIof.GetValueOrDefault().ToStringParaValoresDecimais().PadLeft(15, '0'));
+                segmentoP = segmentoP.PreencherValorNaLinha(181, 195, infoSegmentoP.ValorAbatimento.GetValueOrDefault().ToStringParaValoresDecimais().PadLeft(15, '0'));
 
 
                 const string doc = "DOC";
@@ -346,13 +346,13 @@ namespace BoletoBr.Bancos.Sicoob
                 trailerLote = trailerLote.PreencherValorNaLinha(18, 23, infoTrailerLote.QtdRegistrosLote.ToString().PadLeft(6, '0'));
 
                 trailerLote = trailerLote.PreencherValorNaLinha(24, 29, infoTrailerLote.QtdTitulosCobrancaSimples.ToString().PadLeft(6, '0'));
-                trailerLote = trailerLote.PreencherValorNaLinha(30, 46, infoTrailerLote.ValorTitulosCobrancaSimples.ToStringParaVoloresDecimais().PadLeft(17, '0'));
+                trailerLote = trailerLote.PreencherValorNaLinha(30, 46, infoTrailerLote.ValorTitulosCobrancaSimples.ToStringParaValoresDecimais().PadLeft(17, '0'));
                 trailerLote = trailerLote.PreencherValorNaLinha(47, 52, string.Empty.PadLeft(6,'0'));
                 trailerLote = trailerLote.PreencherValorNaLinha(53, 69, string.Empty.PadLeft(17,'0'));
                 trailerLote = trailerLote.PreencherValorNaLinha(70, 75, infoTrailerLote.QtdTitulosCobrancaCaucionada.ToString().PadLeft(6, '0'));
-                trailerLote = trailerLote.PreencherValorNaLinha(76, 92, infoTrailerLote.ValorTitulosCobrancaCaucionada.ToStringParaVoloresDecimais().PadLeft(17, '0'));
+                trailerLote = trailerLote.PreencherValorNaLinha(76, 92, infoTrailerLote.ValorTitulosCobrancaCaucionada.ToStringParaValoresDecimais().PadLeft(17, '0'));
                 trailerLote = trailerLote.PreencherValorNaLinha(93, 98, infoTrailerLote.QtdTitulosCobrancaDescontada.ToString().PadLeft(6, '0'));
-                trailerLote = trailerLote.PreencherValorNaLinha(99, 115, infoTrailerLote.ValorTitulosCobrancaDescontada.ToStringParaVoloresDecimais().PadLeft(17, '0'));
+                trailerLote = trailerLote.PreencherValorNaLinha(99, 115, infoTrailerLote.ValorTitulosCobrancaDescontada.ToStringParaValoresDecimais().PadLeft(17, '0'));
                 trailerLote = trailerLote.PreencherValorNaLinha(116, 123, string.Empty.PadLeft(8, ' '));
                 trailerLote = trailerLote.PreencherValorNaLinha(124, 240, string.Empty.PadLeft(117, ' '));
 
