@@ -477,19 +477,19 @@ namespace BoletoBr.Bancos.Itau
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 02,
-                        Descricao = "ENTRADA CONFIRMADA"/* COM POSSIBILIDADE DE MENSAGEM*/
+                        Descricao = "ENTRADA CONFIRMADA COM POSSIBILIDADE DE MENSAGEM (NOTA 20 – TABELA 10)"
                     };
                 case 03:
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 03,
-                        Descricao = "ENTRADA REJEITADA"
+                        Descricao = "ENTRADA REJEITADA (NOTA 20 – TABELA 1)"
                     };
                 case 04:
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 04,
-                        Descricao = "ALTERAÇÃO DE DADOS - NOVA ENTRADA OU ALTERAÇÃO/EXCLUSÃO DE DADOS ACATADA"
+                        Descricao = "ALTERAÇÃO DE DADOS – NOVA ENTRADA OU ALTERAÇÃO/EXCLUSÃO DE DADOS ACATADA"
                     };
                 case 05:
                     return new CodigoOcorrencia(numeroOcorrencia)
@@ -513,7 +513,7 @@ namespace BoletoBr.Bancos.Itau
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 08,
-                        Descricao = "LIQUIDAÇÃO PARCIAL – COBRANÇA INTELIGENTE (B2B)"
+                        Descricao = "LIQUIDAÇÃO EM CARTÓRIO"
                     };
                 case 09:
                     return new CodigoOcorrencia(numeroOcorrencia)
@@ -555,25 +555,25 @@ namespace BoletoBr.Bancos.Itau
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 15,
-                        Descricao = "BAIXAS REJEITADAS"
+                        Descricao = "BAIXAS REJEITADAS (NOTA 20 – TABELA 4)"
                     };
                 case 16:
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 16,
-                        Descricao = "INSTRUÇÕES REJEITADAS"
+                        Descricao = "INSTRUÇÕES REJEITADAS (NOTA 20 – TABELA 3)"
                     };
                 case 17:
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 17,
-                        Descricao = "ALTERAÇÃO/EXCLUSÃO DE DADOS REJEITADOS"
+                        Descricao = "ALTERAÇÃO/EXCLUSÃO DE DADOS REJEITADOS (NOTA 20 – TABELA 2)"
                     };
                 case 18:
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 18,
-                        Descricao = "COBRANÇA CONTRATUAL - INSTRUÇÕES/ALTERAÇÕES REJEITADAS/PENDENTES"
+                        Descricao = "COBRANÇA CONTRATUAL – INSTRUÇÕES/ALTERAÇÕES REJEITADAS/PENDENTES (NOTA 20 – TABELA 5)"
                     };
                 case 19:
                     return new CodigoOcorrencia(numeroOcorrencia)
@@ -603,13 +603,13 @@ namespace BoletoBr.Bancos.Itau
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 24,
-                        Descricao = "INSTRUÇÃO DE PROTESTO REJEITADA / SUSTADA / PENDENTE"
+                        Descricao = "INSTRUÇÃO DE PROTESTO REJEITADA / SUSTADA / PENDENTE (NOTA 20 – TABELA 7)"
                     };
                 case 25:
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 25,
-                        Descricao = "ALEGAÇÕES DO SACADO"
+                        Descricao = "ALEGAÇÕES DO PAGADOR (NOTA 20 – TABELA 6)"
                     };
                 case 26:
                     return new CodigoOcorrencia(numeroOcorrencia)
@@ -783,7 +783,7 @@ namespace BoletoBr.Bancos.Itau
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 57,
-                        Descricao = "INSTRUÇÃO CANCELADA"
+                        Descricao = "INSTRUÇÃO CANCELADA (NOTA 20 – TABELA 8)"
                     };
                 case 59:
                     return new CodigoOcorrencia(numeroOcorrencia)
@@ -795,7 +795,7 @@ namespace BoletoBr.Bancos.Itau
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 60,
-                        Descricao = "ENTRADA REJEITADA CARNÊ"
+                        Descricao = "ENTRADA REJEITADA CARNÊ (NOTA 20 – TABELA 1)"
                     };
                 case 61:
                     return new CodigoOcorrencia(numeroOcorrencia)
@@ -807,7 +807,7 @@ namespace BoletoBr.Bancos.Itau
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 62,
-                        Descricao = "DÉBITO MENSAL DE TARIFA - AVISO DE MOVIMENTAÇÃO DE TÍTULOS (2154)"
+                        Descricao = "DÉBITO MENSAL DE TARIFA – AVISO DE MOVIMENTAÇÃO DE TÍTULOS (2154)"
                     };
                 case 63:
                     return new CodigoOcorrencia(numeroOcorrencia)
@@ -821,11 +821,17 @@ namespace BoletoBr.Bancos.Itau
                         Codigo = 64,
                         Descricao = "ENTRADA CONFIRMADA COM RATEIO DE CRÉDITO"
                     };
+                case 65:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 65,
+                        Descricao = "PAGAMENTO COM CHEQUE – AGUARDANDO COMPENSAÇÃO"
+                    };
                 case 69:
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 69,
-                        Descricao = "CHEQUE DEVOLVIDO"
+                        Descricao = "CHEQUE DEVOLVIDO (NOTA 20 – TABELA 9)"
                     };
                 case 71:
                     return new CodigoOcorrencia(numeroOcorrencia)
@@ -843,8 +849,19 @@ namespace BoletoBr.Bancos.Itau
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 73,
-                        Descricao =
-                            "CONFIRMAÇÃO DE ENTRADA NA COBRANÇA SIMPLES – ENTRADA NÃO ACEITA NA COBRANÇA CONTRATUAL"
+                        Descricao = "CONFIRMAÇÃO DE ENTRADA NA COBRANÇA SIMPLES – ENTRADA NÃO ACEITA NA COBRANÇA CONTRATUAL"
+                    };
+                case 74:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 74,
+                        Descricao = "INSTRUÇÃO DE NEGATIVAÇÃO EXPRESSA REJEITADA (NOTA 20 – TABELA 11)"
+                    };
+                case 75:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 75,
+                        Descricao = "CONFIRMAÇÃO DE RECEBIMENTO DE INSTRUÇÃO DE ENTRADA EM NEGATIVAÇÃO EXPRESSA"
                     };
                 case 76:
                     return new CodigoOcorrencia(numeroOcorrencia)
@@ -852,11 +869,95 @@ namespace BoletoBr.Bancos.Itau
                         Codigo = 76,
                         Descricao = "CHEQUE COMPENSADO"
                     };
+                case 77:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 77,
+                        Descricao = "CONFIRMAÇÃO DE RECEBIMENTO DE INSTRUÇÃO DE EXCLUSÃO DE ENTRADA EM NEGATIVAÇÃO EXPRESSA"
+                    };
+                case 78:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 78,
+                        Descricao = "CONFIRMAÇÃO DE RECEBIMENTO DE INSTRUÇÃO DE CANCELAMENTO DE NEGATIVAÇÃO EXPRESSA"
+                    };
+                case 79:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 79,
+                        Descricao = "NEGATIVAÇÃO EXPRESSA INFORMACIONAL (NOTA 20 – TABELA 12)"
+                    };
+                case 80:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 80,
+                        Descricao = "CONFIRMAÇÃO DE ENTRADA EM NEGATIVAÇÃO EXPRESSA – TARIFA"
+                    };
                 case 82:
                     return new CodigoOcorrencia(numeroOcorrencia)
                     {
                         Codigo = 82,
-                        Descricao = "Código de ocorrência não documentado - Cod.82 "
+                        Descricao = "CONFIRMAÇÃO DO CANCELAMENTO DE NEGATIVAÇÃO EXPRESSA – TARIFA"
+                    };
+                case 83:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 83,
+                        Descricao = "CONFIRMAÇÃO DE EXCLUSÃO DE ENTRADA EM NEGATIVAÇÃO EXPRESSA POR LIQUIDAÇÃO – TARIFA"
+                    };
+                case 85:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 85,
+                        Descricao = "TARIFA POR BOLETO (ATÉ 03 ENVIOS) COBRANÇA ATIVA ELETRÔNICA"
+                    };
+                case 86:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 86,
+                        Descricao = "TARIFA EMAIL COBRANÇA ATIVA ELETRÔNICA"
+                    };
+                case 87:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 87,
+                        Descricao = "TARIFA SMS COBRANÇA ATIVA ELETRÔNICA"
+                    };
+                case 88:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 88,
+                        Descricao = "TARIFA MENSAL POR BOLETO (ATÉ 03 ENVIOS) COBRANÇA ATIVA ELETRÔNICA"
+                    };
+                case 89:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 89,
+                        Descricao = "TARIFA MENSAL EMAIL COBRANÇA ATIVA ELETRÔNICA JANEIRO 2017 Cobrança CNAB 400 25"
+                    };
+                case 90:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 90,
+                        Descricao = "TARIFA MENSAL SMS COBRANÇA ATIVA ELETRÔNICA"
+                    };
+                case 91:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 91,
+                        Descricao = "TARIFA MENSAL DE EXCLUSÃO DE ENTRADA DE NEGATIVAÇÃO EXPRESSA"
+                    };
+                case 92:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 92,
+                        Descricao = "TARIFA MENSAL DE CANCELAMENTO DE NEGATIVAÇÃO EXPRESSA"
+                    };
+                case 93:
+                    return new CodigoOcorrencia(numeroOcorrencia)
+                    {
+                        Codigo = 93,
+                        Descricao = "TARIFA MENSAL DE EXCLUSÃO DE NEGATIVAÇÃO EXPRESSA POR LIQUIDAÇÃO "
                     };
             }
             throw new Exception(
