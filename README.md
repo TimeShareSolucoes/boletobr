@@ -102,8 +102,8 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 				- [x] 4 - COBRANÇA (*Homologado com o Banco 10/2017 - by @kalleyaoliveira**)
 	- <b>041-8 | Banco Banrisul - (CNAB 400)</b>
 		- Implementação / Testes
-			- Carteiras 
-            			- [x]  1 – Cobrança Simples (8050.76)
+			- Carteiras
+				- [x]  1 – Cobrança Simples (8050.76)
 			        - [x]  3 – Cobrança Caucionada (8150.55) Reservado
 			        - [x]  4 – Cobrança em IGPM (8450.94) *
 			        - [x]  5 – Cobrança Caucionada CGB Especial (8355.01) Reservado
