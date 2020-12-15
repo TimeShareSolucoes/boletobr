@@ -100,6 +100,27 @@ Me inspirei na biblioteca: https://boletonet.codeplex.com/
 			- Carteiras
 				- [x] 3 - COBRANÇA (*Homologado com o Banco 10/2017 - by @kalleyaoliveira**)
 				- [x] 4 - COBRANÇA (*Homologado com o Banco 10/2017 - by @kalleyaoliveira**)
+	- <b>041-8 | Banco Banrisul - (CNAB 400)</b>
+		- Implementação / Testes
+			- Carteiras 
+            			- [x]  1 – Cobrança Simples (8050.76)
+			        - [x]  3 – Cobrança Caucionada (8150.55) Reservado
+			        - [x]  4 – Cobrança em IGPM (8450.94) *
+			        - [x]  5 – Cobrança Caucionada CGB Especial (8355.01) Reservado
+			        - [x]  6 – Cobrança Simples Seguradora (8051.57)
+			        - [x]  7 – Cobrança em UFIR (8257.86) *
+			        - [x]  8 – Cobrança em IDTR (8356.84) *
+			        - [x]  C – Cobrança Vinculada (8250.34)
+			        - [x]  D – Cobrança CSB (8258.67)
+			        - [x]  E – Cobrança Caucionada Câmbio (8156.24)
+			        - [x]  F – Cobrança Vendor (8152.17) Reservado
+			        - [x]  H – Cobrança Caucionada Dólar (8157.05) Reservado **
+			        - [x]  I – Cobrança Caucionada Compror (8351.46) Reservado
+			        - [x]  K – Cobrança Simples INCC-M (8153.06)
+			        - [x]  M – Cobrança Partilhada (8154.70)
+			        - [x]  N – Capital de Giro CGB ICM (6130.96) Reservado
+			        - [x]  R – Desconto de Duplicata (6030.15) ***
+			        - [x]  S – Vendor Eletrônico – Valor Final (Corrigido) (6032.79) 
 				
 ## Como contribuir
 
