@@ -25,6 +25,7 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
         public string NumeroRemessaRetorno { get; set; }
         public DateTime DataGeracaoGravacao { get; set; }
         public DateTime DataDeCredito { get; set; }
+        public string ComplementoRegistro { get; set; }
 
         #region Banco do Brasil
 
@@ -46,7 +47,14 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
         /// C/C = 45981-36
         /// Neste caso o DV da Ag/Conta = 6
         /// </summary>
+        public int FormaLancamento { get; set; }
         public string DvAgenciaConta { get; set; }
+        public DateTime DataSaldoInicial { get; set; }
+        public decimal ValorSaldoInicial { get; set; }
+        public string SituacaoSaldoInicial { get; set; }
+        public string PosicaoSaldoInicial { get; set; }
+        public string MoedaReferenciadaExtrato { get; set; }
+        public int NumeroSequenciaExtrato { get; set; }
 
         #endregion
     }

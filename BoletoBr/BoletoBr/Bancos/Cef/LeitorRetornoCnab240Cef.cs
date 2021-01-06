@@ -299,12 +299,12 @@ namespace BoletoBr.Bancos.Cef
             objRetornar.CodigoBanco = linha.ExtrairValorDaLinha(1, 3).BoletoBrToInt();
             objRetornar.LoteServico = linha.ExtrairValorDaLinha(4, 7);
             objRetornar.CodigoRegistro = linha.ExtrairValorDaLinha(8, 8).BoletoBrToInt();
-            objRetornar.QtdRegistrosLote = linha.ExtrairValorDaLinha(18, 23).BoletoBrToLong();
-            objRetornar.QtdTitulosCobrancaSimples = linha.ExtrairValorDaLinha(24, 29).BoletoBrToLong();
+            objRetornar.QtdRegistrosLote = linha.ExtrairValorDaLinha(18, 23).BoletoBrToInt();
+            objRetornar.QtdTitulosCobrancaSimples = linha.ExtrairValorDaLinha(24, 29).BoletoBrToInt();
             objRetornar.ValorTitulosCobrancaSimples = linha.ExtrairValorDaLinha(30, 46).BoletoBrToDecimal() / 100;
-            objRetornar.QtdTitulosCobrancaCaucionada = linha.ExtrairValorDaLinha(47, 52).BoletoBrToLong();
+            objRetornar.QtdTitulosCobrancaCaucionada = linha.ExtrairValorDaLinha(47, 52).BoletoBrToInt();
             objRetornar.ValorTitulosCobrancaCaucionada = linha.ExtrairValorDaLinha(53, 69).BoletoBrToDecimal() / 100;
-            objRetornar.QtdTitulosCobrancaDescontada = linha.ExtrairValorDaLinha(70, 75).BoletoBrToLong();
+            objRetornar.QtdTitulosCobrancaDescontada = linha.ExtrairValorDaLinha(70, 75).BoletoBrToInt();
             objRetornar.ValorTitulosCobrancaDescontada = linha.ExtrairValorDaLinha(76, 92).BoletoBrToDecimal() / 100;
 
             return objRetornar;
@@ -323,6 +323,11 @@ namespace BoletoBr.Bancos.Cef
             objRetornar.QtdRegistrosArquivo = linha.ExtrairValorDaLinha(24, 29).BoletoBrToInt();
 
             return objRetornar;
+        }
+
+        public DetalheSegmentoERetornoCnab240 ObterRegistrosDetalheE(string linha)
+        {
+            throw new NotImplementedException();
         }
     }
 }

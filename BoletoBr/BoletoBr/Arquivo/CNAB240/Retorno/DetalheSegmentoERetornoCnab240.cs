@@ -63,7 +63,8 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
         /// <summary>
         /// N�mero de inscri��o da Empresa ou Pessoa F�sica perante uma Institui��o governamental.
         /// </summary>
-        public long NumeroInscricaoCliente { get; private set; }
+        /// era long 
+        public string NumeroInscricaoCliente { get; private set; }
 
         /// <summary>
         /// C�digo adotado pelo Banco para identificar o Contrato entre este e a Empresa Cliente.
@@ -73,7 +74,8 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
         /// <summary>
         /// C�digo adotado pelo Banco respons�vel pela conta, para identificar a qual unidade est� vinculada a conta corrente.
         /// </summary>
-        public int AgenciaMantenedoraConta { get; private set; }
+        /// era int
+        public string AgenciaMantenedoraConta { get; private set; }
 
         /// <summary>
         /// C�digo adotado pelo Banco respons�vel pela conta corrente, para verifica��o da autenticidade do C�digo da Ag�ncia.
@@ -83,7 +85,8 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
         /// <summary>
         /// N�mero adotado pelo Banco, para identificar univocamente a conta corrente utilizada pelo Cliente.
         /// </summary>
-        public long NumeroContaCorrente { get; private set; }
+        /// era long
+        public string NumeroContaCorrente { get; private set; }
 
         /// <summary>
         /// C�digo adotado pelo respons�vel pela conta corrente, para verifica��o da autenticidade do N�mero da Conta Corrente.
@@ -248,7 +251,24 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
         /// </summary>
         public string NumeroDocumentoComplemento { get; private set; }
 
-        public void LerDetalheSegmentoERetornoCnab240(string registro)
+        public string BancoOrigemLancamento { get; private set; }
+
+        public string AgenciaOrigemLancamento { get; private set; }
+
+        public string AgenciaContaOrigemLancamento { get; private set; }
+
+        public string AgenciaDeOrigemLancamento { get; private set; }
+
+        public string ContaOrigemLancamento { get; private set; }
+
+        public string DigVerifAgenciaContaOrigemLancamento { get; private set; }
+
+        public TipoInscricao TipodeIncricaodoEmitente { get; private set; }
+
+        public string NumerodeIncricaodoEmitente { get; private set; }
+
+
+        public void LerDetalheSegmentoERetornoBrandescoCnab240(string registro)
         {
             try
             {
@@ -262,11 +282,11 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
                 Segmento = registro.ExtrairValorDaLinha(14, 14);
                 UsoExclusivoFebrabanCnab = registro.ExtrairValorDaLinha(15, 17);
                 TipoInscricaoCliente = (TipoInscricao) registro.ExtrairValorDaLinha(18, 18)[0];
-                NumeroInscricaoCliente = Convert.ToInt32(registro.ExtrairValorDaLinha(19, 32));
+                NumeroInscricaoCliente = registro.ExtrairValorDaLinha(19, 32);
                 CodigoConvenioBanco = registro.ExtrairValorDaLinha(33, 52);
-                AgenciaMantenedoraConta = Convert.ToInt32(registro.ExtrairValorDaLinha(53, 57));
+                AgenciaMantenedoraConta = registro.ExtrairValorDaLinha(53, 57);
                 DigitoVerificadorAgencia = registro.ExtrairValorDaLinha(58, 58);
-                NumeroContaCorrente = Convert.ToInt32(registro.ExtrairValorDaLinha(59, 70));
+                NumeroContaCorrente = registro.ExtrairValorDaLinha(59, 70);
                 DigitoVerificadorConta = registro.ExtrairValorDaLinha(71, 71);
                 DigitoVerificadorAgenciaConta = registro.ExtrairValorDaLinha(72, 72);
                 NomeEmpresa = registro.ExtrairValorDaLinha(73, 102);
@@ -275,8 +295,8 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
                 TipoComplementoLancamento = (TipoComplementoLancamento) registro.ExtrairValorDaLinha(112, 113)[0];
                 ComplementoLancamento = registro.ExtrairValorDaLinha(114, 133);
                 IdentificacaoIsencaoCpmf = (IsencaoCpmf)registro.ExtrairValorDaLinha(134, 134)[0];
-                DataContabil = Convert.ToDateTime(registro.ExtrairValorDaLinha(135, 142));
-                DataLancamento = Convert.ToDateTime(registro.ExtrairValorDaLinha(143, 150));
+                DataContabil = Convert.ToDateTime(registro.ExtrairValorDaLinha(135, 142).ToDateTimeFromDdMmAaaa());
+                DataLancamento = Convert.ToDateTime(registro.ExtrairValorDaLinha(143, 150).ToDateTimeFromDdMmAaaa());
                 ValorLancamento = decimal.Parse(registro.ExtrairValorDaLinha(151, 168)) / 100m;
                 TipoLancamento = (TipoLancamento)registro.ExtrairValorDaLinha(169, 169)[0];
                 CategoriaLancamento = (CategoriaLancamento)registro.ExtrairValorDaLinha(170, 172)[0];
@@ -289,6 +309,60 @@ namespace BoletoBr.Arquivo.CNAB240.Retorno
                 throw new Exception("Erro ao processar arquivo de RETORNO - SEGMENTO E.", ex);
             }
         }
+
+        public void LerDetalheSegmentoERetornoItauCnab240(string registro)
+        {
+            try
+            {
+                if (registro.ExtrairValorDaLinha(14, 14) != "E")
+                    throw new Exception("Registro inválido. O detalhe não possui as características do segmento E.");
+
+                CodigoBanco = Convert.ToInt32(registro.ExtrairValorDaLinha(1, 3));
+                LoteServico = Convert.ToInt32(registro.ExtrairValorDaLinha(4, 7));
+                TipoRegistro = registro.ExtrairValorDaLinha(8, 8);
+                NumeroRegistro = Convert.ToInt32(registro.ExtrairValorDaLinha(9, 13));
+                Segmento = registro.ExtrairValorDaLinha(14, 14);
+                TipoLancamento = (TipoLancamento) registro.ExtrairValorDaLinha(15, 15)[0];
+                //UsoExclusivoFebrabanCnab = registro.ExtrairValorDaLinha(15, 17);
+                TipoInscricaoCliente = (TipoInscricao)registro.ExtrairValorDaLinha(18, 18)[0];
+                NumeroInscricaoCliente = registro.ExtrairValorDaLinha(19, 32);
+                CodigoHistorico = registro.ExtrairValorDaLinha(33, 38);
+                CodigoConvenioBanco = registro.ExtrairValorDaLinha(48, 52);
+                AgenciaMantenedoraConta = registro.ExtrairValorDaLinha(54, 57);
+                DigitoVerificadorAgencia = registro.ExtrairValorDaLinha(58, 58);
+                NumeroContaCorrente = registro.ExtrairValorDaLinha(66, 70);
+                DigitoVerificadorConta = registro.ExtrairValorDaLinha(72, 72);
+                DigitoVerificadorAgenciaConta = registro.ExtrairValorDaLinha(72, 72);
+                NomeEmpresa = registro.ExtrairValorDaLinha(73, 102);
+                UsoExclusivoFebrabanCnab2 = registro.ExtrairValorDaLinha(103, 108);
+                NaturezaLancamento = registro.ExtrairValorDaLinha(109, 111);
+                TipoComplementoLancamento = (TipoComplementoLancamento)registro.ExtrairValorDaLinha(112, 113)[0];
+                //ComplementoLancamento = registro.ExtrairValorDaLinha(114, 133);
+                BancoOrigemLancamento = registro.ExtrairValorDaLinha(114, 116);
+                AgenciaOrigemLancamento = registro.ExtrairValorDaLinha(117, 121);
+                AgenciaContaOrigemLancamento = registro.ExtrairValorDaLinha(122, 133);
+                IdentificacaoIsencaoCpmf = (IsencaoCpmf)registro.ExtrairValorDaLinha(134, 134)[0];
+                DataContabil = Convert.ToDateTime(registro.ExtrairValorDaLinha(135, 142).ToDateTimeFromDdMmAaaa());
+                DataLancamento = Convert.ToDateTime(registro.ExtrairValorDaLinha(143, 150).ToDateTimeFromDdMmAaaa());
+                ValorLancamento = decimal.Parse(registro.ExtrairValorDaLinha(151, 168)) / 100m;
+                TipoLancamento = (TipoLancamento)registro.ExtrairValorDaLinha(169, 169)[0];
+                CategoriaLancamento = (CategoriaLancamento)registro.ExtrairValorDaLinha(170, 172)[0];
+                CodigoHistorico = registro.ExtrairValorDaLinha(173, 176);
+                HistoricoLancamento = registro.ExtrairValorDaLinha(177, 201);
+                AgenciaDeOrigemLancamento = registro.ExtrairValorDaLinha(202, 205);
+                ComplementoLancamento = registro.ExtrairValorDaLinha(206, 207);
+                ContaOrigemLancamento = registro.ExtrairValorDaLinha(208, 212);
+                DigVerifAgenciaContaOrigemLancamento = registro.ExtrairValorDaLinha(213, 213);
+                TipodeIncricaodoEmitente = (TipoInscricao) registro.ExtrairValorDaLinha(214, 214)[0];
+                NumerodeIncricaodoEmitente = registro.ExtrairValorDaLinha(215, 228);
+                NumeroDocumentoComplemento = registro.ExtrairValorDaLinha(235, 240);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao processar arquivo de RETORNO - SEGMENTO E.", ex);
+            }
+        }
+
     }
 }
 

@@ -5,12 +5,47 @@ using System.Text;
 using System.Threading.Tasks;
 using BoletoBr.Bancos.Itau;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using BoletoBr.Bancos.Bradesco;
+using System.IO;
+using BoletoBr.Arquivo.CNAB240.Retorno;
 
 namespace BoletoBr.UnitTests.TestsBancosRetorno
 {
     [TestClass]
     public class TestRetornoBancoItau
     {
+
+        #region CNAB 240
+        [TestMethod]
+        public void TestArquivoRetornoCnab240BancoItau()
+        {
+            string[] lines = File.ReadAllLines("C:\\Users\\antun\\Downloads\\BL30097A.RET", Encoding.UTF8);
+            List<string> lstFile = lines.ToList<string>();
+
+            var bank = BoletoBr.Fabricas.BancoFactory.ObterBanco("341");
+            var cnabRetFile = bank.LerArquivoRetorno(lstFile);
+
+            //LeitorRetornoCnab240Bradesco leitor = new LeitorRetornoCnab240Bradesco(lstFile);
+
+            //var resultado = leitor.ProcessarRetorno();
+            string conteudo = "";
+
+            foreach (LoteRetornoCnab240 loteRetorno in cnabRetFile.RetornoCnab240Especifico.Lotes)
+            {
+                conteudo += "Conta Corrente: " + loteRetorno.HeaderLote.ContaCorrente + Environment.NewLine;
+                foreach (DetalheRetornoCnab240 retorno in loteRetorno.RegistrosDetalheSegmentos)
+                {
+                    conteudo += "SegmentoE NumeroInscricaoCliente " + retorno.SegmentoE.NumeroInscricaoCliente  + " Agência Conta:" + retorno.SegmentoE.AgenciaMantenedoraConta + " Conta corrente:" + retorno.SegmentoE.NumeroContaCorrente  +" Data Lançamento " + retorno.SegmentoE.DataLancamento + "   HistoricoLancamento:" + retorno.SegmentoE.HistoricoLancamento + "  TipoLancamento:" + retorno.SegmentoE.TipoLancamento + "  NumeroDocumentoComplemento:" + retorno.SegmentoE.NumeroDocumentoComplemento + "  ValorLancamento:" + retorno.SegmentoE.ValorLancamento + Environment.NewLine; ;
+                }
+            }
+            File.WriteAllText("C:\\Users\\antun\\Downloads\\RETAnaliseItau.txt", conteudo);
+            Assert.AreNotEqual(cnabRetFile.Header, null);
+        }
+
+        #endregion
+
+
+
         #region CNAB400
 
         [TestMethod]
